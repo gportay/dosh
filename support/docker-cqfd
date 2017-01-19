@@ -57,6 +57,7 @@ Options:
 
 Commands:
   init                   Initialize project build container.
+  deinit                 Deinitialize project build container.
   exec string [list]     Run argument(s) inside build container.
   flavors                List flavors from config file to stdout.
   run [list]             Run argument(s) inside build container.

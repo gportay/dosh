@@ -28,6 +28,9 @@ Linux distribution.
 *init*::
 	Initialize project build container.
 
+*deinit*::
+	Deinitialize project build container.
+
 *exec cmd [args]*::
 	Run argument(s) inside build container.
 

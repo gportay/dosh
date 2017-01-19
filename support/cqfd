@@ -28,6 +28,7 @@ Options:
 
 Commands:
       init                      Initialize project build container.
+      deinit                    Deinitialize project build container.
       exec cmd [args]           Run argument(s) inside build container.
       flavors                   List flavors from config file to stdout.
       run [command_string]      Run argument(s) inside build container.
@@ -71,7 +72,7 @@ do
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
-	elif [[ "$1" =~ ^(init|exec|flavors|run|release|shell|help)$ ]]
+	elif [[ "$1" =~ ^(init|deinit|exec|flavors|run|release|shell|help)$ ]]
 	then
 		eval "cmd_$1=1"
 		shift
@@ -210,6 +211,19 @@ then
 	fi
 
 	exec "${DOSH[@]:-dosh}" --rebuild "${dosh_opts[@]}" </dev/null
+fi
+
+if [[ "$cmd_deinit" ]]
+then
+	DOSH_DOCKER_RMI_EXTRA_OPTS="$CQFD_EXTRA_RMI_ARGS"
+	export DOSH_DOCKER_RMI_EXTRA_OPTS
+
+	if [[ "$docker_rmi_args" ]]
+	then
+		DOSH_DOCKER_RMI_EXTRA_OPTS+=" $docker_rmi_args"
+	fi
+
+	exec "${DOSH[@]:-dosh}" --rmi "${dosh_opts[@]}" </dev/null
 fi
 
 if [[ "$cmd_exec" ]] && [[ "$#" -eq 0 ]]
