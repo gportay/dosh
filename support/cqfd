@@ -93,7 +93,7 @@ fi
 # Stolen and hacked from https://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
 #
 # Copyright 2008,2010-2011 Andrés J. Díaz
-#           2024           Gaël PORTAY
+#           2024-2025      Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -114,8 +114,7 @@ cfg_parser ()
 	ini=( ${ini[*]/=\ /=} )                    # remove space after =
 	ini=( ${ini[*]/#\\[/\}$'\n'cfg.section.} ) # set section prefix
 	ini=( ${ini[*]/%\\]/ \(} )                 # convert text2function (1)
-	ini=( ${ini[*]/=/=\( } )                   # convert item to array
-	ini=( ${ini[*]/%/ \)} )                    # close array parenthesis
+	ini=( ${ini[*]/%\(/ \( \)} )               # close array parenthesis
 	ini=( ${ini[*]/%\\ \)/ \\} )               # the multiline trick
 	ini=( ${ini[*]/%\( \)/\(\) \{} )           # convert text2function (2)
 	ini=( ${ini[*]/%\} \)/\}} )                # remove extra parenthesis
