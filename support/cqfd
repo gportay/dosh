@@ -116,8 +116,8 @@ cfg_parser ()
 	ini=("${ini[@]/%\)/) {}")                  # the multiline trick
 	ini=("${ini[@]/%\( \)/\(\) \{}")           # convert text2function (2)
 	ini=("${ini[@]/%\} \)/\}}")                # remove extra parenthesis
-	ini[0]="${ini[0]/\}/}"                     # remove first element
 	ini+=("}")                                 # add the last brace
+	ini[0]="${ini[0]/\}/}"                     # remove first element
 	ini=("$(printf "%s\n" "${ini[@]}")")       # reconvert to line-array
 	eval "${ini[*]}"                           # eval the result
 }
