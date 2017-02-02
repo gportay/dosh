@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the MIT License.
+#
+
+set -e
+
+usage() {
+	cat <<EOF
+Usage: ${0##*/} [OPTIONS] [COMMAND] [ARG...]
+
+Run a shell as user in a new container and bind mount cwd.
+
+Options:
+      -c                        Read commands from command-line.
+      -i                        Set interactive.
+      -s                        Read commands from standard-input.
+
+      -q or --quiet             Suppress the build output and print image ID on
+                                success.
+      -h or --help              Print usage.
+EOF
+}
+
+docker_build() {
+	cat "$1" - <<EOF | docker build $buildopts --tag "$2" -
+RUN groupadd --non-unique --gid $GROUPS $USER
+RUN useradd  --non-unique --gid $GROUPS --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER
+EOF
+}
+
+opti=false
+opts=false
+optc=false
+runopts="--rm --volume $PWD:/home/$USER"
+while [ "$#" -ne 0 ]; do
+	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+		usage
+		exit 0
+	elif [ "$1" = "-q" ] || [ "$1" = "--quiet" ]; then
+		buildopts+=" --quiet"
+	elif [ "$1" = "-c" ]; then
+		shift
+		optc=true
+		break
+	elif [ "$1" = "-i" ]; then
+		opti=true
+	elif [ "$1" = "-s" ]; then
+		shift
+		opts=true
+		break
+	elif [ "$1" = "--" ]; then
+		shift
+		break
+	else
+		break
+	fi
+	shift
+done
+
+hash="$(realpath "Dockerfile" | sha256sum - | cut -d' ' -f1)"
+tag="dsh-$hash"
+docker_build "Dockerfile" "$tag" >&2
+
+# Set interactive
+if $opti || $opts || [ "$#" -eq 0 ]; then
+	runopts+=" --interactive"
+
+	# Allocate a pseudo-TTY if stdin/stderr are TTY
+	if [ -t 0 ] && [ -t 2 ]; then
+		runopts+=" --tty"
+	fi
+fi
+
+# Read command from stdin
+# FIXME: pass "$@" insteand of $*
+if $opts; then
+	set -- su $USER -l -c "$SHELL -s $*"
+# Run command from arguments
+elif $optc; then
+	set -- su $USER -l -c "$*"
+# No command or invalid
+else
+	set -- su $USER -l "$@"
+fi
+
+exec docker run $runopts "$tag" "$@"

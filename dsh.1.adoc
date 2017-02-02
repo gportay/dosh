@@ -1,0 +1,161 @@
+= dsh(1)
+:doctype: manpage
+:author: Gaël PORTAY
+:email: gael.portay@savoirfairelinux.com
+:lang: en
+:man manual: docker-scripts Manual
+:man source: dsh 1.0
+
+== NAME
+
+dsh - run a user shell in a new container with pwd bind mounted
+
+== SYNOPSIS
+
+*dsh* [OPTIONS] [COMMAND] [ARG...]
+
+== DESCRIPTION
+
+Runs the _command_ process in a new container; using the current _user_, with
+_pwd_ bind mounted.
+
+When called without arguments, *dsh* defaults to running an interactive shell
+as current _user_.
+
+Under the hood, *dsh* builds its _docker image_ using the *Dockerfile(5)* from
+the _current working directory_ inside *docker-build(1)*.  *dsh* appends a
+*groupadd(8)* and a *useradd(8)* _RUN_ commands to it, to add the
+_$USER/$GROUPS_ to the container. Once the image is build, the _command_ is run
+into *su(1)* using user _$USER_ through *docker-run*.
+
+== OPTIONS
+
+**-c**
+	Read commands from command-line.
+
+**-i**
+	Set interactive.
+
+**-s**
+	Read commands from standard-input.
+
+**-q or --quiet**
+	Suppress the build output and print image ID on success.
+
+**-h or --help**
+	Print usage.
+
+== EXAMPLES
+
+Run an _interactive shell_ in the latest _Ubuntu_ container
+
+	$ echo FROM ubuntu >Dockerfile
+	$ cat Dockerfile
+	FROM ubuntu
+
+	$ dsh
+	Sending build context to Docker daemon 2.048 kB
+	Step 1 : FROM ubuntu
+	 ---> f49eec89601e
+	Step 2 : RUN groupadd --non-unique --gid 1000 gportay
+	 ---> Using cache
+	 ---> 572ea4688a13
+	Step 3 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
+	 ---> Using cache
+	 ---> 777c682a9816
+	Successfully built 777c682a9816
+	gportay@4c3fb2d195d8:~$ 
+
+Check for the _distribution_
+
+	gportay@4c3fb2d195d8:~$ cat /etc/os-release
+	DISTRIB_ID=Ubuntu
+	DISTRIB_RELEASE=16.04
+	DISTRIB_CODENAME=xenial
+	DISTRIB_DESCRIPTION="Ubuntu 16.04.1 LTS"
+	NAME="Ubuntu"
+	VERSION="16.04.1 LTS (Xenial Xerus)"
+	ID=ubuntu
+	ID_LIKE=debian
+	PRETTY_NAME="Ubuntu 16.04.1 LTS"
+	VERSION_ID="16.04"
+	HOME_URL="http://www.ubuntu.com/"
+	SUPPORT_URL="http://help.ubuntu.com/"
+	BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+	VERSION_CODENAME=xenial
+	UBUNTU_CODENAME=xenial
+
+Check for _user_
+
+	gportay@4c3fb2d195d8:~$ whoami
+	gportay
+
+Exit from container
+
+	gportay@4c3fb2d195d8:~$ exit
+	logout
+
+Run the _commands_ above in the same container as a _shell_ script
+
+	$ dsh "cat /etc/os-release && whoami"
+	Sending build context to Docker daemon 2.048 kB
+	Step 1 : FROM ubuntu
+	 ---> f49eec89601e
+	Step 2 : RUN groupadd --non-unique --gid 1000 gportay
+	 ---> Using cache
+	 ---> 572ea4688a13
+	Step 3 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
+	 ---> Using cache
+	 ---> 777c682a9816
+	Successfully built 777c682a9816
+	NAME="Ubuntu"
+	VERSION="16.04.1 LTS (Xenial Xerus)"
+	ID=ubuntu
+	ID_LIKE=debian
+	PRETTY_NAME="Ubuntu 16.04.1 LTS"
+	VERSION_ID="16.04"
+	HOME_URL="http://www.ubuntu.com/"
+	SUPPORT_URL="http://help.ubuntu.com/"
+	BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+	VERSION_CODENAME=xenial
+	UBUNTU_CODENAME=xenial
+	gportay
+	logout
+
+Check for _PWD_ bind mountage ; write the _distribution_ name to local file
+
+	$ dsh -c "grep '^NAME=' /etc/os-release >os-release"
+	Sending build context to Docker daemon 2.048 kB
+	Step 1 : FROM ubuntu
+	 ---> f49eec89601e
+	Step 2 : RUN groupadd --non-unique --gid 1000 gportay
+	 ---> Using cache
+	 ---> 572ea4688a13
+	Step 3 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
+	 ---> Using cache
+	 ---> 777c682a9816
+	Successfully built 777c682a9816
+
+Read the contents outside the container
+
+	$ cat os-release
+	NAME="Ubuntu"
+
+== BUGS
+
+Report bugs at *https://github.com/gazoo74/docker-scripts/issues*
+
+== AUTHOR
+
+Written by Gaël PORTAY *gael.portay@savoirfairelinux.com*
+
+== COPYRIGHT
+
+Copyright (c) 2017 Gaël PORTAY
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the MIT License.
+
+== SEE ALSO
+
+docker-build(1), docker-run(1), su(1), groupadd(8), useradd(8)
