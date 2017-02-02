@@ -105,6 +105,32 @@ else
 fi
 echo
 
+test="Test option -f"
+echo -e "\e[1mRunning $test...\e[0m"
+if dsh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
+   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+then
+	ok=$((ok+1))
+	echo -e "\e[1m$test: \e[32m[OK]\e[0m"
+else
+	ko=$((ko+1))
+	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+fi
+echo
+
+test="Test option -f"
+echo -e "\e[1mRunning $test...\e[0m"
+if dsh "$@" -f Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
+	grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+then
+	ok=$((ok+1))
+	echo -e "\e[1m$test: \e[32m[OK]\e[0m"
+else
+	ko=$((ko+1))
+	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+fi
+echo
+
 if [ -n "$fix" ]; then
 	echo -e "\e[1m\e[33m$fix test(s) fixed!\e[0m" >&2
 fi

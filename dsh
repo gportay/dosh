@@ -19,6 +19,7 @@ Options:
       -i                        Set interactive.
       -s                        Read commands from standard-input.
 
+      -f or --file              Path to the Dockerfile to use.
       -q or --quiet             Suppress the build output and print image ID on
                                 success.
       -h or --help              Print usage.
@@ -35,11 +36,15 @@ EOF
 opti=false
 opts=false
 optc=false
+file="Dockerfile"
 runopts="--rm --volume $PWD:/home/$USER"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 		usage
 		exit 0
+	elif [ "$1" = "-f" ] || [ "$1" = "--file" ]; then
+		shift
+		file="$1"
 	elif [ "$1" = "-q" ] || [ "$1" = "--quiet" ]; then
 		buildopts+=" --quiet"
 	elif [ "$1" = "-c" ]; then
@@ -61,9 +66,9 @@ while [ "$#" -ne 0 ]; do
 	shift
 done
 
-hash="$(realpath "Dockerfile" | sha256sum - | cut -d' ' -f1)"
+hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
 tag="dsh-$hash"
-docker_build "Dockerfile" "$tag" >&2
+docker_build "$file" "$tag" >&2
 
 # Set interactive
 if $opti || $opts || [ "$#" -eq 0 ]; then

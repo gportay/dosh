@@ -39,6 +39,9 @@ into *su(1)* using user _$USER_ through *docker-run*.
 **-s**
 	Read commands from standard-input.
 
+**-f or --file**
+	Path to the Dockerfile to use.
+
 **-q or --quiet**
 	Suppress the build output and print image ID on success.
 
@@ -140,6 +143,24 @@ Read the contents outside the container
 
 	$ cat os-release
 	NAME="Ubuntu"
+
+Specify the *Dockerfile(5)* to use
+
+	$ dsh -f Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
+	Sending build context to Docker daemon 2.048 kB
+	Step 1 : FROM fedora:25
+	 ---> a1e614f0f30e
+	Step 2 : RUN dnf update -y && dnf install -y asciidoctor
+	 ---> Using cache
+	 ---> b231c3e816f9
+	Step 3 : RUN groupadd --non-unique --gid 1000 gportay
+	 ---> Using cache
+	 ---> fb6770a12de0
+	Step 4 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
+	 ---> Using cache
+	 ---> 44d9de323a55
+	Successfully built 44d9de323a55
+	NAME=Fedora
 
 == BUGS
 
