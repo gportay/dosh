@@ -54,6 +54,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--build**
 	Build image.
 
+**-N or --no-do**
+	Do nothing; echo docker commands.
+
 **-v or --verbose**
 	Turn on verbose mode.
 

@@ -40,13 +40,14 @@ Options:
             --root              Run as root.
             --home              Bind mount home directory.
             --build             Build image.
+      -N or --no-do             Do nothing; echo docker commands.
       -v or --verbose           Turn on verbose mode.
       -h or --help              Print usage.
 EOF
 }
 
 docker_build() {
-	cat "$1" - <<EOF | docker build $buildopts --tag "$2" -
+	cat "$1" - <<EOF | $do docker build $buildopts --tag "$2" -
 RUN groupadd --non-unique --gid $GROUPS $USER
 RUN useradd  --non-unique --gid $GROUPS --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER
 EOF
@@ -78,6 +79,8 @@ while [ "$#" -ne 0 ]; do
 		home=true
 	elif [ "$1" = "--build" ]; then
 		build=true
+	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
+		do=echo
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
 		buildopts=
 	elif [ "$1" = "-c" ]; then
@@ -147,4 +150,4 @@ else
 	set -- $SHELL -c "cd $dwd && $SHELL $*"
 fi
 
-exec docker run $runopts "$tag" "$@"
+exec $do docker run $runopts "$tag" "$@"
