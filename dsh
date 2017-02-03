@@ -39,6 +39,7 @@ Options:
       -q or --quiet             Suppress the build output and print image ID on
                                 success.
             --root              Run as root.
+            --build             Build image.
       -h or --help              Print usage.
 EOF
 }
@@ -55,6 +56,7 @@ opts=false
 optc=false
 file="Dockerfile"
 root=false
+build=false
 runopts="--rm --volume $PWD:/home/$USER"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
@@ -67,6 +69,8 @@ while [ "$#" -ne 0 ]; do
 		buildopts+=" --quiet"
 	elif [ "$1" = "--root" ]; then
 		root=true
+	elif [ "$1" = "--build" ]; then
+		build=true
 	elif [ "$1" = "-c" ]; then
 		shift
 		optc=true
@@ -86,9 +90,13 @@ while [ "$#" -ne 0 ]; do
 	shift
 done
 
+# Rebuild or automatically build image if it does not exist
 hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
 tag="dsh-$hash"
-docker_build "$file" "$tag" >&2
+imageid="$(docker images -q "$tag")"
+if $build || [ -z "$imageid" ]; then
+	docker_build "$file" "$tag" >&2
+fi
 
 # Set current user privileges
 if ! $root; then
