@@ -226,6 +226,34 @@ else
 fi
 echo
 
+test="Test option -C with relative path"
+echo -e "\e[1mRunning $test...\e[0m"
+if ( cd .. && dir="${OLDPWD##*/}" && \
+     dsh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
+then
+	ok=$((ok+1))
+	echo -e "\e[1m$test: \e[32m[OK]\e[0m"
+else
+	ko=$((ko+1))
+	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+fi
+echo
+
+test="Test option -C with absolute path"
+echo -e "\e[1mRunning $test...\e[0m"
+if ( cd /tmp && dir="$OLDPWD" && \
+     dsh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
+then
+	ok=$((ok+1))
+	echo -e "\e[1m$test: \e[32m[OK]\e[0m"
+else
+	ko=$((ko+1))
+	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+fi
+echo
+
 test="Test shebang"
 echo -e "\e[1mRunning $test...\e[0m"
 if ./shebang.dsh | tee /dev/stderr | \

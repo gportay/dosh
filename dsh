@@ -36,6 +36,7 @@ Options:
       -s                        Read commands from standard-input.
 
       -f or --file              Path to the Dockerfile to use.
+      -C or --directory DIR     Change to directory before doing anything else.
       -q or --quiet             Suppress the build output and print image ID on
                                 success.
             --root              Run as root.
@@ -55,9 +56,10 @@ opti=false
 opts=false
 optc=false
 file="Dockerfile"
+directory="."
 root=false
 build=false
-runopts="--rm --volume $PWD:/home/$USER"
+runopts="--rm"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 		usage
@@ -65,6 +67,9 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "-f" ] || [ "$1" = "--file" ]; then
 		shift
 		file="$1"
+	elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
+		shift
+		directory="$1"
 	elif [ "$1" = "-q" ] || [ "$1" = "--quiet" ]; then
 		buildopts+=" --quiet"
 	elif [ "$1" = "--root" ]; then
@@ -90,6 +95,9 @@ while [ "$#" -ne 0 ]; do
 	shift
 done
 
+# Change directory
+cd "$directory"
+
 # Rebuild or automatically build image if it does not exist
 hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
 tag="dsh-$hash"
@@ -102,6 +110,9 @@ fi
 if ! $root; then
 	runopts+=" --user $UID:$GROUPS"
 fi
+
+# Bind mount current working directory
+runopts+=" --volume $PWD:/home/$USER"
 
 # Set interactive
 if $opti || $opts || [ "$#" -eq 0 ]; then

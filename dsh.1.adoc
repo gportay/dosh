@@ -42,6 +42,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **-f or --file**
 	Path to the Dockerfile to use.
 
+**-C or --directory DIR**
+	Change to directory before doing anything else.
+
 **-q or --quiet**
 	Suppress the build output and print image ID on success.
 
@@ -147,6 +150,13 @@ Specify the *Dockerfile(5)* to use
 	 ---> 44d9de323a55
 	Successfully built 44d9de323a55
 	NAME=Fedora
+
+Change to another _directory_ before doing anything else
+
+	$ cd /tmp
+	$ dsh -C "$OLDPWD" -c "grep '^NAME=' /etc/os-release"
+	NAME="Ubuntu"
+	$ cd -
 
 Run shell as _root_ with _--root_ to perform privileged user operations into
 container
