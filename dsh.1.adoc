@@ -26,7 +26,7 @@ Under the hood, *dsh* builds its _docker image_ using the *Dockerfile(5)* from
 the _current working directory_ inside *docker-build(1)*.  *dsh* appends a
 *groupadd(8)* and a *useradd(8)* _RUN_ commands to it, to add the
 _$USER/$GROUPS_ to the container. Once the image is build, the _command_ is run
-into *su(1)* using user _$USER_ through *docker-run*.
+into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 == OPTIONS
 
@@ -44,6 +44,9 @@ into *su(1)* using user _$USER_ through *docker-run*.
 
 **-q or --quiet**
 	Suppress the build output and print image ID on success.
+
+**--root**
+	Run as root.
 
 **-h or --help**
 	Print usage.
@@ -162,6 +165,19 @@ Specify the *Dockerfile(5)* to use
 	Successfully built 44d9de323a55
 	NAME=Fedora
 
+Run shell as _root_ with _--root_ to perform privileged user operations into
+container
+
+	$ dsh --root
+	root@4c3fb2d195d8:/# whoami
+	root
+	root@4c3fb2d195d8:/# apt-get install -y asciidoctor
+	Reading package lists... Done
+	Building dependency tree
+	Reading state information... Done
+	asciidoctor is already the newest version (1.5.4-1).
+	0 upgraded, 0 newly installed, 0 to remove and 6 not upgraded.
+
 == BUGS
 
 Report bugs at *https://github.com/gazoo74/docker-scripts/issues*
@@ -179,4 +195,4 @@ the terms of the MIT License.
 
 == SEE ALSO
 
-docker-build(1), docker-run(1), su(1), groupadd(8), useradd(8)
+docker-build(1), docker-run(1), groupadd(8), useradd(8)

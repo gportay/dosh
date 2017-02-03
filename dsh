@@ -38,6 +38,7 @@ Options:
       -f or --file              Path to the Dockerfile to use.
       -q or --quiet             Suppress the build output and print image ID on
                                 success.
+            --root              Run as root.
       -h or --help              Print usage.
 EOF
 }
@@ -53,6 +54,7 @@ opti=false
 opts=false
 optc=false
 file="Dockerfile"
+root=false
 runopts="--rm --volume $PWD:/home/$USER"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
@@ -63,6 +65,8 @@ while [ "$#" -ne 0 ]; do
 		file="$1"
 	elif [ "$1" = "-q" ] || [ "$1" = "--quiet" ]; then
 		buildopts+=" --quiet"
+	elif [ "$1" = "--root" ]; then
+		root=true
 	elif [ "$1" = "-c" ]; then
 		shift
 		optc=true
@@ -86,6 +90,11 @@ hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
 tag="dsh-$hash"
 docker_build "$file" "$tag" >&2
 
+# Set current user privileges
+if ! $root; then
+	runopts+=" --user $UID:$GROUPS"
+fi
+
 # Set interactive
 if $opti || $opts || [ "$#" -eq 0 ]; then
 	runopts+=" --interactive"
@@ -99,13 +108,13 @@ fi
 # Read command from stdin
 # FIXME: pass "$@" insteand of $*
 if $opts; then
-	set -- su $USER -l -c "$SHELL -s $*"
+	set -- $SHELL -c "cd /home/$USER && $SHELL -s $*"
 # Run command from arguments
 elif $optc; then
-	set -- su $USER -l -c "$*"
+	set -- $SHELL -c "cd /home/$USER && $SHELL -c '$*'"
 # No command or invalid
 else
-	set -- su $USER -l "$@"
+	set -- $SHELL -c "cd /home/$USER && $SHELL $*"
 fi
 
 exec docker run $runopts "$tag" "$@"
