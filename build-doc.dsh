@@ -1,0 +1,12 @@
+#!/usr/bin/dsh
+#
+# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the MIT License.
+#
+
+set -e
+set -o pipefail
+
+asciidoctor -b manpage -o - dsh.1.adoc | gzip -c - >dsh.1.gz

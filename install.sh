@@ -12,3 +12,8 @@ PREFIX="${PREFIX:-/usr/local}"
 
 install -d "$DESTDIR$PREFIX/bin/"
 install -m 755 dsh "$DESTDIR$PREFIX/bin/"
+
+if [ -f dsh.1.gz ]; then
+	install -d "$DESTDIR$PREFIX/share/man/man/1/"
+	install -m 644 dsh.1.gz "$DESTDIR$PREFIX/share/man/man1/"
+fi
