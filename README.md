@@ -9,6 +9,20 @@
 [dsh](dsh) runs the _command_ process in a new container; using the current
 _user_, with _pwd_ bind mounted.
 
+## INSTALL
+
+Run the following command to install *dsh(1)*
+
+	$ sudo ./install.sh
+
+Traditional variables *DESTDIR* and *PREFIX* can be overridden
+
+	$ sudo PREFIX=/opt/dsh ./install.sh
+
+or
+
+	$ DESTDIR=$PWD/pkg PREFIX=/usr ./install.sh
+
 ## LINKS
 
 Check for the [man-page](dsh.1.adoc) and its [examples](dsh.1.adoc#examples)
