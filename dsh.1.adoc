@@ -51,6 +51,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--root**
 	Run as root.
 
+**--home**
+	Bind mount home directory.
+
 **--build**
 	Build image.
 
@@ -203,6 +206,19 @@ Rebuid image if *Dockerfile(5)* has changed
 	$ dsh
 	gportay@0406c4779648:~$ exit
 	logout
+
+Bind mount _$HOME_ directory
+
+	$ echo $PWD
+	/home/gportay/src/docker-scripts
+	$ echo $HOME
+	/home/gportay
+
+	$ dsh --home
+	gportay@098ac1e92f20 ~/src/docker-scripts $ echo $PWD
+	/home/gportay/src/docker-scripts
+	gportay@098ac1e92f20 ~/src/docker-scripts $ echo $HOME
+	/home/gportay
 
 == BUGS
 

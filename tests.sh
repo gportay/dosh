@@ -254,6 +254,19 @@ else
 fi
 echo
 
+test="Test option --home"
+echo -e "\e[1mRunning $test...\e[0m"
+if          echo 'pwd; cd ; pwd' |             dsh "$@"  --home -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd ; pwd' | fakeroot -- $SHELL           -s | tee /dev/stderr )
+then
+	ok=$((ok+1))
+	echo -e "\e[1m$test: \e[32m[OK]\e[0m"
+else
+	ko=$((ko+1))
+	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+fi
+echo
+
 test="Test shebang"
 echo -e "\e[1mRunning $test...\e[0m"
 if ./shebang.dsh | tee /dev/stderr | \

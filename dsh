@@ -40,6 +40,7 @@ Options:
       -q or --quiet             Suppress the build output and print image ID on
                                 success.
             --root              Run as root.
+            --home              Bind mount home directory.
             --build             Build image.
       -h or --help              Print usage.
 EOF
@@ -58,6 +59,7 @@ optc=false
 file="Dockerfile"
 directory="."
 root=false
+home=false
 build=false
 runopts="--rm"
 while [ "$#" -ne 0 ]; do
@@ -74,6 +76,8 @@ while [ "$#" -ne 0 ]; do
 		buildopts+=" --quiet"
 	elif [ "$1" = "--root" ]; then
 		root=true
+	elif [ "$1" = "--home" ]; then
+		home=true
 	elif [ "$1" = "--build" ]; then
 		build=true
 	elif [ "$1" = "-c" ]; then
@@ -111,8 +115,15 @@ if ! $root; then
 	runopts+=" --user $UID:$GROUPS"
 fi
 
+# Bind mount home
+if $home; then
+	dwd="$PWD"
+	runopts+=" --volume $HOME:/home/$USER"
 # Bind mount current working directory
-runopts+=" --volume $PWD:/home/$USER"
+else
+	dwd="/home/$USER"
+	runopts+=" --volume $PWD:/home/$USER"
+fi
 
 # Set interactive
 if $opti || $opts || [ "$#" -eq 0 ]; then
@@ -127,13 +138,13 @@ fi
 # Read command from stdin
 # FIXME: pass "$@" insteand of $*
 if $opts; then
-	set -- $SHELL -c "cd /home/$USER && $SHELL -s $*"
+	set -- $SHELL -c "cd $dwd && $SHELL -s $*"
 # Run command from arguments
 elif $optc; then
-	set -- $SHELL -c "cd /home/$USER && $SHELL -c '$*'"
+	set -- $SHELL -c "cd $dwd && $SHELL -c '$*'"
 # No command or invalid
 else
-	set -- $SHELL -c "cd /home/$USER && $SHELL $*"
+	set -- $SHELL -c "cd $dwd && $SHELL $*"
 fi
 
 exec docker run $runopts "$tag" "$@"
