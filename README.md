@@ -14,19 +14,7 @@ _user_, with _pwd_ bind mounted.
 Build documentation using _build-doc.dsh_ *dsh(1)* script
 
 	$ ./build-doc.dsh
-	Sending build context to Docker daemon 2.048 kB
-	Step 1 : FROM ubuntu:16.04
-	 ---> f49eec89601e
-	Step 2 : RUN apt-get update && apt-get install -y asciidoctor
-	 ---> Using cache
-	 ---> a21052a106d9
-	Step 3 : RUN groupadd --non-unique --gid 1000 gportay
-	 ---> Using cache
-	 ---> 9d5ca9684940
-	Step 4 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
-	 ---> Using cache
-	 ---> ced062433e33
-	Successfully built ced062433e33
+	sha256:ced062433e33
 
 ## INSTALL
 
@@ -57,19 +45,7 @@ Also, here is an extra example that build the documentation
 	RUN apt-get update && apt-get install -y asciidoctor
 
 	$ dsh -c asciidoctor -b manpage -o - dsh.1.adoc | gzip -c - >dsh.1.gz
-	Sending build context to Docker daemon 2.048 kB
-	Step 1 : FROM ubuntu
-	 ---> f49eec89601e
-	Step 2 : RUN apt-get update && apt-get install -y asciidoctor
-	 ---> Using cache
-	 ---> a21052a106d9
-	Step 3 : RUN groupadd --non-unique --gid 1000 gportay
-	 ---> Using cache
-	 ---> 9d5ca9684940
-	Step 4 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
-	 ---> Using cache
-	 ---> ced062433e33
-	Successfully built ced062433e33
+	sha256:ced062433e33
 
 	$ man ./dsh.1.gz
 

@@ -45,9 +45,6 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **-C or --directory DIR**
 	Change to directory before doing anything else.
 
-**-q or --quiet**
-	Suppress the build output and print image ID on success.
-
 **--root**
 	Run as root.
 
@@ -56,6 +53,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--build**
 	Build image.
+
+**-v or --verbose**
+	Turn on verbose mode.
 
 **-h or --help**
 	Print usage.
@@ -69,16 +69,7 @@ Run an _interactive shell_ in the latest _Ubuntu_ container
 	FROM ubuntu
 
 	$ dsh
-	Sending build context to Docker daemon 2.048 kB
-	Step 1 : FROM ubuntu
-	 ---> f49eec89601e
-	Step 2 : RUN groupadd --non-unique --gid 1000 gportay
-	 ---> Using cache
-	 ---> 572ea4688a13
-	Step 3 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
-	 ---> Using cache
-	 ---> 777c682a9816
-	Successfully built 777c682a9816
+	sha256:777c682a9816
 	gportay@4c3fb2d195d8:~$ 
 
 Check for the _distribution_
@@ -139,19 +130,7 @@ Read the contents outside the container
 Specify the *Dockerfile(5)* to use
 
 	$ dsh -f Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
-	Sending build context to Docker daemon 2.048 kB
-	Step 1 : FROM fedora:25
-	 ---> a1e614f0f30e
-	Step 2 : RUN dnf update -y && dnf install -y asciidoctor
-	 ---> Using cache
-	 ---> b231c3e816f9
-	Step 3 : RUN groupadd --non-unique --gid 1000 gportay
-	 ---> Using cache
-	 ---> fb6770a12de0
-	Step 4 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
-	 ---> Using cache
-	 ---> 44d9de323a55
-	Successfully built 44d9de323a55
+	sha256:44d9de323a55
 	NAME=Fedora
 
 Change to another _directory_ before doing anything else
@@ -181,23 +160,7 @@ Rebuid image if *Dockerfile(5)* has changed
 	FROM ubuntu
 	RUN apt-get update && apt-get install -y asciidoctor
 	$ dsh --build
-	Sending build context to Docker daemon 2.048 kB
-	Step 1 : FROM ubuntu
-	 ---> f49eec89601e
-	Step 2 : RUN apt-get update && apt-get install -y asciidoctor
-	 ---> Running in a36a6c7a678a
-	...
-	 ---> a21052a106d9
-	Removing intermediate container a36a6c7a678a
-	Step 3 : RUN groupadd --non-unique --gid 1000 gportay
-	 ---> Running in 985d352e2949
-	 ---> 572ea4688a13
-	Removing intermediate container 985d352e2949
-	Step 4 : RUN useradd  --non-unique --gid 1000 --uid 1000 --create-home --home-dir /home/gportay --shell /bin/bash gportay
-	 ---> Running in 1941ad4a92c0
-	 ---> 777c682a9816
-	Removing intermediate container 1941ad4a92c0
-	Successfully built 777c682a9816
+	sha256:777c682a9816
 	gportay@31dd533203ea:~$ which asciidoctor
 	/usr/bin/asciidoctor
 	gportay@31dd533203ea:~$ exit

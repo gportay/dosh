@@ -37,11 +37,10 @@ Options:
 
       -f or --file              Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
-      -q or --quiet             Suppress the build output and print image ID on
-                                success.
             --root              Run as root.
             --home              Bind mount home directory.
             --build             Build image.
+      -v or --verbose           Turn on verbose mode.
       -h or --help              Print usage.
 EOF
 }
@@ -61,6 +60,7 @@ directory="."
 root=false
 home=false
 build=false
+buildopts="--quiet"
 runopts="--rm"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
@@ -72,14 +72,14 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
 		shift
 		directory="$1"
-	elif [ "$1" = "-q" ] || [ "$1" = "--quiet" ]; then
-		buildopts+=" --quiet"
 	elif [ "$1" = "--root" ]; then
 		root=true
 	elif [ "$1" = "--home" ]; then
 		home=true
 	elif [ "$1" = "--build" ]; then
 		build=true
+	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
+		buildopts=
 	elif [ "$1" = "-c" ]; then
 		shift
 		optc=true
