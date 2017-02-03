@@ -6,6 +6,15 @@
 # the terms of the MIT License.
 #
 
+# Called as program loader (shebang #!/usr/bin/dsh)
+__="$_"
+if [ "$__" == "$1" ]; then
+	exec <"$1"
+	shift
+	set -- -s "$@"
+	exec $0 "$@"
+fi
+
 set -e
 
 usage() {
