@@ -13,6 +13,13 @@ if [ "$__" == "$1" ]; then
 	shift
 	set -- -s "$@"
 	exec $0 "$@"
+elif [ "$__" == "$2" ]; then
+	opts="$1"
+	shift
+	exec <"$1"
+	shift
+	set -- $opts -s "$@"
+	exec $0 "$@"
 fi
 
 set -e
