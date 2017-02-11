@@ -78,7 +78,7 @@ echo
 test="Test option -s one two three"
 echo -e "\e[1mRunning $test...\e[0m"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@"  -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s "one" "two" "three" )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok=$((ok+1))
 	echo -e "\e[1m$test: \e[32m[OK]\e[0m"
