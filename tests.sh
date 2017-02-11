@@ -293,6 +293,8 @@ else
 fi
 echo
 
+echo -e "\e[1m\e[32m$ok test(s) succeed!\e[0m"
+
 if [ -n "$fix" ]; then
 	echo -e "\e[1m\e[33m$fix test(s) fixed!\e[0m" >&2
 fi
@@ -305,5 +307,3 @@ if [ -n "$ko" ]; then
 	echo -e "\e[1mError: \e[31m$ko test(s) failed!\e[0m" >&2
 	exit 1
 fi
-
-echo -e "\e[1m\e[32m$ok test(s) succeed!\e[0m"
