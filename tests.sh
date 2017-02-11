@@ -36,7 +36,7 @@ else
 fi
 echo
 
-test="Test option -c without arguments"
+test="Test option -c with empty argument"
 echo -e "\e[1mRunning $test...\e[0m"
 if          dsh "$@"  -c '' | tee /dev/stderr | \
    diff - <($SHELL    -c '' | tee /dev/stderr )
