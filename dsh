@@ -40,6 +40,7 @@ Options:
             --root              Run as root.
             --home              Bind mount home directory.
             --build             Build image.
+            --detach            Detach container.
       -N or --no-do             Do nothing; echo docker commands.
       -v or --verbose           Turn on verbose mode.
       -h or --help              Print usage.
@@ -61,8 +62,8 @@ directory="."
 root=false
 home=false
 build=false
+detach=false
 buildopts="--quiet"
-runopts="--rm"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 		usage
@@ -79,6 +80,8 @@ while [ "$#" -ne 0 ]; do
 		home=true
 	elif [ "$1" = "--build" ]; then
 		build=true
+	elif [ "$1" = "--detach" ]; then
+		detach=true
 	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
 		do=echo
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
@@ -111,6 +114,14 @@ tag="dsh-$hash"
 imageid="$(docker images -q "$tag")"
 if $build || [ -z "$imageid" ]; then
 	docker_build "$file" "$tag" >&2
+fi
+
+# Detach container
+if $detach; then
+	runopts="--detach"
+# Remove the container at exit
+else
+	runopts="--rm"
 fi
 
 # Set current user privileges

@@ -268,3 +268,14 @@ else
 	ko
 fi
 echo
+
+run "Test --detach"
+if container="$(dsh --detach)" && \
+            docker rm -f "$container" | tee /dev/stderr | \
+   diff - <(echo "$container"        | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo

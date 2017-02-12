@@ -54,6 +54,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--build**
 	Build image.
 
+**--detach**
+	Detach container.
+
 **-N or --no-do**
 	Do nothing; echo docker commands.
 
@@ -185,6 +188,34 @@ Bind mount _$HOME_ directory
 	/home/gportay/src/docker-scripts
 	gportay@098ac1e92f20 ~/src/docker-scripts $ echo $HOME
 	/home/gportay
+
+Detach container
+
+	$ dsh --detach
+	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+
+	$ docker ps -a
+CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+6b0e5f883ca5        dsh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2   "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
+
+Attach to it using *docker-attach(1)*
+
+	$ docker attach 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+	gportay@6b0e5f883ca5:~$ exit
+	exit
+
+Stop it using *docker-stop(1)*
+
+	$ docker stop 6b0e5f883ca5
+	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+
+And do not forget to remove it using *docker-rm(1)*
+
+	$ docker rm 6b0e5f883ca5
+	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+
+	$ docker ps -a
+CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 
 == BUGS
 
