@@ -269,8 +269,10 @@ else
 fi
 echo
 
-run "Test --detach"
+run "Test --detach/--exec ID"
 if container="$(dsh --detach)" && \
+          dsh "$@" --exec "$container"  -c "hostname" | tee /dev/stderr | \
+   diff - <(echo "${container:0:12}"                  | tee /dev/stderr ) && \
             docker rm -f "$container" | tee /dev/stderr | \
    diff - <(echo "$container"        | tee /dev/stderr )
 then

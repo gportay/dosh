@@ -8,7 +8,7 @@
 
 == NAME
 
-dsh - run a user shell in a new container with pwd bind mounted
+dsh - run a user shell in a container with pwd bind mounted
 
 == SYNOPSIS
 
@@ -56,6 +56,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--detach**
 	Detach container.
+
+**--exec CONTAINER**
+	Execute in container.
 
 **-N or --no-do**
 	Do nothing; echo docker commands.
@@ -197,6 +200,11 @@ Detach container
 	$ docker ps -a
 CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 6b0e5f883ca5        dsh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2   "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
+
+Execute commands in it with _--exec_
+
+	dsh --exec 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125 -c 'hostname'
+	6b0e5f883ca5
 
 Attach to it using *docker-attach(1)*
 

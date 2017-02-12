@@ -28,7 +28,7 @@ usage() {
 	cat <<EOF
 Usage: ${0##*/} [OPTIONS] [COMMAND] [ARG...]
 
-Run a shell as user in a new container and bind mount cwd.
+Run a shell as user in a container and bind mount cwd.
 
 Options:
       -c                        Read commands from command-line.
@@ -41,6 +41,7 @@ Options:
             --home              Bind mount home directory.
             --build             Build image.
             --detach            Detach container.
+            --exec CONTAINER    Execute in container.
       -N or --no-do             Do nothing; echo docker commands.
       -v or --verbose           Turn on verbose mode.
       -h or --help              Print usage.
@@ -60,9 +61,11 @@ optc=false
 file="Dockerfile"
 directory="."
 root=false
+dwd="/home/$USER"
 home=false
 build=false
 detach=false
+exec=false
 buildopts="--quiet"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
@@ -77,11 +80,16 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "--root" ]; then
 		root=true
 	elif [ "$1" = "--home" ]; then
+		dwd="$PWD"
 		home=true
 	elif [ "$1" = "--build" ]; then
 		build=true
 	elif [ "$1" = "--detach" ]; then
 		detach=true
+	elif [ "$1" = "--exec" ]; then
+		shift
+		container="$1"
+		exec=true
 	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
 		do=echo
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
@@ -108,35 +116,38 @@ done
 # Change directory
 cd "$directory"
 
-# Rebuild or automatically build image if it does not exist
-hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
-tag="dsh-$hash"
-imageid="$(docker images -q "$tag")"
-if $build || [ -z "$imageid" ]; then
-	docker_build "$file" "$tag" >&2
-fi
+# Run in a new container
+if ! $exec; then
+	# Rebuild or automatically build image if it does not exist
+	hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
+	tag="dsh-$hash"
+	imageid="$(docker images -q "$tag")"
+	if $build || [ -z "$imageid" ]; then
+		docker_build "$file" "$tag" >&2
+	fi
 
-# Detach container
-if $detach; then
-	runopts="--detach"
-# Remove the container at exit
-else
-	runopts="--rm"
+	# Detach container
+	if $detach; then
+		runopts="--detach"
+	# Remove the container at exit
+	else
+		runopts="--rm"
+	fi
+
+	# Bind mount home
+	if $home; then
+		dwd="$PWD"
+		runopts+=" --volume $HOME:/home/$USER"
+	# Bind mount current working directory
+	else
+		dwd="/home/$USER"
+		runopts+=" --volume $PWD:/home/$USER"
+	fi
 fi
 
 # Set current user privileges
 if ! $root; then
 	runopts+=" --user $UID:$GROUPS"
-fi
-
-# Bind mount home
-if $home; then
-	dwd="$PWD"
-	runopts+=" --volume $HOME:/home/$USER"
-# Bind mount current working directory
-else
-	dwd="/home/$USER"
-	runopts+=" --volume $PWD:/home/$USER"
 fi
 
 # Set interactive
@@ -161,4 +172,10 @@ else
 	set -- $SHELL -c "cd $dwd && $SHELL $*"
 fi
 
-exec $do docker run $runopts "$tag" "$@"
+# Execute in existing container
+if $exec; then
+	exec $do docker exec $runopts "$container" "$@"
+# Run in a new container
+else
+	exec $do docker run $runopts "$tag" "$@"
+fi

@@ -2,12 +2,12 @@
 
 ## NAME
 
-[dsh](dsh.1.adoc) - run a user shell in a new container with pwd bind mounted
+[dsh](dsh.1.adoc) - run a user shell in a container with pwd bind mounted
 
 ## DESCRIPTION
 
-[dsh](dsh) runs the _command_ process in a new container; using the current
-_user_, with _pwd_ bind mounted.
+[dsh](dsh) runs the _command_ process in a container; using the current _user_,
+with _pwd_ bind mounted.
 
 ## DOCUMENTATION
 
