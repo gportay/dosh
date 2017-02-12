@@ -1,0 +1,57 @@
+= dmake(1)
+:doctype: manpage
+:author: Gaël PORTAY
+:email: gael.portay@savoirfairelinux.com
+:lang: en
+:man manual: docker-scripts Manual
+:man source: dsh 1.0
+
+== NAME
+
+dmake - maintain program dependencies running commands in container
+
+== SYNOPSIS
+
+*dmake* [OPTIONS] [TARGET...]
+
+== DESCRIPTION
+
+Runs on top of *make(1)* using *dsh(1)* as default _shell_.
+
+For a more thorough description of *make(1)*, please refers to its manual.
+
+== OPTIONS
+
+**-h or --help**
+	Print usage.
+
+== EXAMPLES
+
+Run a every shell _command_ in container
+
+	$ dmake
+	asciidoctor -b manpage -o dsh.1 dsh.1.adoc
+	gzip -c dsh.1 >dsh.1.gz
+	asciidoctor -b manpage -o dmake.1 dmake.1.adoc
+	gzip -c dmake.1 >dmake.1.gz
+	rm dsh.1 dmake.1
+	27ab66448896e60b0d68bb2b14b1771813b34f51ee77652594b4d119efcf0405
+
+== BUGS
+
+Report bugs at *https://github.com/gazoo74/docker-scripts/issues*
+
+== AUTHOR
+
+Written by Gaël PORTAY *gael.portay@savoirfairelinux.com*
+
+== COPYRIGHT
+
+Copyright (c) 2017 Gaël PORTAY
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the MIT License.
+
+== SEE ALSO
+
+make(1), dsh(1)

@@ -9,14 +9,14 @@
 PREFIX ?= /usr/local
 
 .PHONY: all
-all: dsh.1.gz
+all: dsh.1.gz dmake.1.gz
 
 .PHONY: install
 install:
 	install -d $(DESTDIR)$(PREFIX)/bin/
-	install -m 755 dsh $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 dsh dmake $(DESTDIR)$(PREFIX)/bin/
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
-	install -m 644 dsh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/
+	install -m 644 dsh.1.gz dmake.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/
 
 .PHONY: tests
 tests:
@@ -24,7 +24,7 @@ tests:
 
 .PHONY:
 clean:
-	rm -f dsh.1.gz
+	rm -f dsh.1.gz dmake.1.gz
 
 %.1: %.1.adoc
 	asciidoctor -b manpage -o $@ $<

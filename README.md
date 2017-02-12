@@ -1,13 +1,19 @@
-# dsh(1)
+# dsh(1), dmake(1)
 
 ## NAME
 
 [dsh](dsh.1.adoc) - run a user shell in a container with pwd bind mounted
 
+[dmake](dmake.1.adoc) - maintain program dependencies running commands in
+container
+
 ## DESCRIPTION
 
 [dsh](dsh) runs the _command_ process in a container; using the current _user_,
 with _pwd_ bind mounted.
+
+[dmake](dmake) runs on top of *make(1)* using [dsh(1)](dsh.1.adoc) as default
+_shell_.
 
 ## DOCUMENTATION
 
@@ -15,6 +21,17 @@ Build documentation using _build-doc.dsh_ *dsh(1)* script
 
 	$ ./build-doc.dsh
 	sha256:ced062433e33
+
+Or using *dmake(1)* and _Makefile_
+
+	$ dmake
+	sha256:ced062433e33
+	asciidoctor -b manpage -o dsh.1 dsh.1.adoc
+	gzip -c dsh.1 >dsh.1.gz
+	asciidoctor -b manpage -o dmake.1 dmake.1.adoc
+	gzip -c dmake.1 >dmake.1.gz
+	rm dsh.1 dmake.1
+	83727c98a60a9648b20d127c53526e785a051cef2235702071b8504bb1bdca59
 
 ## INSTALL
 
@@ -32,8 +49,8 @@ or
 
 ## LINKS
 
-Check for the [man-page](dsh.1.adoc) and its [examples](dsh.1.adoc#examples)
-section.
+Check for [dsh(1)](dsh.1.adoc) and [dmake(1)](dmake.1.adoc) man-page and theirs
+examples [dsh](dsh.1.adoc#examples) [dmake](dmake.1.adoc#examples) section.
 
 Also, here is an extra example that build the documentation
 

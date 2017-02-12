@@ -10,3 +10,4 @@ set -e
 set -o pipefail
 
 asciidoctor -b manpage -o - dsh.1.adoc | gzip -c - >dsh.1.gz
+asciidoctor -b manpage -o - dmake.1.adoc | gzip -c - >dmake.1.gz
