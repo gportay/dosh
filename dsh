@@ -55,9 +55,9 @@ RUN useradd  --non-unique --gid $GROUPS --uid $UID --create-home --home-dir /hom
 EOF
 }
 
-opti=false
-opts=false
-optc=false
+opt_i=false
+opt_s=false
+opt_c=false
 file="Dockerfile"
 directory="."
 root=false
@@ -96,13 +96,13 @@ while [ "$#" -ne 0 ]; do
 		buildopts=
 	elif [ "$1" = "-c" ]; then
 		shift
-		optc=true
+		opt_c=true
 		break
 	elif [ "$1" = "-i" ]; then
-		opti=true
+		opt_i=true
 	elif [ "$1" = "-s" ]; then
 		shift
-		opts=true
+		opt_s=true
 		break
 	elif [ "$1" = "--" ]; then
 		shift
@@ -151,7 +151,7 @@ if ! $root; then
 fi
 
 # Set interactive
-if $opti || $opts || [ "$#" -eq 0 ]; then
+if $opt_i || $opt_s || [ "$#" -eq 0 ]; then
 	runopts+=" --interactive"
 
 	# Allocate a pseudo-TTY if stdin/stderr are TTY
@@ -162,10 +162,10 @@ fi
 
 # Read command from stdin
 # FIXME: pass "$@" instead of $*
-if $opts; then
+if $opt_s; then
 	set -- $SHELL -c "cd $dwd && $SHELL -s $*"
 # Run command from arguments
-elif $optc; then
+elif $opt_c; then
 	set -- $SHELL -c "cd $dwd && $SHELL -c '$*'"
 # No command or invalid
 else
