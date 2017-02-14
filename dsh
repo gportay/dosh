@@ -128,35 +128,35 @@ if ! $exec; then
 
 	# Detach container
 	if $detach; then
-		runopts="--detach"
+		opts="--detach"
 	# Remove the container at exit
 	else
-		runopts="--rm"
+		opts="--rm"
 	fi
 
 	# Bind mount home
 	if $home; then
 		dwd="$PWD"
-		runopts+=" --volume $HOME:/home/$USER"
+		opts+=" --volume $HOME:/home/$USER"
 	# Bind mount current working directory
 	else
 		dwd="/home/$USER"
-		runopts+=" --volume $PWD:/home/$USER"
+		opts+=" --volume $PWD:/home/$USER"
 	fi
 fi
 
 # Set current user privileges
 if ! $root; then
-	runopts+=" --user $UID:$GROUPS"
+	opts+=" --user $UID:$GROUPS"
 fi
 
 # Set interactive
 if $opt_i || $opt_s || [ "$#" -eq 0 ]; then
-	runopts+=" --interactive"
+	opts+=" --interactive"
 
 	# Allocate a pseudo-TTY if stdin/stderr are TTY
 	if [ -t 0 ] && [ -t 2 ]; then
-		runopts+=" --tty"
+		opts+=" --tty"
 	fi
 fi
 
@@ -174,8 +174,8 @@ fi
 
 # Execute in existing container
 if $exec; then
-	exec $do docker exec $runopts "$container" "$@"
+	exec $do docker exec $opts "$container" "$@"
 # Run in a new container
 else
-	exec $do docker run $runopts "$tag" "$@"
+	exec $do docker run $opts "$tag" "$@"
 fi
