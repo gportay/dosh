@@ -8,8 +8,39 @@
 
 set -e
 
+usage() {
+	cat <<EOF
+Usage: ${0##*/} [OPTIONS] [TARGET...]
+
+Runs on top of make using dsh as default shell.
+
+For a more thorough description of make, please refers to its help.
+
+Options:
+      -C or --directory DIR     Change to directory before doing anything else.
+      -h or --help              Print usage.
+EOF
+}
+
+parse_arguments() {
+	dshopts="--verbose"
+	while [ "$#" -ne 0 ]; do
+		if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+			usage
+			exit 0
+		elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
+			dshopts+=" $1 $2"
+			shift
+		fi
+		shift
+	done
+}
+
+# Intercept -C option
+parse_arguments "$@"
+
 # Create a container and remove it on exit
-container="$(dsh --detach)"
+container="$(dsh $dshopts --detach)"
 trap 'docker rm -f $container' 0
 
 # Run make and set docker shell as default shell

@@ -292,3 +292,27 @@ else
 	ko
 fi
 echo
+
+run "dmake: Test option -C with relative path (Makefile from stdin)"
+if ( cd .. && dir="${OLDPWD##*/}" && \
+     echo -e "all:\n\t@cat /etc/os*release" | \
+     dmake "$@" -f - -C "$dir" | tee /dev/stderr | \
+     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dmake: Test option -C with absolute path (Makefile from stdin)"
+if ( cd /tmp && dir="$OLDPWD" && \
+     echo -e "all:\n\t@cat /etc/os*release" | \
+     dmake "$@" -f - -C "$dir" | tee /dev/stderr | \
+     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
+then
+	ok
+else
+	ko
+fi
+echo

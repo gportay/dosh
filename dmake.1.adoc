@@ -22,6 +22,9 @@ For a more thorough description of *make(1)*, please refers to its manual.
 
 == OPTIONS
 
+**-C or --directory DIR**
+	Change to directory dir before doing anything else.
+
 **-h or --help**
 	Print usage.
 
@@ -36,6 +39,16 @@ Run a every shell _command_ in container
 	gzip -c dmake.1 >dmake.1.gz
 	rm dsh.1 dmake.1
 	27ab66448896e60b0d68bb2b14b1771813b34f51ee77652594b4d119efcf0405
+
+Change to another _directory_ before doing anything else
+
+	$ cd /tmp
+	$ dmake -C "$OLDPWD"
+	make: Entering directory '/home/gportay/src/docker-scripts'
+	make: Nothing to be done for 'all'.
+	make: Leaving directory '/home/gportay/src/docker-scripts'
+	1395ea836747e96dae36208d74e5cb4e006395beb6bb777c403635bbb0577072
+	$ cd -
 
 == BUGS
 
