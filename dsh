@@ -14,11 +14,11 @@ if [ "$__" == "$1" ]; then
 	set -- -s "$@"
 	exec $0 "$@"
 elif [ "$__" == "$2" ]; then
-	opts="$1"
+	args="$1"
 	shift
 	exec <"$1"
 	shift
-	set -- $opts -s "$@"
+	set -- $args -s "$@"
 	exec $0 "$@"
 fi
 
