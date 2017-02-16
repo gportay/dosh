@@ -22,6 +22,10 @@ install:
 tests:
 	@./tests.sh
 
+.PHONY: check
+check: dsh dmake
+	shellcheck $^
+
 .PHONY:
 clean:
 	rm -f dsh.1.gz dmake.1.gz
