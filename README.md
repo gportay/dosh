@@ -1,4 +1,4 @@
-# dsh(1), dmake(1)
+# docker-scripts
 
 ## NAME
 
@@ -7,6 +7,8 @@
 [dmake](dmake.1.adoc) - maintain program dependencies running commands in
 container
 
+[docker-clean](docker-clean.1.adoc) - remove unused containers and images
+
 ## DESCRIPTION
 
 [dsh](dsh) runs the _command_ process in a container; using the current _user_,
@@ -14,6 +16,9 @@ with _pwd_ bind mounted.
 
 [dmake](dmake) runs on top of *make(1)* using [dsh(1)](dsh.1.adoc) as default
 _shell_.
+
+[docker-clean](docker-clean) removes exited containers and dangling images that
+take place for nothing.
 
 ## DOCUMENTATION
 
@@ -49,8 +54,10 @@ or
 
 ## LINKS
 
-Check for [dsh(1)](dsh.1.adoc) and [dmake(1)](dmake.1.adoc) man-page and theirs
-examples [dsh](dsh.1.adoc#examples) [dmake](dmake.1.adoc#examples) section.
+Check for man-pages ([dsh(1)](dsh.1.adoc), [dmake(1)](dmake.1.adoc) and
+[docker-clean(1)](docker-clean.1.adoc)) and theirs examples
+([dsh](dsh.1.adoc#examples), [dmake](dmake.1.adoc#examples) and
+[docker-clean](docker-clean.1.adoc#examples)).
 
 Also, here is an extra example that build the documentation
 
