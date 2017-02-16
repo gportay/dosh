@@ -39,7 +39,7 @@ result() {
 	fi
 
 	if [ -n "$fix" ]; then
-		echo -e "\e[1m\e[33m$fix test(s) fixed!\e[0m" >&2
+		echo -e "\e[1m\e[34m$fix test(s) fixed!\e[0m" >&2
 	fi
 
 	if [ -n "$bug" ]; then
