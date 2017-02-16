@@ -52,8 +52,10 @@ EOF
 docker_build() {
 	# shellcheck disable=SC2086
 	cat "$1" - <<EOF | $do docker build $buildopts --tag "$2" -
-RUN groupadd --non-unique --gid ${GROUPS[0]} $USER
-RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER
+RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
+ || addgroup -g ${GROUPS[0]} $USER
+RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER \
+ || adduser  -G $USER -u $UID -h /home/$USER -s $SHELL -D $USER
 EOF
 }
 

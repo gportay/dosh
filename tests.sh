@@ -300,6 +300,15 @@ else
 fi
 echo
 
+run "dsh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
+if SHELL=/bin/ash dsh -f Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dmake: Test default target with (Makefile from stdin)"
 if echo -e "all:\n\t@cat /etc/os*release" | \
    dmake "$@" -f - | tee /dev/stderr | \
