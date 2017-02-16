@@ -161,9 +161,8 @@ if $opt_i || $opt_s || [ "$#" -eq 0 ]; then
 fi
 
 # Read command from stdin
-# FIXME: pass "$@" instead of $*
 if $opt_s; then
-	set -- $SHELL -c "cd $dwd && $SHELL -s $*"
+	set -- $SHELL -c "cd $dwd && $SHELL -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
 	set -- $SHELL -c "cd $dwd && $SHELL -c '$*'"

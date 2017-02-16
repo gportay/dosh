@@ -119,11 +119,9 @@ run "dsh: Test option -s one\ +\ two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@"  -s one\ +\ two three | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s one\ +\ two three | tee /dev/stderr )
 then
-	# See FIXME in dsh
-	fix
+	ok
 else
-	# See FIXME in dsh
-	bug
+	ko
 fi
 echo
 
@@ -131,11 +129,9 @@ run "dsh: Test option -s \"one + two\" three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@"  -s "one + two" "three" | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s "one + two" "three" | tee /dev/stderr )
 then
-	# See FIXME in dsh
-	fix
+	ok
 else
-	# See FIXME in dsh
-	bug
+	ko
 fi
 echo
 
@@ -203,11 +199,9 @@ run "dsh: Test option --root and -s one\ +\ two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' |             dsh "$@"  --root -s one\ +\ two three | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL           -s one\ +\ two three | tee /dev/stderr )
 then
-	# See FIXME in dsh
-	fix
+	ok
 else
-	# See FIXME in dsh
-	bug
+	ko
 fi
 echo
 
@@ -215,11 +209,9 @@ run "dsh: Test option --root and -s \"one + two\" three"
 if          echo 'whoami; echo "$0" "$#" "$@"' |             dsh "$@"  --root -s "one + two" "three" | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL           -s "one + two" "three" | tee /dev/stderr )
 then
-	# See FIXME in dsh
-	fix
+	ok
 else
-	# See FIXME in dsh
-	bug
+	ko
 fi
 echo
 
