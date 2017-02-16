@@ -18,6 +18,8 @@ Options:
       -E or --no-exited         Do not remove exited containers.
       -D or --no-dangling       Do not remove dangling images.
       -c or --created           Remove created containers.
+            --all               Remove all containers.
+                                ie. exited, dangling, and created.
       -h or --help              Print usage.
 EOF
 }
@@ -35,6 +37,10 @@ parse_arguments() {
 		elif [ "$1" = "-D" ] || [ "$1" = "--no-dangling" ]; then
 			dangling=false
 		elif [ "$1" = "-c" ] || [ "$1" = "--created" ]; then
+			created=true
+		elif [ "$1" = "--all" ]; then
+			exited=true
+			dangling=true
 			created=true
 		fi
 		shift

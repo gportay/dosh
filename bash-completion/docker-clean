@@ -11,7 +11,7 @@ _docker_clean()
 	_init_completion || return
 
 	local short_opts="-E -D -c -h"
-	local long_opts="--no-exited --no-dangling --created --help"
+	local long_opts="--no-exited --no-dangling --created --all --help"
 	COMPREPLY=( $( compgen -W "$short_opts $long_opts" -- "$cur" ) )
 } &&
 complete -F _docker_clean docker-clean
