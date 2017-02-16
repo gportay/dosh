@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
@@ -8,18 +8,19 @@
 
 # Called as program loader (shebang #!/usr/bin/dsh)
 __="$_"
-if [ "$__" == "$1" ]; then
+if [ "$__" = "$1" ]; then
 	exec <"$1"
 	shift
 	set -- -s "$@"
-	exec $0 "$@"
-elif [ "$__" == "$2" ]; then
+	exec "$0" "$@"
+elif [ "$__" = "$2" ]; then
 	args="$1"
 	shift
 	exec <"$1"
 	shift
+	# shellcheck disable=SC2086
 	set -- $args -s "$@"
-	exec $0 "$@"
+	exec "$0" "$@"
 fi
 
 set -e
@@ -49,9 +50,10 @@ EOF
 }
 
 docker_build() {
+	# shellcheck disable=SC2086
 	cat "$1" - <<EOF | $do docker build $buildopts --tag "$2" -
-RUN groupadd --non-unique --gid $GROUPS $USER
-RUN useradd  --non-unique --gid $GROUPS --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER
+RUN groupadd --non-unique --gid ${GROUPS[0]} $USER
+RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER
 EOF
 }
 
@@ -147,7 +149,7 @@ fi
 
 # Set current user privileges
 if ! $root; then
-	opts+=" --user $UID:$GROUPS"
+	opts+=" --user $UID:${GROUPS[0]}"
 fi
 
 # Set interactive
@@ -162,16 +164,17 @@ fi
 
 # Read command from stdin
 if $opt_s; then
-	set -- $SHELL -c "cd $dwd && $SHELL -s $(eval echo "${@// /\\\\ }")"
+	set -- "$SHELL" -c "cd $dwd && $SHELL -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
-	set -- $SHELL -c "cd $dwd && $SHELL -c '$*'"
+	set -- "$SHELL" -c "cd $dwd && $SHELL -c '$*'"
 # No command or invalid
 else
-	set -- $SHELL -c "cd $dwd && $SHELL $*"
+	set -- "$SHELL" -c "cd $dwd && $SHELL $*"
 fi
 
 # Execute in existing container
+# shellcheck disable=SC2086
 if $exec; then
 	exec $do docker exec $opts "$container" "$@"
 # Run in a new container
