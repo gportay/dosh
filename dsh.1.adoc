@@ -162,7 +162,7 @@ container
 	asciidoctor is already the newest version (1.5.4-1).
 	0 upgraded, 0 newly installed, 0 to remove and 6 not upgraded.
 
-Rebuid image if *Dockerfile(5)* has changed
+Rebuild image if *Dockerfile(5)* has changed
 
 	$ echo RUN apt-get update && apt-get install -y asciidoctor >>Dockerfile
 	$ cat Dockerfile
