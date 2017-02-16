@@ -9,16 +9,17 @@
 PREFIX ?= /usr/local
 
 .PHONY: all
-all: dsh.1.gz dmake.1.gz docker-clean.1.gz
+all: dsh.1.gz dmake.1.gz docker-clean.1.gz docker-archive.1.gz
 	@eval $$(cat /etc/os*release); echo $$NAME
 
 .PHONY: install
 install:
 	install -d $(DESTDIR)$(PREFIX)/bin/
 	install -m 755 dsh dmake $(DESTDIR)$(PREFIX)/bin/
-	install -m 755 docker-clean $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 docker-clean docker-archive $(DESTDIR)$(PREFIX)/bin/
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
 	install -m 644 dsh.1.gz dmake.1.gz docker-clean.1.gz \
+	               docker-archive.1.gz \
 	           $(DESTDIR)$(PREFIX)/share/man/man1/
 	completionsdir=$$(pkg-config --variable=completionsdir bash-completion); \
 	if [ -n "$$completionsdir" ]; then \
@@ -26,6 +27,7 @@ install:
 		install -m 644 bash-completion/dsh \
 		               bash-completion/dmake \
 		               bash-completion/docker-clean \
+		               bash-completion/docker-archive \
 		               $(DESTDIR)$$completionsdir/; \
 	fi
 
@@ -34,12 +36,12 @@ tests:
 	@./tests.sh
 
 .PHONY: check
-check: dsh dmake docker-clean
+check: dsh dmake docker-clean docker-archive
 	shellcheck $^
 
 .PHONY:
 clean:
-	rm -f dsh.1.gz dmake.1.gz docker-clean.1.gz
+	rm -f dsh.1.gz dmake.1.gz docker-clean.1.gz docker-archive.1.gz
 
 %.1: %.1.adoc
 	asciidoctor -b manpage -o $@ $<

@@ -9,6 +9,8 @@ container
 
 [docker-clean](docker-clean.1.adoc) - remove unused containers and images
 
+[docker-archive](docker-archive.1.adoc) - show archive content
+
 ## DESCRIPTION
 
 [dsh](dsh) runs the _command_ process in a container; using the current _user_,
@@ -19,6 +21,9 @@ _shell_.
 
 [docker-clean](docker-clean) removes exited containers and dangling images that
 take place for nothing.
+
+[docker-archive](docker-archive) displays à la git-log the content of a docker
+archive.
 
 ## DOCUMENTATION
 
@@ -54,9 +59,10 @@ or
 
 ## LINKS
 
-Check for man-pages ([dsh(1)](dsh.1.adoc), [dmake(1)](dmake.1.adoc) and
-[docker-clean(1)](docker-clean.1.adoc)) and theirs examples
-([dsh](dsh.1.adoc#examples), [dmake](dmake.1.adoc#examples) and
+Check for man-pages ([dsh(1)](dsh.1.adoc), [dmake(1)](dmake.1.adoc),
+[docker-clean(1)](docker-clean.1.adoc), and
+[docker-archive(1)](docker-archive.1.adoc)) and theirs examples
+([dsh](dsh.1.adoc#examples), [dmake](dmake.1.adoc#examples),
 [docker-clean](docker-clean.1.adoc#examples)).
 
 Also, here is an extra example that build the documentation
