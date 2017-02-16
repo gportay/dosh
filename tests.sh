@@ -34,7 +34,9 @@ bug() {
 }
 
 result() {
-	echo -e "\e[1m\e[32m$ok test(s) succeed!\e[0m"
+	if [ -n "$ok" ]; then
+		echo -e "\e[1m\e[32m$ok test(s) succeed!\e[0m"
+	fi
 
 	if [ -n "$fix" ]; then
 		echo -e "\e[1m\e[33m$fix test(s) fixed!\e[0m" >&2
