@@ -267,6 +267,26 @@ else
 fi
 echo
 
+run "dsh: Test option --sh"
+if          echo 'echo $0' | dsh "$@"  --sh -s | tee /dev/stderr | \
+   diff - <(echo 'echo $0' | /bin/sh        -s | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dsh: Test default shell"
+if          echo 'echo $0' | dsh "$@"  -s | tee /dev/stderr | \
+   diff - <(echo 'echo $0' | $SHELL    -s | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dsh: Test shebang"
 if ./shebang.dsh | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'

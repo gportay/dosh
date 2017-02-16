@@ -51,6 +51,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--home**
 	Bind mount home directory.
 
+**--sh**
+	Set /bin/sh as default shell.
+	Equivalent to set SHELL=/bin/sh.
+
 **--build**
 	Build image.
 
@@ -191,6 +195,15 @@ Bind mount _$HOME_ directory
 	/home/gportay/src/docker-scripts
 	gportay@098ac1e92f20 ~/src/docker-scripts $ echo $HOME
 	/home/gportay
+
+Use _/bin/sh_ as default _$SHELL_
+
+	$ echo $0
+	bash
+
+	$ dsh --sh
+	$ echo $0
+	/bin/sh
 
 Detach container
 
