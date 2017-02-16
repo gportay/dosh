@@ -229,6 +229,33 @@ CONTAINER ID        IMAGE                                                       
 
 Report bugs at *https://github.com/gazoo74/docker-scripts/issues*
 
+== ISSUES
+
+=== MISMATCH ARGUMENTS NUMBER
+
+When *dsh(1)* is invoked with the _-s_ option, it does not handle properly
+arguments with _spaces_.
+
+Spaces in arguments are not preserved. They are interpreted, and thus, creates
+spurious arguments. The example below considers 5 arguments instead of 3: one
+argument per word!
+
+	$ cat <<EOF | dsh -s "first argument" second "and third"
+	echo $#
+	EOF
+
+Which is equivalent to
+
+	$ cat <<EOF | dsh -s first argument second and third
+	echo $#
+	EOF
+
+Or
+
+	$ cat <<EOF | dsh -s "first argument second and third"
+	echo $#
+	EOF
+
 == AUTHOR
 
 Written by Gaël PORTAY *gael.portay@savoirfairelinux.com*
