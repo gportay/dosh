@@ -9,7 +9,8 @@
 set -e
 
 run() {
-	test="$@"
+	id=$((id+1))
+	test="#$id: $@"
 	echo -e "\e[1mRunning $test...\e[0m"
 }
 
