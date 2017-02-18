@@ -86,8 +86,8 @@ fi
 echo
 
 run "dsh: Test option -c command arguments"
-if          dsh "$@"  -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr | \
-   diff - <($SHELL    -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr )
+if          dsh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
+   diff - <($SHELL    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then
 	ok
 else
