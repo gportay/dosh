@@ -340,6 +340,17 @@ else
 fi
 echo
 
+run "dmake: Test option -F with relative path (Makefile from stdin)"
+if ( echo -e "all:\n\t@cat /etc/os*release" | \
+     dmake "$@" -f - -F Dockerfile.fedora | tee /dev/stderr | \
+     grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)' )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dmake: Test option -C with relative path (Makefile from stdin)"
 if ( cd .. && dir="${OLDPWD##*/}" && \
      echo -e "all:\n\t@cat /etc/os*release" | \

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
@@ -17,26 +17,35 @@ Runs on top of make using dsh as default shell.
 For a more thorough description of make, please refers to its help.
 
 Options:
+      -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
       -h or --help              Print usage.
 EOF
 }
 
 parse_arguments() {
+	makeopts=()
 	dshopts="--verbose"
 	while [ "$#" -ne 0 ]; do
 		if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 			usage
 			exit 0
-		elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
+		elif [ "$1" = "-F" ] || [ "$1" = "--dockerfile" ]; then
 			dshopts+=" $1 $2"
 			shift
+		elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
+			dshopts+=" $1 $2"
+			makeopts[${#makeopts[*]}]="$1"
+			makeopts[${#makeopts[*]}]="$2"
+			shift
+		else
+			makeopts[${#makeopts[*]}]="$1"
 		fi
 		shift
 	done
 }
 
-# Intercept -C option
+# Intercept -C option, and strip -F option
 parse_arguments "$@"
 
 # Create a container and remove it on exit
@@ -45,4 +54,5 @@ container="$(dsh $dshopts --detach)"
 trap 'docker rm -f $container' 0
 
 # Run make and set docker shell as default shell
+set -- "${makeopts[@]}"
 make SHELL="dsh --exec $container" "$@"

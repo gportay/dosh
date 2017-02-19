@@ -10,6 +10,7 @@ PREFIX ?= /usr/local
 
 .PHONY: all
 all: dsh.1.gz dmake.1.gz docker-clean.1.gz
+	@eval $$(cat /etc/os*release); echo $$NAME
 
 .PHONY: install
 install:
