@@ -20,6 +20,14 @@ install:
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
 	install -m 644 dsh.1.gz dmake.1.gz docker-clean.1.gz \
 	           $(DESTDIR)$(PREFIX)/share/man/man1/
+	completionsdir=$$(pkg-config --variable=completionsdir bash-completion); \
+	if [ -n "$$completionsdir" ]; then \
+		install -d $(DESTDIR)$$completionsdir/; \
+		install -m 644 bash-completion/dsh \
+		               bash-completion/dmake \
+		               bash-completion/docker-clean \
+		               $(DESTDIR)$$completionsdir/; \
+	fi
 
 .PHONY: tests
 tests:

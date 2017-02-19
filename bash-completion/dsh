@@ -1,0 +1,88 @@
+#
+# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the MIT License.
+#
+
+#
+# Copyright (c) 2013-2017 Docker, Inc.
+#                    2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+#
+__docker_q() {
+	docker ${host:+-H "$host"} ${config:+--config "$config"} 2>/dev/null "$@"
+}
+
+__docker_complete_containers_all() {
+	local IFS=$'\n'
+	local containers=( $(__docker_q ps -aq --no-trunc) )
+	if [ "$1" ]; then
+		containers=( $(__docker_q inspect --format "{{if $1}}{{.Id}}{{end}}" "${containers[@]}") )
+	fi
+	local names=( $(__docker_q inspect --format '{{.Name}}' "${containers[@]}") )
+	names=( "${names[@]#/}" ) # trim off the leading "/" from the container names
+	unset IFS
+	COMPREPLY=( $(compgen -W "${names[*]} ${containers[*]}" -- "$cur") )
+}
+
+__docker_complete_containers_running() {
+    __docker_complete_containers_all '.State.Running'
+}
+
+#
+#   Copyright © 2006-2008, Ian Macdonald <ian@caliban.org>
+#             © 2009-2016, Bash Completion Maintainers
+#                    2017, Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2, or (at your option)
+#   any later version.
+#
+_dsh()
+{
+	local cur prev words cword
+	_init_completion || return
+
+	case $prev in
+	-c)
+		COMPREPLY=( $(compgen -c "$cur") )
+		return
+		;;
+	-F|--dockerfile)
+		_filedir
+		return
+		;;
+	-C|--directory)
+		_filedir -d
+		return
+		;;
+	--exec)
+		__docker_complete_containers_running
+		return
+		;;
+	esac
+
+	local short_opts="-c -s -i -F -C -N -v -h"
+	local long_opts="--dockerfile --directory --root --home --sh --build --detach --exec --no-do --verbose --help"
+	if [[ "$cur" == -* ]]; then
+		COMPREPLY=( $( compgen -W "$short_opts $long_opts" -- "$cur" ) )
+		return
+	fi
+
+        # before we check for arguments, see if a command was specified with -c
+        for (( i=0; i < ${#words[@]}; i++ )); do
+		if [[ ${words[i]} == -c ]]; then
+			# do not complete
+			return
+		fi
+        done
+
+	local args ext=
+	_count_args
+	[[ $args -eq 1 ]] && ext=dsh
+	_filedir $ext
+} &&
+complete -F _dsh dsh
