@@ -36,7 +36,7 @@ Options:
       -i                        Set interactive.
       -s                        Read commands from standard-input.
 
-      -f or --file              Path to the Dockerfile to use.
+      -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
             --root              Run as root.
             --home              Bind mount home directory.
@@ -77,7 +77,7 @@ while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 		usage
 		exit 0
-	elif [ "$1" = "-f" ] || [ "$1" = "--file" ]; then
+	elif [ "$1" = "-F" ] || [ "$1" = "--dockerfile" ]; then
 		shift
 		file="$1"
 	elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then

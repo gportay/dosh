@@ -39,7 +39,7 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **-s**
 	Read commands from standard-input.
 
-**-f or --file**
+**-F or --dockerfile FILE**
 	Path to the Dockerfile to use.
 
 **-C or --directory DIR**
@@ -142,7 +142,7 @@ Read the contents outside the container
 
 Specify the *Dockerfile(5)* to use
 
-	$ dsh -f Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
+	$ dsh -F Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
 	sha256:44d9de323a55
 	NAME=Fedora
 

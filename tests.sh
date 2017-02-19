@@ -225,8 +225,8 @@ else
 fi
 echo
 
-run "dsh: Test option -f"
-if dsh "$@" -f Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
+run "dsh: Test option -F"
+if dsh "$@" -F Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
 	grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -321,7 +321,7 @@ fi
 echo
 
 run "dsh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
-if SHELL=/bin/ash dsh -f Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
+if SHELL=/bin/ash dsh -F Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
 then
 	ok
 else
