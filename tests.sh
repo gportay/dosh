@@ -375,3 +375,40 @@ else
 	ko
 fi
 echo
+
+run "docker-clean: Test without option with an exited container"
+if cid="$(docker run --detach ubuntu:latest)" && sleep 3 && \
+   docker-clean | tee /dev/stderr | \
+   grep -q "${cid:0:12}"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "docker-clean: Test without option with a dangled image"
+if cid="$(cat <<EOF | docker build --quiet -
+FROM ubuntu:latest
+RUN uname
+EOF
+)" && sleep 3 && \
+   docker-clean | tee /dev/stderr | \
+   grep -q "Deleted: $cid"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "docker-clean: Test with option -c with a created image"
+if cid="$(docker create ubuntu:latest)" && sleep 3 && \
+   docker-clean -c | tee /dev/stderr | \
+   grep -q "${cid:0:12}"
+then
+	ok
+else
+	ko
+fi
+echo
