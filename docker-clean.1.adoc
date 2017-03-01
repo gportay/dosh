@@ -29,8 +29,11 @@ Remove exited containers and dangling images.
 **-c or --created**
 	Remove created containers.
 
+**--running**
+	Remove running containers.
+
 **--all**
-	Remove all containers.
+	Remove all containers except running.
 	ie. exited, dangling, and created.
 
 **-h or --help**
