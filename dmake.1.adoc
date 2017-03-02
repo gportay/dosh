@@ -28,6 +28,9 @@ For a more thorough description of *make(1)*, please refers to its manual.
 **-C or --directory DIR**
 	Change to directory dir before doing anything else.
 
+**--sh**
+	Set /bin/sh as default shell.
+
 **-h or --help**
 	Print usage.
 

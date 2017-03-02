@@ -376,6 +376,50 @@ else
 fi
 echo
 
+run "dmake: Test option --sh with a busybox based distro (/bin/ash)"
+if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
+     SHELL=/bin/zsh dmake "$@" -f - -F Dockerfile.alpine --sh | tee /dev/stderr | \
+     grep -q 'SHELL=/bin/sh' )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dmake: Test overriding existent \$SHELL with a busybox based distro (/bin/ash)"
+if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
+     SHELL=/bin/ash dmake "$@" -f - -F Dockerfile.alpine | tee /dev/stderr | \
+     grep -q 'SHELL=/bin/ash' )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dmake: Test overriding nonexistent \$SHELL and option --sh with a busybox based distro (/bin/ash)"
+if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
+     SHELL=/bin/zsh dmake "$@" -f - -F Dockerfile.alpine --sh | tee /dev/stderr | \
+     grep -q 'SHELL=/bin/sh' )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dmake: Test overriding existent \$SHELL in command line argument with a busybox based distro (/bin/ash)"
+if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
+     dmake "$@" -f - -F Dockerfile.alpine SHELL=/bin/sh | tee /dev/stderr | \
+     grep -q 'SHELL=/bin/sh' )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "docker-clean: Test without option with an exited container"
 if cid="$(docker run --detach ubuntu:latest)" && sleep 3 && \
    docker-clean | tee /dev/stderr | \

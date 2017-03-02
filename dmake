@@ -19,6 +19,7 @@ For a more thorough description of make, please refers to its help.
 Options:
       -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
+            --sh                Set /bin/sh as default shell.
       -h or --help              Print usage.
 EOF
 }
@@ -30,6 +31,11 @@ parse_arguments() {
 		if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 			usage
 			exit 0
+		elif [ "$1" = "--sh" ]; then
+			dshopts+=" $1"
+			shell_dshopts+=" $1"
+		elif [ "$1" = "SHELL=/bin/sh" ]; then
+			eval "$1"
 		elif [ "$1" = "-F" ] || [ "$1" = "--dockerfile" ]; then
 			dshopts+=" $1 $2"
 			shift
@@ -55,4 +61,4 @@ trap 'docker rm -f $container' 0
 
 # Run make and set docker shell as default shell
 set -- "${makeopts[@]}"
-make SHELL="dsh --exec $container" "$@"
+make SHELL="dsh $shell_dshopts --exec $container" "$@"
