@@ -24,14 +24,16 @@ install:
 	install -m 644 dsh.1.gz dmake.1.gz docker-clean.1.gz \
 	               docker-archive.1.gz \
 	           $(DESTDIR)$(PREFIX)/share/man/man1/
+
+.PHONY: install-bash-completion
+install-bash-completion:
 	completionsdir=$$(pkg-config --variable=completionsdir bash-completion); \
 	if [ -n "$$completionsdir" ]; then \
 		install -d $(DESTDIR)$$completionsdir/; \
-		install -m 644 bash-completion/dsh \
-		               bash-completion/dmake \
-		               bash-completion/docker-clean \
-		               bash-completion/docker-archive \
-		               $(DESTDIR)$$completionsdir/; \
+		for bash in dsh dmake docker-clean docker-archive; do \
+			install -m 644 bash-completion/$$bash \
+			        $(DESTDIR)$$completionsdir/; \
+		done; \
 	fi
 
 .PHONY: uninstall
