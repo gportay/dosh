@@ -34,6 +34,21 @@ install:
 		               $(DESTDIR)$$completionsdir/; \
 	fi
 
+.PHONY: uninstall
+uninstall:
+	for bin in dsh dmake docker-clean docker-archive; do \
+		rm -f $(DESTDIR)$(PREFIX)/bin/$$bin; \
+	done
+	for man in dsh.1.gz dmake.1.gz docker-clean.1.gz docker-archive.1.gz; do \
+		rm -f $(DESTDIR)$(PREFIX)/share/man/man1/$$man; \
+	done
+	completionsdir=$$(pkg-config --variable=completionsdir bash-completion); \
+	if [ -n "$$completionsdir" ]; then \
+		for bash in dsh dmake docker-clean docker-archive; do \
+			rm -f $(DESTDIR)$$completionsdir/$$bash; \
+		done; \
+	fi
+
 .PHONY: tests
 tests:
 	@./tests.sh
