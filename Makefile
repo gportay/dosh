@@ -42,7 +42,7 @@ tests:
 check: dsh dmake docker-clean docker-archive
 	shellcheck $^
 
-.PHONY:
+.PHONY: clean
 clean:
 	rm -f dsh.1.gz dmake.1.gz docker-clean.1.gz docker-archive.1.gz
 
