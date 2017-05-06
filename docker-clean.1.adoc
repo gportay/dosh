@@ -71,7 +71,7 @@ Create a dangling image
 	 ---> 3190681e7fc0
 	Successfully built 3190681e7fc0
 
-Image is danling
+Image is dangled
 
 	$ docker images --filter "dangling=true"
 	REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
