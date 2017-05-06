@@ -9,7 +9,7 @@
 PREFIX ?= /usr/local
 
 .PHONY: all
-all: doc
+all:
 	@eval $$(cat /etc/os*release); echo $$NAME
 
 .PHONY: doc
@@ -20,6 +20,9 @@ install:
 	install -d $(DESTDIR)$(PREFIX)/bin/
 	install -m 755 dsh dmake $(DESTDIR)$(PREFIX)/bin/
 	install -m 755 docker-clean docker-archive $(DESTDIR)$(PREFIX)/bin/
+
+.PHONY: install-doc
+install-doc:
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
 	install -m 644 dsh.1.gz dmake.1.gz docker-clean.1.gz \
 	               docker-archive.1.gz \
