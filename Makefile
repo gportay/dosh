@@ -9,8 +9,11 @@
 PREFIX ?= /usr/local
 
 .PHONY: all
-all: dsh.1.gz dmake.1.gz docker-clean.1.gz docker-archive.1.gz
+all: doc
 	@eval $$(cat /etc/os*release); echo $$NAME
+
+.PHONY: doc
+doc: dsh.1.gz dmake.1.gz docker-clean.1.gz docker-archive.1.gz
 
 .PHONY: install
 install:
