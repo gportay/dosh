@@ -87,7 +87,7 @@ install-aur-$(1):
 	pacman -U $(1).pkg.tar.xz
 endef
 
-aurs := $(shell ls -1d *.pkg.tar.xz | sed -e 's,.pkg.tar.xz$$,,')
+aurs := $(shell ls -1d *.pkg.tar.xz 2>/dev/null | sed -e 's,.pkg.tar.xz$$,,')
 $(foreach aur,$(aurs),$(eval $(call do_install_aur,$(aur))))
 
 %.1: %.1.adoc
