@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
