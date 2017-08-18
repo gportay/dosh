@@ -1,4 +1,4 @@
-#!/usr/bin/dsh
+#!/usr/bin/dosh -F Dockerfile.fedora
 #
 # Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #

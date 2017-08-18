@@ -56,9 +56,9 @@ result() {
 PATH="$PWD:$PATH"
 trap result 0
 
-run "dsh: Test without option with arguments"
-if          dsh "$@"  echo "one" "two" "three" | tee /dev/stderr | \
-   diff - <($SHELL    echo "one" "two" "three" | tee /dev/stderr )
+run "dosh: Test without option with arguments"
+if          dosh "$@"  echo "one" "two" "three" | tee /dev/stderr | \
+   diff - <($SHELL     echo "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -66,9 +66,9 @@ else
 fi
 echo
 
-run "dsh: Test option -c without arguments"
-if          dsh "$@"  -c | tee /dev/stderr | \
-   diff - <($SHELL    -c | tee /dev/stderr )
+run "dosh: Test option -c without arguments"
+if          dosh "$@"  -c | tee /dev/stderr | \
+   diff - <($SHELL     -c | tee /dev/stderr )
 then
 	ok
 else
@@ -76,9 +76,9 @@ else
 fi
 echo
 
-run "dsh: Test option -c with empty argument"
-if          dsh "$@"  -c '' | tee /dev/stderr | \
-   diff - <($SHELL    -c '' | tee /dev/stderr )
+run "dosh: Test option -c with empty argument"
+if          dosh "$@"  -c '' | tee /dev/stderr | \
+   diff - <($SHELL     -c '' | tee /dev/stderr )
 then
 	ok
 else
@@ -86,9 +86,9 @@ else
 fi
 echo
 
-run "dsh: Test option -c command arguments"
-if          dsh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
-   diff - <($SHELL    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
+run "dosh: Test option -c command arguments"
+if          dosh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
+   diff - <($SHELL     -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then
 	ok
 else
@@ -96,9 +96,9 @@ else
 fi
 echo
 
-run "dsh: Test option -s without arguments"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@" -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL   -s | tee /dev/stderr )
+run "dosh: Test option -s without arguments"
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@" -s | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s | tee /dev/stderr )
 then
 	ok
 else
@@ -106,9 +106,9 @@ else
 fi
 echo
 
-run "dsh: Test option -s one two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@"  -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s "one" "two" "three" | tee /dev/stderr )
+run "dosh: Test option -s one two three"
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one" "two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL     -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -116,9 +116,9 @@ else
 fi
 echo
 
-run "dsh: Test option -s one\ +\ two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@"  -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s one\ +\ two three | tee /dev/stderr )
+run "dosh: Test option -s one\ +\ two three"
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s one\ +\ two three | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL     -s one\ +\ two three | tee /dev/stderr )
 then
 	ok
 else
@@ -126,9 +126,9 @@ else
 fi
 echo
 
-run "dsh: Test option -s \"one + two\" three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dsh "$@"  -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s "one + two" "three" | tee /dev/stderr )
+run "dosh: Test option -s \"one + two\" three"
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one + two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL     -s "one + two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -136,9 +136,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root with arguments"
-if                      dsh "$@"  --root echo "one" "two" "three" | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL           echo "one" "two" "three" | tee /dev/stderr )
+run "dosh: Test option --root with arguments"
+if                      dosh "$@"  --root echo "one" "two" "three" | tee /dev/stderr | \
+   diff - <(fakeroot -- $SHELL            echo "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -146,9 +146,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -c without arguments"
-if                      dsh "$@"  --root -c | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL           -c | tee /dev/stderr )
+run "dosh: Test option --root and -c without arguments"
+if                      dosh "$@"  --root -c | tee /dev/stderr | \
+   diff - <(fakeroot -- $SHELL            -c | tee /dev/stderr )
 then
 	ok
 else
@@ -156,9 +156,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -c with empty arguments"
-if                      dsh "$@"  --root -c '' | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL           -c '' | tee /dev/stderr )
+run "dosh: Test option --root and -c with empty arguments"
+if                      dosh "$@"  --root -c '' | tee /dev/stderr | \
+   diff - <(fakeroot -- $SHELL            -c '' | tee /dev/stderr )
 then
 	ok
 else
@@ -166,9 +166,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -c command arguments"
-if                      dsh "$@"  --root -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL           -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr )
+run "dosh: Test option --root and -c command arguments"
+if                      dosh "$@"  --root -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr | \
+   diff - <(fakeroot -- $SHELL            -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr )
 then
 	ok
 else
@@ -176,9 +176,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -s without arguments"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dsh "$@"  --root -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL           -s | tee /dev/stderr )
+run "dosh: Test option --root and -s without arguments"
+if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s | tee /dev/stderr )
 then
 	ok
 else
@@ -186,9 +186,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -s one two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dsh "$@"  --root -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL           -s "one" "two" "three" | tee /dev/stderr )
+run "dosh: Test option --root and -s one two three"
+if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s "one" "two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -196,9 +196,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -s one\ +\ two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dsh "$@"  --root -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL           -s one\ +\ two three | tee /dev/stderr )
+run "dosh: Test option --root and -s one\ +\ two three"
+if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s one\ +\ two three | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s one\ +\ two three | tee /dev/stderr )
 then
 	ok
 else
@@ -206,9 +206,9 @@ else
 fi
 echo
 
-run "dsh: Test option --root and -s \"one + two\" three"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dsh "$@"  --root -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL           -s "one + two" "three" | tee /dev/stderr )
+run "dosh: Test option --root and -s \"one + two\" three"
+if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s "one + two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s "one + two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -216,8 +216,8 @@ else
 fi
 echo
 
-run "dsh: Test option -f"
-if dsh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
+run "dosh: Test option -f"
+if dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
 	ok
@@ -226,8 +226,8 @@ else
 fi
 echo
 
-run "dsh: Test option -F"
-if dsh "$@" -F Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
+run "dosh: Test option -F"
+if dosh "$@" -F Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
 	grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -236,9 +236,9 @@ else
 fi
 echo
 
-run "dsh: Test option -C with relative path"
+run "dosh: Test option -C with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
-     dsh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     dosh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
 then
 	ok
@@ -247,9 +247,9 @@ else
 fi
 echo
 
-run "dsh: Test option -C with absolute path"
+run "dosh: Test option -C with absolute path"
 if ( cd /tmp && dir="$OLDPWD" && \
-     dsh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     dosh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
 then
 	ok
@@ -258,9 +258,9 @@ else
 fi
 echo
 
-run "dsh: Test option --home"
-if          echo 'pwd; cd ; pwd' |             dsh "$@"  --home -s | tee /dev/stderr | \
-   diff - <(echo 'pwd; cd ; pwd' | fakeroot -- $SHELL           -s | tee /dev/stderr )
+run "dosh: Test option --home"
+if          echo 'pwd; cd ; pwd' |             dosh "$@"  --home -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd ; pwd' | fakeroot -- $SHELL            -s | tee /dev/stderr )
 then
 	ok
 else
@@ -268,9 +268,9 @@ else
 fi
 echo
 
-run "dsh: Test option --sh"
-if          echo 'echo $0' | dsh "$@"  --sh -s | tee /dev/stderr | \
-   diff - <(echo 'echo $0' | /bin/sh        -s | tee /dev/stderr )
+run "dosh: Test option --sh"
+if          echo 'echo $0' | dosh "$@"  --sh -s | tee /dev/stderr | \
+   diff - <(echo 'echo $0' | /bin/sh         -s | tee /dev/stderr )
 then
 	ok
 else
@@ -278,9 +278,9 @@ else
 fi
 echo
 
-run "dsh: Test default shell"
-if          echo 'echo $0' | dsh "$@"  -s | tee /dev/stderr | \
-   diff - <(echo 'echo $0' | $SHELL    -s | tee /dev/stderr )
+run "dosh: Test default shell"
+if          echo 'echo $0' | dosh "$@"  -s | tee /dev/stderr | \
+   diff - <(echo 'echo $0' | $SHELL     -s | tee /dev/stderr )
 then
 	ok
 else
@@ -288,8 +288,8 @@ else
 fi
 echo
 
-run "dsh: Test shebang"
-if ./shebang.dsh | tee /dev/stderr | \
+run "dosh: Test shebang"
+if ./shebang.dosh | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
 	ok
@@ -298,8 +298,8 @@ else
 fi
 echo
 
-run "dsh: Test shebang with arguments"
-if ./shebang-fedora.dsh | tee /dev/stderr | \
+run "dosh: Test shebang with arguments"
+if ./shebang-fedora.dosh | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -308,12 +308,12 @@ else
 fi
 echo
 
-run "dsh: Test --detach/--exec ID"
-if container="$(dsh --detach)" && \
-          dsh "$@" --exec "$container"  -c "hostname" | tee /dev/stderr | \
-   diff - <(echo "${container:0:12}"                  | tee /dev/stderr ) && \
+run "dosh: Test --detach/--exec ID"
+if container="$(dosh --detach)" && \
+          dosh "$@" --exec "$container"  -c "hostname" | tee /dev/stderr | \
+   diff - <(echo "${container:0:12}"                   | tee /dev/stderr ) && \
             docker rm -f "$container" | tee /dev/stderr | \
-   diff - <(echo "$container"        | tee /dev/stderr )
+   diff - <(echo "$container"         | tee /dev/stderr )
 then
 	ok
 else
@@ -321,8 +321,8 @@ else
 fi
 echo
 
-run "dsh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
-if SHELL=/bin/ash dsh -F Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
+run "dosh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
+if SHELL=/bin/ash dosh -F Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
 then
 	ok
 else
@@ -330,129 +330,3 @@ else
 fi
 echo
 
-run "dmake: Test default target with (Makefile from stdin)"
-if echo -e "all:\n\t@cat /etc/os*release" | \
-   dmake "$@" -f - | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test option -F with relative path (Makefile from stdin)"
-if ( echo -e "all:\n\t@cat /etc/os*release" | \
-     dmake "$@" -f - -F Dockerfile.fedora | tee /dev/stderr | \
-     grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test option -C with relative path (Makefile from stdin)"
-if ( cd .. && dir="${OLDPWD##*/}" && \
-     echo -e "all:\n\t@cat /etc/os*release" | \
-     dmake "$@" -f - -C "$dir" | tee /dev/stderr | \
-     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test option -C with absolute path (Makefile from stdin)"
-if ( cd /tmp && dir="$OLDPWD" && \
-     echo -e "all:\n\t@cat /etc/os*release" | \
-     dmake "$@" -f - -C "$dir" | tee /dev/stderr | \
-     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test option --sh with a busybox based distro (/bin/ash)"
-if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
-     SHELL=/bin/zsh dmake "$@" -f - -F Dockerfile.alpine --sh | tee /dev/stderr | \
-     grep -q 'SHELL=/bin/sh' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test overriding existent \$SHELL with a busybox based distro (/bin/ash)"
-if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
-     SHELL=/bin/ash dmake "$@" -f - -F Dockerfile.alpine | tee /dev/stderr | \
-     grep -q 'SHELL=/bin/ash' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test overriding nonexistent \$SHELL and option --sh with a busybox based distro (/bin/ash)"
-if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
-     SHELL=/bin/zsh dmake "$@" -f - -F Dockerfile.alpine --sh | tee /dev/stderr | \
-     grep -q 'SHELL=/bin/sh' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dmake: Test overriding existent \$SHELL in command line argument with a busybox based distro (/bin/ash)"
-if ( echo -e "all:\n\t@echo SHELL=\$\$0" | \
-     dmake "$@" -f - -F Dockerfile.alpine SHELL=/bin/sh | tee /dev/stderr | \
-     grep -q 'SHELL=/bin/sh' )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "docker-clean: Test without option with an exited container"
-if cid="$(docker run --detach ubuntu:latest)" && sleep 3 && \
-   docker-clean | tee /dev/stderr | \
-   grep -q "${cid:0:12}"
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "docker-clean: Test without option with a dangled image"
-if cid="$(cat <<EOF | docker build --quiet -
-FROM ubuntu:latest
-RUN uname
-EOF
-)" && sleep 3 && \
-   docker-clean | tee /dev/stderr | \
-   grep -q "Deleted: $cid"
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "docker-clean: Test with option -c with a created image"
-if cid="$(docker create ubuntu:latest)" && sleep 3 && \
-   docker-clean -c | tee /dev/stderr | \
-   grep -q "${cid:0:12}"
-then
-	ok
-else
-	ko
-fi
-echo

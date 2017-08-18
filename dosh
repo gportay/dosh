@@ -6,7 +6,7 @@
 # the terms of the MIT License.
 #
 
-# Called as program loader (shebang #!/usr/bin/dsh)
+# Called as program loader (shebang #!/usr/bin/dosh)
 __="$_"
 if [ "$__" = "$1" ]; then
 	exec <"$1"
@@ -128,7 +128,7 @@ cd "$directory"
 if ! $exec; then
 	# Rebuild or automatically build image if it does not exist
 	hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
-	tag="dsh-$hash"
+	tag="dosh-$hash"
 	imageid="$(docker images -q "$tag")"
 	if $build || [ -z "$imageid" ]; then
 		docker_build "$file" "$tag" >&2

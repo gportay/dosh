@@ -1,29 +1,29 @@
-= dsh(1)
+= dosh(1)
 :doctype: manpage
 :author: Gaël PORTAY
 :email: gael.portay@savoirfairelinux.com
 :lang: en
-:man manual: docker-scripts Manual
-:man source: dsh 1.0
+:man manual: Docker Shell Manual
+:man source: dosh 1.0
 
 == NAME
 
-dsh - run a user shell in a container with pwd bind mounted
+dosh - run a user shell in a container with pwd bind mounted
 
 == SYNOPSIS
 
-*dsh* [OPTIONS] [COMMAND] [ARG...]
+*dosh* [OPTIONS] [COMMAND] [ARG...]
 
 == DESCRIPTION
 
 Runs the _command_ process in a new container; using the current _user_, with
 _pwd_ bind mounted.
 
-When called without arguments, *dsh* defaults to running an interactive shell
+When called without arguments, *dosh* defaults to running an interactive shell
 as current _user_.
 
-Under the hood, *dsh* builds its _docker image_ using the *Dockerfile(5)* from
-the _current working directory_ inside *docker-build(1)*.  *dsh* appends a
+Under the hood, *dosh* builds its _docker image_ using the *Dockerfile(5)* from
+the _current working directory_ inside *docker-build(1)*.  *dosh* appends a
 *groupadd(8)* and a *useradd(8)* _RUN_ commands to it, to add the
 _$USER/$GROUPS_ to the container. Once the image is build, the _command_ is run
 into *$SHELL -c* using user _$USER_ through *docker-run*.
@@ -81,7 +81,7 @@ Run an _interactive shell_ in the latest _Ubuntu_ container
 	$ cat Dockerfile
 	FROM ubuntu
 
-	$ dsh
+	$ dosh
 	sha256:777c682a9816
 	gportay@4c3fb2d195d8:~$ 
 
@@ -116,7 +116,7 @@ Exit from container
 
 Run the _commands_ above in the same container as a _shell_ script
 
-	$ dsh "cat /etc/os-release && whoami"
+	$ dosh "cat /etc/os-release && whoami"
 	NAME="Ubuntu"
 	VERSION="16.04.1 LTS (Xenial Xerus)"
 	ID=ubuntu
@@ -133,7 +133,7 @@ Run the _commands_ above in the same container as a _shell_ script
 
 Check for _PWD_ bind mountage ; write the _distribution_ name to local file
 
-	$ dsh -c "grep '^NAME=' /etc/os-release >os-release"
+	$ dosh -c "grep '^NAME=' /etc/os-release >os-release"
 
 Read the contents outside the container
 
@@ -142,21 +142,21 @@ Read the contents outside the container
 
 Specify the *Dockerfile(5)* to use
 
-	$ dsh -F Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
+	$ dosh -F Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
 	sha256:44d9de323a55
 	NAME=Fedora
 
 Change to another _directory_ before doing anything else
 
 	$ cd /tmp
-	$ dsh -C "$OLDPWD" -c "grep '^NAME=' /etc/os-release"
+	$ dosh -C "$OLDPWD" -c "grep '^NAME=' /etc/os-release"
 	NAME="Ubuntu"
 	$ cd -
 
 Run shell as _root_ with _--root_ to perform privileged user operations into
 container
 
-	$ dsh --root
+	$ dosh --root
 	root@4c3fb2d195d8:/# whoami
 	root
 	root@4c3fb2d195d8:/# apt-get install -y asciidoctor
@@ -172,28 +172,28 @@ Rebuild image if *Dockerfile(5)* has changed
 	$ cat Dockerfile
 	FROM ubuntu
 	RUN apt-get update && apt-get install -y asciidoctor
-	$ dsh --build
+	$ dosh --build
 	sha256:777c682a9816
 	gportay@31dd533203ea:~$ which asciidoctor
 	/usr/bin/asciidoctor
 	gportay@31dd533203ea:~$ exit
 	logout
 
-	$ dsh
+	$ dosh
 	gportay@0406c4779648:~$ exit
 	logout
 
 Bind mount _$HOME_ directory
 
 	$ echo $PWD
-	/home/gportay/src/docker-scripts
+	/home/gportay/src/dosh
 	$ echo $HOME
 	/home/gportay
 
-	$ dsh --home
-	gportay@098ac1e92f20 ~/src/docker-scripts $ echo $PWD
-	/home/gportay/src/docker-scripts
-	gportay@098ac1e92f20 ~/src/docker-scripts $ echo $HOME
+	$ dosh --home
+	gportay@098ac1e92f20 ~/src/dosh $ echo $PWD
+	/home/gportay/src/dosh
+	gportay@098ac1e92f20 ~/src/dosh $ echo $HOME
 	/home/gportay
 
 Use _/bin/sh_ as default _$SHELL_
@@ -201,22 +201,22 @@ Use _/bin/sh_ as default _$SHELL_
 	$ echo $0
 	bash
 
-	$ dsh --sh
+	$ dosh --sh
 	$ echo $0
 	/bin/sh
 
 Detach container
 
-	$ dsh --detach
+	$ dosh --detach
 	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
 
 	$ docker ps -a
 CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
-6b0e5f883ca5        dsh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2   "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
+6b0e5f883ca5        dosh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2   "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
 
 Execute commands in it with _--exec_
 
-	dsh --exec 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125 -c 'hostname'
+	dosh --exec 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125 -c 'hostname'
 	6b0e5f883ca5
 
 Attach to it using *docker-attach(1)*
@@ -240,7 +240,7 @@ CONTAINER ID        IMAGE                                                       
 
 == BUGS
 
-Report bugs at *https://github.com/gazoo74/docker-scripts/issues*
+Report bugs at *https://github.com/gazoo74/dosh/issues*
 
 == AUTHOR
 
