@@ -9,7 +9,7 @@ license=('MIT')
 source=('https://github.com/gazoo74/dosh/archive/master.tar.gz')
 arch=('any')
 depends=('docker')
-builddepends=('asciidoctor')
+makedepends=('asciidoctor')
 
 pkgver() {
 	cd "$srcdir/dosh-master"
