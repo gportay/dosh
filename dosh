@@ -25,6 +25,8 @@ fi
 
 set -e
 
+VERSION="1.0"
+
 usage() {
 	cat <<EOF
 Usage: ${0##*/} [OPTIONS] [COMMAND] [ARG...]
@@ -47,6 +49,7 @@ Options:
             --exec CONTAINER    Execute in container.
       -N or --no-do             Do nothing; echo docker commands.
       -v or --verbose           Turn on verbose mode.
+      -V or --version           Print version.
       -h or --help              Print usage.
 EOF
 }
@@ -77,6 +80,9 @@ while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 		usage
 		exit 0
+	elif [ "$1" = "-V" ] || [ "$1" = "--version" ]; then
+		echo "$VERSION"
+		exit
 	elif [ "$1" = "-F" ] || [ "$1" = "--dockerfile" ]; then
 		shift
 		file="$1"

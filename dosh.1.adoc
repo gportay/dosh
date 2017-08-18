@@ -70,6 +70,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **-v or --verbose**
 	Turn on verbose mode.
 
+**-V or --version**
+	Print version.
+
 **-h or --help**
 	Print usage.
 

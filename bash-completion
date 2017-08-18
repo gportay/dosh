@@ -65,8 +65,8 @@ _dosh()
 		;;
 	esac
 
-	local short_opts="-c -s -i -F -C -N -v -h"
-	local long_opts="--dockerfile --directory --root --home --sh --build --detach --exec --no-do --verbose --help"
+	local short_opts="-c -s -i -F -C -N -v -V -h"
+	local long_opts="--dockerfile --directory --root --home --sh --build --detach --exec --no-do --verbose --version --help"
 	if [[ "$cur" == -* ]]; then
 		COMPREPLY=( $( compgen -W "$short_opts $long_opts" -- "$cur" ) )
 		return

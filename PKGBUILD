@@ -13,7 +13,7 @@ builddepends=('asciidoctor')
 
 pkgver() {
 	cd "$srcdir/dosh-master"
-	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	printf "$(./dosh --version)r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
