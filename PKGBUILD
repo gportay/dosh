@@ -4,12 +4,12 @@ pkgname=dosh
 pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
+arch=('any')
 url='https://github.com/gazoo74/dosh'
 license=('MIT')
-source=('https://github.com/gazoo74/dosh/archive/master.tar.gz')
-arch=('any')
 depends=('docker')
-makedepends=('asciidoctor')
+makedepends=('asciidoc')
+source=('https://github.com/gazoo74/dosh/archive/master.tar.gz')
 
 pkgver() {
 	cd "$srcdir/dosh-master"
