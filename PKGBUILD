@@ -5,25 +5,25 @@ pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
-url='https://github.com/gazoo74/dosh'
+url="https://github.com/gazoo74/$pkgname"
 license=('MIT')
 depends=('docker')
 makedepends=('asciidoc')
-source=('https://github.com/gazoo74/dosh/archive/master.tar.gz')
+source=("https://github.com/gazoo74/$pkgname/archive/$pkgver.tar.gz")
 
 pkgver() {
-	cd "$srcdir/dosh-master"
+	cd "$srcdir/$pkgname-$pkgver"
 	printf "$(./dosh --version)r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-	cd "$srcdir/dosh-master"
+	cd "$srcdir/$pkgname-$pkgver"
 
 	make doc
 }
 
 package() {
-	cd "$srcdir/dosh-master"
+	cd "$srcdir/$pkgname-$pkgver"
 
 	install -d "$pkgdir/usr/bin/"
 	install -m 755 dosh "$pkgdir/usr/bin/"
