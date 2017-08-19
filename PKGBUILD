@@ -1,7 +1,7 @@
 # Maintainer: Gaël PORTAY <gael.portay@savoirfairelinux.com>
 
 pkgname=dosh
-pkgver=master
+pkgver=1.0
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
@@ -10,11 +10,6 @@ license=('MIT')
 depends=('docker')
 makedepends=('asciidoc')
 source=("https://github.com/gazoo74/$pkgname/archive/$pkgver.tar.gz")
-
-pkgver() {
-	cd "$srcdir/$pkgname-$pkgver"
-	printf "$(./dosh --version)r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
 
 build() {
 	cd "$srcdir/$pkgname-$pkgver"

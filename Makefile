@@ -52,8 +52,8 @@ check: dosh
 .PHONY: clean
 clean:
 	rm -f dosh.1.gz
-	rm -f PKGBUILD.aur master.tar.gz src/master.tar.gz *.pkg.tar.xz \
-	   -R src/dosh-master/ pkg/dosh/
+	rm -f PKGBUILD.aur *.tar.gz src/*.tar.gz *.pkg.tar.xz \
+	   -R src/dosh-*/ pkg/dosh/
 
 .PHONY: aur
 aur: PKGBUILD.aur
