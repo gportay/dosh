@@ -8,7 +8,7 @@ arch=('any')
 url="https://github.com/gazoo74/$pkgname"
 license=('MIT')
 depends=('docker')
-makedepends=('asciidoc')
+makedepends=('asciidoctor')
 source=("https://github.com/gazoo74/$pkgname/archive/$pkgver.tar.gz")
 md5sums=('161f60d6c6131093a8cb583fe86ddca6')
 
