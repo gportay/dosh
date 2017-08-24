@@ -278,6 +278,16 @@ else
 fi
 echo
 
+run "dosh: Test option --shell /bin/dash"
+if          echo 'echo $0' | dosh "$@"  --shell /bin/dash -s | tee /dev/stderr | \
+   diff - <(echo '/bin/dash'                                 | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test default shell"
 if          echo 'echo $0' | dosh "$@"  -s | tee /dev/stderr | \
    diff - <(echo 'echo $0' | $SHELL     -s | tee /dev/stderr )

@@ -43,7 +43,10 @@ Options:
             --root              Run as root.
             --home              Bind mount home directory.
             --sh                Set /bin/sh as default shell.
-                                Equivalent to set SHELL=/bin/sh.
+                                Equivalent to set SHELL=/bin/sh,
+                                           or set --shell /bin/sh.
+                                This option is deprecated; use --shell instead.
+            --shell SHELL       Set shell interpretor.
             --build             Build image.
             --detach            Detach container.
             --exec CONTAINER    Execute in container.
@@ -97,6 +100,9 @@ while [ "$#" -ne 0 ]; do
 		home=true
 	elif [ "$1" = "--sh" ]; then
 		SHELL="/bin/sh"
+	elif [ "$1" = "--shell" ]; then
+		shift
+		SHELL="$1"
 	elif [ "$1" = "--build" ]; then
 		build=true
 	elif [ "$1" = "--detach" ]; then

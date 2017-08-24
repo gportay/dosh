@@ -53,7 +53,11 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--sh**
 	Set /bin/sh as default shell.
-	Equivalent to set SHELL=/bin/sh.
+	Equivalent to set SHELL=/bin/sh or set --shell /bin/sh.
+	This option is deprecated; use **--shell** instead.
+
+**--shell SHELL**
+	Set shell interpretor.
 
 **--build**
 	Build image.
