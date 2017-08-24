@@ -148,6 +148,7 @@ if ! $exec; then
 	tag="dosh-$hash"
 	imageid="$(docker images -q "$tag")"
 	if $build || [ -z "$imageid" ]; then
+		[ -n "$imageid" ] || buildopts=
 		docker_build "$file" "$tag" >&2
 	fi
 
