@@ -58,6 +58,10 @@ EOF
 }
 
 docker_build() {
+	if [ -n "$DOSH_NOBUILD" ]; then
+		return
+	fi
+
 	# shellcheck disable=SC2086
 	cat "$1" - <<EOF | $do docker build $buildopts --tag "$2" -
 
