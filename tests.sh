@@ -56,6 +56,8 @@ result() {
 PATH="$PWD:$PATH"
 trap result 0
 
+export -n DOSHELL
+
 run "dosh: Test without option with arguments"
 if          dosh "$@"  echo "one" "two" "three" | tee /dev/stderr | \
    diff - <(/bin/sh    echo "one" "two" "three" | tee /dev/stderr )
