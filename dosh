@@ -91,6 +91,7 @@ build=false
 detach=false
 exec=false
 buildopts="--quiet"
+verbose=false
 DOSHELL="${DOSHELL:-/bin/sh}"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
@@ -126,6 +127,7 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
 		do=echo
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
+		verbose="true"
 		buildopts=
 	elif [ "$1" = "-c" ]; then
 		shift
@@ -212,5 +214,8 @@ if $exec; then
 # Run in a new container
 else
 	opts+=" --env DOSHLVL=$((DOSHLVL+1))"
+	if $verbose; then
+		echo "$tag"
+	fi >&2
 	exec $do docker run $opts "$tag" "$@"
 fi
