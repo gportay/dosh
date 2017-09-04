@@ -56,9 +56,11 @@ result() {
 PATH="$PWD:$PATH"
 trap result 0
 
+SHELL=/bin/sh
+
 run "dosh: Test without option with arguments"
 if          dosh "$@"  echo "one" "two" "three" | tee /dev/stderr | \
-   diff - <($SHELL     echo "one" "two" "three" | tee /dev/stderr )
+   diff - <(/bin/sh    echo "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -68,7 +70,7 @@ echo
 
 run "dosh: Test option -c without arguments"
 if          dosh "$@"  -c | tee /dev/stderr | \
-   diff - <($SHELL     -c | tee /dev/stderr )
+   diff - <(/bin/sh    -c | tee /dev/stderr )
 then
 	ok
 else
@@ -78,7 +80,7 @@ echo
 
 run "dosh: Test option -c with empty argument"
 if          dosh "$@"  -c '' | tee /dev/stderr | \
-   diff - <($SHELL     -c '' | tee /dev/stderr )
+   diff - <(/bin/sh    -c '' | tee /dev/stderr )
 then
 	ok
 else
@@ -88,7 +90,7 @@ echo
 
 run "dosh: Test option -c command arguments"
 if          dosh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
-   diff - <($SHELL     -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
+   diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then
 	ok
 else
@@ -98,7 +100,7 @@ echo
 
 run "dosh: Test option -s without arguments"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@" -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL    -s | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh   -s | tee /dev/stderr )
 then
 	ok
 else
@@ -108,7 +110,7 @@ echo
 
 run "dosh: Test option -s one two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL     -s "one" "two" "three" | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -118,7 +120,7 @@ echo
 
 run "dosh: Test option -s one\ +\ two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL     -s one\ +\ two three | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s one\ +\ two three | tee /dev/stderr )
 then
 	ok
 else
@@ -128,7 +130,7 @@ echo
 
 run "dosh: Test option -s \"one + two\" three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | $SHELL     -s "one + two" "three" | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s "one + two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -138,7 +140,7 @@ echo
 
 run "dosh: Test option --root with arguments"
 if                      dosh "$@"  --root echo "one" "two" "three" | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL            echo "one" "two" "three" | tee /dev/stderr )
+   diff - <(fakeroot -- /bin/sh           echo "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -148,7 +150,7 @@ echo
 
 run "dosh: Test option --root and -c without arguments"
 if                      dosh "$@"  --root -c | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL            -c | tee /dev/stderr )
+   diff - <(fakeroot -- /bin/sh           -c | tee /dev/stderr )
 then
 	ok
 else
@@ -158,7 +160,7 @@ echo
 
 run "dosh: Test option --root and -c with empty arguments"
 if                      dosh "$@"  --root -c '' | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL            -c '' | tee /dev/stderr )
+   diff - <(fakeroot -- /bin/sh           -c '' | tee /dev/stderr )
 then
 	ok
 else
@@ -168,7 +170,7 @@ echo
 
 run "dosh: Test option --root and -c command arguments"
 if                      dosh "$@"  --root -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr | \
-   diff - <(fakeroot -- $SHELL            -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr )
+   diff - <(fakeroot -- /bin/sh           -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr )
 then
 	ok
 else
@@ -178,7 +180,7 @@ echo
 
 run "dosh: Test option --root and -s without arguments"
 if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s | tee /dev/stderr )
 then
 	ok
 else
@@ -188,7 +190,7 @@ echo
 
 run "dosh: Test option --root and -s one two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s "one" "two" "three" | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -198,7 +200,7 @@ echo
 
 run "dosh: Test option --root and -s one\ +\ two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s one\ +\ two three | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s one\ +\ two three | tee /dev/stderr )
 then
 	ok
 else
@@ -208,7 +210,7 @@ echo
 
 run "dosh: Test option --root and -s \"one + two\" three"
 if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- $SHELL            -s "one + two" "three" | tee /dev/stderr )
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s "one + two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -260,7 +262,7 @@ echo
 
 run "dosh: Test option --home"
 if          echo 'pwd; cd ; pwd' |             dosh "$@"  --home -s | tee /dev/stderr | \
-   diff - <(echo 'pwd; cd ; pwd' | fakeroot -- $SHELL            -s | tee /dev/stderr )
+   diff - <(echo 'pwd; cd ; pwd' | fakeroot -- /bin/sh           -s | tee /dev/stderr )
 then
 	ok
 else
@@ -268,7 +270,7 @@ else
 fi
 echo
 
-run "dosh: Test option --sh"
+run "dosh: Test deprecated option --sh"
 if          echo 'echo $0' | dosh "$@"  --sh -s | tee /dev/stderr | \
    diff - <(echo 'echo $0' | /bin/sh         -s | tee /dev/stderr )
 then
@@ -280,7 +282,7 @@ echo
 
 run "dosh: Test default shell"
 if          echo 'echo $0' | dosh "$@"  -s | tee /dev/stderr | \
-   diff - <(echo 'echo $0' | $SHELL     -s | tee /dev/stderr )
+   diff - <(echo 'echo $0' | /bin/sh    -s | tee /dev/stderr )
 then
 	ok
 else
