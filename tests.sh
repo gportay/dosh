@@ -342,3 +342,46 @@ else
 fi
 echo
 
+rmi() {
+	run "dosh: Test --rmi option"
+	if   dosh --rmi &&
+	   ! dosh --rmi
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
+	run "dosh: Test --rmi option with -F option"
+	if   dosh --rmi -F Dockerfile.fedora && \
+	   ! dosh --rmi -F Dockerfile.fedora
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
+	run "dosh: Test --rmi option with -C and -F option in a busybox based distro"
+	if ( cd .. && dir="${OLDPWD##*/}" && \
+	       dosh --rmi -C "$dir" -F Dockerfile.alpine && \
+	     ! dosh --rmi -C "$dir" -F Dockerfile.alpine )
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+}
+
+if [ -n "$DO_RMI_TESTS" ]
+then
+	rmi
+else
+	cat <<EOF >&2
+Note: --rmi tests are disabled by default!
+      Set DO_RMI_TESTS=1 to enable --rmi tests.
+
+EOF
+fi

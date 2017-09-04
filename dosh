@@ -48,6 +48,7 @@ Options:
                                 This option is deprecated; use --shell instead.
             --shell SHELL       Set shell interpretor.
             --build             Build image.
+            --rmi               Remove image.
             --detach            Detach container.
             --exec CONTAINER    Execute in container.
       -N or --no-do             Do nothing; echo docker commands.
@@ -62,6 +63,10 @@ Environment variables:
       DOSHLVL                   Incremented by one each time an instance of dosh
                                 is started.
 EOF
+}
+
+get_tag() {
+	echo "dosh-$(realpath "$1" | sha256sum - | cut -d' ' -f1)"
 }
 
 docker_build() {
@@ -79,6 +84,10 @@ RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir
 EOF
 }
 
+docker_rmi() {
+	$do docker rmi "$1"
+}
+
 opt_i=false
 opt_s=false
 opt_c=false
@@ -88,6 +97,7 @@ root=false
 dwd="/home/$USER"
 home=false
 build=false
+rmi=false
 detach=false
 exec=false
 buildopts="--quiet"
@@ -118,6 +128,8 @@ while [ "$#" -ne 0 ]; do
 		DOSHELL="$1"
 	elif [ "$1" = "--build" ]; then
 		build=true
+	elif [ "$1" = "--rmi" ]; then
+		rmi=true
 	elif [ "$1" = "--detach" ]; then
 		detach=true
 	elif [ "$1" = "--exec" ]; then
@@ -151,11 +163,17 @@ done
 # Change directory
 cd "$directory"
 
+if $rmi; then
+	# Remove image if exist
+	tag="$(get_tag "$file")"
+	docker_rmi "$tag" >&2
+	exit
+fi
+
 # Run in a new container
 if ! $exec; then
 	# Rebuild or automatically build image if it does not exist
-	hash="$(realpath "$file" | sha256sum - | cut -d' ' -f1)"
-	tag="dosh-$hash"
+	tag="$(get_tag "$file")"
 	imageid="$(docker images -q "$tag")"
 	if $build || [ -z "$imageid" ]; then
 		[ -n "$imageid" ] || buildopts=
