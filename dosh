@@ -43,7 +43,7 @@ Options:
             --root              Run as root.
             --home              Bind mount home directory.
             --sh                Set /bin/sh as default shell.
-                                Equivalent to set SHELL=/bin/sh,
+                                Equivalent to set DOSHELL=/bin/sh,
                                            or set --shell /bin/sh.
                                 This option is deprecated; use --shell instead.
             --shell SHELL       Set shell interpretor.
@@ -54,6 +54,10 @@ Options:
       -v or --verbose           Turn on verbose mode.
       -V or --version           Print version.
       -h or --help              Print usage.
+
+Environment variables:
+      DOSHELL                   The full pathname to the shell to run in docker
+                                image.
 EOF
 }
 
@@ -67,8 +71,8 @@ docker_build() {
 
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
  || addgroup -g ${GROUPS[0]} $USER
-RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir /home/$USER --shell $SHELL $USER \
- || adduser  -G $USER -u $UID -h /home/$USER -s $SHELL -D $USER
+RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir /home/$USER --shell /bin/sh $USER \
+ || adduser  -G $USER -u $UID -h /home/$USER -s /bin/sh -D $USER
 EOF
 }
 
@@ -84,6 +88,7 @@ build=false
 detach=false
 exec=false
 buildopts="--quiet"
+DOSHELL="${DOSHELL:-/bin/sh}"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 		usage
@@ -103,10 +108,10 @@ while [ "$#" -ne 0 ]; do
 		dwd="$PWD"
 		home=true
 	elif [ "$1" = "--sh" ]; then
-		SHELL="/bin/sh"
+		DOSHELL="/bin/sh"
 	elif [ "$1" = "--shell" ]; then
 		shift
-		SHELL="$1"
+		DOSHELL="$1"
 	elif [ "$1" = "--build" ]; then
 		build=true
 	elif [ "$1" = "--detach" ]; then
@@ -188,13 +193,13 @@ fi
 
 # Read command from stdin
 if $opt_s; then
-	set -- "$SHELL" -c "cd $dwd && $SHELL -s $(eval echo "${@// /\\\\ }")"
+	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
-	set -- "$SHELL" -c "cd $dwd && $SHELL -c '$*'"
+	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -c '$*'"
 # No command or invalid
 else
-	set -- "$SHELL" -c "cd $dwd && $SHELL $*"
+	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL $*"
 fi
 
 # Execute in existing container

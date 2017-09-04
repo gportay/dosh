@@ -53,7 +53,7 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--sh**
 	Set /bin/sh as default shell.
-	Equivalent to set SHELL=/bin/sh or set --shell /bin/sh.
+	Equivalent to set DOSHELL=/bin/sh or set --shell /bin/sh.
 	This option is deprecated; use **--shell** instead.
 
 **--shell SHELL**
@@ -79,6 +79,11 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **-h or --help**
 	Print usage.
+
+== ENVIRONMENT VARIABLES
+
+**DOSHELL**
+	The full pathname to the shell to run in docker image.
 
 == EXAMPLES
 
