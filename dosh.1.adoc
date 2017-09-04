@@ -85,6 +85,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **DOSHELL**
 	The full pathname to the shell to run in docker image.
 
+**DOSHLVL**
+	Incremented by one each time an instance of dosh is started.
+
 == EXAMPLES
 
 Run an _interactive shell_ in the latest _Ubuntu_ container

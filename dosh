@@ -58,6 +58,9 @@ Options:
 Environment variables:
       DOSHELL                   The full pathname to the shell to run in docker
                                 image.
+
+      DOSHLVL                   Incremented by one each time an instance of dosh
+                                is started.
 EOF
 }
 
@@ -208,5 +211,6 @@ if $exec; then
 	exec $do docker exec $opts "$container" "$@"
 # Run in a new container
 else
+	opts+=" --env DOSHLVL=$((DOSHLVL+1))"
 	exec $do docker run $opts "$tag" "$@"
 fi
