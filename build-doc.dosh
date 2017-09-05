@@ -1,4 +1,4 @@
-#!/usr/bin/dosh
+#!/usr/bin/dosh --shell /bin/bash
 #
 # Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
