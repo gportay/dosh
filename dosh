@@ -24,6 +24,7 @@ elif [ "$__" != "/bin/bash" ] && [ "$__" = "$2" ]; then
 fi
 
 set -e
+set -o pipefail
 
 VERSION="1.0.1"
 
