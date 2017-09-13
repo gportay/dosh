@@ -67,6 +67,15 @@ else
 fi
 echo
 
+run "dosh: Test with missing Dockerfile"
+if ! dosh -F Dockerfile.missing -c "echo Oops"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test without option with arguments"
 if          dosh "$@"  echo "one" "two" "three" | tee /dev/stderr | \
    diff - <(/bin/sh    echo "one" "two" "three" | tee /dev/stderr )
