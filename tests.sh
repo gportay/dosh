@@ -351,6 +351,33 @@ else
 fi
 echo
 
+run "dosh: Test --tag option"
+if dosh --tag
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test --tag option with -F option"
+if dosh --tag -F Dockerfile.fedora
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test --tag option with -C and -F option in a busybox based distro"
+if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag )
+then
+	ok
+else
+	ko
+fi
+echo
+
 rmi() {
 	run "dosh: Test --rmi option"
 	if   dosh --rmi &&

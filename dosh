@@ -52,6 +52,7 @@ Options:
             --rmi               Remove image.
             --detach            Detach container.
             --exec CONTAINER    Execute in container.
+            --tag               Print docker tag and exit.
       -N or --no-do             Do nothing; echo docker commands.
       -v or --verbose           Turn on verbose mode.
       -V or --version           Print version.
@@ -137,6 +138,9 @@ while [ "$#" -ne 0 ]; do
 		shift
 		container="$1"
 		exec=true
+	elif [ "$1" = "--tag" ]; then
+		get_tag "$directory/$file"
+		exit
 	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
 		do=echo
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then

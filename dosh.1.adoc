@@ -71,6 +71,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--exec CONTAINER**
 	Execute in container.
 
+**--tag**
+	Print docker tag and exit.
+
 **-N or --no-do**
 	Do nothing; echo docker commands.
 
