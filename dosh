@@ -64,6 +64,22 @@ Environment variables:
 
       DOSHLVL                   Incremented by one each time an instance of dosh
                                 is started.
+
+      DOSH_DOCKER_RUN_EXTRA_OPTS
+                                Set additionnal parameters to docker run
+                                command.
+
+      DOSH_DOCKER_EXEC_EXTRA_OPTS
+                                Set additionnal parameters to docker exec
+                                command.
+
+      DOSH_DOCKER_BUILD_EXTRA_OPTS
+                                Set additionnal parameters to docker build
+                                command.
+
+      DOSH_DOCKER_RMI_EXTRA_OPTS
+                                Set additionnal parameters to docker rmi
+                                command.
 EOF
 }
 
@@ -77,7 +93,8 @@ docker_build() {
 	fi
 
 	# shellcheck disable=SC2086
-	cat "$1" - <<EOF | $do docker build $buildopts --tag "$2" -
+	cat "$1" - <<EOF | \
+	$do docker build $buildopts --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
 
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
  || addgroup -g ${GROUPS[0]} $USER
@@ -87,7 +104,8 @@ EOF
 }
 
 docker_rmi() {
-	$do docker rmi "$1"
+	# shellcheck disable=SC2086
+	$do docker rmi $DOSH_DOCKER_RMI_EXTRA_OPTS "$1"
 }
 
 opt_i=false
@@ -233,12 +251,12 @@ fi
 # Execute in existing container
 # shellcheck disable=SC2086
 if $exec; then
-	exec $do docker exec $opts "$container" "$@"
+	exec $do docker exec $opts $DOSH_DOCKER_EXEC_EXTRA_OPTS "$container" "$@"
 # Run in a new container
 else
 	opts+=" --env DOSHLVL=$((DOSHLVL+1))"
 	if $verbose; then
 		echo "$tag"
 	fi >&2
-	exec $do docker run $opts "$tag" "$@"
+	exec $do docker run $opts $DOSH_DOCKER_RUN_EXTRA_OPTS "$tag" "$@"
 fi

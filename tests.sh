@@ -57,6 +57,10 @@ PATH="$PWD:$PATH"
 trap result 0
 
 export -n DOSHELL
+export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
+export -n DOSH_DOCKER_RMI_EXTRA_OPTS
+export -n DOSH_DOCKER_RUN_EXTRA_OPTS
+export -n DOSH_DOCKER_EXEC_EXTRA_OPTS
 
 run "dosh: Test with missing Dockerfile"
 if ! dosh -F Dockerfile.missing -c "echo Oops"
@@ -344,6 +348,16 @@ echo
 
 run "dosh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
 if DOSHELL=/bin/ash dosh -F Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable"
+if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
+   dosh -c "which dosh"
 then
 	ok
 else

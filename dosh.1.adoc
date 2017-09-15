@@ -94,6 +94,18 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **DOSHLVL**
 	Incremented by one each time an instance of dosh is started.
 
+**DOSH_DOCKER_RUN_EXTRA_OPTS**
+	Set additionnal parameters to docker run command.
+
+**DOSH_DOCKER_EXEC_EXTRA_OPTS**
+	Set additionnal parameters to docker exec command.
+
+**DOSH_DOCKER_BUILD_EXTRA_OPTS**
+	Set additionnal parameters to docker build command.
+
+**DOSH_DOCKER_RMI_EXTRA_OPTS**
+	Set additionnal parameters to docker rmi command.
+
 == EXAMPLES
 
 Run an _interactive shell_ in the latest _Ubuntu_ container

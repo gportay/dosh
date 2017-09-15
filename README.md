@@ -37,6 +37,25 @@ or
 
 	$ DESTDIR=$PWD/pkg PREFIX=/usr ./install.sh
 
+## TUNING
+
+Every single [docker(1)](https://github.com/docker/docker) command performed in
+[dosh(1)](dosh.1.adoc) can be customized by passing extra arguments thanks its
+corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS** environment variable. **xxx**
+represents one of the *docker* commands used in *dosh* (*build*, *rmi*, *run*
+and *exec*).
+
+_Note:_ Only `DOSH_DOCKER_RUN_EXTRA_OPTS` is relevant for interactive usage.
+
+As an example, consider mapping extra personal *dot-files* to feel at home in
+the container.
+
+Adding these two following lines to the Shell `~/.profile` automatically binds
+the `~/.ssh` directory to the container.
+
+	DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
+	export DOSH_DOCKER_RUN_EXTRA_OPTS
+
 ## LINKS
 
 Check for [man-pages](dosh.1.adoc) and its [examples](dosh.1.adoc#examples).
