@@ -27,15 +27,15 @@ Or using *make(1)* and _Makefile_
 
 Run the following command to install *dosh(1)*
 
-	$ sudo ./install.sh
+	$ sudo make install
 
 Traditional variables *DESTDIR* and *PREFIX* can be overridden
 
-	$ sudo PREFIX=/opt/dosh ./install.sh
+	$ sudo make install PREFIX=/opt/dosh
 
 or
 
-	$ DESTDIR=$PWD/pkg PREFIX=/usr ./install.sh
+	$ make install DESTDIR=$PWD/pkg PREFIX=/usr
 
 ## TUNING
 
