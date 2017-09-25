@@ -34,11 +34,12 @@ Usage: ${0##*/} [OPTIONS] [COMMAND] [ARG...]
 
 Run a shell as user in a container and bind mount cwd.
 
-Options:
+POSIX Shell related options:
       -c                        Read commands from command-line.
       -i                        Set interactive.
       -s                        Read commands from standard-input.
 
+Docker related options:
       -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
             --root              Run as root.
@@ -54,6 +55,8 @@ Options:
             --exec CONTAINER    Execute in container.
             --tag               Print docker tag and exit.
       -N or --no-do             Do nothing; echo docker commands.
+
+Miscellaneous options:
       -v or --verbose           Turn on verbose mode.
       -V or --version           Print version.
       -h or --help              Print usage.

@@ -30,6 +30,8 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 == OPTIONS
 
+*POSIX Shell related options*
+
 **-c**
 	Read commands from command-line.
 
@@ -38,6 +40,8 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **-s**
 	Read commands from standard-input.
+
+*Docker related options*
 
 **-F or --dockerfile FILE**
 	Path to the Dockerfile to use.
@@ -76,6 +80,8 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **-N or --no-do**
 	Do nothing; echo docker commands.
+
+*Miscellaneous options*
 
 **-v or --verbose**
 	Turn on verbose mode.
