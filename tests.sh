@@ -314,7 +314,7 @@ fi
 echo
 
 run "dosh: Test shebang"
-if ./shebang.dosh | tee /dev/stderr | \
+if examples/shebang.dosh | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
 	ok
@@ -324,7 +324,7 @@ fi
 echo
 
 run "dosh: Test shebang with arguments"
-if ./shebang-fedora.dosh | tee /dev/stderr | \
+if examples/shebang-fedora.dosh | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok

@@ -11,9 +11,9 @@ _user_, with _pwd_ bind mounted.
 
 ## DOCUMENTATION
 
-Build documentation using _build-doc.dosh_ *dosh(1)* script
+Build documentation using _examples/build-doc.dosh_ *dosh(1)* script
 
-	$ ./build-doc.dosh
+	$ examples/build-doc.dosh
 	sha256:ced062433e33
 
 Or using *make(1)* and _Makefile_
