@@ -39,6 +39,26 @@ or
 
 ## TUNING
 
+### Default Shell Interpreter
+
+[dosh(1)](dosh.1.adoc) uses `/bin/sh` as default interpreter as it is the only
+reliable Shell available. The default interpreter can be set by option
+`--shell SHELL`; but it needs to be set to every call to *dosh*.
+
+	dosh --shell /bin/bash
+
+Instead, the default interpreter can be set using the `DOSHELL` environment
+variable. When this variable is exported, there is no need to override the Shell
+interpreter through the command-line.
+
+Adding these two following lines to the Shell `~/.profile` tells *dosh* to uses
+`/bin/bash` as Shell interpreter.
+
+	DOSHELL="/bin/bash"
+	export DOSHELL
+
+### Docker extra options
+
 Every single [docker(1)](https://github.com/docker/docker) command performed in
 [dosh(1)](dosh.1.adoc) can be customized by passing extra arguments thanks its
 corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS** environment variable. **xxx**
