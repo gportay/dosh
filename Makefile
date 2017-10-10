@@ -18,6 +18,18 @@ doc: dosh.1.gz
 install:
 	install -d $(DESTDIR)$(PREFIX)/bin/
 	install -m 755 dosh $(DESTDIR)$(PREFIX)/bin/
+	install -d $(DESTDIR)$(PREFIX)/share/dosh/examples/
+	install -m 644 examples/profile examples/dot-profile \
+	           $(DESTDIR)$(PREFIX)/share/dosh/examples/
+
+.PHONY: install-profile
+install-profile:
+	install -d $(DESTDIR)/etc/profile.d
+	install -m 644 examples/profile $(DESTDIR)/etc/profile.d/dosh.sh
+
+.PHONY: install-dot-profile
+install-dot-profile:
+	cat >>~/.profile examples/dot-profile
 
 .PHONY: install-doc
 install-doc:
@@ -35,6 +47,7 @@ install-bash-completion:
 .PHONY: uninstall
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dosh
+	rm -f $(DESTDIR)/etc/profile.d/dosh.sh
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	completionsdir=$$(pkg-config --variable=completionsdir bash-completion); \
 	if [ -n "$$completionsdir" ]; then \

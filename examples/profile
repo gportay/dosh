@@ -1,0 +1,16 @@
+#
+# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the MIT License.
+#
+
+# Not /bin/sh?
+if [ "$SHELL" != "/bin/sh" ]; then
+	export DOSHELL="$SHELL"
+fi
+
+# Map ~/.ssh?
+if [ -d "$HOME/.ssh" ]; then
+	export DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
+fi

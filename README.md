@@ -76,6 +76,39 @@ the `~/.ssh` directory to the container.
 	DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
 	export DOSH_DOCKER_RUN_EXTRA_OPTS
 
+### SHELL PROFILE EXAMPLES
+
+Here is an example of code to copy/paste in the `.profile`.
+
+	# Not sh?
+	if [ "$SHELL" != "/bin/sh" ]; then
+		export DOSHELL="$SHELL"
+	fi
+
+	# Export some environment variables
+	for env in TERM EDITOR; do
+		[ -n "$env" ] || continue
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
+	done
+
+	# Map some home dot-files
+	for vol in $HOME/.ssh $HOME/.config $HOME/.local $HOME/.profile; do
+		[ -e "$vol" ] || continue
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
+	done
+
+	# Map bash dot-files
+	for vol in $HOME/.bash{_profile,rc,login,logout}; do
+		[ -e "$vol" ] || continue
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
+	done
+
+	# In docker?
+	[ -z "$DOSHLVL" ] || return
+
+	# Update prompt color
+	PS1="${PS1//32/33}"
+
 ## LINKS
 
 Check for [man-pages](dosh.1.adoc) and its [examples](dosh.1.adoc#examples).
