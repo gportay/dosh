@@ -23,6 +23,11 @@ Or using *make(1)* and _Makefile_
 	gzip -c dosh.1 >dosh.1.gz
 	rm dosh.1
 
+If neither _asciidoctor(1)_ nor _dosh(1)_ are installed on the system, the
+documentation can be build using intree _dosh_ script
+
+	./dosh -c "bash examples/build-doc.dosh"
+
 ## INSTALL
 
 Run the following command to install *dosh(1)*
