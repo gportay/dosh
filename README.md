@@ -83,12 +83,28 @@ the `~/.ssh` directory to the container.
 
 ### SHELL PROFILE EXAMPLES
 
-Here is an example of code to copy/paste in the `.profile`.
+Here are some example of code to copy/paste in the `.profile`.
+
+They significantly improve the *dosh* experience.
+
+#### REUSE SAME SHELL INTERPRETER
+
+This asks *dosh* to use the same Shell interpreter as the one which is currently
+in use.
 
 	# Not sh?
 	if [ "$SHELL" != "/bin/sh" ]; then
 		export DOSHELL="$SHELL"
 	fi
+
+_Important:_ Be aware that when the Shell interpreter is not installed in the
+container, *dosh* ends with the following error:
+
+	docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"/bin/zsh\": stat /bin/zsh: no such file or directory".
+
+#### EXPORT ENVIRONMENT
+
+These following lines export some useful environment variables to the container.
 
 	# Export some environment variables
 	for env in TERM EDITOR; do
@@ -96,17 +112,25 @@ Here is an example of code to copy/paste in the `.profile`.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 	done
 
+#### MAP DOT-FILES
+
+These following lines maps some useful *dot-files* to the container.
+
 	# Map some home dot-files
 	for vol in $HOME/.config $HOME/.local $HOME/.profile; do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
+*bash(1)* invocation files is a *must-have* to feel like home.
+
 	# Map bash dot-files
 	for vol in $HOME/.bash{_profile,rc,login,logout}; do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
+
+*zsh(1)* too.
 
 	# Map zsh dot-files
 	zdotdir="${ZDOTDIR:-$HOME}"
@@ -115,12 +139,9 @@ Here is an example of code to copy/paste in the `.profile`.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
-	# In docker?
-	[ -z "$DOSHLVL" ] || return
+#### SSH HANDLING
 
-	# Update prompt color
-	PS1="${PS1//32/33}"
-	PROMPT="${PROMPT//blue/green}"
+For a better experience with *SSH*, these following lines should be considered.
 
 	# Map and export ssh things?
 	if [ -d "$HOME/.ssh" ]; then
@@ -130,6 +151,22 @@ Here is an example of code to copy/paste in the `.profile`.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
 	fi
+
+#### MAKE THE PROMPT SLIGHTLY DIFFERENT
+
+Colorize the prompt from the container in a different way to distinguish *dosh*
+sessions.
+
+	# In docker?
+	[ -z "$DOSHLVL" ] || return
+
+	# Colorize prompt color differently
+	PS1="${PS1//32/33}"
+	PROMPT="${PROMPT//blue/green}"
+
+_Note_: Put these lines to the end of the file.
+
+Lines beside `[ -z "$DOSHLVL" ] || return` are applied in the container.
 
 ## LINKS
 
