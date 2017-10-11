@@ -2,7 +2,7 @@
 
 pkgname=dosh
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Docker shell'
 arch=('any')
 url="https://github.com/gportay/$pkgname"
@@ -26,5 +26,5 @@ package() {
 	install -d "$pkgdir/usr/share/man/man1/"
 	install -m 644 dosh.1.gz "$pkgdir/usr/share/man/man1/"
 	install -d "$pkgdir/usr/share/bash-completion/completions"
-	install -m 644 dosh "$pkgdir/usr/share/bash-completion/completions"
+	install -m 644 bash-completion "$pkgdir/usr/share/bash-completion/completions/dosh"
 }
