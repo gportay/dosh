@@ -100,6 +100,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **DOSHLVL**
 	Incremented by one each time an instance of dosh is started.
 
+**DOSH_DOCKERFILE**
+	The filename of the Dockerfile to use.
+
 **DOSH_DOCKER_RUN_EXTRA_OPTS**
 	Set additionnal parameters to docker run command.
 

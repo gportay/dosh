@@ -68,6 +68,8 @@ Environment variables:
       DOSHLVL                   Incremented by one each time an instance of dosh
                                 is started.
 
+      DOSH_DOCKERFILE           The filename of the Dockerfile to use.
+
       DOSH_DOCKER_RUN_EXTRA_OPTS
                                 Set additionnal parameters to docker run
                                 command.
@@ -114,7 +116,7 @@ docker_rmi() {
 opt_i=false
 opt_s=false
 opt_c=false
-file="Dockerfile"
+DOSH_DOCKERFILE="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 root=false
 dwd="/home/$USER"
@@ -135,7 +137,7 @@ while [ "$#" -ne 0 ]; do
 		exit
 	elif [ "$1" = "-F" ] || [ "$1" = "--dockerfile" ]; then
 		shift
-		file="$1"
+		DOSH_DOCKERFILE="$1"
 	elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
 		shift
 		directory="$1"
@@ -160,7 +162,7 @@ while [ "$#" -ne 0 ]; do
 		container="$1"
 		exec=true
 	elif [ "$1" = "--tag" ]; then
-		get_tag "$directory/$file"
+		get_tag "$directory/$DOSH_DOCKERFILE"
 		exit
 	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
 		do=echo
@@ -191,7 +193,7 @@ cd "$directory"
 
 if $rmi; then
 	# Remove image if exist
-	tag="$(get_tag "$file")"
+	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	docker_rmi "$tag" >&2
 	exit
 fi
@@ -199,11 +201,11 @@ fi
 # Run in a new container
 if ! $exec; then
 	# Rebuild or automatically build image if it does not exist
-	tag="$(get_tag "$file")"
+	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	imageid="$(docker images -q "$tag")"
 	if $build || [ -z "$imageid" ]; then
 		[ -n "$imageid" ] || buildopts=
-		docker_build "$file" "$tag" >&2
+		docker_build "$DOSH_DOCKERFILE" "$tag" >&2
 	fi
 
 	# Detach container

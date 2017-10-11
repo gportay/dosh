@@ -57,6 +57,7 @@ PATH="$PWD:$PATH"
 trap result 0
 
 export -n DOSHELL
+export -n DOSH_DOCKERFILE
 export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
 export -n DOSH_DOCKER_RMI_EXTRA_OPTS
 export -n DOSH_DOCKER_RUN_EXTRA_OPTS
@@ -234,6 +235,17 @@ echo
 run "dosh: Test option -f"
 if dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test \$DOSH_DOCKERFILE"
+if DOSH_DOCKERFILE=Dockerfile.fedora \
+   dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
+   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
 else
