@@ -232,7 +232,7 @@ else
 fi
 echo
 
-run "dosh: Test option -f"
+run "dosh: Test option -c"
 if dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
