@@ -96,12 +96,14 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **DOSHELL**
 	The full pathname to the shell to run in docker image.
+	Equivalent to --shell SHELL
 
 **DOSHLVL**
 	Incremented by one each time an instance of dosh is started.
 
 **DOSH_DOCKERFILE**
 	The filename of the Dockerfile to use.
+	Equivalent to --dockerfile FILE
 
 **DOSH_DOCKER_RUN_EXTRA_OPTS**
 	Set additionnal parameters to docker run command.
