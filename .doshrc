@@ -1,0 +1,4 @@
+case "$DOSH_DOCKERFILE" in
+Dockerfile.alpine) DOSHELL=/bin/ash;;
+Dockerfile.zsh)    DOSHELL=/bin/zsh;;
+esac

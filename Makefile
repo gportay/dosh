@@ -60,7 +60,7 @@ tests:
 
 .PHONY: check
 check: dosh
-	shellcheck $^
+	shellcheck --exclude=SC1091 $^
 
 .PHONY: clean
 clean:

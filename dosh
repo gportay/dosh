@@ -193,6 +193,10 @@ done
 # Change directory
 cd "$directory"
 
+if [ -e ".doshrc" ]; then
+	. .doshrc
+fi
+
 if $rmi; then
 	# Remove image if exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
