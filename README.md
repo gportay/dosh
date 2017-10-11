@@ -97,7 +97,7 @@ Here is an example of code to copy/paste in the `.profile`.
 	done
 
 	# Map some home dot-files
-	for vol in $HOME/.ssh $HOME/.config $HOME/.local $HOME/.profile; do
+	for vol in $HOME/.config $HOME/.local $HOME/.profile; do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
@@ -121,6 +121,15 @@ Here is an example of code to copy/paste in the `.profile`.
 	# Update prompt color
 	PS1="${PS1//32/33}"
 	PROMPT="${PROMPT//blue/green}"
+
+	# Map and export ssh things?
+	if [ -d "$HOME/.ssh" ]; then
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
+	fi
+	if [ -n "$SSH_AUTH_SOCK" ]; then
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
+	fi
 
 ## LINKS
 

@@ -10,7 +10,12 @@ if [ "$SHELL" != "/bin/sh" ]; then
 	export DOSHELL="$SHELL"
 fi
 
-# Map ~/.ssh?
+# Map and export ssh things?
 if [ -d "$HOME/.ssh" ]; then
-	export DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
 fi
+if [ -n "$SSH_AUTH_SOCK" ]; then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
+fi
+export DOSH_DOCKER_RUN_EXTRA_OPTS

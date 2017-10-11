@@ -12,7 +12,7 @@ for env in TERM EDITOR; do
 done
 
 # Map some home dot-files
-for vol in $HOME/.ssh $HOME/.config $HOME/.local $HOME/.profile; do
+for vol in $HOME/.config $HOME/.local $HOME/.profile; do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
@@ -29,6 +29,15 @@ for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HO
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
+
+# Map and export ssh things?
+if [ -d "$HOME/.ssh" ]; then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
+fi
+if [ -n "$SSH_AUTH_SOCK" ]; then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
+fi
 
 export DOSHELL DOSH_DOCKER_RUN_EXTRA_OPTS
 
