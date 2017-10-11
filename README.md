@@ -103,11 +103,19 @@ Here is an example of code to copy/paste in the `.profile`.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
+	# Map zsh dot-files
+	zdotdir="${ZDOTDIR:-$HOME}"
+	for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout; do
+		[ -e "$vol" ] || continue
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
+	done
+
 	# In docker?
 	[ -z "$DOSHLVL" ] || return
 
 	# Update prompt color
 	PS1="${PS1//32/33}"
+	PROMPT="${PROMPT//blue/green}"
 
 ## LINKS
 

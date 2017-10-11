@@ -23,6 +23,13 @@ for vol in $HOME/.bash{_profile,rc,login,logout}; do
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
+# Map zsh dot-files
+zdotdir="${ZDOTDIR:-$HOME}"
+for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout; do
+	[ -e "$vol" ] || continue
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
+done
+
 export DOSHELL DOSH_DOCKER_RUN_EXTRA_OPTS
 
 # In docker?
@@ -30,3 +37,4 @@ export DOSHELL DOSH_DOCKER_RUN_EXTRA_OPTS
 
 # Update prompt color
 PS1="${PS1//32/33}"
+PROMPT="${PROMPT//blue/green}"
