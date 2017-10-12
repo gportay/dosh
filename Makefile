@@ -54,6 +54,10 @@ uninstall:
 		rm -f $(DESTDIR)$$completionsdir/dosh; \
 	fi
 
+.PHONY: user-install
+user-install:
+	$(MAKE) install PREFIX=$$HOME/.local
+
 .PHONY: tests
 tests:
 	@./tests.sh
