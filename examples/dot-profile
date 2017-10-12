@@ -30,6 +30,12 @@ for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HO
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
+# Map grml zsh dot-files
+for vol in $zdotdir/.zshrc.pre $zdotdir/.zshrc.local; do
+	[ -e "$vol" ] || continue
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
+done
+
 # Map and export ssh things?
 if [ -d "$HOME/.ssh" ]; then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
