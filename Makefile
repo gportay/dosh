@@ -70,7 +70,7 @@ clean:
 
 .PHONY: aur
 aur: PKGBUILD.aur
-	makepkg --force --nodeps -p $^
+	makepkg --force --syncdeps -p $^
 
 PKGBUILD.aur: PKGBUILD
 	cp $< $@.tmp
