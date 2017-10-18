@@ -158,6 +158,31 @@ For a better experience with *SSH*, these following lines should be considered.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
 	fi
 
+#### X
+
+To enable *X* in docker, these following lines should be considered.
+
+	# Map and export X things?
+	if [ -n "$DISPLAY" ]; then
+		for env in DISPLAY XAUTHORITY XSOCK; do
+			[ -n "$env" ] || continue
+			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
+		done
+		dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
+		if [ -e "$dotxauthority" ]; then
+			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $dotxauthority:$HOME/.Xauthority"
+		fi
+		unset dotxauthority
+		xsock="${XSOCK:-/tmp/.X11-unix}"
+		if [ -e "$xsock" ]; then
+			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $xsock:/tmp/.X11-unix:ro"
+		fi
+		unset xsock
+	fi
+
+_Note_: To enable *X* through *SSH*, please have a look to the excelent post of
+Jean-Tiare Le Bigot on its blog [yadutaf].
+
 #### MAKE THE PROMPT SLIGHTLY DIFFERENT
 
 Colorize the prompt from the container in a different way to distinguish *dosh*
@@ -208,3 +233,5 @@ Copyright (c) 2017 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the MIT License.
+
+[yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
