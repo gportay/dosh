@@ -122,6 +122,12 @@ These following lines maps some useful *dot-files* to the container.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
+	# Map extra home dot-files
+	for vol in $HOME/.inputrc $HOME/.screenrc; do
+		[ -e "$vol" ] || continue
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
+	done
+
 *bash(1)* invocation files is a *must-have* to feel like home.
 
 	# Map bash dot-files
