@@ -94,6 +94,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 == ENVIRONMENT VARIABLES
 
+**DOCKER**
+	The docker executable.
+
 **DOSHELL**
 	The full pathname to the shell to run in docker image.
 	Equivalent to --shell SHELL

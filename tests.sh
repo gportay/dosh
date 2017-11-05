@@ -56,6 +56,7 @@ result() {
 PATH="$PWD:$PATH"
 trap result 0
 
+export -n DOCKER
 export -n DOSHELL
 export -n DOSH_DOCKERFILE
 export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
@@ -351,6 +352,16 @@ if container="$(dosh --detach)" && \
    diff - <(echo "${container:0:12}"                   | tee /dev/stderr ) && \
             docker rm -f "$container" | tee /dev/stderr | \
    diff - <(echo "$container"         | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test DOCKER environment variable"
+if DOCKER="echo docker" dosh | \
+   grep "docker run --rm --volume $PWD:/home/$USER --user ${GROUPS[0]}:${GROUPS[0]} --interactive --tty --env DOSHLVL=1 dosh-[0-9a-z]\{64\} /bin/sh -c cd /home/$USER && /bin/sh"
 then
 	ok
 else
