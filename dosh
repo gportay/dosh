@@ -107,8 +107,8 @@ docker_build() {
 
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
  || addgroup -g ${GROUPS[0]} $USER
-RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir /home/$USER --shell /bin/sh $USER \
- || adduser  -G $USER -u $UID -h /home/$USER -s /bin/sh -D $USER
+RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
+ || adduser  -G $USER -u $UID -h $HOME -s /bin/sh -D $USER
 EOF
 }
 
@@ -123,7 +123,6 @@ opt_c=false
 DOSH_DOCKERFILE="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 root=false
-dwd="/home/$USER"
 home=false
 build=false
 rmi=false
@@ -149,7 +148,6 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "--root" ]; then
 		root=true
 	elif [ "$1" = "--home" ]; then
-		dwd="$PWD"
 		home=true
 	elif [ "$1" = "--sh" ]; then
 		DOSHELL="/bin/sh"
@@ -227,12 +225,10 @@ if ! $exec; then
 
 	# Bind mount home
 	if $home; then
-		dwd="$PWD"
 		opts+=" --volume $HOME:/home/$USER"
 	# Bind mount current working directory
 	else
-		dwd="/home/$USER"
-		opts+=" --volume $PWD:/home/$USER"
+		opts+=" --volume $PWD:$PWD"
 	fi
 fi
 
@@ -253,13 +249,13 @@ fi
 
 # Read command from stdin
 if $opt_s; then
-	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -s $(eval echo "${@// /\\\\ }")"
+	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
-	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -c '$*'"
+	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL -c '$*'"
 # No command or invalid
 else
-	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL $*"
+	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL $*"
 fi
 
 # Execute in existing container

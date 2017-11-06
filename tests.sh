@@ -361,7 +361,7 @@ echo
 
 run "dosh: Test DOCKER environment variable"
 if DOCKER="echo docker" dosh | \
-   grep "docker run --rm --volume $PWD:/home/$USER --user ${GROUPS[0]}:${GROUPS[0]} --interactive --tty --env DOSHLVL=1 dosh-[0-9a-z]\{64\} /bin/sh -c cd /home/$USER && /bin/sh"
+   grep "docker run --rm --volume $PWD:$PWD --user ${GROUPS[0]}:${GROUPS[0]} --interactive --tty --env DOSHLVL=1 dosh-[0-9a-z]\{64\} /bin/sh -c cd $PWD && /bin/sh"
 then
 	ok
 else
