@@ -24,7 +24,7 @@ Or using *make(1)* and _Makefile_
 	rm dosh.1
 
 If neither _asciidoctor(1)_ nor _dosh(1)_ are installed on the system, the
-documentation can be build using intree _dosh_ script
+documentation can be build using in-tree _dosh_ script
 
 	./dosh -c "bash examples/build-doc.dosh"
 
@@ -83,7 +83,7 @@ the `~/.ssh` directory to the container.
 
 ### SHELL PROFILE EXAMPLES
 
-Here are some example of code to copy/paste in the `.profile`.
+Here are some examples of code to copy/paste in the `.profile`.
 
 They significantly improve the *dosh* experience.
 
@@ -114,7 +114,7 @@ These following lines export some useful environment variables to the container.
 
 #### MAP DOT-FILES
 
-These following lines maps some useful *dot-files* to the container.
+These following lines map some useful *dot-files* to the container.
 
 	# Map some home dot-files
 	for vol in $HOME/.config $HOME/.local $HOME/.profile; do
@@ -203,7 +203,7 @@ Lines beside `[ -z "$DOSHLVL" ] || return` are applied in the container.
 
 Check for [man-pages](dosh.1.adoc) and its [examples](dosh.1.adoc#examples).
 
-Also, here is an extra example that build the documentation
+Also, here is an extra example that builds the documentation
 
 	$ echo FROM ubuntu >Dockerfile
 	$ echo RUN apt-get update && apt-get install -y asciidoctor >>Dockerfile
