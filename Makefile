@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -65,6 +65,32 @@ tests:
 .PHONY: check
 check: dosh
 	shellcheck --exclude=SC1091 $^
+
+ifneq (,$(BUMP_VERSION))
+.SILENT: bump
+bump:
+	old="$$(bash dosh --version)"; \
+	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
+	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
+	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD
+	git commit dosh dosh.1.adoc PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
+	git tag --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
+else
+.SILENT: bump-major
+bump-major:
+	old="$$(bash dosh --version)"; \
+	new="$$(($${old%.*}+1)).0"; \
+	make bump "BUMP_VERSION=$$new"
+
+.SILENT: bump-minor
+bump-minor:
+	old="$$(bash dosh --version)"; \
+	new="$${old%.*}.$$(($${old##*.}+1))"; \
+	make bump "BUMP_VERSION=$$new"
+
+.SILENT: bump
+bump: bump-minor
+endif
 
 .PHONY: clean
 clean:
