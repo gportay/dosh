@@ -1,0 +1,6 @@
+FROM ubuntu:16.04
+RUN useradd -ms /bin/bash dosh 
+RUN chown -R dosh:dosh /home/dosh
+USER dosh
+WORKDIR /home/dosh
+ENV HOME /home/dosh

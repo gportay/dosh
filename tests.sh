@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -408,6 +408,15 @@ echo
 
 run "dosh: Test --tag option with -C and -F option in a busybox based distro"
 if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test when user is set in Dockerfile"
+if dosh -F Dockerfile.user -c "whoami"
 then
 	ok
 else
