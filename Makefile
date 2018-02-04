@@ -58,9 +58,10 @@ uninstall:
 user-install:
 	$(MAKE) install PREFIX=$$HOME/.local
 
+DO_RMI_TESTS ?=
 .PHONY: tests
 tests:
-	@./tests.sh
+	@DO_RMI_TESTS=$(DO_RMI_TESTS) ./tests.sh
 
 .PHONY: check
 check: dosh
