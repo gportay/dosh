@@ -108,6 +108,7 @@ PKGBUILD.aur: PKGBUILD
 	makepkg --nobuild --nodeps --skipinteg -p $@.tmp
 	md5sum="$$(makepkg --geninteg -p $@.tmp)"; \
 	sed -e "/pkgver()/,/^$$/d" \
+	    -e "/md5sums=/d" \
 	    -e "/source=/a$$md5sum" \
 	    -i $@.tmp
 	mv $@.tmp $@
