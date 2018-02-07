@@ -95,8 +95,18 @@ docker_build() {
 		return
 	fi
 
+	lineno=0
+	while read -r -a words; do
+		if [[ ${words[0]} =~ ADD|COPY ]]; then
+			echo "Warning: Ignoring line #$lineno: \`${words[*]}'"
+		fi
+		lineno=$((lineno+1))
+	done <"$1" >&2
+	unset lineno
+
 	# shellcheck disable=SC2086
 	cat "$1" - <<EOF | \
+	sed -e '/^\(ADD\|COPY\)/d' | \
 	$do docker build $buildopts --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
 
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
