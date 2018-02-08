@@ -70,6 +70,7 @@ check: dosh
 ifneq (,$(BUMP_VERSION))
 .SILENT: bump
 bump:
+	! git tag | grep "$(BUMP_VERSION)"
 	old="$$(bash dosh --version)"; \
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
