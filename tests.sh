@@ -64,6 +64,39 @@ export -n DOSH_DOCKER_RMI_EXTRA_OPTS
 export -n DOSH_DOCKER_RUN_EXTRA_OPTS
 export -n DOSH_DOCKER_EXEC_EXTRA_OPTS
 
+rmi() {
+	run "dosh: Test --rmi option"
+	if   dosh --rmi &&
+	   ! dosh --rmi
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
+	run "dosh: Test --rmi option with -F option"
+	if   dosh --rmi -F Dockerfile.fedora && \
+	   ! dosh --rmi -F Dockerfile.fedora
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
+	run "dosh: Test --rmi option with -C and -F option in a busybox based distro"
+	if ( cd .. && dir="${OLDPWD##*/}" && \
+	       dosh --rmi -C "$dir" -F Dockerfile.alpine && \
+	     ! dosh --rmi -C "$dir" -F Dockerfile.alpine )
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+}
+
 run "dosh: Test with missing Dockerfile"
 if ! dosh -F Dockerfile.missing -c "echo Oops"
 then
@@ -423,39 +456,6 @@ else
 	ko
 fi
 echo
-
-rmi() {
-	run "dosh: Test --rmi option"
-	if   dosh --rmi &&
-	   ! dosh --rmi
-	then
-		ok
-	else
-		ko
-	fi
-	echo
-
-	run "dosh: Test --rmi option with -F option"
-	if   dosh --rmi -F Dockerfile.fedora && \
-	   ! dosh --rmi -F Dockerfile.fedora
-	then
-		ok
-	else
-		ko
-	fi
-	echo
-
-	run "dosh: Test --rmi option with -C and -F option in a busybox based distro"
-	if ( cd .. && dir="${OLDPWD##*/}" && \
-	       dosh --rmi -C "$dir" -F Dockerfile.alpine && \
-	     ! dosh --rmi -C "$dir" -F Dockerfile.alpine )
-	then
-		ok
-	else
-		ko
-	fi
-	echo
-}
 
 if [ -n "$DO_RMI_TESTS" ]
 then
