@@ -97,6 +97,13 @@ rmi() {
 	echo
 }
 
+if [ -n "$DO_CLEANUP" ]
+then
+	trap - 0
+	rmi
+	exit
+fi
+
 run "dosh: Test with missing Dockerfile"
 if ! dosh -F Dockerfile.missing -c "echo Oops"
 then

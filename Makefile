@@ -99,6 +99,10 @@ clean:
 	rm -f PKGBUILD.aur *.tar.gz src/*.tar.gz *.pkg.tar.xz \
 	   -R src/dosh-*/ pkg/dosh/
 
+.PHONY: mrproper
+mrproper: clean
+	DO_CLEANUP=1 bash tests.sh
+
 .PHONY: aur
 aur: PKGBUILD.aur
 	makepkg --force --syncdeps -p $^
