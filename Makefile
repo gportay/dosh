@@ -51,6 +51,7 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dosh
 	rm -f $(DESTDIR)/etc/profile.d/dosh.sh
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
+	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
 	completionsdir=$$(pkg-config --define-variable=prefix=$(PREFIX) \
 	                             --variable=completionsdir \
 	                             bash-completion); \
