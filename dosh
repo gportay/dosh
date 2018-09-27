@@ -304,15 +304,18 @@ if $opt_i || $opt_s || [ "$#" -eq 0 ]; then
 	fi
 fi
 
+# Change to present working directory
+opts+=" --workdir $PWD"
+
 # Read command from stdin
 if $opt_s; then
-	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL ${shopts[*]} -s $(eval echo "${@// /\\\\ }")"
+	set -- "$DOSHELL" "${shopts[@]}" -s "$@"
 # Run command from arguments
 elif $opt_c; then
-	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL ${shopts[*]} -c '$*'"
+	set -- "$DOSHELL" "${shopts[@]}" -c "$*"
 # No command or invalid
 else
-	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL ${shopts[*]} $*"
+	set -- "$DOSHELL" "${shopts[@]}" "$@"
 fi
 
 # Execute in existing container
