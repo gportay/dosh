@@ -147,9 +147,9 @@ docker_rmi() {
 }
 
 is_shopt() {
-	# Do not handle -c, -i, -s and -o shoptname here
+	# Do not handle -o shoptname here
 	# sh (only)
-	if [[ "$1" =~ ^[-+][abefhmnuvxC]$ ]]; then
+	if [[ "$1" =~ ^[-+][abcefhimnsuvxC]$ ]]; then
 		return 0
 	fi
 
@@ -190,9 +190,6 @@ is_shopt_argument() {
 }
 
 shopts=()
-opt_i=false
-opt_s=false
-opt_c=false
 DOSH_DOCKERFILE="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 root=false
@@ -249,19 +246,11 @@ while [ "$#" -ne 0 ]; do
 		buildopts=()
 	elif is_shopt "$1"; then
 		shopts+=("$1")
+		eval "opt_${1:1:1}=1"
 	elif is_shopt_argument "$1"; then
 		shopts+=("$1" "$2")
+		eval "opt_${1:1:1}=\"$2\""
 		shift
-	elif [ "$1" = "-c" ]; then
-		shift
-		opt_c=true
-		break
-	elif [ "$1" = "-i" ]; then
-		opt_i=true
-	elif [ "$1" = "-s" ]; then
-		shift
-		opt_s=true
-		break
 	elif [ "$1" = "--" ]; then
 		shift
 		break
@@ -318,7 +307,8 @@ if ! $root; then
 fi
 
 # Set interactive
-if $opt_i || $opt_s || [ "$#" -eq 0 ]; then
+# shellcheck disable=SC2154
+if [[ $opt_i ]] || [[ $opt_s ]] || [ "$#" -eq 0 ]; then
 	opts+=("--interactive")
 
 	# Allocate a pseudo-TTY if stdin/stderr are TTY
@@ -330,13 +320,11 @@ fi
 # Change to present working directory
 opts+=("--workdir" "$PWD")
 
-# Read command from stdin
-if $opt_s; then
-	set -- "$DOSHELL" "${shopts[@]}" -s "$@"
 # Run command from arguments
-elif $opt_c; then
-	set -- "$DOSHELL" "${shopts[@]}" -c "$*"
-# No command or invalid
+# shellcheck disable=SC2154
+if [[ $opt_c ]]; then
+	set -- "$DOSHELL" "${shopts[@]}" "$*"
+# Read command from stdin or no command or invalid
 else
 	set -- "$DOSHELL" "${shopts[@]}" "$@"
 fi
