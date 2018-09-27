@@ -63,10 +63,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 *Docker related options*
 
-**-F or --dockerfile FILE**
+**--dockerfile FILE**
 	Path to the Dockerfile to use.
 
-**-C or --directory DIR**
+**--directory DIR**
 	Change to directory before doing anything else.
 
 **--root**
@@ -98,18 +98,18 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--tag**
 	Print docker tag and exit.
 
-**-N or --no-do**
+**--no-do**
 	Do nothing; echo docker commands.
 
 *Miscellaneous options*
 
-**-v or --verbose**
+**--verbose**
 	Turn on verbose mode.
 
-**-V or --version**
+**--version**
 	Print version.
 
-**-h or --help**
+**--help**
 	Print usage.
 
 == ENVIRONMENT VARIABLES
@@ -209,14 +209,14 @@ Read the contents outside the container
 
 Specify the *Dockerfile(5)* to use
 
-	$ dosh -F Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
+	$ dosh --dockerfile Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
 	sha256:44d9de323a55
 	NAME=Fedora
 
 Change to another _directory_ before doing anything else
 
 	$ cd /tmp
-	$ dosh -C "$OLDPWD" -c "grep '^NAME=' /etc/os-release"
+	$ dosh --directory "$OLDPWD" -c "grep '^NAME=' /etc/os-release"
 	NAME="Ubuntu"
 	$ cd -
 

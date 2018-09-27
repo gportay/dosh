@@ -75,9 +75,9 @@ rmi() {
 	fi
 	echo
 
-	run "dosh: Test --rmi option with -F option"
-	if   dosh --rmi -F Dockerfile.fedora && \
-	   ! dosh --rmi -F Dockerfile.fedora
+	run "dosh: Test --rmi option with --dockerfile option"
+	if   dosh --rmi --dockerfile Dockerfile.fedora && \
+	   ! dosh --rmi --dockerfile Dockerfile.fedora
 	then
 		ok
 	else
@@ -85,10 +85,10 @@ rmi() {
 	fi
 	echo
 
-	run "dosh: Test --rmi option with -C and -F option in a busybox based distro"
+	run "dosh: Test --rmi option with --directory and --dockerfile option in a busybox based distro"
 	if ( cd .. && dir="${OLDPWD##*/}" && \
-	       dosh --rmi -C "$dir" -F Dockerfile.alpine && \
-	     ! dosh --rmi -C "$dir" -F Dockerfile.alpine )
+	       dosh --rmi --directory "$dir" --dockerfile Dockerfile.alpine && \
+	     ! dosh --rmi --directory "$dir" --dockerfile Dockerfile.alpine )
 	then
 		ok
 	else
@@ -105,7 +105,7 @@ then
 fi
 
 run "dosh: Test with missing Dockerfile"
-if ! dosh -F Dockerfile.missing -c "echo Oops"
+if ! dosh --dockerfile Dockerfile.missing -c "echo Oops"
 then
 	ok
 else
@@ -294,8 +294,8 @@ else
 fi
 echo
 
-run "dosh: Test option -F"
-if dosh "$@" -F Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
+run "dosh: Test option --dockerfile"
+if dosh "$@" --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
 	grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -304,9 +304,9 @@ else
 fi
 echo
 
-run "dosh: Test option -C with relative path"
+run "dosh: Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
-     dosh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
 then
 	ok
@@ -315,9 +315,9 @@ else
 fi
 echo
 
-run "dosh: Test option -C with absolute path"
+run "dosh: Test option --directory with absolute path"
 if ( cd /tmp && dir="$OLDPWD" && \
-     dosh "$@" -C "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
 then
 	ok
@@ -410,7 +410,7 @@ fi
 echo
 
 run "dosh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
-if DOSHELL=/bin/ash dosh -F Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
+if DOSHELL=/bin/ash dosh --dockerfile Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
 then
 	ok
 else
@@ -437,8 +437,8 @@ else
 fi
 echo
 
-run "dosh: Test --tag option with -F option"
-if dosh --tag -F Dockerfile.fedora
+run "dosh: Test --tag option with --dockerfile option"
+if dosh --tag --dockerfile Dockerfile.fedora
 then
 	ok
 else
@@ -446,7 +446,7 @@ else
 fi
 echo
 
-run "dosh: Test --tag option with -C and -F option in a busybox based distro"
+run "dosh: Test --tag option with --directory and --dockerfile option in a busybox based distro"
 if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag )
 then
 	ok
@@ -456,7 +456,7 @@ fi
 echo
 
 run "dosh: Test when user is set in Dockerfile"
-if dosh -F Dockerfile.user -c "whoami"
+if dosh --dockerfile Dockerfile.user -c "whoami"
 then
 	ok
 else

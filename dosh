@@ -58,26 +58,26 @@ Zsh specific options:
                                 please refers to zsh help.
 
 Docker related options:
-      -F or --dockerfile FILE   Path to the Dockerfile to use.
-      -C or --directory DIR     Change to directory before doing anything else.
-            --root              Run as root.
-            --home              Bind mount home directory.
-            --sh                Set /bin/sh as default shell.
+      --dockerfile FILE         Path to the Dockerfile to use.
+      --directory DIR           Change to directory before doing anything else.
+      --root                    Run as root.
+      --home                    Bind mount home directory.
+      --sh                      Set /bin/sh as default shell.
                                 Equivalent to set DOSHELL=/bin/sh,
                                            or set --shell /bin/sh.
                                 This option is deprecated; use --shell instead.
-            --shell SHELL       Set shell interpretor.
-            --build             Build image.
-            --rmi               Remove image.
-            --detach            Detach container.
-            --exec CONTAINER    Execute in container.
-            --tag               Print docker tag and exit.
-      -N or --no-do             Do nothing; echo docker commands.
+      --shell SHELL             Set shell interpretor.
+      --build                   Build image.
+      --rmi                     Remove image.
+      --detach                  Detach container.
+      --exec CONTAINER          Execute in container.
+      --tag                     Print docker tag and exit.
+      --no-do                   Do nothing; echo docker commands.
 
 Miscellaneous options:
-      -v or --verbose           Turn on verbose mode.
-      -V or --version           Print version.
-      -h or --help              Print usage.
+      --verbose                 Turn on verbose mode.
+      --version                 Print version.
+      --help                    Print usage.
 
 Environment variables:
       DOCKER                    The docker executable.
@@ -207,16 +207,16 @@ verbose=false
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOCKER="${DOCKER:-docker}"
 while [ "$#" -ne 0 ]; do
-	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	if [ "$1" = "--help" ]; then
 		usage
 		exit 0
-	elif [ "$1" = "-V" ] || [ "$1" = "--version" ]; then
+	elif [ "$1" = "--version" ]; then
 		echo "$VERSION"
 		exit
-	elif [ "$1" = "-F" ] || [ "$1" = "--dockerfile" ]; then
+	elif [ "$1" = "--dockerfile" ]; then
 		shift
 		DOSH_DOCKERFILE="$1"
-	elif [ "$1" = "-C" ] || [ "$1" = "--directory" ]; then
+	elif [ "$1" = "--directory" ]; then
 		shift
 		directory="$1"
 	elif [ "$1" = "--root" ]; then
@@ -241,10 +241,10 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "--tag" ]; then
 		get_tag "$directory/$DOSH_DOCKERFILE"
 		exit
-	elif [ "$1" = "-N" ] || [ "$1" = "--no-do" ]; then
+	elif [ "$1" = "--no-do" ]; then
 		# shellcheck disable=SC2209
 		do=echo
-	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
+	elif [ "$1" = "--verbose" ]; then
 		verbose="true"
 		buildopts=()
 	elif is_shopt "$1"; then
