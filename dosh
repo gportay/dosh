@@ -42,6 +42,11 @@ POSIX Shell related options:
       +abefhmnuvxC or +o shopt  For a more thorough description of shopts,
                                 please refers to sh help.
 
+Bash specific options:
+      -klprtBDEHIPT or -O shopt,
+      +klprtBDEHIPT or +O shopt For a more thorough description of shopts,
+                                please refers to bash help.
+
 Docker related options:
       -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
@@ -138,12 +143,24 @@ is_shopt() {
 		return 0
 	fi
 
+	# bash (specific)
+	if [ "${DOSHELL##*/}" == "bash" ] &&
+	   [[ "$1" =~ ^[-+][klprtBDEHIPT]$ ]]; then
+		return 0
+	fi
+
 	return 1
 }
 
 is_shopt_argument() {
 	# sh (only)
 	if [[ "$1" =~ ^[-+][o]$ ]]; then
+		return 0
+	fi
+
+	# bash (specific)
+	if [ "${DOSHELL##*/}" == "bash" ] &&
+	   [[ "$1" =~ ^[-+]O$ ]]; then
 		return 0
 	fi
 

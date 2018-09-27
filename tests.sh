@@ -465,8 +465,8 @@ fi
 echo
 
 run "dosh: Test with shopt arguments using /bin/bash"
-if          dosh --shell /bin/bash -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
-   diff - <(/bin/bash              -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
+if          dosh --shell /bin/bash +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
+   diff - <(/bin/bash              +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
 then
 	ok
 else

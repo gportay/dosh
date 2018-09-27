@@ -45,6 +45,12 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **+abefhmnuvxC or +o shopt**
 	For a more thorough description of shopts, please refers to sh help.
 
+*Bash specific options:*
+
+**-klprtBDEHIPT** or **-O shopt**,
+**+klprtBDEHIPT** or **+O shopt**
+	For a more thorough description of shopts, please refers to bash help.
+
 *Docker related options*
 
 **-F or --dockerfile FILE**
