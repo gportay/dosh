@@ -121,7 +121,7 @@ docker_build() {
 	# shellcheck disable=SC2086
 	cat "$1" - <<EOF | \
 	sed -e '/^\(ADD\|COPY\|ENTRYPOINT\)/d' | \
-	$do $DOCKER build $buildopts --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
+	$do $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
 
 USER root
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
@@ -179,7 +179,8 @@ build=false
 rmi=false
 detach=false
 exec=false
-buildopts="--quiet"
+opts=()
+buildopts=("--quiet")
 verbose=false
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOCKER="${DOCKER:-docker}"
@@ -223,7 +224,7 @@ while [ "$#" -ne 0 ]; do
 		do=echo
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
 		verbose="true"
-		buildopts=
+		buildopts=()
 	elif is_shopt "$1"; then
 		shopts+=("$1")
 	elif is_shopt_argument "$1"; then
@@ -268,44 +269,44 @@ if ! $exec; then
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	imageid="$($DOCKER images -q "$tag")"
 	if $build || [ -z "$imageid" ]; then
-		[ -n "$imageid" ] || buildopts=
+		[ -n "$imageid" ] || buildopts=()
 		docker_build "$DOSH_DOCKERFILE" "$tag" >&2
 	fi
 
 	# Detach container
 	if $detach; then
-		opts="--detach"
+		opts+=("--detach")
 	# Remove the container at exit
 	else
-		opts="--rm"
+		opts+=("--rm")
 	fi
 
 	# Bind mount home
 	if $home; then
-		opts+=" --volume $HOME:/home/$USER"
+		opts+=("--volume" "$HOME:/home/$USER")
 	# Bind mount current working directory
 	else
-		opts+=" --volume $PWD:$PWD"
+		opts+=("--volume" "$PWD:$PWD")
 	fi
 fi
 
 # Set current user privileges
 if ! $root; then
-	opts+=" --user $UID:${GROUPS[0]}"
+	opts+=("--user" "$UID:${GROUPS[0]}")
 fi
 
 # Set interactive
 if $opt_i || $opt_s || [ "$#" -eq 0 ]; then
-	opts+=" --interactive"
+	opts+=("--interactive")
 
 	# Allocate a pseudo-TTY if stdin/stderr are TTY
 	if [ -t 0 ] && [ -t 2 ]; then
-		opts+=" --tty"
+		opts+=("--tty")
 	fi
 fi
 
 # Change to present working directory
-opts+=" --workdir $PWD"
+opts+=("--workdir" "$PWD")
 
 # Read command from stdin
 if $opt_s; then
@@ -321,12 +322,12 @@ fi
 # Execute in existing container
 # shellcheck disable=SC2086
 if $exec; then
-	exec $do $DOCKER exec $opts $DOSH_DOCKER_EXEC_EXTRA_OPTS "$container" "$@"
+	exec $do $DOCKER exec "${opts[@]}" $DOSH_DOCKER_EXEC_EXTRA_OPTS "$container" "$@"
 # Run in a new container
 else
-	opts+=" --env DOSHLVL=$((DOSHLVL+1))"
+	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
 	if $verbose; then
 		echo "$tag"
 	fi >&2
-	exec $do $DOCKER run $opts $DOSH_DOCKER_RUN_EXTRA_OPTS "$tag" "$@"
+	exec $do $DOCKER run "${opts[@]}" $DOSH_DOCKER_RUN_EXTRA_OPTS "$tag" "$@"
 fi
