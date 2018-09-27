@@ -38,6 +38,9 @@ POSIX Shell related options:
       -c                        Read commands from command-line.
       -i                        Set interactive.
       -s                        Read commands from standard-input.
+      -abefhmnuvxC or -o shopt, 
+      +abefhmnuvxC or +o shopt  For a more thorough description of shopts,
+                                please refers to sh help.
 
 Docker related options:
       -F or --dockerfile FILE   Path to the Dockerfile to use.
@@ -128,6 +131,26 @@ docker_rmi() {
 	$do $DOCKER rmi $DOSH_DOCKER_RMI_EXTRA_OPTS "$1"
 }
 
+is_shopt() {
+	# Do not handle -c, -i, -s and -o shoptname here
+	# sh (only)
+	if [[ "$1" =~ ^[-+][abefhmnuvxC]$ ]]; then
+		return 0
+	fi
+
+	return 1
+}
+
+is_shopt_argument() {
+	# sh (only)
+	if [[ "$1" =~ ^[-+][o]$ ]]; then
+		return 0
+	fi
+
+	return 1
+}
+
+shopts=()
 opt_i=false
 opt_s=false
 opt_c=false
@@ -184,6 +207,11 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
 		verbose="true"
 		buildopts=
+	elif is_shopt "$1"; then
+		shopts+=("$1")
+	elif is_shopt_argument "$1"; then
+		shopts+=("$1" "$2")
+		shift
 	elif [ "$1" = "-c" ]; then
 		shift
 		opt_c=true
@@ -261,13 +289,13 @@ fi
 
 # Read command from stdin
 if $opt_s; then
-	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL -s $(eval echo "${@// /\\\\ }")"
+	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL ${shopts[*]} -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
-	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL -c '$*'"
+	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL ${shopts[*]} -c '$*'"
 # No command or invalid
 else
-	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL $*"
+	set -- "$DOSHELL" -c "cd $PWD && $DOSHELL ${shopts[*]} $*"
 fi
 
 # Execute in existing container

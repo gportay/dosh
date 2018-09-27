@@ -41,6 +41,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **-s**
 	Read commands from standard-input.
 
+**-abefhmnuvxC or -o shopt**,
+**+abefhmnuvxC or +o shopt**
+	For a more thorough description of shopts, please refers to sh help.
+
 *Docker related options*
 
 **-F or --dockerfile FILE**

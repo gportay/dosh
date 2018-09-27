@@ -464,6 +464,34 @@ else
 fi
 echo
 
+run "dosh: Test with shopt arguments using /bin/bash"
+if          dosh --shell /bin/bash -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
+   diff - <(/bin/bash              -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test without pipefail bashopt argument"
+if dosh --shell /bin/bash -c 'false | true'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test with pipefail bashopt argument"
+if ! dosh --shell /bin/bash -o pipefail -c 'false | true'
+then
+	ok
+else
+	ko
+fi
+echo
+
 if [ -n "$DO_RMI_TESTS" ]
 then
 	rmi
