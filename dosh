@@ -51,6 +51,12 @@ Dash specific options:
       -pEIV, +pEIV              For a more thorough description of shopts,
                                 please refers to dash help.
 
+Zsh specific options:
+      -0123456789dgklprtxyBDEFGHIJKLMNOPQRSTUVWXYZ,
+      +0123456789dgklprtxyBDEFGHIJKLMNOPQRSTUVWXYZ
+                                For a more thorough description of shopts,
+                                please refers to zsh help.
+
 Docker related options:
       -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
@@ -156,6 +162,12 @@ is_shopt() {
 	# dash (specific)
 	if [ "${DOSHELL##*/}" == "dash" ] &&
 	   [[ "$1" =~ ^[-+][pEIV]$ ]]; then
+		return 0
+	fi
+
+	# zsh (specific)
+	if [ "${DOSHELL##*/}" == "zsh" ] &&
+	   [[ "$1" =~ ^[-+][0123456789dgklprtxyBDEFGHIJKLMNOPQRSTUVWXYZ]$ ]]; then
 		return 0
 	fi
 

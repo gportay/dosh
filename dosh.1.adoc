@@ -56,6 +56,11 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **-pEIV**, **+pEIV**
 	For a more thorough description of shopts, please refers to dash help.
 
+**Zsh specific options:**
+**-0123456789dgklprtxyBDEFGHIJKLMNOPQRSTUVWXYZ,**
+**+0123456789dgklprtxyBDEFGHIJKLMNOPQRSTUVWXYZ**
+	For a more thorough description of shopts, please refers to zsh help.
+
 *Docker related options*
 
 **-F or --dockerfile FILE**
