@@ -51,6 +51,11 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **+klprtBDEHIPT** or **+O shopt**
 	For a more thorough description of shopts, please refers to bash help.
 
+*Dash specific options:*
+
+**-pEIV**, **+pEIV**
+	For a more thorough description of shopts, please refers to dash help.
+
 *Docker related options*
 
 **-F or --dockerfile FILE**

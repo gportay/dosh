@@ -47,6 +47,10 @@ Bash specific options:
       +klprtBDEHIPT or +O shopt For a more thorough description of shopts,
                                 please refers to bash help.
 
+Dash specific options:
+      -pEIV, +pEIV              For a more thorough description of shopts,
+                                please refers to dash help.
+
 Docker related options:
       -F or --dockerfile FILE   Path to the Dockerfile to use.
       -C or --directory DIR     Change to directory before doing anything else.
@@ -146,6 +150,12 @@ is_shopt() {
 	# bash (specific)
 	if [ "${DOSHELL##*/}" == "bash" ] &&
 	   [[ "$1" =~ ^[-+][klprtBDEHIPT]$ ]]; then
+		return 0
+	fi
+
+	# dash (specific)
+	if [ "${DOSHELL##*/}" == "dash" ] &&
+	   [[ "$1" =~ ^[-+][pEIV]$ ]]; then
 		return 0
 	fi
 

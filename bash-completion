@@ -118,6 +118,9 @@ _dosh()
 	bash)
 		shopts+=" -O -k -l -p -r -t -B -D -E -H -I -P -T"
 		;;
+	dash)
+		shopts+=" -p -E -I -V"
+		;;
 	esac
 
 	if [[ "$cur" == -* ]]; then
