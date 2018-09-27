@@ -192,15 +192,8 @@ is_shopt_argument() {
 shopts=()
 DOSH_DOCKERFILE="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
-root=false
-home=false
-build=false
-rmi=false
-detach=false
-exec=false
 opts=()
 buildopts=("--quiet")
-verbose=false
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOCKER="${DOCKER:-docker}"
 while [ "$#" -ne 0 ]; do
@@ -267,7 +260,7 @@ if [ -e ".doshrc" ]; then
 	. .doshrc
 fi
 
-if $rmi; then
+if [[ $rmi ]]; then
 	# Remove image if exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	docker_rmi "$tag" >&2
@@ -275,17 +268,17 @@ if $rmi; then
 fi
 
 # Run in a new container
-if ! $exec; then
+if ! [[ $exec ]]; then
 	# Rebuild or automatically build image if it does not exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	imageid="$($DOCKER images -q "$tag")"
-	if $build || [ -z "$imageid" ]; then
-		[ -n "$imageid" ] || buildopts=()
+	if [[ $build ]] || ! [[ $imageid ]]; then
+		[[ $imageid ]] || buildopts=()
 		docker_build "$DOSH_DOCKERFILE" "$tag" >&2
 	fi
 
 	# Detach container
-	if $detach; then
+	if [[ $detach ]]; then
 		opts+=("--detach")
 	# Remove the container at exit
 	else
@@ -293,7 +286,7 @@ if ! $exec; then
 	fi
 
 	# Bind mount home
-	if $home; then
+	if [[ $home ]]; then
 		opts+=("--volume" "$HOME:/home/$USER")
 	# Bind mount current working directory
 	else
@@ -302,7 +295,7 @@ if ! $exec; then
 fi
 
 # Set current user privileges
-if ! $root; then
+if ! [[ $root ]]; then
 	opts+=("--user" "$UID:${GROUPS[0]}")
 fi
 
@@ -331,12 +324,12 @@ fi
 
 # Execute in existing container
 # shellcheck disable=SC2086
-if $exec; then
+if [[ $exec ]]; then
 	exec $do $DOCKER exec "${opts[@]}" $DOSH_DOCKER_EXEC_EXTRA_OPTS "$container" "$@"
 # Run in a new container
 else
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
-	if $verbose; then
+	if [[ $verbose ]]; then
 		echo "$tag"
 	fi >&2
 	exec $do $DOCKER run "${opts[@]}" $DOSH_DOCKER_RUN_EXTRA_OPTS "$tag" "$@"
