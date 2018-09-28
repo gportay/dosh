@@ -235,7 +235,7 @@ while [ "$#" -ne 0 ]; do
 		# shellcheck disable=SC2209
 		do=echo
 	elif [ "$1" = "--verbose" ]; then
-		verbose="true"
+		verbose=true
 		buildopts=()
 	elif is_shopt "$1"; then
 		shopts+=("$1")
