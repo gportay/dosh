@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -104,6 +104,16 @@ echo
 run "dosh: Test option -c command arguments"
 if          dosh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
    diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test option -c with commands and arguments"
+if          dosh "$@"  -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
+   diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
 then
 	ok
 else

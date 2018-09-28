@@ -256,7 +256,9 @@ if $opt_s; then
 	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
-	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -c '$*'"
+	command="$1"
+	shift
+	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL -c '$command' $*"
 # No command or invalid
 else
 	set -- "$DOSHELL" -c "cd $dwd && $DOSHELL $*"
