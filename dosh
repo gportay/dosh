@@ -142,6 +142,22 @@ docker_rmi() {
 	$do $DOCKER rmi $DOSH_DOCKER_RMI_EXTRA_OPTS "$1"
 }
 
+is_doshopt() {
+	if [[ "$1" =~ ^--(root|home|build|rmi|detach)$ ]]; then
+		return 0
+	fi
+
+	return 1
+}
+
+is_doshopt_argument() {
+	if [[ "$1" =~ ^--(dockerfile|directory|shell|detach|exec)$ ]]; then
+		return 0
+	fi
+
+	return 1
+}
+
 is_shopt() {
 	# Do not handle -o shoptname here
 	# sh (only)
@@ -186,7 +202,7 @@ is_shopt_argument() {
 }
 
 shopts=()
-DOSH_DOCKERFILE="${DOSH_DOCKERFILE:-Dockerfile}"
+dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 opts=()
 buildopts=("--quiet")
@@ -199,31 +215,13 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "--version" ]; then
 		echo "$VERSION"
 		exit
-	elif [ "$1" = "--dockerfile" ]; then
+	elif is_doshopt "$1"; then
+		eval "${1:2}=1"
+	elif is_doshopt_argument "$1"; then
+		eval "${1:2}=\"$2\""
 		shift
-		DOSH_DOCKERFILE="$1"
-	elif [ "$1" = "--directory" ]; then
-		shift
-		directory="$1"
-	elif [ "$1" = "--root" ]; then
-		root=true
-	elif [ "$1" = "--home" ]; then
-		home=true
-	elif [ "$1" = "--shell" ]; then
-		shift
-		DOSHELL="$1"
-	elif [ "$1" = "--build" ]; then
-		build=true
-	elif [ "$1" = "--rmi" ]; then
-		rmi=true
-	elif [ "$1" = "--detach" ]; then
-		detach=true
-	elif [ "$1" = "--exec" ]; then
-		shift
-		container="$1"
-		exec=true
 	elif [ "$1" = "--tag" ]; then
-		get_tag "$directory/$DOSH_DOCKERFILE"
+		get_tag "$directory/$dockerfile"
 		exit
 	elif [ "$1" = "--no-do" ]; then
 		# shellcheck disable=SC2209
@@ -247,6 +245,17 @@ while [ "$#" -ne 0 ]; do
 	shift
 done
 
+# Apply dosh options to dosh environment variables
+# --shell SHELL to DOSHELL
+# shellcheck disable=SC2154
+if [[ $shell ]]; then
+	DOSHELL="$shell"
+fi
+# --dockerfile FILE to DOSH_DOCKERFILE
+if [[ $dockerfile ]]; then
+	DOSH_DOCKERFILE="$dockerfile"
+fi
+
 # Change directory
 cd "$directory"
 
@@ -254,6 +263,7 @@ if [ -e ".doshrc" ]; then
 	. .doshrc
 fi
 
+# shellcheck disable=SC2154
 if [[ $rmi ]]; then
 	# Remove image if exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
@@ -262,6 +272,7 @@ if [[ $rmi ]]; then
 fi
 
 # Run in a new container
+# shellcheck disable=SC2154
 if ! [[ $exec ]]; then
 	# Rebuild or automatically build image if it does not exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
@@ -289,6 +300,7 @@ if ! [[ $exec ]]; then
 fi
 
 # Set current user privileges
+# shellcheck disable=SC2154
 if ! [[ $root ]]; then
 	opts+=("--user" "$UID:${GROUPS[0]}")
 fi
@@ -319,7 +331,7 @@ fi
 # Execute in existing container
 # shellcheck disable=SC2086
 if [[ $exec ]]; then
-	exec $do $DOCKER exec "${opts[@]}" $DOSH_DOCKER_EXEC_EXTRA_OPTS "$container" "$@"
+	exec $do $DOCKER exec "${opts[@]}" $DOSH_DOCKER_EXEC_EXTRA_OPTS "$exec" "$@"
 # Run in a new container
 else
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
