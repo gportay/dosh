@@ -5,11 +5,11 @@ pkgver=1.0.1
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
-url="https://github.com/gazoo74/$pkgname"
+url="https://github.com/gportay/$pkgname"
 license=('MIT')
 depends=('docker')
 makedepends=('asciidoctor')
-source=("https://github.com/gazoo74/$pkgname/archive/$pkgver.tar.gz")
+source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz")
 md5sums=('dd7952566643a7e7176d91864db1e001')
 
 build() {
