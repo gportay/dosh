@@ -227,7 +227,7 @@ Enjoy!
 
 ## BUGS
 
-Report bugs at *https://github.com/gazoo74/dosh/issues*
+Report bugs at *https://github.com/gportay/dosh/issues*
 
 ## AUTHOR
 
