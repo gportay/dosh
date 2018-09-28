@@ -6,8 +6,15 @@
 
 ## DESCRIPTION
 
-[dosh] runs the _command_ process in a container; using the current _user_, with
-_pwd_ bind mounted.
+[dosh(1)] is an _sh-compatible_ frontend that runs commands in a [docker]
+container; using the current _user_, with _pwd_ bind mounted.
+
+Commands are read either from the standard input or from a file or from command
+line using one of the standard shell invocations (i.e. thanks to options `-c`,
+`-i`, `-s` or without arguments).
+
+Think [dosh(1)] as a _shell_ frontend wrapper on top of _docker-run(1)_ written
+in _bash_.
 
 ## DOCUMENTATION
 
