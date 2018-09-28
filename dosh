@@ -193,7 +193,9 @@ if $opt_s; then
 	set -- "$SHELL" -c "cd $dwd && $SHELL -s $(eval echo "${@// /\\\\ }")"
 # Run command from arguments
 elif $opt_c; then
-	set -- "$SHELL" -c "cd $dwd && $SHELL -c '$*'"
+	command="$1"
+	shift
+	set -- "$SHELL" -c "cd $dwd && $SHELL -c '$command' $*"
 # No command or invalid
 else
 	set -- "$SHELL" -c "cd $dwd && $SHELL $*"

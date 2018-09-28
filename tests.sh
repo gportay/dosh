@@ -107,6 +107,16 @@ else
 fi
 echo
 
+run "dosh: Test option -c with commands and arguments"
+if          dosh "$@"  -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
+   diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test option -s without arguments"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@" -s | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh   -s | tee /dev/stderr )
