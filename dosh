@@ -62,10 +62,6 @@ Docker related options:
       --directory DIR           Change to directory before doing anything else.
       --root                    Run as root.
       --home                    Bind mount home directory.
-      --sh                      Set /bin/sh as default shell.
-                                Equivalent to set DOSHELL=/bin/sh,
-                                           or set --shell /bin/sh.
-                                This option is deprecated; use --shell instead.
       --shell SHELL             Set shell interpretor.
       --build                   Build image.
       --rmi                     Remove image.
@@ -213,8 +209,6 @@ while [ "$#" -ne 0 ]; do
 		root=true
 	elif [ "$1" = "--home" ]; then
 		home=true
-	elif [ "$1" = "--sh" ]; then
-		DOSHELL="/bin/sh"
 	elif [ "$1" = "--shell" ]; then
 		shift
 		DOSHELL="$1"

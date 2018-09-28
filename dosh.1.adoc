@@ -75,11 +75,6 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--home**
 	Bind mount home directory.
 
-**--sh**
-	Set /bin/sh as default shell.
-	Equivalent to set DOSHELL=/bin/sh or set --shell /bin/sh.
-	This option is deprecated; use **--shell** instead.
-
 **--shell SHELL**
 	Set shell interpretor.
 
@@ -268,7 +263,7 @@ Use _/bin/sh_ as default _$SHELL_
 	$ echo $0
 	bash
 
-	$ dosh --sh
+	$ dosh --shell /bin/sh
 	$ echo $0
 	/bin/sh
 
