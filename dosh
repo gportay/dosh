@@ -326,7 +326,9 @@ opts+=("--workdir" "$PWD")
 # Run command from arguments
 # shellcheck disable=SC2154
 if [[ $opt_c ]]; then
-	set -- "$DOSHELL" "${shopts[@]}" "$*"
+	command="$1"
+	shift
+	set -- "$DOSHELL" "${shopts[@]}" "$command" "$@"
 # Read command from stdin or no command or invalid
 else
 	set -- "$DOSHELL" "${shopts[@]}" "$@"
