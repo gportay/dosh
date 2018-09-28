@@ -123,7 +123,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c without arguments"
+run "dosh: Test option -c without command"
 if          dosh "$@"  -c | tee /dev/stderr | \
    diff - <(/bin/sh    -c | tee /dev/stderr )
 then
@@ -133,7 +133,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c with empty argument"
+run "dosh: Test option -c with empty command"
 if          dosh "$@"  -c '' | tee /dev/stderr | \
    diff - <(/bin/sh    -c '' | tee /dev/stderr )
 then
@@ -143,7 +143,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c command arguments"
+run "dosh: Test option -c with commands"
 if          dosh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
    diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then

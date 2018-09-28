@@ -12,7 +12,11 @@ dosh - run a user shell in a container with pwd bind mounted
 
 == SYNOPSIS
 
-*dosh* [OPTIONS] [COMMAND] [ARG...]
+*dosh*    [(-|\+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
+
+*dosh* -c [(-|\+)abefhmnuvxC] [(-|+)o shopt] COMMAND [NAME [ARGS...]]
+
+*dosh* -s [(-|\+)abefhmnuvxC] [(-|+)o shopt]               [ARGS...]
 
 == DESCRIPTION
 
