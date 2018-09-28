@@ -2,12 +2,12 @@
 
 ## NAME
 
-[dosh](dosh.1.adoc) - run a user shell in a container with pwd bind mounted
+[dosh][dosh(1)] - run a user shell in a container with pwd bind mounted
 
 ## DESCRIPTION
 
-[dosh](dosh) runs the _command_ process in a container; using the current
-_user_, with _pwd_ bind mounted.
+[dosh] runs the _command_ process in a container; using the current _user_, with
+_pwd_ bind mounted.
 
 ## DOCUMENTATION
 
@@ -46,9 +46,9 @@ or
 
 ### Default Shell Interpreter
 
-[dosh(1)](dosh.1.adoc) uses `/bin/sh` as default interpreter as it is the only
-reliable Shell available. The default interpreter can be set by option
-`--shell SHELL`; but it needs to be set to every call to *dosh*.
+[dosh(1)] uses `/bin/sh` as default interpreter as it is the only reliable Shell
+available. The default interpreter can be set by option `--shell SHELL`; but it
+needs to be set to every call to *dosh*.
 
 	dosh --shell /bin/bash
 
@@ -64,11 +64,10 @@ Adding these two following lines to the Shell `~/.profile` tells *dosh* to uses
 
 ### Docker extra options
 
-Every single [docker(1)](https://github.com/docker/docker) command performed in
-[dosh(1)](dosh.1.adoc) can be customized by passing extra arguments thanks its
-corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS** environment variable. **xxx**
-represents one of the *docker* commands used in *dosh* (*build*, *rmi*, *run*
-and *exec*).
+Every single [docker(1)][docker] command performed in [dosh(1)] can be customized by
+passing extra arguments thanks its corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS**
+environment variable. **xxx** represents one of the *docker* commands used in
+*dosh* (*build*, *rmi*, *run* and *exec*).
 
 _Note:_ Only `DOSH_DOCKER_RUN_EXTRA_OPTS` is relevant for interactive usage.
 
@@ -201,7 +200,7 @@ Lines beside `[ -z "$DOSHLVL" ] || return` are applied in the container.
 
 ## LINKS
 
-Check for [man-pages](dosh.1.adoc) and its [examples](dosh.1.adoc#examples).
+Check for [man-pages][dosh(1)] and its [examples].
 
 Also, here is an extra example that builds the documentation
 
@@ -234,4 +233,8 @@ Copyright (c) 2017-2018 Gaël PORTAY
 This program is free software: you can redistribute it and/or modify it under
 the terms of the MIT License.
 
+[docker]: https://github.com/docker/docker
+[dosh]: dosh
+[dosh(1)]: dosh.1.adoc
+[examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
