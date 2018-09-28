@@ -259,10 +259,12 @@ fi
 # Change directory
 cd "$directory"
 
+# Source local profile
 if [ -e ".doshrc" ]; then
 	. .doshrc
 fi
 
+# Remove image and exit
 # shellcheck disable=SC2154
 if [[ $rmi ]]; then
 	# Remove image if exist
