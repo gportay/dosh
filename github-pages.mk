@@ -2,7 +2,7 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,7 @@ Gemfile:
 	cat $@.tmp >>$@
 	rm -f $@.tmp
 
+.SILENT: _config.yml
 _config.yml:
 	echo "theme: jekyll-theme-cayman" >$@.tmp
 	cat $@.tmp >>$@
@@ -53,9 +54,7 @@ update: bundle-update
 .SILENT: install
 .PHONY: install
 install:
-	if ! which bundler >/dev/null 2>&1; then \
-		gem install bundler; \
-	fi
+	gem install bundler
 
 .PHONY: clean
 clean:
@@ -68,3 +67,4 @@ bundle-update:
 bundle-%: Gemfile
 	bundle $* $(BUNDLEFLAGS)
 
+# ex: filetype=make
