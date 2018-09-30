@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2019 Gaël PORTAY <gael.portay@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -65,6 +65,7 @@ Docker related options:
       --root                    Run as root.
       --home                    Bind mount home directory.
       --shell SHELL             Set shell interpretor.
+                                Equivalent to set DOSHELL=SHELL.
       --build                   Build image.
       --rmi                     Remove image.
       --detach                  Detach container.
