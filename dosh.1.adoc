@@ -81,6 +81,7 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--shell SHELL**
 	Set shell interpretor.
+	Equivalent to set DOSHELL=SHELL.
 
 **--build**
 	Build image.
