@@ -246,11 +246,11 @@ Report bugs at *https://github.com/gportay/dosh/issues*
 
 ## AUTHOR
 
-Written by Gaël PORTAY *gael.portay@savoirfairelinux.com*
+Written by Gaël PORTAY *gael.portay@gmail.com*
 
 ## COPYRIGHT
 
-Copyright (c) 2017-2018 Gaël PORTAY
+Copyright (c) 2017-2019 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the MIT License.

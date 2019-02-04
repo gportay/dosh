@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2019 Gaël PORTAY <gael.portay@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -114,23 +114,40 @@ get_tag() {
 }
 
 docker_build() {
+	local iid
+	local path
+
 	if [ -n "$DOSH_NOBUILD" ]; then
 		return
 	fi
 
 	lineno=0
 	while read -r -a words; do
-		if [[ ${words[0]} =~ ADD|COPY|ENTRYPOINT ]]; then
+		if [[ ${words[0]} =~ ADD|COPY ]]; then
+			echo "Info: ADD or COPY sends build context to daemon" >&2
+			path="."
+		elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
 			echo "Warning: Ignoring line #$lineno: \`${words[*]}'"
 		fi
 		lineno=$((lineno+1))
 	done <"$1" >&2
 	unset lineno
 
+	# Build inital image
+	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	# shellcheck disable=SC2086
-	cat "$1" - <<EOF | \
-	sed -e '/^\(ADD\|COPY\|ENTRYPOINT\)/d' | \
-	$do $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
+	if [[ $path ]]; then
+		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid "$path"
+	else
+		$do $DOCKER build "${buildopts[@]}" --iidfile .iid - <"$1"
+	fi
+
+	# Build final image
+	# Inject both user and group id.
+	iid="$(cat .iid)"
+	# shellcheck disable=SC2086
+	cat - <<EOF | $do $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
+FROM $iid
 
 USER root
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
