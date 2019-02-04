@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2018 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Copyright (c) 2017-2019 Gaël PORTAY <gael.portay@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -465,8 +465,8 @@ fi
 echo
 
 run "dosh: Test with shopt arguments using /bin/bash"
-if          dosh --shell /bin/bash +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
-   diff - <(/bin/bash              +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
+if          dosh --shell /bin/bash +B -x -o errexit +h -O globasciiranges -O checkwinsize -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
+   diff - <(/bin/bash              +B -x -o errexit +h -O globasciiranges -O checkwinsize -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
 then
 	ok
 else
