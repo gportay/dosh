@@ -152,7 +152,7 @@ FROM $iid
 USER root
 RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
  || addgroup -g ${GROUPS[0]} $USER
-RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
+RUN useradd  --non-unique --group $USER --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
  || adduser  -G $USER -u $UID -h $HOME -s /bin/sh -D $USER
 EOF
 }
