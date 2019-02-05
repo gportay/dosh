@@ -300,7 +300,10 @@ if ! [[ $exec ]]; then
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	imageid="$($DOCKER images -q "$tag")"
 	if [[ $build ]] || ! [[ $imageid ]]; then
-		[[ $imageid ]] || buildopts=()
+		# Reset quiet option when image does not exist or if verbose option is set
+		if ! [[ $imageid ]] || [[ $verbose ]]; then
+			buildopts=()
+		fi	
 		docker_build "$DOSH_DOCKERFILE" "$tag" >&2
 	fi
 
