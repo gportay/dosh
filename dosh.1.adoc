@@ -70,6 +70,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--dockerfile FILE**
 	Path to the Dockerfile to use.
 
+**--context TAR**
+	Path to the context to send to docker daemon.
+
 **--directory DIR**
 	Change to directory before doing anything else.
 

@@ -314,6 +314,30 @@ else
 fi
 echo
 
+run "dosh: Test option --context"
+tar cf context.tar Dockerfile
+if dosh "$@" --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
+   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+then
+	ok
+else
+	ko
+fi
+echo
+rm context.tar
+
+run "dosh: Test option --context with --dockerfile"
+tar cf context.tar Dockerfile.fedora
+if dosh "$@" --build --dockerfile Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
+   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+then
+	ok
+else
+	ko
+fi
+echo
+rm context.tar
+
 run "dosh: Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
      dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \

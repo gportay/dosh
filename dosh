@@ -61,6 +61,7 @@ Zsh specific options:
 
 Docker related options:
       --dockerfile FILE         Path to the Dockerfile to use.
+      --context TAR             Path to the context to send to docker daemon.
       --directory DIR           Change to directory before doing anything else.
       --root                    Run as root.
       --home                    Bind mount home directory.
@@ -116,22 +117,27 @@ get_tag() {
 docker_build() {
 	local iid
 	local path
+	local context_file
 
 	if [ -n "$DOSH_NOBUILD" ]; then
 		return
 	fi
 
-	lineno=0
-	while read -r -a words; do
-		if [[ ${words[0]} =~ ADD|COPY ]]; then
-			echo "Info: ADD or COPY sends build context to daemon" >&2
-			path="."
-		elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
-			echo "Info: ENTRYPOINT is overridden by dosh" >&2
-		fi
-		lineno=$((lineno+1))
-	done <"$1" >&2
-	unset lineno
+	context_file="$3"
+	if ! [[ $context_file ]]; then
+		context_file="$1"
+		lineno=0
+		while read -r -a words; do
+			if [[ ${words[0]} =~ ADD|COPY ]]; then
+				echo "Info: ADD or COPY sends build context to daemon" >&2
+				path="."
+			elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
+				echo "Info: ENTRYPOINT is overridden by dosh" >&2
+			fi
+			lineno=$((lineno+1))
+		done <"$1" >&2
+		unset lineno
+	fi
 
 	# Build inital image
 	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
@@ -139,7 +145,7 @@ docker_build() {
 	if [[ $path ]]; then
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid "$path"
 	else
-		$do $DOCKER build "${buildopts[@]}" --iidfile .iid - <"$1"
+		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid - <"$context_file"
 	fi
 
 	# Build final image
@@ -171,7 +177,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|directory|shell|detach|exec)$ ]]; then
+	if [[ "$1" =~ ^--(dockerfile|context|directory|shell|detach|exec)$ ]]; then
 		return 0
 	fi
 
@@ -304,7 +310,7 @@ if ! [[ $exec ]]; then
 		if ! [[ $imageid ]] || [[ $verbose ]]; then
 			buildopts=()
 		fi	
-		docker_build "$DOSH_DOCKERFILE" "$tag" >&2
+		docker_build "$DOSH_DOCKERFILE" "$tag" "$context" >&2
 	fi
 
 	# Detach container
