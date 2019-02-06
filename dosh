@@ -127,7 +127,7 @@ docker_build() {
 			echo "Info: ADD or COPY sends build context to daemon" >&2
 			path="."
 		elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
-			echo "Warning: Ignoring line #$lineno: \`${words[*]}'"
+			echo "Info: ENTRYPOINT is overridden by dosh" >&2
 		fi
 		lineno=$((lineno+1))
 	done <"$1" >&2
@@ -349,19 +349,20 @@ opts+=("--workdir" "$PWD")
 if [[ $opt_c ]]; then
 	command="$1"
 	shift
-	set -- "$DOSHELL" "${shopts[@]}" "$command" "$@"
+	set -- "${shopts[@]}" "$command" "$@"
 # Read command from stdin or no command or invalid
 else
-	set -- "$DOSHELL" "${shopts[@]}" "$@"
+	set -- "${shopts[@]}" "$@"
 fi
 
 # Execute in existing container
 # shellcheck disable=SC2086
 if [[ $exec ]]; then
-	exec $do $DOCKER exec "${opts[@]}" $DOSH_DOCKER_EXEC_EXTRA_OPTS "$exec" "$@"
+	exec $do $DOCKER exec "${opts[@]}" $DOSH_DOCKER_EXEC_EXTRA_OPTS "$exec" "$DOSHELL" "$@"
 # Run in a new container
 else
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
+	opts+=("--entrypoint" "$DOSHELL")
 	if [[ $verbose ]]; then
 		echo "$tag"
 	fi >&2
