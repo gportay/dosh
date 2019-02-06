@@ -129,10 +129,10 @@ docker_build() {
 		lineno=0
 		while read -r -a words; do
 			if [[ ${words[0]} =~ ADD|COPY ]]; then
-				echo "Info: ADD or COPY sends build context to daemon" >&2
+				echo "Info: ADD or COPY sends build context to daemon"
 				path="."
 			elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
-				echo "Info: ENTRYPOINT is overridden by dosh" >&2
+				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
 			lineno=$((lineno+1))
 		done <"$1" >&2
