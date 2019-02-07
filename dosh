@@ -117,12 +117,14 @@ get_tag() {
 docker_build() {
 	local iid
 	local path
+	local files
 	local context_file
 
 	if [ -n "$DOSH_NOBUILD" ]; then
 		return
 	fi
 
+	files=("$1")
 	context_file="$3"
 	if ! [[ $context_file ]]; then
 		context_file="$1"
@@ -130,6 +132,8 @@ docker_build() {
 		while read -r -a words; do
 			if [[ ${words[0]} =~ ADD|COPY ]]; then
 				echo "Info: ADD or COPY sends build context to daemon"
+				files+=("${words[@]:1}")
+				unset 'files[-1]'
 				path="."
 			elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
@@ -143,6 +147,8 @@ docker_build() {
 	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	# shellcheck disable=SC2086
 	if [[ $path ]]; then
+		echo "Info: Consider option --context <TAR> to speed up the build of image, and run" >&2
+		echo "      tar cf context.tar ${files[*]}" >&2
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid "$path"
 	else
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid - <"$context_file"
