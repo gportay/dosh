@@ -220,9 +220,13 @@ while [ "$#" -ne 0 ]; do
 		echo "$VERSION"
 		exit
 	elif is_doshopt "$1"; then
-		eval "${1:2}=1"
+		optname="${1//-/_}"
+		optname="${optname:2}"
+		eval "$optname=1"
 	elif is_doshopt_argument "$1"; then
-		eval "${1:2}=\"$2\""
+		optname="${1//-/_}"
+		optname="${optname:2}"
+		eval "$optname=\"$2\""
 		shift
 	elif [ "$1" = "--tag" ]; then
 		get_tag "$directory/$dockerfile"
