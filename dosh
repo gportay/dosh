@@ -129,8 +129,6 @@ docker_build() {
 		context_file="$1"
 		while read -r -a words; do
 			if [[ ${words[0]} =~ ADD|COPY ]]; then
-				echo "Info: ADD or COPY sends build context to daemon"
-
 				# Remove keyword and destination path
 				unset 'words[0]'
 				unset 'words[-1]'
@@ -154,7 +152,8 @@ docker_build() {
 	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	# shellcheck disable=SC2086
 	if [[ ${#files[@]} -gt 1 ]]; then
-		echo "Info: Consider option --context <TAR> to speed up the build of image, and run" >&2
+		echo "Info: ADD or COPY sends build context to daemon" >&2
+		echo "      Consider option --context <TAR> to speed up the build of image, and run" >&2
 		echo "      tar cf context.tar ${files[*]}" >&2
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid . 
 	else
