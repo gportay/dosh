@@ -118,6 +118,7 @@ docker_build() {
 	local iid
 	local path
 	local files
+	local lineno
 	local context_file
 
 	if [ -n "$DOSH_NOBUILD" ]; then
