@@ -128,7 +128,7 @@ docker_build() {
 	if ! [[ $context_file ]]; then
 		context_file="$1"
 		while read -r -a words; do
-			if [[ ${words[0]} =~ ADD|COPY ]]; then
+			if [[ ${words[0]} =~ ^(ADD|COPY)$ ]]; then
 				# Remove keyword and destination path
 				unset 'words[0]'
 				unset 'words[-1]'
@@ -142,7 +142,7 @@ docker_build() {
 
 					files+=("$word")
 				done
-			elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
+			elif [[ ${words[0]} =~ ^ENTRYPOINT$ ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
 		done <"$1" >&2
