@@ -114,6 +114,8 @@ get_tag() {
 }
 
 docker_build() {
+	local lineno
+
 	if [ -n "$DOSH_NOBUILD" ]; then
 		return
 	fi
@@ -125,7 +127,6 @@ docker_build() {
 		fi
 		lineno=$((lineno+1))
 	done <"$1" >&2
-	unset lineno
 
 	# shellcheck disable=SC2086
 	cat "$1" - <<EOF | \
