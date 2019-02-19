@@ -153,8 +153,11 @@ docker_build() {
 	# shellcheck disable=SC2086
 	if [[ ${#files[@]} -gt 1 ]]; then
 		echo "Info: ADD or COPY sends build context to daemon" >&2
-		echo "      Consider option --context <TAR> to speed up the build of image, and run" >&2
-		echo "      tar cf context.tar ${files[*]}" >&2
+		echo "      Consider option --context <TAR> to speed up the build of image." >&2
+		echo "      First, generate the context archive as suggested by the command below:" >&2
+		echo "          tar cf context.tar ${files[*]}" >&2
+		echo "      Then, run dosh again and tell it to use the context archive:" >&2
+		echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid . 
 	else
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid - <"$context_file"
