@@ -62,6 +62,7 @@ Zsh specific options:
 Docker related options:
       --dockerfile FILE         Path to the Dockerfile to use.
       --context TAR             Path to the context to send to docker daemon.
+      --no-auto-context         Disable automatic context sent to docker daemon.
       --directory DIR           Change to directory before doing anything else.
       --root                    Run as root.
       --home                    Bind mount home directory.
@@ -151,7 +152,7 @@ docker_build() {
 	# Build inital image
 	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	# shellcheck disable=SC2086
-	if [[ ${#files[@]} -gt 1 ]]; then
+	if [[ ${#files[@]} -gt 1 ]] && [[ $no_auto_context ]]; then
 		echo "Info: ADD or COPY sends build context to daemon" >&2
 		echo "      Consider option --context <TAR> to speed up the build of image." >&2
 		echo "      First, generate the context archive as suggested by the command below:" >&2
@@ -185,7 +186,7 @@ docker_rmi() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(root|home|build|rmi|detach)$ ]]; then
+	if [[ "$1" =~ ^--(no-auto-context|root|home|build|rmi|detach)$ ]]; then
 		return 0
 	fi
 
