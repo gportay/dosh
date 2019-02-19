@@ -105,6 +105,10 @@ bump-minor:
 bump: bump-minor
 endif
 
+.PHONY: commit-check
+commit-check:
+	git rebase -i -x "make check && make tests"
+
 .PHONY: clean
 clean:
 	rm -f dosh.1.gz
