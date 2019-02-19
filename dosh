@@ -118,7 +118,6 @@ docker_build() {
 	local iid
 	local path
 	local files
-	local lineno
 	local context_file
 
 	if [ -n "$DOSH_NOBUILD" ]; then
@@ -129,7 +128,6 @@ docker_build() {
 	context_file="$3"
 	if ! [[ $context_file ]]; then
 		context_file="$1"
-		lineno=0
 		while read -r -a words; do
 			if [[ ${words[0]} =~ ADD|COPY ]]; then
 				echo "Info: ADD or COPY sends build context to daemon"
@@ -139,9 +137,7 @@ docker_build() {
 			elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
-			lineno=$((lineno+1))
 		done <"$1" >&2
-		unset lineno
 	fi
 
 	# Build inital image
