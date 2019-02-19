@@ -131,8 +131,20 @@ docker_build() {
 		while read -r -a words; do
 			if [[ ${words[0]} =~ ADD|COPY ]]; then
 				echo "Info: ADD or COPY sends build context to daemon"
-				files+=("${words[@]:1}")
-				unset 'files[-1]'
+
+				# Remove keyword and destination path
+				unset 'words[0]'
+				unset 'words[-1]'
+
+				for word in "${words[@]}"; do
+					# Skip long option and sources with schema://
+					if [[ $word =~ ^-- ]] ||
+					   [[ $word =~ ^.*\:// ]]; then
+						continue
+					fi
+
+					files+=("$word")
+				done
 				path="."
 			elif [[ ${words[0]} =~ ENTRYPOINT ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
