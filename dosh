@@ -161,7 +161,11 @@ docker_build() {
 		echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid .
 	else
-		tar c "${files[@]}" | \
+		if ! [[ $context_file ]]; then
+			tar c "${files[@]}"
+		else
+			cat "$context_file"
+		fi | \
 		$do $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid -
 	fi
 
