@@ -399,8 +399,8 @@ else
 fi
 echo
 
-run "dosh: Test shebang"
-if examples/shebang.dosh | tee /dev/stderr | \
+run "dosh: Test shebang (dind and bash)"
+if dosh --shell /bin/bash --dind -c 'examples/shebang.dosh' | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
 	ok
@@ -409,8 +409,8 @@ else
 fi
 echo
 
-run "dosh: Test shebang with arguments"
-if examples/shebang-fedora.dosh | tee /dev/stderr | \
+run "dosh: Test shebang with arguments (dind and bash)"
+if dosh --shell /bin/bash --dind -c 'examples/shebang-fedora.dosh' | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
