@@ -16,22 +16,6 @@ line using one of the standard shell invocations (i.e. thanks to options `-c`,
 Think [dosh(1)] as a _shell_ frontend wrapper on top of _docker-run(1)_ written
 in _bash_.
 
-## DOWNLOAD
-
-Give it a try right now by fetching your own copy!
-
-*Version* | *Checksum* (\*)                  |
---------- | -------------------------------- |
-[1.5]     | 12008869c3e0b096ca4704a7378334a0 |
-[1.4]     | dc84c3c938dca91a81d471efdc681081 |
-[1.3.1]   | b0ddb7932dd692cf154efbdf29e8df6a |
-[1.2.1]   | 4bcf4e3ff14bc13e0b6b2e0333ffcce1 |
-[1.1.1]   | dc957c4d062779065b060beaeee612ff |
-[1.0.2]   | beebf0e007750891d784745ced2b51eb |
-
-\*: Note that hashes are subject to change as GitHub might update tarball
-generation.
-
 ## DOCUMENTATION
 
 Build documentation using _examples/build-doc.dosh_ *dosh(1)* script
@@ -261,9 +245,3 @@ the terms of the MIT License.
 [dosh(1)]: dosh.1.adoc
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
-[1.5]: https://github.com/gportay/dosh/archive/1.5.tar.gz
-[1.4]: https://github.com/gportay/dosh/archive/1.4.tar.gz
-[1.3.1]: https://github.com/gportay/dosh/archive/1.3.1.tar.gz
-[1.2.1]: https://github.com/gportay/dosh/archive/1.2.1.tar.gz
-[1.1.1]: https://github.com/gportay/dosh/archive/1.1.1.tar.gz
-[1.0.2]: https://github.com/gportay/dosh/archive/1.0.2.tar.gz
