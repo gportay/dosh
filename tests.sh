@@ -315,7 +315,7 @@ echo
 
 run "dosh: Test option --dockerfile"
 if dosh "$@" --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
-	grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
 else
