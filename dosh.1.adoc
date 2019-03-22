@@ -85,6 +85,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--root**
 	Run as root.
 
+**--dind**
+	Run dosh in dosh.
+
 **--home**
 	Bind mount home directory.
 

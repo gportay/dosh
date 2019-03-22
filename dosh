@@ -65,6 +65,7 @@ Docker related options:
       --no-auto-context         Disable automatic context sent to docker daemon.
       --directory DIR           Change to directory before doing anything else.
       --root                    Run as root.
+      --dind                    Run dosh in dosh.
       --home                    Bind mount home directory.
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
@@ -117,6 +118,7 @@ get_tag() {
 
 docker_build() {
 	local iid
+	local did
 	local files
 	local context_file
 
@@ -172,6 +174,7 @@ docker_build() {
 	# Build final image
 	# Inject both user and group id.
 	iid="$(cat .iid 2>/dev/null || true)"
+	IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
 	# shellcheck disable=SC2086
 	cat - <<EOF | $do $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
 FROM $iid
@@ -181,6 +184,10 @@ RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
  || addgroup -g ${GROUPS[0]} $USER
 RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
  || adduser  -G $USER -u $UID -h $HOME -s /bin/sh -D $USER
+RUN groupadd --non-unique --gid ${did[2]} dind \
+ || addgroup -g ${did[2]} dind
+RUN usermod  --append --group dind $USER \
+ || addgroup $USER dind
 EOF
 }
 
@@ -190,7 +197,7 @@ docker_rmi() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|root|home|build|rmi|detach)$ ]]; then
+	if [[ "$1" =~ ^--(no-auto-context|root|dind|home|build|rmi|detach)$ ]]; then
 		return 0
 	fi
 
@@ -355,9 +362,14 @@ if ! [[ $exec ]]; then
 	fi
 fi
 
-# Set current user privileges
 # shellcheck disable=SC2154
-if ! [[ $root ]]; then
+# Set current user privileges for docker-in-docker
+if [[ $dind ]]; then
+	opts+=("--user" "$UID:dind")
+	opts+=("--volume" "/var/run/docker.sock:/var/run/docker.sock")
+	opts+=("--volume" "$0:/bin/dosh:ro")
+# Set current user privileges
+elif ! [[ $root ]]; then
 	opts+=("--user" "$UID:${GROUPS[0]}")
 fi
 

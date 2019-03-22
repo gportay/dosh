@@ -283,6 +283,15 @@ else
 fi
 echo
 
+run "dosh: Test option --dind"
+if dosh --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+   grep -q 'DOSHLVL=2'
+then
+	ok
+else
+	ko
+fi
+
 run "dosh: Test option -c"
 if dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
@@ -315,7 +324,7 @@ fi
 echo
 
 run "dosh: Test option --context"
-tar cf context.tar Dockerfile
+tar cf context.tar Dockerfile dosh
 if dosh "$@" --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
