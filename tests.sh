@@ -53,6 +53,33 @@ result() {
 	fi
 }
 
+verrevcmp_lt() {
+	echo "$@" | awk '
+{
+	split($1, val, ".");
+	split($2, ref, ".");
+
+	i = 1;
+	while (val[i] != "" || ref[i] != "") {
+		if (val[i] == "" || val[i] < ref[i]) {
+			ret = -1;
+			break;
+		}
+		else if (ref[i] == "" || val[i] > ref[i]) {
+			ret = 1;
+			break;
+		}
+
+		i++;
+	}
+
+	if (ret >= 0) {
+		exit 1
+	}
+}
+'
+}
+
 PATH="$PWD:$PATH"
 trap result 0
 
@@ -376,25 +403,28 @@ else
 fi
 echo
 
-run "dosh: Test shebang"
-if examples/shebang.dosh | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+if [ -x /usr/bin/dosh ] && verrevcmp_lt "$(/usr/bin/dosh --version)" "1.4"
 then
-	ok
-else
-	ko
-fi
-echo
+	run "dosh: Test shebang"
+	if examples/shebang.dosh | tee /dev/stderr | \
+	   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+	then
+		ok
+	else
+		ko
+	fi
+	echo
 
-run "dosh: Test shebang with arguments"
-if examples/shebang-fedora.dosh | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
-then
-	ok
-else
-	ko
+	run "dosh: Test shebang with arguments"
+	if examples/shebang-fedora.dosh | tee /dev/stderr | \
+	   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+	then
+		ok
+	else
+		ko
+	fi
+	echo
 fi
-echo
 
 run "dosh: Test --detach/--exec ID"
 if container="$(dosh --detach)" && \
