@@ -93,13 +93,13 @@ else
 bump-major:
 	old="$$(bash dosh --version)"; \
 	new="$$(($${old%.*}+1)).0"; \
-	make bump "BUMP_VERSION=$$new"
+	$(MAKE) bump "BUMP_VERSION=$$new"
 
 .SILENT: bump-minor
 bump-minor:
 	old="$$(bash dosh --version)"; \
 	new="$${old%.*}.$$(($${old##*.}+1))"; \
-	make bump "BUMP_VERSION=$$new"
+	$(MAKE) bump "BUMP_VERSION=$$new"
 
 .SILENT: bump
 bump: bump-minor
@@ -107,7 +107,7 @@ endif
 
 .PHONY: commit-check
 commit-check:
-	git rebase -i -x "make check && make tests"
+	git rebase -i -x "$(MAKE) check && $(MAKE) tests"
 
 .PHONY: clean
 clean:
