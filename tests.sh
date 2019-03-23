@@ -497,9 +497,9 @@ else
 fi
 echo
 
-run "dosh: Test with shopt arguments using /bin/bash"
-if          dosh --shell /bin/bash +B -x -o errexit +h -O globasciiranges -O checkwinsize -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
-   diff - <(/bin/bash              +B -x -o errexit +h -O globasciiranges -O checkwinsize -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
+run "dosh: Test with shopt arguments using /bin/bash (dind)"
+if          dosh --shell /usr/bin/dosh --dind -- --shell /bin/bash -- +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
+   diff - <(dosh                                 --shell /bin/bash    +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
 then
 	ok
 else
