@@ -10,7 +10,7 @@ license=('MIT')
 depends=('docker')
 makedepends=('asciidoctor')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz")
-md5sums=('dc957c4d062779065b060beaeee612ff')
+md5sums=('2c4de1da587b2ea10614a1c348f6a851')
 
 build() {
 	cd "$srcdir/$pkgname-$pkgver"
