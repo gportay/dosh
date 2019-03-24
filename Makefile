@@ -106,6 +106,11 @@ bump-patch:
 bump: bump-patch
 endif
 
+.PHONY: bump-PKGBUILD
+bump-PKGBUILD: aur
+	cp PKGBUILD.aur PKGBUILD
+	git commit PKGBUILD --patch --message "PKGBUILD: update release $$(bash dosh --version) checksum"
+
 .PHONY: clean
 clean:
 	rm -f dosh.1.gz
