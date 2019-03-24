@@ -1,8 +1,8 @@
 # Maintainer: Gaël PORTAY <gael.portay@savoirfairelinux.com>
 
 pkgname=dosh
-pkgver=1.0.2
-pkgrel=2
+pkgver=1.0.3
+pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
 url="https://github.com/gportay/$pkgname"
