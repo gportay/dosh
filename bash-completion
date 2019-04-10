@@ -133,6 +133,7 @@ _dosh()
 		return
 	elif [[ "$cur" == +* ]]; then
 		COMPREPLY=( $( compgen -W "${shopts//-/+}" -- "$cur" ) )
+		return
 	fi
 
         # before we check for arguments, see if a command was specified with -c
