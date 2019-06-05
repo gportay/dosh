@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2019 Gaël PORTAY <gael.portay@gmail.com>
+# Copyright (c) 2017-2019 Gaël PORTAY
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.

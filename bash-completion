@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017-2019 Gaël PORTAY <gael.portay@gmail.com>
+# Copyright (c) 2017-2019 Gaël PORTAY
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the MIT License.
@@ -7,7 +7,7 @@
 
 #
 # Copyright (c) 2013-2017 Docker, Inc.
-#                    2017 Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#                    2017 Gaël PORTAY
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
 #
@@ -34,7 +34,7 @@ __docker_complete_containers_running() {
 #
 #   Copyright © 2006-2008, Ian Macdonald <ian@caliban.org>
 #             © 2009-2016, Bash Completion Maintainers
-#                    2017, Gaël PORTAY <gael.portay@savoirfairelinux.com>
+#                    2017, Gaël PORTAY
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
