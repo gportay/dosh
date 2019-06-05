@@ -1,15 +1,14 @@
 #
 # Copyright (c) 2017-2019 Gaël PORTAY
 #
-# This program is free software: you can redistribute it and/or modify it under
-# the terms of the MIT License.
+# SPDX-License-Identifier: MIT
 #
 
 #
 # Copyright (c) 2013-2017 Docker, Inc.
 #                    2017 Gaël PORTAY
 #
-# Licensed under the Apache License, Version 2.0 (the "License").
+# SPDX-License-Identifier: Apache-2.0
 #
 __docker_q() {
 	docker ${host:+-H "$host"} ${config:+--config "$config"} 2>/dev/null "$@"
@@ -36,10 +35,7 @@ __docker_complete_containers_running() {
 #             © 2009-2016, Bash Completion Maintainers
 #                    2017, Gaël PORTAY
 #
-#   This program is free software; you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation; either version 2, or (at your option)
-#   any later version.
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 _dosh()
 {
