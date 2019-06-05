@@ -1,4 +1,4 @@
-# Maintainer: Gaël PORTAY <gael.portay@savoirfairelinux.com>
+# Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
 pkgname=dosh
 pkgver=1.5
