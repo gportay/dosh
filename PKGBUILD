@@ -27,4 +27,6 @@ package() {
 	install -m 644 dosh.1.gz "$pkgdir/usr/share/man/man1/"
 	install -d "$pkgdir/usr/share/bash-completion/completions"
 	install -m 644 bash-completion "$pkgdir/usr/share/bash-completion/completions/dosh"
+	install -d "$pkgdir/usr/share/licenses/$pkgname/"
+	install -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/"
 }
