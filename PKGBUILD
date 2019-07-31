@@ -14,13 +14,11 @@ md5sums=('12008869c3e0b096ca4704a7378334a0')
 
 build() {
 	cd "$srcdir/$pkgname-$pkgver"
-
 	make doc
 }
 
 package() {
 	cd "$srcdir/$pkgname-$pkgver"
-
 	install -D -m 755 dosh "$pkgdir/usr/bin/dosh"
 	install -D -m 644 dosh.1.gz "$pkgdir/usr/share/man/man1/dosh.1.gz"
 	install -D -m 644 bash-completion "$pkgdir/usr/share/bash-completion/completions/dosh"
