@@ -71,8 +71,10 @@ fi
 
 export DOSHELL DOSH_DOCKER_RUN_EXTRA_OPTS
 
-# In docker?
-[ -z "$DOSHLVL" ] || return
+# In dosh?
+if [ -z "$DOSHLVL" ]; then
+	return
+fi
 
 # Colorize prompt color differently
 PS1="${PS1//32/33}"

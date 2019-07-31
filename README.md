@@ -210,8 +210,10 @@ Jean-Tiare Le Bigot on its blog [yadutaf].
 Colorize the prompt from the container in a different way to distinguish *dosh*
 sessions.
 
-	# In docker?
-	[ -z "$DOSHLVL" ] || return
+	# In dosh?
+	if [ -z "$DOSHLVL" ]; then
+		return
+	fi
 
 	# Colorize prompt color differently
 	PS1="${PS1//32/33}"
@@ -219,7 +221,7 @@ sessions.
 
 _Note_: Put these lines to the end of the file.
 
-Lines beside `[ -z "$DOSHLVL" ] || return` are applied in the container.
+Lines after the if statement are applied in the container.
 
 ## LINKS
 
