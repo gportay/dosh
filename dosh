@@ -191,7 +191,7 @@ EOF
 
 docker_rmi() {
 	# shellcheck disable=SC2086
-	$do $DOCKER rmi $DOSH_DOCKER_RMI_EXTRA_OPTS "$1"
+	$do $DOCKER rmi $DOSH_DOCKER_RMI_EXTRA_OPTS "$@"
 }
 
 is_doshopt() {
@@ -325,7 +325,7 @@ fi
 if [[ $rmi ]]; then
 	# Remove image if exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
-	docker_rmi "$tag" >&2
+	docker_rmi "$tag" "$@" >&2
 	exit
 fi
 
