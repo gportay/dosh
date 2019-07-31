@@ -69,6 +69,8 @@ Docker related options:
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
       --build                   Build image.
+      --rebuild                 Build image again, verbosely.
+                                Equivalent to --build --verbose.
       --rmi                     Remove image.
       --detach                  Detach container.
       --exec CONTAINER          Execute in container.
@@ -195,7 +197,7 @@ docker_rmi() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|root|dind|home|build|rmi|detach)$ ]]; then
+	if [[ "$1" =~ ^--(no-auto-context|root|dind|home|build|rebuild|rmi|detach)$ ]]; then
 		return 0
 	fi
 
@@ -335,9 +337,9 @@ if ! [[ $exec ]]; then
 	# Rebuild or automatically build image if it does not exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	imageid="$($DOCKER images -q "$tag")"
-	if [[ $build ]] || ! [[ $imageid ]]; then
-		# Reset quiet option when image does not exist or if verbose option is set
-		if ! [[ $imageid ]] || [[ $verbose ]]; then
+	if [[ $build ]] || [[ $rebuild ]] || ! [[ $imageid ]]; then
+		# Reset quiet option when image does not exist or rebuild or if verbose option is set
+		if ! [[ $imageid ]] || [[ $rebuild ]] || [[ $verbose ]]; then
 			buildopts=()
 		fi	
 		docker_build "$DOSH_DOCKERFILE" "$tag" "$context" >&2

@@ -98,6 +98,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--build**
 	Build image.
 
+**--rebuild**
+	Build image again, verbosely.
+	Equivalent to --build --verbose.
+
 **--rmi**
 	Remove image.
 
