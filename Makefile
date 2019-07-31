@@ -150,8 +150,9 @@ devel: PKGBUILD.devel
 PKGBUILD.devel: PKGBUILD
 	sed -e "/source=/d" \
 	    -e "/md5sums=/d" \
-	    -e "/build() {/,/^}$$/s,\$$srcdir/\$$pkgname-\$$pkgver,\$$startdir,g" \
-	    -e "/package() {/,/^}$$/s,\$$srcdir/\$$pkgname-\$$pkgver,\$$startdir,g" \
+	    -e "/build() {/,/^}$$/s,\$$pkgname-\$$pkgver,\$$startdir,g" \
+	    -e "/check() {/,/^}$$/s,\$$pkgname-\$$pkgver,\$$startdir,g" \
+	    -e "/package() {/,/^}$$/s,\$$pkgname-\$$pkgver,\$$startdir,g" \
 	    -e "/pkgver=/apkgver() { printf \"\$$(bash dosh --version)r%s.%s\" \"\$$(git rev-list --count HEAD)\" \"\$$(git rev-parse --short HEAD)\"; }" \
 	       $< >$@
 

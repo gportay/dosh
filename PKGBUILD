@@ -9,16 +9,22 @@ url="https://github.com/gportay/$pkgname"
 license=('MIT')
 depends=('docker')
 makedepends=('asciidoctor')
+checkdepends=('shellcheck')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz")
 md5sums=('12008869c3e0b096ca4704a7378334a0')
 
 build() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "$pkgname-$pkgver"
 	make doc
 }
 
+check() {
+	cd "$pkgname-$pkgver"
+	make -k check
+}
+
 package() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "$pkgname-$pkgver"
 	install -D -m 755 dosh "$pkgdir/usr/bin/dosh"
 	install -D -m 644 dosh.1.gz "$pkgdir/usr/share/man/man1/dosh.1.gz"
 	install -D -m 644 bash-completion "$pkgdir/usr/share/bash-completion/completions/dosh"
