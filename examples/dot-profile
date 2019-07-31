@@ -18,7 +18,7 @@ for vol in $HOME/.config $HOME/.local $HOME/.profile; do
 done
 
 # Map extra home dot-files
-for vol in $HOME/.inputrc $HOME/.screenrc; do
+for vol in $HOME/.inputrc $HOME/.screenrc $HOME/.gnupg; do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done

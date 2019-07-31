@@ -145,7 +145,7 @@ These following lines map some useful *dot-files* to the container.
 	done
 
 	# Map extra home dot-files
-	for vol in $HOME/.inputrc $HOME/.screenrc; do
+	for vol in $HOME/.inputrc $HOME/.gnupg $HOME/.screenrc; do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
