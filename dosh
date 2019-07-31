@@ -128,7 +128,6 @@ docker_build() {
 	files=("$1")
 	context_file="$3"
 	if ! [[ $context_file ]]; then
-		context_file="$1"
 		while read -r -a words; do
 			if [[ ${words[0]^^} =~ ^(ADD|COPY)$ ]]; then
 				# Remove keyword and destination path
