@@ -86,7 +86,7 @@ bump:
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD
 	git commit dosh dosh.1.adoc PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
-	git tag --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
+	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
 else
 .SILENT: bump-major
 bump-major:
