@@ -116,6 +116,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--no-do**
 	Do nothing; echo docker commands.
+	This option is deprecated; use --dry-run instead.
+
+**--dry-run**
+	Do nothing; echo docker commands.
 
 *Miscellaneous options*
 
