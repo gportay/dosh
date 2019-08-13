@@ -79,6 +79,7 @@ check: dosh
 
 ifneq (,$(BUMP_VERSION))
 .SILENT: bump
+.PHONY: bump
 bump:
 	! git tag | grep "$(BUMP_VERSION)"
 	old="$$(bash dosh --version)"; \
@@ -89,18 +90,21 @@ bump:
 	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
 else
 .SILENT: bump-major
+.PHONY: bump-major
 bump-major:
 	old="$$(bash dosh --version)"; \
 	new="$$(($${old%.*}+1)).0"; \
 	$(MAKE) bump "BUMP_VERSION=$$new"
 
 .SILENT: bump-minor
+.PHONY: bump-minor
 bump-minor:
 	old="$$(bash dosh --version)"; \
 	new="$${old%.*}.$$(($${old##*.}+1))"; \
 	$(MAKE) bump "BUMP_VERSION=$$new"
 
 .SILENT: bump-patch
+.PHONY: bump-patch
 bump-patch:
 	old="$$(bash dosh --version)"; \
 	if [ "$${old%.*.*}" = "$$old" ]; then old="$$old.0"; fi; \
