@@ -185,7 +185,7 @@ docker_build() {
 
 	# Build final image
 	# Inject both user and group id.
-	iid="$(cat .iid 2>/dev/null || true)"
+	iid="$(cat .iid 2>/dev/null || true; rm -f .iid)"
 	IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
 	# shellcheck disable=SC2086
 	run cat - <<EOF | run $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
