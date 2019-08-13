@@ -11,7 +11,7 @@ depends=('docker')
 makedepends=('asciidoctor')
 checkdepends=('shellcheck')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz")
-md5sums=('12008869c3e0b096ca4704a7378334a0')
+md5sums=('33673c1fb370c691b75850cab671488e')
 
 build() {
 	cd "$pkgname-$pkgver"
