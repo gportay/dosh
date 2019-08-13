@@ -176,9 +176,9 @@ docker_build() {
 		run $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid .
 	else
 		if ! [[ $context_file ]]; then
-			tar c "${files[@]}"
+			run tar c "${files[@]}"
 		else
-			cat "$context_file"
+			run cat "$context_file"
 		fi | \
 		run $DOCKER build "${buildopts[@]}" --file "$1" --iidfile .iid -
 	fi
@@ -188,7 +188,7 @@ docker_build() {
 	iid="$(cat .iid 2>/dev/null || true)"
 	IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
 	# shellcheck disable=SC2086
-	cat - <<EOF | run $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
+	run cat - <<EOF | run $DOCKER build "${buildopts[@]}" --tag "$2" $DOSH_DOCKER_BUILD_EXTRA_OPTS -
 FROM $iid
 
 USER root
