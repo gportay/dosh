@@ -108,7 +108,7 @@ bump-patch:
 	$(MAKE) bump "BUMP_VERSION=$$new"
 
 .SILENT: bump
-bump: bump-patch
+bump: bump-minor
 endif
 
 .PHONY: commit-check
