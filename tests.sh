@@ -452,7 +452,7 @@ echo
 
 run "dosh: Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
-   dosh -c "which dosh"
+   dosh -c "which dosh" | grep "$HOME/.local/bin/dosh"
 then
 	ok
 else
