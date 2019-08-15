@@ -460,6 +460,16 @@ else
 fi
 echo
 
+run "dosh: Test --no-extra-options option"
+if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
+   dosh --no-extra-options -c "which dosh" | grep '/usr/bin/dosh'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test --tag option"
 if dosh --tag
 then

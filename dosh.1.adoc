@@ -79,6 +79,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--no-auto-context**
 	Disable automatic context sent to docker daemon.
 
+**--no-extra-options**
+	Disable extra options given to docker commands.
+
 **--directory DIR**
 	Change to directory before doing anything else.
 
