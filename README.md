@@ -47,10 +47,8 @@ Or using *make(1)* and _Makefile_
 	gzip -c dosh.1 >dosh.1.gz
 	rm dosh.1
 
-If neither _asciidoctor(1)_ nor _dosh(1)_ are installed on the system, the
-documentation can be build using in-tree _dosh_ script
-
-	./dosh -c "bash examples/build-doc.dosh"
+The _Makefile_ uses *dosh(1)* to build the documentation. It uses the version
+in-tree as the *SHELL* to run the for the `doc` target.
 
 ## INSTALL
 
@@ -262,6 +260,7 @@ the terms of the MIT License.
 [docker]: https://github.com/docker/docker
 [dosh]: dosh
 [dosh(1)]: dosh.1.adoc
+[doc]: Makefile#L13-L16
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
 [1.6]: https://github.com/gportay/dosh/archive/1.6.tar.gz

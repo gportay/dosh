@@ -11,6 +11,8 @@ all:
 	@eval $$(cat /etc/os*release); echo $$NAME
 
 .PHONY: doc
+doc: PATH:=$(CURDIR):$(PATH)
+doc: SHELL=dosh
 doc: dosh.1.gz
 
 .PHONY: install-all
