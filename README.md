@@ -42,7 +42,7 @@ Build documentation using _examples/build-doc.dosh_ *dosh(1)* script
 
 Or using *make(1)* and _Makefile_
 
-	$ make
+	$ make doc
 	asciidoctor -b manpage -o dosh.1 dosh.1.adoc
 	gzip -c dosh.1 >dosh.1.gz
 	rm dosh.1
