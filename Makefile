@@ -22,6 +22,8 @@ install-all: install install-doc install-bash-completion
 install:
 	install -d $(DESTDIR)$(PREFIX)/bin/
 	install -m 755 dosh $(DESTDIR)$(PREFIX)/bin/
+	install -d $(DESTDIR)$(PREFIX)/share/dosh/support/
+	install -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/
 	install -d $(DESTDIR)$(PREFIX)/share/dosh/examples/
 	install -m 644 examples/profile examples/dot-profile \
 	           $(DESTDIR)$(PREFIX)/share/dosh/examples/

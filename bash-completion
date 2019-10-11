@@ -145,4 +145,4 @@ _dosh()
 	[[ $args -eq 1 ]] && ext=dosh
 	_filedir $ext
 } &&
-complete -F _dosh dosh
+complete -F _dosh dosh posh

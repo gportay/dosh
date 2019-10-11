@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Copyright (c) 2019 Gaël PORTAY
+#
+# SPDX-License-Identifier: MIT
+#
+
+DOCKER="podman" \
+exec dosh --no-auto-context "$@"
