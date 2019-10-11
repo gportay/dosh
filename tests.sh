@@ -323,7 +323,7 @@ fi
 echo
 
 run "dosh: Test option --context"
-tar cf context.tar Dockerfile dosh
+tar cf context.tar Dockerfile dosh bash-completion
 if dosh "$@" --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
