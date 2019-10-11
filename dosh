@@ -39,7 +39,7 @@ POSIX Shell related options:
       -c                        Read commands from command-line.
       -i                        Set interactive.
       -s                        Read commands from standard-input.
-      -abefhmnuvxC or -o shopt, 
+      -abefhmnuvxC or -o shopt,
       +abefhmnuvxC or +o shopt  For a more thorough description of shopts,
                                 please refers to sh help.
 
@@ -123,7 +123,7 @@ run() {
 		return
 	fi
 
-	"$@"	
+	"$@"
 }
 
 get_tag() {
@@ -364,7 +364,7 @@ if ! [[ $exec ]]; then
 		# Reset quiet option when image does not exist or rebuild or if verbose option is set
 		if ! [[ $imageid ]] || [[ $rebuild ]] || [[ $verbose ]]; then
 			buildopts=()
-		fi	
+		fi
 		# Remove previous image
 		if [[ $imageid ]]; then
 			docker_rmi "$tag" >&2
