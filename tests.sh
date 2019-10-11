@@ -506,6 +506,48 @@ else
 fi
 echo
 
+IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
+sed -e "s,@USER@,$USER,g" \
+    -e "s,@GROUP@,${GROUPS[0]},g" \
+    -e "s,@UID@,$UID,g" \
+    -e "s,@GID@,${GROUPS[0]},g" \
+    -e "s,@HOME@,$HOME,g" \
+    -e "s,@DID_GID@,${did[2]},g" \
+    Dockerfile.me.in >Dockerfile.me
+
+run "dosh: Test when user/group already exists with same UID/GID in Dockerfile"
+if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
+   diff - <(/bin/sh                                   -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+rm -f Dockerfile.me
+
+uid="$((UID+1))"
+gid="$((${GROUPS[0]}+1))"
+sed -e "s,@USER@,$USER,g" \
+    -e "s,@GROUP@,${GROUPS[0]},g" \
+    -e "s,@UID@,$uid,g" \
+    -e "s,@GID@,$gid,g" \
+    -e "s,@HOME@,$HOME,g" \
+    -e "s,@DID_GID@,${did[2]},g" \
+    Dockerfile.me.in >Dockerfile.not-me
+cat Dockerfile.not-me
+
+run "dosh: Test when user/group already exists with different UID/GID in Dockerfile"
+if          dosh --rebuild --dockerfile Dockerfile.not-me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
+   diff - <(/bin/sh                                       -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+rm -f Dockerfile.not-me
+
 run "dosh: Test with shopt arguments using /bin/bash (dind)"
 if          dosh --shell /usr/bin/dosh --dind -- --shell /bin/bash -- +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
    diff - <(dosh                                 --shell /bin/bash    +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )

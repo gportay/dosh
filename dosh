@@ -194,13 +194,17 @@ docker_build() {
 FROM $iid
 
 USER root
-RUN groupadd --non-unique --gid ${GROUPS[0]} $USER \
+RUN grep -q "^$USER:" /etc/group \
+ || groupadd --non-unique --gid ${GROUPS[0]} $USER \
  || addgroup -g ${GROUPS[0]} $USER
-RUN useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
+RUN grep -q "^$USER:" /etc/passwd \
+ || useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
  || adduser  -G $USER -u $UID -h $HOME -s /bin/sh -D $USER
-RUN groupadd --non-unique --gid ${did[2]} dind \
+RUN grep -q "^dind:" /etc/group \
+ || groupadd --non-unique --gid ${did[2]} dind \
  || addgroup -g ${did[2]} dind
-RUN usermod  --append --group dind $USER \
+RUN grep -q "^dind:x:${did[2]}:.*$USER" /etc/group \
+ || usermod  --append --group dind $USER \
  || addgroup $USER dind
 RUN if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >"/etc/sudoers.d/$USER"; fi
 EOF
