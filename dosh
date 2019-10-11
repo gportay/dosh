@@ -156,7 +156,8 @@ docker_build() {
 						continue
 					fi
 
-					files+=("$word")
+					# shellcheck disable=SC2206
+					files+=($word)
 				done
 			elif [[ ${words[0]^^} =~ ^ENTRYPOINT$ ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
