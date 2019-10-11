@@ -384,7 +384,7 @@ if ! [[ $exec ]]; then
 fi
 
 # shellcheck disable=SC2154
-# Set current user privileges for docker-in-docker
+# Set current user privileges for dosh-in-dosh
 if [[ $dind ]]; then
 	opts+=("--user" "$UID:dind")
 	opts+=("--volume" "/var/run/docker.sock:/var/run/docker.sock")
