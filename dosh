@@ -202,6 +202,7 @@ RUN groupadd --non-unique --gid ${did[2]} dind \
  || addgroup -g ${did[2]} dind
 RUN usermod  --append --group dind $USER \
  || addgroup $USER dind
+RUN if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >"/etc/sudoers.d/$USER"; fi
 EOF
 }
 
