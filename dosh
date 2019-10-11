@@ -119,7 +119,7 @@ EOF
 run() {
 	if [ -n "$dryrun" ]; then
 		[ "$1" != "exec" ] || shift
-		echo "${@// /\\ }"
+		echo "${@// /\\ }" >&2
 		return
 	fi
 
