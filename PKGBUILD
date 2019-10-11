@@ -26,9 +26,6 @@ check() {
 
 package() {
 	cd "$pkgname-$pkgver"
-	install -D -m 755 dosh "$pkgdir/usr/bin/dosh"
-	install -D -m 644 dosh.1.gz "$pkgdir/usr/share/man/man1/dosh.1.gz"
-	install -D -m 644 bash-completion "$pkgdir/usr/share/bash-completion/completions/dosh"
-	install -D -m 755 support/posh "$pkgdir/usr/share/dosh/support/posh"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
