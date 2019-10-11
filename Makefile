@@ -24,18 +24,17 @@ install:
 	install -m 755 dosh $(DESTDIR)$(PREFIX)/bin/
 	install -d $(DESTDIR)$(PREFIX)/share/dosh/support/
 	install -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/
-	install -d $(DESTDIR)$(PREFIX)/share/dosh/examples/
-	install -m 644 examples/profile examples/dot-profile \
-	           $(DESTDIR)$(PREFIX)/share/dosh/examples/
+	install -m 644 support/profile support/dot-profile \
+	           $(DESTDIR)$(PREFIX)/share/dosh/support/
 
 .PHONY: install-profile
 install-profile:
 	install -d $(DESTDIR)/etc/profile.d
-	install -m 644 examples/profile $(DESTDIR)/etc/profile.d/dosh.sh
+	install -m 644 support/profile $(DESTDIR)/etc/profile.d/dosh.sh
 
 .PHONY: install-dot-profile
 install-dot-profile:
-	cat >>~/.profile examples/dot-profile
+	cat >>~/.profile support/dot-profile
 
 .PHONY: install-doc
 install-doc:
