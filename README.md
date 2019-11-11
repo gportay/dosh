@@ -48,8 +48,8 @@ Or using *make(1)* and _Makefile_
 	gzip -c dosh.1 >dosh.1.gz
 	rm dosh.1
 
-The _Makefile_ uses *dosh(1)* to build the documentation. It uses the version
-in-tree as the *SHELL* to run the for the `doc` target.
+The _Makefile_ uses [dosh(1)] to build the documentation. It uses the version
+in-tree as the *SHELL* to run the for the [doc] target.
 
 ## INSTALL
 
