@@ -67,7 +67,7 @@ or
 
 ## TUNING
 
-### Default Shell Interpreter
+### DEFAULT SHELL INTERPRETER
 
 [dosh(1)] uses `/bin/sh` as default interpreter as it is the only reliable Shell
 available. The default interpreter can be set by option `--shell SHELL`; but it
@@ -85,7 +85,7 @@ Adding these two following lines to the Shell `~/.profile` tells *dosh* to uses
 	DOSHELL="/bin/bash"
 	export DOSHELL
 
-### Manage dosh as a non-root user
+### MANAGE DOSH AS A NON-ROOT USER
 
 [dosh(1)] relies on the setup of Docker. See its documentation to run Docker as
 [non-root-user].
@@ -103,7 +103,7 @@ On Linux, if you are not a member of the `docker` group, please consider to run
 The `DOCKER` environment can be set to the Shell profile files to make it
 persistent for the session.
 
-### Docker extra options
+### DOCKER EXTRA OPTIONS
 
 Every single [docker(1)][docker] command performed in [dosh(1)] can be customized by
 passing extra arguments thanks its corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS**
