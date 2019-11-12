@@ -85,6 +85,24 @@ Adding these two following lines to the Shell `~/.profile` tells *dosh* to uses
 	DOSHELL="/bin/bash"
 	export DOSHELL
 
+### Manage dosh as a non-root user
+
+[dosh(1)] relies on the setup of Docker. See its documentation to run Docker as
+[non-root-user].
+
+It is not recommended to run [dosh(1)] using `sudo` in case the user does not
+have permission to send the context to the Docker daemon. Instead, consider
+setting the `DOCKER` environment to `sudo docker` as it will only run the
+`docker` commands with the superuser privileges.
+
+On Linux, if you are not a member of the `docker` group, please consider to run
+`dosh` as below:
+
+	DOCKER="sudo docker" dosh
+
+The `DOCKER` environment can be set to the Shell profile files to make it
+persistent for the session.
+
 ### Docker extra options
 
 Every single [docker(1)][docker] command performed in [dosh(1)] can be customized by
@@ -259,6 +277,7 @@ This program is free software: you can redistribute it and/or modify it under
 the terms of the MIT License.
 
 [docker]: https://github.com/docker/docker
+[non-root-user]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
 [dosh]: dosh
 [dosh(1)]: dosh.1.adoc
 [doc]: Makefile#L13-L16
