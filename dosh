@@ -131,7 +131,6 @@ get_tag() {
 }
 
 docker_build() {
-	local iid
 	local did
 	local files
 	local context_file
@@ -141,7 +140,6 @@ docker_build() {
 	fi
 
 	# Inject both user and group id.
-	iid="$(cat .iid 2>/dev/null || true; rm -f .iid)"
 	IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
 	cat "$1" - <<EOF >.doshfile
 
