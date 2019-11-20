@@ -329,15 +329,11 @@ fi
 # Change to present working directory
 opts+=("--workdir" "$PWD")
 
-# Run command from arguments
-# shellcheck disable=SC2154
-if [[ $opt_c ]]; then
-	command="$1"
-	shift
-	set -- "$DOSHELL" "${shopts[@]}" "$command" "$@"
-# Read command from stdin or no command or invalid
-else
+# Prepend shell options if any
+if [ ${#shopts[*]} -gt 0 ]; then
 	set -- "$DOSHELL" "${shopts[@]}" "$@"
+else
+	set -- "$DOSHELL" "$@"
 fi
 
 # Execute in existing container
