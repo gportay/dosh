@@ -337,6 +337,16 @@ fi
 echo
 rm context.tar
 
+run "dosh: Test option --no-auto-context"
+if dosh "$@" --build --no-auto-context -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
+   grep '^Info: ADD or COPY sends build context to daemon'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
      dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
