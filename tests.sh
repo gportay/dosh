@@ -112,9 +112,8 @@ else
 fi
 echo
 
-run "dosh: Test without option with arguments"
-if          dosh "$@"  echo "one" "two" "three" | tee /dev/stderr | \
-   diff - <(/bin/sh    echo "one" "two" "three" | tee /dev/stderr )
+run "dosh: Test with a binary argument"
+if ! dosh "$@" echo "one" "two" "three"
 then
 	ok
 else
@@ -123,8 +122,7 @@ fi
 echo
 
 run "dosh: Test option -c without command"
-if          dosh "$@"  -c | tee /dev/stderr | \
-   diff - <(/bin/sh    -c | tee /dev/stderr )
+if ! dosh "$@" -c
 then
 	ok
 else
@@ -202,9 +200,8 @@ else
 fi
 echo
 
-run "dosh: Test option --root with arguments"
-if                      dosh "$@"  --root echo "one" "two" "three" | tee /dev/stderr | \
-   diff - <(fakeroot -- /bin/sh           echo "one" "two" "three" | tee /dev/stderr )
+run "dosh: Test option --root with a binary argument"
+if ! dosh "$@" --root echo "one" "two" "three"
 then
 	ok
 else
@@ -212,9 +209,8 @@ else
 fi
 echo
 
-run "dosh: Test option --root and -c without arguments"
-if                      dosh "$@"  --root -c | tee /dev/stderr | \
-   diff - <(fakeroot -- /bin/sh           -c | tee /dev/stderr )
+run "dosh: Test option --root and -c without command"
+if ! dosh "$@" --root -c
 then
 	ok
 else
