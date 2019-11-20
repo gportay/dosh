@@ -21,6 +21,9 @@ ok() {
 ko() {
 	ko=$((ko+1))
 	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+	if [ -n "$EXIT_ON_ERROR" ]; then
+		exit 1
+	fi
 }
 
 fix() {
