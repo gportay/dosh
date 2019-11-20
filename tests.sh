@@ -203,77 +203,9 @@ else
 fi
 echo
 
-run "dosh: Test option --root with a binary argument"
-if ! dosh "$@" --root echo "one" "two" "three"
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -c without command"
-if ! dosh "$@" --root -c
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -c with empty arguments"
-if                      dosh "$@"  --root -c '' | tee /dev/stderr | \
-   diff - <(fakeroot -- /bin/sh           -c '' | tee /dev/stderr )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -c command arguments"
-if                      dosh "$@"  --root -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr | \
-   diff - <(fakeroot -- /bin/sh           -c 'whoami; echo "$#" "$@" "one" "two" "three"' | tee /dev/stderr )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -s without arguments"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s | tee /dev/stderr )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -s one two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s "one" "two" "three" | tee /dev/stderr )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -s one\ +\ two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s one\ +\ two three | tee /dev/stderr )
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "dosh: Test option --root and -s \"one + two\" three"
-if          echo 'whoami; echo "$0" "$#" "$@"' |             dosh "$@"  --root -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | fakeroot -- /bin/sh           -s "one + two" "three" | tee /dev/stderr )
+run "dosh: Test option --root"
+if                      dosh "$@" --root -c 'whoami' | tee /dev/stderr | \
+   diff - <(fakeroot -- /bin/sh          -c 'whoami' | tee /dev/stderr )
 then
 	ok
 else
