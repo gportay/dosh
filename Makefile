@@ -74,7 +74,7 @@ user-%:
 .PHONY: ci
 ci: export EXIT_ON_ERROR = 1
 ci: export DO_RMI_TESTS = 1
-ci: check tests
+ci: check coverage
 
 DO_RMI_TESTS ?=
 .PHONY: tests
@@ -84,6 +84,10 @@ tests:
 .PHONY: check
 check: dosh
 	shellcheck --exclude=SC1091 $^
+
+.PHONY: coverage
+coverage:
+	kcov $(CURDIR)/$@ --include-path=dosh $(CURDIR)/tests.sh
 
 ifneq (,$(BUMP_VERSION))
 .SILENT: bump
@@ -137,6 +141,7 @@ clean:
 	rm -f dosh.1.gz
 	rm -f PKGBUILD.aur PKGBUILD.devel *.tar.gz src/*.tar.gz *.pkg.tar.xz \
 	   -R src/dosh-*/ pkg/dosh/
+	rm -Rf coverage/
 
 .PHONY: mrproper
 mrproper: clean
