@@ -300,8 +300,8 @@ fi
 echo
 
 run "dosh: Test option --home"
-if          echo 'pwd; cd ; pwd' |             dosh "$@"  --home -s | tee /dev/stderr | \
-   diff - <(echo 'pwd; cd ; pwd' | fakeroot -- /bin/sh           -s | tee /dev/stderr )
+if          echo 'pwd; cd ; pwd' | dosh "$@"  --home -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd ; pwd' | /bin/sh           -s | tee /dev/stderr )
 then
 	ok
 else
