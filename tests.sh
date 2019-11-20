@@ -135,6 +135,16 @@ else
 fi
 echo
 
+run "dosh: Test option --dry-run"
+if dosh --dry-run 2>&1 | tee /dev/stderr | \
+   grep "docker run --rm --volume $PWD:$PWD --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test option --build"
 if dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Sending build context to Docker daemon'
