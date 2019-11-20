@@ -115,6 +115,26 @@ else
 fi
 echo
 
+run "dosh: Test option --help"
+if dosh --help | \
+   grep '^Usage: '
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test option --version"
+if dosh --version | \
+   grep -E '^([0-9a-zA-Z]+)(\.[0-9a-zA-Z]+)*$'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "dosh: Test with a binary argument"
 if ! dosh "$@" echo "one" "two" "three"
 then
