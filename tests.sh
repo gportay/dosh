@@ -577,6 +577,42 @@ else
 fi
 echo
 
+run "dosh: Test specific bash options (short form)"
+if DOSHELL=/bin/bash dosh -p -c 'echo "$-"'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test specific dash options (short form)"
+if DOSHELL=/bin/dash dosh -p -c 'echo "$-"'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test specific zsh options (short form)"
+if DOSHELL=/bin/zsh dosh -p -c 'echo "$-"'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "dosh: Test specific bash options (complete form)"
+if DOSHELL=/bin/bash dosh -O compat31 -c 'shopt compat31 | grep on'
+then
+	ok
+else
+	ko
+fi
+echo
+
 if [ -n "$DO_RMI_TESTS" ]
 then
 	rmi
