@@ -27,7 +27,7 @@ When called without arguments, *dosh* defaults to running an interactive shell
 as current _user_.
 
 When a container shell is started, *dosh* reads and executes commands from
-_./.doshrc_, if that file exists.
+_./doshrc_, if that file exists.
 
 Under the hood, *dosh* builds its _docker image_ using the *Dockerfile(5)* from
 the _current working directory_ inside *docker-build(1)*.  *dosh* appends a

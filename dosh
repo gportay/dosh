@@ -141,7 +141,7 @@ docker_build() {
 
 	# Inject both user and group id.
 	IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
-	cat "$1" - <<EOF >.doshfile
+	cat "$1" - <<EOF >doshfile
 
 USER root
 RUN grep -q "^$USER:" /etc/group \
@@ -159,7 +159,7 @@ RUN grep -q "^dind:x:${did[2]}:.*$USER" /etc/group \
 RUN if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >"/etc/sudoers.d/$USER"; fi
 EOF
 
-	files=(.doshfile)
+	files=(doshfile)
 	context_file="$3"
 	if ! [[ $context_file ]]; then
 		while read -r -a words; do
@@ -181,7 +181,7 @@ EOF
 			elif [[ ${words[0]^^} =~ ^ENTRYPOINT$ ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
-		done <.doshfile >&2
+		done <doshfile >&2
 	fi
 
 	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
@@ -193,18 +193,18 @@ EOF
 		echo "          tar cf context.tar ${files[*]}" >&2
 		echo "      Then, run dosh again and tell it to use the context archive:" >&2
 		echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
-		run $DOCKER build "${buildopts[@]}" $DOSH_DOCKER_BUILD_EXTRA_OPTS --tag "$2" --file .doshfile .
+		run $DOCKER build "${buildopts[@]}" $DOSH_DOCKER_BUILD_EXTRA_OPTS --tag "$2" --file doshfile .
 	else
 		if ! [[ $context_file ]]; then
 			run tar c "${files[@]}"
 		else
-			run tar rf "$context_file" ".doshfile"
+			run tar rf "$context_file" "doshfile"
 			run cat "$context_file"
 		fi | \
-		run $DOCKER build "${buildopts[@]}" $DOSH_DOCKER_BUILD_EXTRA_OPTS --tag "$2" --file .doshfile -
+		run $DOCKER build "${buildopts[@]}" $DOSH_DOCKER_BUILD_EXTRA_OPTS --tag "$2" --file doshfile -
 	fi
 
-	rm -f .doshfile
+	rm -f doshfile
 }
 
 docker_rmi() {
@@ -341,10 +341,18 @@ fi
 # Change directory
 cd "$directory"
 
-# Source local profile
-if [ -e ".doshrc" ]; then
-	. .doshrc
-fi
+# Source profile files
+for rc in doshrc .doshrc; do
+	if [ -e "$rc" ]; then
+		if [ "${rc:0:1}" = "." ]; then
+			echo "Warning: $rc is going to be depracted in 2.0!"
+			echo "         Consider ${rc:1} instead:"
+			echo "             mv $rc ${rc:1}"
+		fi >&2
+		. "$rc"
+		break
+	fi
+done
 
 # Remove image and exit
 # shellcheck disable=SC2154

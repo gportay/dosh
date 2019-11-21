@@ -83,7 +83,7 @@ tests:
 
 .PHONY: check
 check: dosh
-	shellcheck --exclude=SC1091 $^
+	shellcheck --exclude=SC1090 --exclude=SC1091 $^
 
 .PHONY: coverage
 coverage:
