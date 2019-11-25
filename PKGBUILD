@@ -1,7 +1,7 @@
 # Maintainer: Gaël PORTAY <gael.portay@savoirfairelinux.com>
 
 pkgname=dosh
-pkgver=1.5.1
+pkgver=1.5.2
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
