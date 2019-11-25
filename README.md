@@ -26,7 +26,7 @@ Give it a try right now by fetching your own copy!
 [1.6]     | 33673c1fb370c691b75850cab671488e |
 [1.5]     | 12008869c3e0b096ca4704a7378334a0 |
 [1.4]     | dc84c3c938dca91a81d471efdc681081 |
-[1.3.1]   | b0ddb7932dd692cf154efbdf29e8df6a |
+[1.3.1.a] | 3e4a0a99bd9faa6b40c4a71b526e8b53 |
 [1.2.1]   | 4bcf4e3ff14bc13e0b6b2e0333ffcce1 |
 [1.1.1]   | dc957c4d062779065b060beaeee612ff |
 [1.0.2]   | beebf0e007750891d784745ced2b51eb |
@@ -287,7 +287,7 @@ the terms of the MIT License.
 [1.6]: https://github.com/gportay/dosh/archive/1.6.tar.gz
 [1.5]: https://github.com/gportay/dosh/archive/1.5.tar.gz
 [1.4]: https://github.com/gportay/dosh/archive/1.4.tar.gz
-[1.3.1]: https://github.com/gportay/dosh/archive/1.3.1.tar.gz
+[1.3.1.a]: https://github.com/gportay/dosh/archive/1.3.1.a.tar.gz
 [1.2.1]: https://github.com/gportay/dosh/archive/1.2.1.tar.gz
 [1.1.1]: https://github.com/gportay/dosh/archive/1.1.1.tar.gz
 [1.0.2]: https://github.com/gportay/dosh/archive/1.0.2.tar.gz
