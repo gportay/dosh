@@ -613,6 +613,15 @@ else
 fi
 echo
 
+run "dosh: Test specific bash options (optional argument)"
+if DOSHELL=/bin/bash dosh +O < <(echo whoami)
+then
+	ok
+else
+	ko
+fi
+echo
+
 if [ -n "$DO_RMI_TESTS" ]
 then
 	rmi

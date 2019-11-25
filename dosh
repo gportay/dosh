@@ -307,9 +307,12 @@ while [ "$#" -ne 0 ]; do
 		shopts+=("$1")
 		eval "opt_${1:1:1}=1"
 	elif is_shopt_argument "$1"; then
-		shopts+=("$1" "$2")
-		eval "opt_${1:1:1}=\"$2\""
-		shift
+		# shellcheck disable=SC2206
+		shopts+=("$1" ${2:-})
+		eval "opt_${1:1:1}=\"${2:-1}\""
+		if [ $# -gt 1 ]; then
+			shift
+		fi
 	elif [ "$1" = "--" ]; then
 		shift
 		break
