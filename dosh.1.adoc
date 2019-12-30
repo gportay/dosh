@@ -60,7 +60,7 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 *Dash specific options:*
 
-**-pEIV**, **+pEIV**
+**-pqEIV**, **+pqEIV**
 	For a more thorough description of shopts, please refers to dash help.
 
 **Zsh specific options:**

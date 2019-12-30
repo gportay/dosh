@@ -117,7 +117,7 @@ _dosh()
 		shopts+=" -O -k -l -p -r -t -B -D -E -H -I -P -T"
 		;;
 	dash)
-		shopts+=" -p -E -I -V"
+		shopts+=" -p -q -E -I -V"
 		;;
 	zsh)
 		shopts+=" -0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -d -g -k -l -p -r -t -w -y -B -D -E -F -G -H -I -J -K -L -M -N -O -P -Q -R -S -T -U -V -W -X -Y -Z"
