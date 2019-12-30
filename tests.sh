@@ -67,7 +67,7 @@ export -n DOSH_DOCKER_RUN_EXTRA_OPTS
 export -n DOSH_DOCKER_EXEC_EXTRA_OPTS
 
 rmi() {
-	run "dosh: Test --rmi option"
+	run "Test --rmi option"
 	if   dosh --rmi &&
 	   ! dosh --rmi
 	then
@@ -77,7 +77,7 @@ rmi() {
 	fi
 	echo
 
-	run "dosh: Test --rmi option with --dockerfile option"
+	run "Test --rmi option with --dockerfile option"
 	if   dosh --rmi --dockerfile Dockerfile.fedora && \
 	   ! dosh --rmi --dockerfile Dockerfile.fedora
 	then
@@ -87,7 +87,7 @@ rmi() {
 	fi
 	echo
 
-	run "dosh: Test --rmi option with --directory and --dockerfile option in a busybox based distro"
+	run "Test --rmi option with --directory and --dockerfile option in a busybox based distro"
 	if ( cd .. && dir="${OLDPWD##*/}" && \
 	       dosh --rmi --directory "$dir" --dockerfile Dockerfile.alpine && \
 	     ! dosh --rmi --directory "$dir" --dockerfile Dockerfile.alpine )
@@ -106,7 +106,7 @@ then
 	exit
 fi
 
-run "dosh: Test with missing Dockerfile"
+run "Test with missing Dockerfile"
 if ! dosh --dockerfile Dockerfile.missing -c "echo Oops"
 then
 	ok
@@ -115,7 +115,7 @@ else
 fi
 echo
 
-run "dosh: Test option --help"
+run "Test option --help"
 if dosh --help | \
    grep '^Usage: '
 then
@@ -125,7 +125,7 @@ else
 fi
 echo
 
-run "dosh: Test option --version"
+run "Test option --version"
 if dosh --version | \
    grep -E '^([0-9a-zA-Z]+)(\.[0-9a-zA-Z]+)*$'
 then
@@ -135,7 +135,7 @@ else
 fi
 echo
 
-run "dosh: Test option --dry-run"
+run "Test option --dry-run"
 if dosh --dry-run 2>&1 | tee /dev/stderr | \
    grep "docker run --rm --volume $PWD:$PWD --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
 then
@@ -145,7 +145,7 @@ else
 fi
 echo
 
-run "dosh: Test option --build"
+run "Test option --build"
 if dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Sending build context to Docker daemon'
 then
@@ -155,7 +155,7 @@ else
 fi
 echo
 
-run "dosh: Test option --rebuild"
+run "Test option --rebuild"
 if dosh --rebuild --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Sending build context to Docker daemon'
 then
@@ -165,7 +165,7 @@ else
 fi
 echo
 
-run "dosh: Test DOSH_NOBUILD environment variable"
+run "Test DOSH_NOBUILD environment variable"
 if ! DOSH_NOBUILD=1 dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Sending build context to Docker daemon'
 then
@@ -175,7 +175,7 @@ else
 fi
 echo
 
-run "dosh: Test with a binary argument"
+run "Test with a binary argument"
 if ! dosh "$@" echo "one" "two" "three"
 then
 	ok
@@ -184,7 +184,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c without command"
+run "Test option -c without command"
 if ! dosh "$@" -c
 then
 	ok
@@ -193,7 +193,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c with empty command"
+run "Test option -c with empty command"
 if          dosh "$@"  -c '' | tee /dev/stderr | \
    diff - <(/bin/sh    -c '' | tee /dev/stderr )
 then
@@ -203,7 +203,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c with commands"
+run "Test option -c with commands"
 if          dosh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
    diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then
@@ -213,7 +213,7 @@ else
 fi
 echo
 
-run "dosh: Test option -c with commands and arguments"
+run "Test option -c with commands and arguments"
 if          dosh "$@"  -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
    diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
 then
@@ -223,7 +223,7 @@ else
 fi
 echo
 
-run "dosh: Test option -s without arguments"
+run "Test option -s without arguments"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@" -s | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh   -s | tee /dev/stderr )
 then
@@ -233,7 +233,7 @@ else
 fi
 echo
 
-run "dosh: Test option -s one two three"
+run "Test option -s one two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one" "two" "three" | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s "one" "two" "three" | tee /dev/stderr )
 then
@@ -243,7 +243,7 @@ else
 fi
 echo
 
-run "dosh: Test option -s one\ +\ two three"
+run "Test option -s one\ +\ two three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s one\ +\ two three | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s one\ +\ two three | tee /dev/stderr )
 then
@@ -253,7 +253,7 @@ else
 fi
 echo
 
-run "dosh: Test option -s \"one + two\" three"
+run "Test option -s \"one + two\" three"
 if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one + two" "three" | tee /dev/stderr | \
    diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s "one + two" "three" | tee /dev/stderr )
 then
@@ -263,7 +263,7 @@ else
 fi
 echo
 
-run "dosh: Test option --root"
+run "Test option --root"
 if                      dosh "$@" --root -c 'whoami' | tee /dev/stderr | \
    diff - <(fakeroot -- /bin/sh          -c 'whoami' | tee /dev/stderr )
 then
@@ -273,7 +273,7 @@ else
 fi
 echo
 
-run "dosh: Test option --dind"
+run "Test option --dind"
 if dosh --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
    grep -q 'DOSHLVL=2'
 then
@@ -282,7 +282,7 @@ else
 	ko
 fi
 
-run "dosh: Test option -c"
+run "Test option -c"
 if dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
@@ -292,7 +292,7 @@ else
 fi
 echo
 
-run "dosh: Test \$DOSH_DOCKERFILE"
+run "Test \$DOSH_DOCKERFILE"
 if DOSH_DOCKERFILE=Dockerfile.fedora \
    dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
@@ -303,7 +303,7 @@ else
 fi
 echo
 
-run "dosh: Test option --dockerfile"
+run "Test option --dockerfile"
 if dosh "$@" --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
@@ -313,7 +313,7 @@ else
 fi
 echo
 
-run "dosh: Test option --context"
+run "Test option --context"
 tar cf context.tar Dockerfile dosh bash-completion support/* examples/*
 if dosh "$@" --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
@@ -325,7 +325,7 @@ fi
 echo
 rm context.tar
 
-run "dosh: Test option --context with --dockerfile"
+run "Test option --context with --dockerfile"
 tar cf context.tar Dockerfile.fedora
 if dosh "$@" --build --dockerfile Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
@@ -337,7 +337,7 @@ fi
 echo
 rm context.tar
 
-run "dosh: Test option --no-auto-context"
+run "Test option --no-auto-context"
 if dosh "$@" --build --no-auto-context -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Info: ADD or COPY sends build context to daemon'
 then
@@ -347,7 +347,7 @@ else
 fi
 echo
 
-run "dosh: Test option --directory with relative path"
+run "Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
      dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
@@ -358,7 +358,7 @@ else
 fi
 echo
 
-run "dosh: Test option --directory with absolute path"
+run "Test option --directory with absolute path"
 if ( cd /tmp && dir="$OLDPWD" && \
      dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
@@ -369,7 +369,7 @@ else
 fi
 echo
 
-run "dosh: Test option --home"
+run "Test option --home"
 if          echo 'pwd; cd ; pwd' | dosh "$@"  --home -s | tee /dev/stderr | \
    diff - <(echo 'pwd; cd ; pwd' | /bin/sh           -s | tee /dev/stderr )
 then
@@ -379,7 +379,7 @@ else
 fi
 echo
 
-run "dosh: Test option --shell /bin/dash"
+run "Test option --shell /bin/dash"
 if          echo 'echo $0' | dosh "$@"  --shell /bin/dash -s | tee /dev/stderr | \
    diff - <(echo '/bin/dash'                                 | tee /dev/stderr )
 then
@@ -389,7 +389,7 @@ else
 fi
 echo
 
-run "dosh: Test default shell"
+run "Test default shell"
 if          echo 'echo $0' | dosh "$@"  -s | tee /dev/stderr | \
    diff - <(echo 'echo $0' | /bin/sh    -s | tee /dev/stderr )
 then
@@ -399,7 +399,7 @@ else
 fi
 echo
 
-run "dosh: Test shebang (dind and bash)"
+run "Test shebang (dind and bash)"
 if dosh --shell /bin/bash --dind -c 'examples/shebang.dosh' | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
@@ -409,7 +409,7 @@ else
 fi
 echo
 
-run "dosh: Test shebang with arguments (dind and bash)"
+run "Test shebang with arguments (dind and bash)"
 if dosh --shell /bin/bash --dind -c 'examples/shebang-fedora.dosh' | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
@@ -419,7 +419,7 @@ else
 fi
 echo
 
-run "dosh: Test --detach/--exec ID"
+run "Test --detach/--exec ID"
 if container="$(dosh --detach)" && \
           dosh "$@" --exec "$container"  -c "hostname" | tee /dev/stderr | \
    diff - <(echo "${container:0:12}"                   | tee /dev/stderr ) && \
@@ -432,7 +432,7 @@ else
 fi
 echo
 
-run "dosh: Test DOCKER environment variable"
+run "Test DOCKER environment variable"
 if DOCKER="echo docker" dosh | tee /dev/stderr | \
    grep "docker run --rm --volume $PWD:$PWD --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
 then
@@ -442,7 +442,7 @@ else
 fi
 echo
 
-run "dosh: Test with a busybox based distro (/bin/ash + adduser/addgroup)"
+run "Test with a busybox based distro (/bin/ash + adduser/addgroup)"
 if DOSHELL=/bin/ash dosh --dockerfile Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
 then
 	ok
@@ -451,7 +451,7 @@ else
 fi
 echo
 
-run "dosh: Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable"
+run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
    dosh -c "which dosh" | grep "$HOME/.local/bin/dosh"
 then
@@ -461,7 +461,7 @@ else
 fi
 echo
 
-run "dosh: Test --no-extra-options option"
+run "Test --no-extra-options option"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
    dosh --no-extra-options -c "which dosh" | grep '/usr/bin/dosh'
 then
@@ -471,7 +471,7 @@ else
 fi
 echo
 
-run "dosh: Test --tag option"
+run "Test --tag option"
 if dosh --tag
 then
 	ok
@@ -480,7 +480,7 @@ else
 fi
 echo
 
-run "dosh: Test --tag option with --dockerfile option"
+run "Test --tag option with --dockerfile option"
 if dosh --tag --dockerfile Dockerfile.fedora
 then
 	ok
@@ -489,7 +489,7 @@ else
 fi
 echo
 
-run "dosh: Test --tag option with --directory and --dockerfile option in a busybox based distro"
+run "Test --tag option with --directory and --dockerfile option in a busybox based distro"
 if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag )
 then
 	ok
@@ -498,7 +498,7 @@ else
 fi
 echo
 
-run "dosh: Test when user is set in Dockerfile"
+run "Test when user is set in Dockerfile"
 if dosh --dockerfile Dockerfile.user -c "whoami"
 then
 	ok
@@ -516,7 +516,7 @@ sed -e "s,@USER@,$USER,g" \
     -e "s,@DID_GID@,${did[2]},g" \
     Dockerfile.me.in >Dockerfile.me
 
-run "dosh: Test when user/group already exists with same UID/GID in Dockerfile"
+run "Test when user/group already exists with same UID/GID in Dockerfile"
 if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
    diff - <(/bin/sh                                   -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr )
 then
@@ -538,7 +538,7 @@ sed -e "s,@USER@,$USER,g" \
     Dockerfile.me.in >Dockerfile.not-me
 cat Dockerfile.not-me
 
-run "dosh: Test when user/group already exists with different UID/GID in Dockerfile"
+run "Test when user/group already exists with different UID/GID in Dockerfile"
 if          dosh --rebuild --dockerfile Dockerfile.not-me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
    diff - <(/bin/sh                                       -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
 then
@@ -549,7 +549,7 @@ fi
 echo
 rm -f Dockerfile.not-me
 
-run "dosh: Test with shopt arguments using /bin/bash (dind)"
+run "Test with shopt arguments using /bin/bash (dind)"
 if          dosh --shell /usr/bin/dosh --dind -- --shell /bin/bash -- +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
    diff - <(dosh                                 --shell /bin/bash    +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
 then
@@ -559,7 +559,7 @@ else
 fi
 echo
 
-run "dosh: Test without pipefail bashopt argument"
+run "Test without pipefail bashopt argument"
 if dosh --shell /bin/bash -c 'false | true'
 then
 	ok
@@ -568,7 +568,7 @@ else
 fi
 echo
 
-run "dosh: Test with pipefail bashopt argument"
+run "Test with pipefail bashopt argument"
 if ! dosh --shell /bin/bash -o pipefail -c 'false | true'
 then
 	ok
@@ -577,7 +577,7 @@ else
 fi
 echo
 
-run "dosh: Test specific bash options (short form)"
+run "Test specific bash options (short form)"
 if DOSHELL=/bin/bash dosh -p -c 'echo "$-"'
 then
 	ok
@@ -586,7 +586,7 @@ else
 fi
 echo
 
-run "dosh: Test specific dash options (short form)"
+run "Test specific dash options (short form)"
 if DOSHELL=/bin/dash dosh -p -c 'echo "$-"'
 then
 	ok
@@ -595,7 +595,7 @@ else
 fi
 echo
 
-run "dosh: Test specific zsh options (short form)"
+run "Test specific zsh options (short form)"
 if DOSHELL=/bin/zsh dosh -p -c 'echo "$-"'
 then
 	ok
@@ -604,7 +604,7 @@ else
 fi
 echo
 
-run "dosh: Test specific bash options (complete form)"
+run "Test specific bash options (complete form)"
 if DOSHELL=/bin/bash dosh -O compat31 -c 'shopt compat31 | grep on'
 then
 	ok
@@ -613,7 +613,7 @@ else
 fi
 echo
 
-run "dosh: Test specific bash options (optional argument)"
+run "Test specific bash options (optional argument)"
 if DOSHELL=/bin/bash dosh +O < <(echo whoami)
 then
 	ok
