@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2019 Gaël PORTAY
+# Copyright (c) 2017-2020 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -21,7 +21,7 @@ ok() {
 ko() {
 	ko=$((ko+1))
 	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
-	if [ -n "$EXIT_ON_ERROR" ]; then
+	if [[ $EXIT_ON_ERROR ]]; then
 		exit 1
 	fi
 }
@@ -37,19 +37,19 @@ bug() {
 }
 
 result() {
-	if [ -n "$ok" ]; then
+	if [[ $ok ]]; then
 		echo -e "\e[1m\e[32m$ok test(s) succeed!\e[0m"
 	fi
 
-	if [ -n "$fix" ]; then
+	if [[ $fix ]]; then
 		echo -e "\e[1m\e[34m$fix test(s) fixed!\e[0m" >&2
 	fi
 
-	if [ -n "$bug" ]; then
+	if [[ $bug ]]; then
 		echo -e "\e[1mWarning: \e[33m$bug test(s) bug!\e[0m" >&2
 	fi
 
-	if [ -n "$ko" ]; then
+	if [[ $ko ]]; then
 		echo -e "\e[1mError: \e[31m$ko test(s) failed!\e[0m" >&2
 		exit 1
 	fi
@@ -99,7 +99,7 @@ rmi() {
 	echo
 }
 
-if [ -n "$DO_CLEANUP" ]
+if [[ $DO_CLEANUP ]]
 then
 	trap - 0
 	rmi
@@ -622,7 +622,7 @@ else
 fi
 echo
 
-if [ -n "$DO_RMI_TESTS" ]
+if [[ $DO_RMI_TESTS ]]
 then
 	rmi
 else
