@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017-2019 Gaël PORTAY
+# Copyright (c) 2017-2020 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -79,7 +79,7 @@ ci: check coverage
 DO_RMI_TESTS ?=
 .PHONY: tests
 tests:
-	@DO_RMI_TESTS=$(DO_RMI_TESTS) ./tests.sh
+	@DO_RMI_TESTS=$(DO_RMI_TESTS) ./tests.bash
 
 .PHONY: check
 check: dosh
@@ -87,7 +87,7 @@ check: dosh
 
 .PHONY: coverage
 coverage:
-	kcov $(CURDIR)/$@ --include-path=dosh $(CURDIR)/tests.sh
+	kcov $(CURDIR)/$@ --include-path=dosh $(CURDIR)/tests.bash
 
 ifneq (,$(BUMP_VERSION))
 .SILENT: bump
@@ -145,7 +145,7 @@ clean:
 
 .PHONY: mrproper
 mrproper: clean
-	DO_CLEANUP=1 bash tests.sh
+	DO_CLEANUP=1 bash tests.bash
 
 .PHONY: aur
 aur: PKGBUILD.aur
