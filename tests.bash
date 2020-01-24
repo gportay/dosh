@@ -64,7 +64,7 @@ result() {
 }
 
 PATH="$PWD:$PATH"
-trap result 0
+trap result 0 SIGINT
 
 export -n DOCKER
 export -n DOSHELL
@@ -109,7 +109,7 @@ rmi() {
 
 if [[ $DO_CLEANUP ]]
 then
-	trap - 0
+	trap - 0 SIGINT
 	rmi
 	exit
 fi
