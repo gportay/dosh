@@ -76,8 +76,6 @@ Docker related options:
       --detach                  Detach container.
       --exec CONTAINER          Execute in container.
       --tag                     Print docker tag and exit.
-      --no-do                   Do nothing; echo docker commands.
-                                This option is deprecated; use --dry-run instead.
       --dry-run                 Do nothing; echo docker commands.
 
 Miscellaneous options:
@@ -297,7 +295,7 @@ while [ "$#" -ne 0 ]; do
 	elif [ "$1" = "--tag" ]; then
 		get_tag "$directory/$dockerfile"
 		exit
-	elif [ "$1" = "--dry-run" ] || [ "$1" = "--no-do" ]; then
+	elif [ "$1" = "--dry-run" ]; then
 		# shellcheck disable=SC2209
 		dryrun=true
 	elif [ "$1" = "--verbose" ]; then
