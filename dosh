@@ -348,17 +348,9 @@ fi
 cd "$directory"
 
 # Source profile files
-for rc in doshrc .doshrc; do
-	if [ -e "$rc" ]; then
-		if [ "${rc:0:1}" = "." ]; then
-			echo "Warning: $rc is going to be depracted in 2.0!"
-			echo "         Consider ${rc:1} instead:"
-			echo "             mv $rc ${rc:1}"
-		fi >&2
-		. "$rc"
-		break
-	fi
-done
+if [ -e ./doshrc ]; then
+	. ./doshrc
+fi
 
 # Remove image and exit
 # shellcheck disable=SC2154
