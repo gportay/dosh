@@ -307,7 +307,6 @@ while [ "$#" -ne 0 ]; do
 		get_tag "$directory/$dockerfile"
 		exit
 	elif [ "$1" = "--dry-run" ]; then
-		# shellcheck disable=SC2209
 		dryrun=true
 	elif [ "$1" = "--verbose" ]; then
 		verbose=true
