@@ -115,14 +115,6 @@ bump-minor:
 	new="$${old%.*}.$$(($${old##*.}+1))"; \
 	$(MAKE) bump "BUMP_VERSION=$$new"
 
-.SILENT: bump-patch
-.PHONY: bump-patch
-bump-patch:
-	old="$$(bash dosh --version)"; \
-	if [ "$${old%.*.*}" = "$$old" ]; then old="$$old.0"; fi; \
-	new="$${old%.*}.$$(($${old##*.}+1))"; \
-	$(MAKE) bump "BUMP_VERSION=$$new"
-
 .SILENT: bump
 bump: bump-minor
 endif
