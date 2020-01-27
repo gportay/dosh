@@ -13,12 +13,11 @@ if [ "$__" != "/bin/bash" ] && [ "$__" = "$1" ]; then
 	set -- -s "$@"
 	exec "$0" "$@"
 elif [ "$__" != "/bin/bash" ] && [ "$__" = "$2" ]; then
-	args="$1"
+	read -r -a args < <(echo "$1")
 	shift
 	exec <"$1"
 	shift
-	# shellcheck disable=SC2086
-	set -- $args -s "$@"
+	set -- "${args[@]}" -s "$@"
 	exec "$0" "$@"
 fi
 
