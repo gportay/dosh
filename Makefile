@@ -105,13 +105,14 @@ else
 .PHONY: bump-major
 bump-major:
 	old="$$(bash dosh --version)"; \
-	new="$$(($${old%.*}+1)).0"; \
+	new="$$(($${old%.*}+1))"; \
 	$(MAKE) bump "BUMP_VERSION=$$new"
 
 .SILENT: bump-minor
 .PHONY: bump-minor
 bump-minor:
 	old="$$(bash dosh --version)"; \
+	if [ "$${old%.*}" = "$$old" ]; then old="$$old.0"; fi; \
 	new="$${old%.*}.$$(($${old##*.}+1))"; \
 	$(MAKE) bump "BUMP_VERSION=$$new"
 
