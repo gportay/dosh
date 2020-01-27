@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2019 Gaël PORTAY
+# Copyright (c) 2017-2020 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -135,6 +135,11 @@ docker_build() {
 
 	if [ -n "$DOSH_NOBUILD" ]; then
 		return
+	fi
+
+	if [[ ! -e "$1" ]]; then
+		echo "$1: No such Dockerfile"
+		exit 1
 	fi
 
 	# Inject both user and group id.
