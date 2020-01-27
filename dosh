@@ -201,7 +201,7 @@ EOF
 		echo "          tar cf context.tar ${files[*]}" >&2
 		echo "      Then, run dosh again and tell it to use the context archive:" >&2
 		echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
-		run $DOCKER build "${buildopts[@]}" ${DOSH_DOCKER_BUILD_EXTRA_OPTS:-} --tag "$2" --file doshfile .
+		run "${docker[@]}" build "${buildopts[@]}" ${DOSH_DOCKER_BUILD_EXTRA_OPTS:-} --tag "$2" --file doshfile .
 	else
 		if ! [[ ${context_file:-} ]]; then
 			run tar c "${files[@]}"
@@ -209,7 +209,7 @@ EOF
 			run tar rf "$context_file" "doshfile"
 			run cat "$context_file"
 		fi | \
-		run $DOCKER build "${buildopts[@]}" ${DOSH_DOCKER_BUILD_EXTRA_OPTS:-} --tag "$2" --file doshfile -
+		run "${docker[@]}" build "${buildopts[@]}" ${DOSH_DOCKER_BUILD_EXTRA_OPTS:-} --tag "$2" --file doshfile -
 	fi
 
 	rm -f doshfile
@@ -217,7 +217,7 @@ EOF
 
 docker_rmi() {
 	# shellcheck disable=SC2086
-	run $DOCKER rmi ${DOSH_DOCKER_RMI_EXTRA_OPTS:-} "$@"
+	run "${docker[@]}" rmi ${DOSH_DOCKER_RMI_EXTRA_OPTS:-} "$@"
 }
 
 is_doshopt() {
@@ -280,13 +280,13 @@ is_shopt_argument() {
 }
 
 shopts=()
+read -r -a docker < <(echo "${DOCKER:-docker}")
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 opts=()
 buildopts=("--quiet")
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOSHLVL="${DOSHLVL:-0}"
-DOCKER="${DOCKER:-docker}"
 while [ "$#" -ne 0 ]; do
 	if [ "$1" = "--help" ]; then
 		usage
@@ -370,7 +370,7 @@ fi
 if ! [[ ${exec:-} ]]; then
 	# Rebuild or automatically build image if it does not exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
-	imageid="$($DOCKER images -q "$tag")"
+	imageid="$("${docker[@]}" images -q "$tag")"
 	if [[ ${build:-} ]] || [[ ${rebuild:-} ]] || ! [[ ${imageid:-} ]]; then
 		# Reset quiet option when image does not exist or rebuild or if verbose option is set
 		if ! [[ ${imageid:-} ]] || [[ ${rebuild:-} ]] || [[ ${verbose:-} ]]; then
@@ -429,9 +429,8 @@ if [ ${#shopts[*]} -gt 0 ]; then
 fi
 
 # Execute in existing container
-# shellcheck disable=SC2086
 if [[ ${exec:-} ]]; then
-	run exec $DOCKER exec "${opts[@]}" ${DOSH_DOCKER_EXEC_EXTRA_OPTS:-} "$exec" "$DOSHELL" "$@"
+	run exec "${docker[@]}" exec "${opts[@]}" ${DOSH_DOCKER_EXEC_EXTRA_OPTS:-} "$exec" "$DOSHELL" "$@"
 # Run in a new container
 else
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
@@ -439,5 +438,5 @@ else
 	if [[ ${verbose:-} ]]; then
 		echo "$tag"
 	fi >&2
-	run exec $DOCKER run "${opts[@]}" ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} "$tag" "$@"
+	run exec "${docker[@]}" run "${opts[@]}" ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} "$tag" "$@"
 fi
