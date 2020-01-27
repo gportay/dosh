@@ -1,69 +1,82 @@
 # dosh
 
 # Not sh?
-if [ "$SHELL" != "/bin/sh" ]; then
+if [ "$SHELL" != "/bin/sh" ]
+then
 	export DOSHELL="$SHELL"
 fi
 
 # Export some environment variables
-for env in TERM EDITOR; do
+for env in TERM EDITOR
+do
 	[ -n "$env" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 done
 
 # Map some home dot-files
-for vol in $HOME/.config $HOME/.local $HOME/.profile; do
+for vol in $HOME/.config $HOME/.local $HOME/.profile
+do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
 # Map extra home dot-files
-for vol in $HOME/.inputrc $HOME/.screenrc $HOME/.gnupg; do
+for vol in $HOME/.inputrc $HOME/.screenrc $HOME/.gnupg
+do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
 # Map bash dot-files
-for vol in $HOME/.bash{_profile,rc,login,logout}; do
+for vol in $HOME/.bash{_profile,rc,login,logout}
+do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
 # Map zsh dot-files
 zdotdir="${ZDOTDIR:-$HOME}"
-for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout; do
+for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout
+do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
 # Map grml zsh dot-files
-for vol in $zdotdir/.zshrc.pre $zdotdir/.zshrc.local; do
+for vol in $zdotdir/.zshrc.pre $zdotdir/.zshrc.local
+do
 	[ -e "$vol" ] || continue
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 done
 
 # Map and export ssh things?
-if [ -d "$HOME/.ssh" ]; then
+if [ -d "$HOME/.ssh" ]
+then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
 fi
-if [ -n "$SSH_AUTH_SOCK" ]; then
+if [ -n "$SSH_AUTH_SOCK" ]
+then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
 fi
 
 # Map and export X things?
-if [ -n "$DISPLAY" ]; then
-	for env in DISPLAY XAUTHORITY XSOCK; do
+if [ -n "$DISPLAY" ]
+then
+	for env in DISPLAY XAUTHORITY XSOCK
+	do
 		[ -n "$env" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 	done
 	dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
-	if [ -e "$dotxauthority" ]; then
+	if [ -e "$dotxauthority" ]
+	then
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $dotxauthority:$HOME/.Xauthority"
 	fi
 	unset dotxauthority
 	xsock="${XSOCK:-/tmp/.X11-unix}"
-	if [ -e "$xsock" ]; then
+	if [ -e "$xsock" ]
+	then
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $xsock:/tmp/.X11-unix:ro"
 	fi
 	unset xsock
@@ -72,7 +85,8 @@ fi
 export DOSHELL DOSH_DOCKER_RUN_EXTRA_OPTS
 
 # In dosh?
-if [ -z "$DOSHLVL" ]; then
+if [ -z "$DOSHLVL" ]
+then
 	return
 fi
 

@@ -135,7 +135,8 @@ This asks *dosh* to use the same Shell interpreter as the one which is currently
 in use.
 
 	# Not sh?
-	if [ "$SHELL" != "/bin/sh" ]; then
+	if [ "$SHELL" != "/bin/sh" ]
+	then
 		export DOSHELL="$SHELL"
 	fi
 
@@ -149,7 +150,8 @@ container, *dosh* ends with the following error:
 These following lines export some useful environment variables to the container.
 
 	# Export some environment variables
-	for env in TERM EDITOR; do
+	for env in TERM EDITOR
+	do
 		[ -n "$env" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 	done
@@ -159,13 +161,15 @@ These following lines export some useful environment variables to the container.
 These following lines map some useful *dot-files* to the container.
 
 	# Map some home dot-files
-	for vol in $HOME/.config $HOME/.local $HOME/.profile; do
+	for vol in $HOME/.config $HOME/.local $HOME/.profile
+	do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
 	# Map extra home dot-files
-	for vol in $HOME/.inputrc $HOME/.gnupg $HOME/.screenrc; do
+	for vol in $HOME/.inputrc $HOME/.gnupg $HOME/.screenrc
+	do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
@@ -173,7 +177,8 @@ These following lines map some useful *dot-files* to the container.
 *bash(1)* invocation files is a *must-have* to feel like home.
 
 	# Map bash dot-files
-	for vol in $HOME/.bash{_profile,rc,login,logout}; do
+	for vol in $HOME/.bash{_profile,rc,login,logout}
+	do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
@@ -182,7 +187,8 @@ These following lines map some useful *dot-files* to the container.
 
 	# Map zsh dot-files
 	zdotdir="${ZDOTDIR:-$HOME}"
-	for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout; do
+	for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout
+	do
 		[ -e "$vol" ] || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
@@ -192,10 +198,12 @@ These following lines map some useful *dot-files* to the container.
 For a better experience with *SSH*, these following lines should be considered.
 
 	# Map and export ssh things?
-	if [ -d "$HOME/.ssh" ]; then
+	if [ -d "$HOME/.ssh" ]
+	then
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
 	fi
-	if [ -n "$SSH_AUTH_SOCK" ]; then
+	if [ -n "$SSH_AUTH_SOCK" ]
+	then
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
 	fi
@@ -205,18 +213,22 @@ For a better experience with *SSH*, these following lines should be considered.
 To enable *X* in docker, these following lines should be considered.
 
 	# Map and export X things?
-	if [ -n "$DISPLAY" ]; then
-		for env in DISPLAY XAUTHORITY XSOCK; do
+	if [ -n "$DISPLAY" ]
+	then
+		for env in DISPLAY XAUTHORITY XSOCK
+		do
 			[ -n "$env" ] || continue
 			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 		done
 		dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
-		if [ -e "$dotxauthority" ]; then
+		if [ -e "$dotxauthority" ]
+		then
 			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $dotxauthority:$HOME/.Xauthority"
 		fi
 		unset dotxauthority
 		xsock="${XSOCK:-/tmp/.X11-unix}"
-		if [ -e "$xsock" ]; then
+		if [ -e "$xsock" ]
+		then
 			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $xsock:/tmp/.X11-unix:ro"
 		fi
 		unset xsock
@@ -231,7 +243,8 @@ Colorize the prompt from the container in a different way to distinguish *dosh*
 sessions.
 
 	# In dosh?
-	if [ -z "$DOSHLVL" ]; then
+	if [ -z "$DOSHLVL" ]
+	then
 		return
 	fi
 
@@ -273,7 +286,7 @@ Written by Gaël PORTAY *gael.portay@gmail.com*
 
 ## COPYRIGHT
 
-Copyright (c) 2017-2019 Gaël PORTAY
+Copyright (c) 2017-2020 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the MIT License.
