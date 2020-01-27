@@ -27,7 +27,8 @@ When called without arguments, *dosh* defaults to running an interactive shell
 as current _user_.
 
 When a container shell is started, *dosh* reads and executes commands from
-_./doshrc_, if that file exists.
+_./doshrc_, if that file exists. This may be inhibited by using the --no-doshrc
+option.
 
 Under the hood, *dosh* builds its _docker image_ using the *Dockerfile(5)* from
 the _current working directory_ inside *docker-build(1)*.  *dosh* appends a
@@ -81,6 +82,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **--no-extra-options**
 	Disable extra options given to docker commands.
+
+**--no-doshrc**
+	Disable read of ./doshrc
 
 **--directory DIR**
 	Change to directory before doing anything else.
