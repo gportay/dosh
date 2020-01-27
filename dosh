@@ -183,9 +183,11 @@ EOF
 						continue
 					fi
 
-					# shellcheck disable=SC2206
-					files+=($word)
+					for f in $word; do
+						files+=("$f")
+					done
 				done
+				unset f
 			elif [[ ${words[0]^^} =~ ^ENTRYPOINT$ ]]; then
 				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
