@@ -170,5 +170,5 @@ PKGBUILD.devel: PKGBUILD
 	asciidoctor -b manpage -o $@ $<
 
 %.gz: %
-	gzip -c $^ >$@
+	gzip -c $< >$@
 
