@@ -88,10 +88,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 	Disable extra options given to docker commands.
 
 **--no-doshprofile**
-	Disable read of ~/.dosh_profile
+	Disable read of ~/.dosh_profile.
 
 **--no-doshrc**
-	Disable read of ./doshrc
+	Disable read of ./doshrc.
 
 **--directory DIR**
 	Change to directory before doing anything else.

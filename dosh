@@ -65,8 +65,8 @@ Docker related options:
       --context TAR             Path to the context to send to docker daemon.
       --no-auto-context         Disable automatic context sent to docker daemon.
       --no-extra-options        Disable extra options given to docker commands.
-      --no-doshprofile          Disable read of ~/.dosh_profile
-      --no-doshrc               Disable read of ./doshrc
+      --no-doshprofile          Disable read of ~/.dosh_profile.
+      --no-doshrc               Disable read of ./doshrc.
       --directory DIR           Change to directory before doing anything else.
       --root                    Run as root.
       --dind                    Run dosh in dosh.
