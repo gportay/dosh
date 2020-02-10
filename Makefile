@@ -122,14 +122,14 @@ bump-minor:
 bump: bump-major
 endif
 
-.PHONY: commit-check
-commit-check:
-	git rebase -i -x "$(MAKE) check && $(MAKE) tests"
-
 .PHONY: bump-PKGBUILD
 bump-PKGBUILD: aur
 	cp PKGBUILD.aur PKGBUILD
 	git commit PKGBUILD --patch --message "PKGBUILD: update release $$(bash dosh --version) checksum"
+
+.PHONY: commit-check
+commit-check:
+	git rebase -i -x "$(MAKE) check && $(MAKE) tests"
 
 .PHONY: clean
 clean:
