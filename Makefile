@@ -20,17 +20,14 @@ install-all: install install-doc install-bash-completion
 
 .PHONY: install
 install:
-	install -d $(DESTDIR)$(PREFIX)/bin/
-	install -m 755 dosh $(DESTDIR)$(PREFIX)/bin/
-	install -d $(DESTDIR)$(PREFIX)/share/dosh/support/
-	install -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/
-	install -m 644 support/profile support/dot-profile \
-	           $(DESTDIR)$(PREFIX)/share/dosh/support/
+	install -D -m 755 dosh $(DESTDIR)$(PREFIX)/bin/dosh
+	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
+	install -D -m 644 support/profile $(DESTDIR)$(PREFIX)/share/dosh/support/profile
+	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 
 .PHONY: install-profile
 install-profile:
-	install -d $(DESTDIR)/etc/profile.d
-	install -m 644 support/profile $(DESTDIR)/etc/profile.d/dosh.sh
+	install -D -m 644 support/profile $(DESTDIR)/etc/profile.d/dosh.sh
 
 .PHONY: install-dot-profile
 install-dot-profile:
@@ -38,8 +35,7 @@ install-dot-profile:
 
 .PHONY: install-doc
 install-doc:
-	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
-	install -m 644 dosh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/
+	install -D -m 644 dosh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 
 .PHONY: install-bash-completion
 install-bash-completion:
@@ -47,8 +43,7 @@ install-bash-completion:
 	                             --variable=completionsdir \
 	                             bash-completion)}; \
 	if [ -n "$$completionsdir" ]; then \
-		install -d $(DESTDIR)$$completionsdir/; \
-		install -m 644 bash-completion $(DESTDIR)$$completionsdir/dosh; \
+		install -D -m 644 bash-completion $(DESTDIR)$$completionsdir/dosh; \
 	fi
 
 .PHONY: uninstall
