@@ -118,8 +118,7 @@ bump: bump-major
 endif
 
 .PHONY: bump-PKGBUILD
-bump-PKGBUILD: aur
-	cp PKGBUILD.aur PKGBUILD
+bump-PKGBUILD: updpkgsums
 	git commit PKGBUILD --patch --message "PKGBUILD: update release $$(bash dosh --version) checksum"
 
 .PHONY: commit-check
@@ -129,8 +128,8 @@ commit-check:
 .PHONY: clean
 clean:
 	rm -f dosh.1.gz
-	rm -f PKGBUILD.aur PKGBUILD.devel *.tar.gz src/*.tar.gz *.pkg.tar.xz \
-	   -R src/dosh-*/ pkg/dosh/
+	rm -f PKGBUILD.tmp *.tar.gz src/*.tar.gz *.pkg.tar.xz \
+	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
 	rm -Rf coverage/
 
 .PHONY: mrproper
@@ -142,30 +141,15 @@ updpkgsums:
 	updpkgsums
 
 .PHONY: aur
-aur: PKGBUILD.aur
+aur:
+	makepkg --force --syncdeps
+
+.PHONY: aur-git
+aur-git: PKGBUILD.tmp
 	makepkg --force --syncdeps -p $^
 
-PKGBUILD.aur: PKGBUILD
-	cp $< $@.tmp
-	makepkg --nobuild --nodeps --skipinteg -p $@.tmp
-	md5sum="$$(makepkg --geninteg -p $@.tmp)"; \
-	sed -e "/md5sums=/d" \
-	    -e "/source=/a$$md5sum" \
-	    -i $@.tmp
-	mv $@.tmp $@
-
-.PHONY: devel
-devel: PKGBUILD.devel
-	makepkg --force --syncdeps -p $^
-
-PKGBUILD.devel: PKGBUILD
-	sed -e "/source=/d" \
-	    -e "/md5sums=/d" \
-	    -e "/build() {/,/^}$$/s,\$$pkgname-\$$pkgver,\$$startdir,g" \
-	    -e "/check() {/,/^}$$/s,\$$pkgname-\$$pkgver,\$$startdir,g" \
-	    -e "/package() {/,/^}$$/s,\$$pkgname-\$$pkgver,\$$startdir,g" \
-	    -e "/pkgver=/apkgver() { printf \"\$$(bash dosh --version)r%s.%s\" \"\$$(git rev-list --count HEAD)\" \"\$$(git rev-parse --short HEAD)\"; }" \
-	       $< >$@
+PKGBUILD.tmp: PKGBUILD-git
+	cp $< $@
 
 %.1: %.1.adoc
 	asciidoctor -b manpage -o $@ $<
