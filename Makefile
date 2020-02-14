@@ -137,6 +137,10 @@ clean:
 mrproper: clean
 	DO_CLEANUP=1 bash tests.bash
 
+.PHONY: updpkgsums
+updpkgsums:
+	updpkgsums
+
 .PHONY: aur
 aur: PKGBUILD.aur
 	makepkg --force --syncdeps -p $^
