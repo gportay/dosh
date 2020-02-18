@@ -20,9 +20,9 @@ in _bash_.
 
 Give it a try right now by fetching your own copy!
 
-*Version* | *Checksum* (\*)                  |
---------- | -------------------------------- |
-[2.1]     | e73c0949fb577359e70ca0a26b2f62bf |
+*Version* | *Checksum* (\*)                                                  |
+--------- | ---------------------------------------------------------------- |
+[2.1]     | 798edbf32490ec5c95a228087846cfc592c6305a8f65c92b2a0ed8e08387c6b6 |
 
 \*: Note that hashes are subject to change as GitHub might update tarball
 generation.
