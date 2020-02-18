@@ -106,6 +106,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--home**
 	Bind mount home directory.
 
+**--mount-options OPTIONS**
+	Set bind mount volume options.
+	For a more thorough description please refers to docker-run(1) manual.
+
 **--shell SHELL**
 	Set shell interpretor.
 	Equivalent to set DOSHELL=<SHELL>.

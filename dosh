@@ -71,6 +71,9 @@ Docker related options:
       --root                    Run as root.
       --dind                    Run dosh in dosh.
       --home                    Bind mount home directory.
+      --mount-options OPTIONS   Set bind mount volume options.
+                                For a more thorough description please refers to
+                                docker-run(1) manual.
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
       --build                   Build image.
@@ -265,7 +268,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|context|directory|shell|detach|exec)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|context|directory|mount-options|shell|detach|exec)$ ]]
 	then
 		return 0
 	fi
@@ -460,10 +463,10 @@ then
 	# Bind mount home
 	if [[ ${home:-} ]]
 	then
-		opts+=("--volume" "$HOME:/home/$USER")
+		opts+=("--volume" "$HOME:/home/$USER:${mount_options:-rw}")
 	# Bind mount current working directory
 	else
-		opts+=("--volume" "$PWD:$PWD")
+		opts+=("--volume" "$PWD:$PWD:${mount_options:-rw}")
 	fi
 fi
 

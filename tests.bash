@@ -150,7 +150,7 @@ echo
 
 run "Test option --dry-run"
 if dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -392,6 +392,26 @@ else
 fi
 echo
 
+run "Test option --mount-options"
+if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
+   grep "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --mount-options (run-time)"
+if ! dosh "$@" --mount-options ro -c "touch read-only" 2>&1 | tee /dev/stderr |
+   grep "^touch: .*: Read-only file system\$"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --shell /bin/dash"
 if          echo 'echo $0' | dosh "$@"  --shell /bin/dash -s | tee /dev/stderr | \
    diff - <(echo '/bin/dash'                                 | tee /dev/stderr )
@@ -447,7 +467,7 @@ echo
 
 run "Test DOCKER environment variable"
 if DOCKER="echo docker" dosh | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
 then
 	ok
 else
