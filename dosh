@@ -151,7 +151,7 @@ docker_build() {
 	fi
 
 	# Inject both user and group id.
-	IFS=":" read -r -a did <<< "$(grep '^docker' /etc/group)"
+	IFS=":" read -r -a did <<< "$(grep '^docker:' /etc/group)"
 	cat "$1" - <<EOF >doshfile
 
 USER root
