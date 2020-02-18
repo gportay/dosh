@@ -22,7 +22,7 @@ Give it a try right now by fetching your own copy!
 
 *Version* | *Checksum* (\*)                  |
 --------- | -------------------------------- |
-[2]       | 50e17e5219120bc0b45dc5794efc43bf |
+[2.1]     | e73c0949fb577359e70ca0a26b2f62bf |
 
 \*: Note that hashes are subject to change as GitHub might update tarball
 generation.
@@ -289,4 +289,4 @@ the terms of the MIT License.
 [doc]: Makefile#L13-L16
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
-[2]: https://github.com/gportay/dosh/archive/2.tar.gz
+[2.1]: https://github.com/gportay/dosh/archive/2.1.tar.gz
