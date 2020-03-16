@@ -43,6 +43,7 @@ bug() {
 
 result() {
 	exitcode="$?"
+	trap - 0
 
 	echo -e "\e[1mTest report:\e[0m"
 	for report in "${reports[@]}"
