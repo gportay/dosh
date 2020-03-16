@@ -9,8 +9,8 @@ set -e
 set -o pipefail
 
 run() {
-	id=$((id+1))
-	test="#$id: $@"
+	lineno="${BASH_LINENO[0]}"
+	test="$*"
 	echo -e "\e[1mRunning $test...\e[0m"
 }
 
@@ -22,6 +22,7 @@ ok() {
 ko() {
 	ko=$((ko+1))
 	echo -e "\e[1m$test: \e[31m[KO]\e[0m"
+	reports+=("$test at line \e[1m$lineno \e[31mhas failed\e[0m!")
 	if [[ $EXIT_ON_ERROR ]]
 	then
 		exit 1
@@ -31,15 +32,23 @@ ko() {
 fix() {
 	fix=$((fix+1))
 	echo -e "\e[1m$test: \e[34m[FIX]\e[0m"
+	reports+=("$test at line \e[1m$lineno is \e[34mfixed\e[0m!")
 }
 
 bug() {
 	bug=$((bug+1))
 	echo -e "\e[1m$test: \e[33m[BUG]\e[0m"
+	reports+=("$test at line \e[1m$lineno is \e[33mbugged\e[0m!")
 }
 
 result() {
 	exitcode="$?"
+
+	echo -e "\e[1mTest report:\e[0m"
+	for report in "${reports[@]}"
+	do
+		echo -e "$report" >&2
+	done
 
 	if [[ $ok ]]
 	then
