@@ -572,7 +572,7 @@ echo
 rm -f Dockerfile.me
 
 uid="$((UID+1))"
-gid="$((${GROUPS[0]}+1))"
+gid="$((GROUPS[0]+1))"
 sed -e "s,@USER@,$USER,g" \
     -e "s,@GROUP@,${GROUPS[0]},g" \
     -e "s,@UID@,$uid,g" \
