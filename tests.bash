@@ -6,6 +6,7 @@
 #
 
 set -e
+set -o pipefail
 
 run() {
 	id=$((id+1))
