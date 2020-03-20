@@ -27,7 +27,7 @@ set -e
 set -u
 set -o pipefail
 
-VERSION="2.1"
+VERSION="3"
 
 usage() {
 	cat <<EOF
