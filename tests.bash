@@ -74,6 +74,9 @@ result() {
 	if [[ $exitcode -ne 0 ]] && [[ $ko ]]
 	then
 		echo -e "\e[1;31mExited!\e[0m" >&2
+	elif [[ $exitcode -eq 0 ]] && [[ $ko ]]
+	then
+		exit 1
 	fi
 
 	exit "$exitcode"
