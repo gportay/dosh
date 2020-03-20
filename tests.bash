@@ -71,7 +71,7 @@ result() {
 		echo -e "\e[1mError: \e[31m$ko test(s) failed!\e[0m" >&2
 	fi
 
-	if [[ $exitcode -ne 0 ]] && [[ $ko -eq 0 ]]
+	if [[ $exitcode -ne 0 ]] && [[ $ko ]]
 	then
 		echo -e "\e[1;31mExited!\e[0m" >&2
 	fi
