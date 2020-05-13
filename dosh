@@ -506,7 +506,14 @@ fi
 # Execute in existing container
 if [[ ${exec:-} ]]
 then
-	run exec "${docker[@]}" exec "${opts[@]}" ${DOSH_DOCKER_EXEC_EXTRA_OPTS:-} "$exec" "$DOSHELL" "$@"
+	# Append extra options if any
+	read -r -a extraopts < <(echo "${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}")
+	if [ ${#extraopts[*]} -gt 0 ]
+	then
+		opts+=("${extraopts[@]:-}")
+	fi
+
+	run exec "${docker[@]}" exec "${opts[@]}" "$exec" "$DOSHELL" "$@"
 # Run in a new container
 else
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
@@ -515,5 +522,13 @@ else
 	then
 		echo "$tag"
 	fi >&2
-	run exec "${docker[@]}" run "${opts[@]}" ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} "$tag" "$@"
+
+	# Append extra options if any
+	read -r -a extraopts < <(echo "${DOSH_DOCKER_RUN_EXTRA_OPTS:-}")
+	if [ ${#extraopts[*]} -gt 0 ]
+	then
+		opts+=("${extraopts[@]:-}")
+	fi
+
+	run exec "${docker[@]}" run "${opts[@]}" "$tag" "$@"
 fi
