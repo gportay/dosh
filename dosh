@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2020 Gaël PORTAY
+# Copyright (c) 2017-2020,2022 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -494,9 +494,6 @@ then
 	fi
 fi
 
-# Change to present working directory
-opts+=("--workdir" "$PWD")
-
 # Prepend shell options if any
 if [ ${#shopts[*]} -gt 0 ]
 then
@@ -516,6 +513,7 @@ then
 	run exec "${docker[@]}" exec "${opts[@]}" "$exec" "$DOSHELL" "$@"
 # Run in a new container
 else
+	opts+=("--workdir" "$PWD")
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
 	opts+=("--entrypoint" "$DOSHELL")
 	if [[ ${verbose:-} ]]
