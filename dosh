@@ -173,7 +173,7 @@ RUN grep -q "^dind:" /etc/group \
 RUN grep -q "^dind:x:${did[2]}:.*$USER" /etc/group \
  || usermod  --append --group dind $USER \
  || addgroup $USER dind
-RUN if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >"/etc/sudoers.d/$USER"; fi
+RUN if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >>"/etc/sudoers.d/$USER"; fi
 EOF
 
 	files=(doshfile)
