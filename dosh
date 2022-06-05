@@ -219,6 +219,7 @@ EOF
 	then
 		buildopts+=("${extraopts[@]:-}")
 	fi
+	buildopts+=(--build-arg "DOSH_USER=$USER")
 
 	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
