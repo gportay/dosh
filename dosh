@@ -444,11 +444,6 @@ then
 		then
 			buildopts=()
 		fi
-		# Remove previous image
-		if [[ ${imageid:-} ]]
-		then
-			docker_rmi "$tag" >&2
-		fi
 		docker_build "$DOSH_DOCKERFILE" "$tag" "${context:-}" >&2
 	fi
 
