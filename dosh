@@ -133,7 +133,12 @@ run() {
 }
 
 get_tag() {
-	echo "dosh-$(realpath "$1" | sha256sum - | cut -d' ' -f1)"
+	local file
+	local sha256
+
+	file="$(realpath "$1")"
+	read -r -a sha256 < <(sha256sum "$file")
+	echo "dosh-${sha256[0]}"
 }
 
 docker_build() {
