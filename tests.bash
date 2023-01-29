@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2020 Gaël PORTAY
+# Copyright (c) 2017-2020,2023 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -528,7 +528,7 @@ fi
 echo
 
 run "Test --tag option with --dockerfile option"
-if dosh --tag --dockerfile Dockerfile.fedora
+if dosh --dockerfile Dockerfile.fedora --tag
 then
 	ok
 else
@@ -537,7 +537,7 @@ fi
 echo
 
 run "Test --tag option with --directory and --dockerfile option in a busybox based distro"
-if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag )
+if ( cd .. && dir="${OLDPWD##*/}" && dosh --directory "$dir" --dockerfile Dockerfile.alpine --tag )
 then
 	ok
 else
