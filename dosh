@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2020,2022 Gaël PORTAY
+# Copyright (c) 2017-2020,2022-2023 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -163,17 +163,17 @@ docker_build() {
 USER root
 RUN grep -q "^$USER:" /etc/group \
  || groupadd --non-unique --gid ${GROUPS[0]} $USER \
- || addgroup -g ${GROUPS[0]} $USER
-RUN grep -q "^$USER:" /etc/passwd \
+ || addgroup -g ${GROUPS[0]} $USER; \
+    grep -q "^$USER:" /etc/passwd \
  || useradd  --non-unique --gid ${GROUPS[0]} --uid $UID --create-home --home-dir $HOME --shell /bin/sh $USER \
- || adduser  -G $USER -u $UID -h $HOME -s /bin/sh -D $USER
-RUN grep -q "^dind:" /etc/group \
+ || adduser  -G $USER -u $UID -h $HOME -s /bin/sh -D $USER; \
+    grep -q "^dind:" /etc/group \
  || groupadd --non-unique --gid ${did[2]} dind \
- || addgroup -g ${did[2]} dind
-RUN grep -q "^dind:x:${did[2]}:.*$USER" /etc/group \
+ || addgroup -g ${did[2]} dind; \
+    grep -q "^dind:x:${did[2]}:.*$USER" /etc/group \
  || usermod  --append --group dind $USER \
- || addgroup $USER dind
-RUN if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >>"/etc/sudoers.d/$USER"; fi
+ || addgroup $USER dind; \
+    if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >>"/etc/sudoers.d/$USER"; fi
 EOF
 
 	files=(doshfile)
