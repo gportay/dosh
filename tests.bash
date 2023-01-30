@@ -82,6 +82,9 @@ result() {
 	exit "$exitcode"
 }
 
+CACHEDIR="$PWD/cache"
+export CACHEDIR
+
 PATH="$PWD:$PATH"
 trap result 0 SIGINT
 
@@ -124,6 +127,8 @@ rmi() {
 		ko
 	fi
 	echo
+
+	rmdir "$CACHEDIR"
 }
 
 if [[ $DO_CLEANUP ]]
@@ -572,6 +577,16 @@ else
 	ko
 fi
 echo
+
+run "Test --rmi option"
+if   DOSH_DOCKERFILE=Dockerfile.me \
+     dosh --rmi
+then
+	ok
+else
+	ko
+fi
+echo
 rm -f Dockerfile.me
 
 uid="$((UID+1))"
@@ -588,6 +603,15 @@ cat Dockerfile.not-me
 run "Test when user/group already exists with different UID/GID in Dockerfile"
 if          dosh --rebuild --dockerfile Dockerfile.not-me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
    diff - <(/bin/sh                                       -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test --rmi option with --dockerfile option"
+if   dosh --rmi --dockerfile Dockerfile.not-me
 then
 	ok
 else

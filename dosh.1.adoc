@@ -155,6 +155,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **DOCKER**
 	The docker executable.
 
+**CACHEDIR**
+	The full pathname to the cache directory.
+
 **DOSHELL**
 	The full pathname to the shell to run in docker image.
 	Equivalent to --shell <SHELL>.
