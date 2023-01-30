@@ -76,6 +76,7 @@ Docker related options:
                                 docker-run(1) manual.
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
+      --ls                      List images.
       --build                   Build image.
       --rebuild                 Build image again, verbosely.
                                 Equivalent to --build --verbose.
@@ -141,9 +142,26 @@ get_tag() {
 	echo "dosh-${sha256[0]}"
 }
 
+list() {
+	local dockerfile
+
+	for i in ~/.cache/dosh/*/*
+	do
+		if [ ! -e "$i" ]
+		then
+			continue
+		fi
+
+		dockerfile="$(readlink "$i")"
+		echo "${i##*/} $dockerfile"
+	done
+}
+
 docker_build() {
 	local did
+	local file
 	local files
+	local sha256
 	local extraopts
 	local context_file
 
@@ -248,9 +266,15 @@ EOF
 	fi
 
 	rm -f doshfile
+
+	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
+	file="$(realpath "$1")"
+	mkdir -p ~/.cache/dosh/"${sha256[0]}"
+	ln -sf "$file" ~/.cache/dosh/"${sha256[0]}/$2"
 }
 
 docker_rmi() {
+	local sha256
 	local rmiopts
 	local extraopts
 
@@ -262,10 +286,14 @@ docker_rmi() {
 	fi
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
+
+	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
+	rm ~/.cache/dosh/"${sha256[0]}/$1"
+	rmdir --ignore-fail-on-non-empty ~/.cache/dosh/"${sha256[0]}"
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|build|rebuild|rmi|detach)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|build|rebuild|rmi|detach)$ ]]
 	then
 		return 0
 	fi
@@ -425,6 +453,14 @@ fi
 if [[ ! ${no_doshrc:-} ]] && [ -e ./doshrc ]
 then
 	. ./doshrc
+fi
+
+# List images and exit
+if [[ ${ls:-} ]]
+then
+	# List images
+	list
+	exit
 fi
 
 # Remove image and exit
