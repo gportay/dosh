@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017-2020 Gaël PORTAY
+# Copyright (c) 2017-2020,2023 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -72,8 +72,8 @@ ci: export DO_RMI_TESTS = 1
 ci: check coverage
 
 DO_RMI_TESTS ?=
-.PHONY: tests
-tests:
+.PHONY: test tests
+test tests:
 	@DO_RMI_TESTS=$(DO_RMI_TESTS) ./tests.bash
 
 .PHONY: check
