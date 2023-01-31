@@ -82,8 +82,8 @@ result() {
 	exit "$exitcode"
 }
 
-CACHEDIR="$PWD/cache"
-export CACHEDIR
+XDG_CACHE_HOME="$PWD/cache"
+export XDG_CACHE_HOME
 
 PATH="$PWD:$PATH"
 trap result 0 SIGINT
@@ -128,7 +128,8 @@ rmi() {
 	fi
 	echo
 
-	rmdir "$CACHEDIR"
+	rmdir "$XDG_CACHE_HOME/dosh"
+	rmdir "$XDG_CACHE_HOME"
 }
 
 if [[ $DO_CLEANUP ]]

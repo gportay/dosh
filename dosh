@@ -94,8 +94,6 @@ Miscellaneous options:
 Environment variables:
       DOCKER                    The docker executable.
 
-      CACHEDIR                  The full pathname to the cache directory.
-
       DOSHELL                   The full pathname to the shell to run in docker
                                 image.
                                 Equivalent to --shell <SHELL>.
@@ -147,7 +145,7 @@ get_tag() {
 list() {
 	local dockerfile
 
-	for i in "$CACHEDIR"/*/*
+	for i in "$cachedir"/*/*
 	do
 		if [ ! -e "$i" ]
 		then
@@ -271,8 +269,8 @@ EOF
 
 	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
 	file="$(realpath "$1")"
-	mkdir -p "$CACHEDIR/${sha256[0]}"
-	ln -sf "$file" "$CACHEDIR/${sha256[0]}/$2"
+	mkdir -p "$cachedir/${sha256[0]}"
+	ln -sf "$file" "$cachedir/${sha256[0]}/$2"
 }
 
 docker_rmi() {
@@ -290,8 +288,8 @@ docker_rmi() {
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
 
 	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
-	rm "$CACHEDIR/${sha256[0]}/$1"
-	rmdir --ignore-fail-on-non-empty "$CACHEDIR/${sha256[0]}"
+	rm "$cachedir/${sha256[0]}/$1"
+	rmdir --ignore-fail-on-non-empty "$cachedir/${sha256[0]}"
 }
 
 is_doshopt() {
@@ -367,7 +365,7 @@ dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 opts=()
 buildopts=("--quiet")
-CACHEDIR="${CACHEDIR:-$HOME/.cache/dosh}"
+cachedir="${XDG_CACHE_HOME:-$HOME/.cache}/dosh"
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOSHLVL="${DOSHLVL:-0}"
 while [ "$#" -ne 0 ]
