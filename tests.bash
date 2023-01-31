@@ -534,7 +534,7 @@ fi
 echo
 
 run "Test --tag option with --dockerfile option"
-if dosh --dockerfile Dockerfile.fedora --tag
+if dosh --tag --dockerfile Dockerfile.fedora
 then
 	ok
 else
@@ -543,7 +543,7 @@ fi
 echo
 
 run "Test --tag option with --directory and --dockerfile option in a busybox based distro"
-if ( cd .. && dir="${OLDPWD##*/}" && dosh --directory "$dir" --dockerfile Dockerfile.alpine --tag )
+if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag --directory "$dir" --dockerfile Dockerfile.alpine )
 then
 	ok
 else

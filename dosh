@@ -293,7 +293,7 @@ docker_rmi() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|build|rebuild|rmi|detach)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|build|rebuild|rmi|detach|tag)$ ]]
 	then
 		return 0
 	fi
@@ -389,10 +389,6 @@ do
 		optname="${optname:2}"
 		eval "$optname=\"$2\""
 		shift
-	elif [ "$1" = "--tag" ]
-	then
-		get_tag "$directory/$dockerfile"
-		exit
 	elif [ "$1" = "--dry-run" ]
 	then
 		dryrun=true
@@ -422,6 +418,14 @@ do
 	fi
 	shift
 done
+
+# Print tag and exit
+if [[ "${tag:-}" ]]
+then
+	# Print tag
+	get_tag "$directory/$dockerfile"
+	exit
+fi
 
 # Apply dosh options to dosh environment variables
 # --shell SHELL to DOSHELL
