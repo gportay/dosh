@@ -669,6 +669,15 @@ else
 fi
 echo
 
+run "Test --ls option"
+if dosh --ls
+then
+	ok
+else
+	ko
+fi
+echo
+
 if [[ $DO_RMI_TESTS ]]
 then
 	rmi
