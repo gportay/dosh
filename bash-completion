@@ -30,6 +30,10 @@ __docker_complete_containers_running() {
     __docker_complete_containers_all '.State.Running'
 }
 
+_docker_shell() {
+	_dosh
+}
+
 #
 #   Copyright © 2006-2008, Ian Macdonald <ian@caliban.org>
 #             © 2009-2016, Bash Completion Maintainers

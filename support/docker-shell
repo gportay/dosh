@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# Copyright (c) 2023 Gaël PORTAY
+#
+# SPDX-License-Identifier: MIT
+#
+
+if [[ "$1" == "docker-cli-plugin-metadata" ]]
+then
+	cat <<EOF
+{
+	"SchemaVersion":"0.1.0",
+	"Vendor":"Gaël PORTAY",
+	"Version":"$(dosh --version)",
+	"ShortDescription":"Run a shell as user in a container and bind mount cwd.",
+	"URL":"https://www.portay.io/dosh/"
+}
+EOF
+	exit 0
+fi
+
+if [[ "$1" == "help" ]]
+then
+	cat <<EOF
+Usage:  docker shell    [OPTIONS] [SCRIPT_FILE  [ARGS...]]
+        docker shell -c [OPTIONS] COMMAND [NAME [ARGS...]]
+        docker shell -s [OPTIONS] [ARGS...]
+
+Run a shell as user in a container and bind mount cwd.
+
+docker-shell is a wrapper on top of dosh; For a more thorough description of
+dosh, please refers to its help.
+
+Options:
+  --dockerfile string    Path to the Dockerfile to use.
+  --context string       Path to the context to send to docker daemon.
+  --no-auto-context      Disable automatic context sent to docker daemon.
+  --no-extra-options     Disable extra options given to docker commands.
+  --no-doshprofile       Disable read of ~/.dosh_profile.
+  --no-doshrc            Disable read of ./doshrc.
+  --directory string     Change to directory before doing anything else.
+  --root                 Run as root.
+  --dind                 Run dosh in dosh.
+  --home                 Bind mount home directory.
+  --mount-options string Set bind mount volume options.
+                         For a more thorough description please refers to
+                         docker-run(1) manual.
+  --shell string         Set shell interpretor.
+  --ls                   List images.
+  --build                Build image.
+  --rebuild              Build image again, verbosely.
+                         Equivalent to --build --verbose.
+  --rmi                  Remove image.
+  --detach               Detach container.
+  --exec string          Execute in container.
+  --tag                  Print docker tag and exit.
+  --dry-run              Do nothing; echo docker commands.
+  --verbose              Turn on verbose mode.
+  --version              Print version.
+  --help                 Print usage.
+EOF
+	exit 0
+fi
+
+# Called as docker-shell shell
+shift
+exec dosh "$@"

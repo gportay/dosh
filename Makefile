@@ -16,7 +16,7 @@ doc: SHELL=dosh
 doc: dosh.1.gz
 
 .PHONY: install-all
-install-all: install install-doc install-bash-completion
+install-all: install install-doc install-bash-completion install-cli-plugin
 
 .PHONY: install
 install:
@@ -48,12 +48,19 @@ install-bash-completion:
 		install -D -m 644 bash-completion $(DESTDIR)$$completionsdir/dosh; \
 	fi
 
+.PHONY: install-cli-plugin
+install-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
+install-cli-plugin:
+	install -D -m 755 support/docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
+
 .PHONY: uninstall
+uninstall: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dosh
 	rm -f $(DESTDIR)/etc/profile.d/dosh.sh
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
+	rm -Rf $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
 	                             --variable=completionsdir \
 	                             bash-completion)}; \
@@ -62,11 +69,11 @@ uninstall:
 	fi
 
 .PHONY: user-install-all
-user-install-all: user-install user-install-doc user-install-bash-completion
+user-install-all: user-install user-install-doc user-install-bash-completion user-install-cli-plugin
 
-user-install user-install-doc user-install-bash-completion user-uninstall:
+user-install user-install-doc user-install-bash-completion user-install-cli-plugin user-uninstall:
 user-%:
-	$(MAKE) $* PREFIX=$$HOME/.local BASHCOMPLETIONSDIR=$$HOME/.local/share/bash-completion/completions
+	$(MAKE) $* PREFIX=$$HOME/.local BASHCOMPLETIONSDIR=$$HOME/.local/share/bash-completion/completions DOCKERLIBDIR=$$HOME/.docker
 
 .PHONY: ci
 ci: export EXIT_ON_ERROR = 1
