@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Copyright (c) 2023 Gaël PORTAY
+#
+# SPDX-License-Identifier: MIT
+#
+
+DOCKER_BUILDKIT=1 \
+exec dosh "$@"

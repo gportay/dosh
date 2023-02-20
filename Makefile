@@ -21,6 +21,7 @@ install-all: install install-doc install-bash-completion
 .PHONY: install
 install:
 	install -D -m 755 dosh $(DESTDIR)$(PREFIX)/bin/dosh
+	install -D -m 755 support/doshx $(DESTDIR)$(PREFIX)/share/dosh/support/doshx
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
 	install -D -m 755 support/zdosh $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
 	install -D -m 644 support/profile $(DESTDIR)$(PREFIX)/share/dosh/support/profile
