@@ -237,7 +237,7 @@ EOF
 	fi
 
 	# Append extra options if any
-	read -r -a extraopts < <(echo "${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}")
+	read -r -a extraopts <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
 	if [ ${#extraopts[*]} -gt 0 ]
 	then
 		buildopts+=("${extraopts[@]:-}")
@@ -279,7 +279,7 @@ docker_rmi() {
 	local extraopts
 
 	# Append extra options if any
-	read -r -a extraopts < <(echo "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}")
+	read -r -a extraopts <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
 	if [ ${#extraopts[*]} -gt 0 ]
 	then
 		rmiopts+=("${extraopts[@]:-}")
@@ -546,7 +546,7 @@ fi
 if [[ ${exec:-} ]]
 then
 	# Append extra options if any
-	read -r -a extraopts < <(echo "${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}")
+	read -r -a extraopts <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
 	if [ ${#extraopts[*]} -gt 0 ]
 	then
 		opts+=("${extraopts[@]:-}")
@@ -564,7 +564,7 @@ else
 	fi >&2
 
 	# Append extra options if any
-	read -r -a extraopts < <(echo "${DOSH_DOCKER_RUN_EXTRA_OPTS:-}")
+	read -r -a extraopts <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
 	if [ ${#extraopts[*]} -gt 0 ]
 	then
 		opts+=("${extraopts[@]:-}")

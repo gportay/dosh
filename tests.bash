@@ -514,6 +514,16 @@ else
 fi
 echo
 
+run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with echo short option -e"
+if DOSH_DOCKER_RUN_EXTRA_OPTS="-e ECHO_SHORT_OPTION=true" dosh --dry-run 2>&1 | tee /dev/stderr | \
+   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-[0-9a-z]\{64\}"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test --no-extra-options option"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
    dosh --no-extra-options -c "which dosh" | grep '/usr/bin/dosh'
