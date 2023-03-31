@@ -162,7 +162,6 @@ docker_build() {
 	local file
 	local files
 	local sha256
-	local extraopts
 	local context_file
 
 	if [[ ${DOSH_NOBUILD:-} ]]
@@ -237,10 +236,9 @@ EOF
 	fi
 
 	# Append extra options if any
-	read -r -a extraopts <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS[*]:-}"
-	if [ ${#extraopts[*]} -gt 0 ]
+	if [[ ${DOSH_DOCKER_BUILD_EXTRA_OPTS:-} ]]
 	then
-		buildopts+=("${extraopts[@]:-}")
+		buildopts+=("${DOSH_DOCKER_BUILD_EXTRA_OPTS[@]}")
 	fi
 	buildopts+=(--build-arg "DOSH_USER=$USER")
 
@@ -276,13 +274,11 @@ EOF
 docker_rmi() {
 	local sha256
 	local rmiopts
-	local extraopts
 
 	# Append extra options if any
-	read -r -a extraopts <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS[*]:-}"
-	if [ ${#extraopts[*]} -gt 0 ]
+	if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
 	then
-		rmiopts+=("${extraopts[@]:-}")
+		rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
 	fi
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
@@ -447,6 +443,12 @@ then
 	DOSH_DOCKER_RMI_EXTRA_OPTS=
 fi
 
+# converts DOSH_DOCKER_*_EXTRA_OPTS to arrays
+read -r -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
+read -r -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
+read -r -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
+read -r -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
+
 # Change directory
 cd "$directory"
 
@@ -546,10 +548,9 @@ fi
 if [[ ${exec:-} ]]
 then
 	# Append extra options if any
-	read -r -a extraopts <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS[*]:-}"
-	if [ ${#extraopts[*]} -gt 0 ]
+	if [[ ${DOSH_DOCKER_EXEC_EXTRA_OPTS:-} ]]
 	then
-		opts+=("${extraopts[@]:-}")
+		opts+=("${DOSH_DOCKER_EXEC_EXTRA_OPTS[@]}")
 	fi
 
 	run exec "${docker[@]}" exec "${opts[@]}" "$exec" "$DOSHELL" "$@"
@@ -564,10 +565,9 @@ else
 	fi >&2
 
 	# Append extra options if any
-	read -r -a extraopts <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS[*]:-}"
-	if [ ${#extraopts[*]} -gt 0 ]
+	if [[ ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} ]]
 	then
-		opts+=("${extraopts[@]:-}")
+		opts+=("${DOSH_DOCKER_RUN_EXTRA_OPTS[@]}")
 	fi
 
 	run exec "${docker[@]}" run "${opts[@]}" "$tag" "$@"
