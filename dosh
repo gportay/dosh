@@ -15,7 +15,7 @@ then
 	exec "$0" "$@"
 elif [ "$__" != "/bin/bash" ] && [ "$__" = "$2" ]
 then
-	read -r -a args < <(echo "$1")
+	read -r -a args <<<"$1"
 	shift
 	exec <"$1"
 	shift
@@ -360,7 +360,7 @@ is_shopt_argument() {
 }
 
 shopts=()
-read -r -a docker < <(echo "${DOCKER:-docker}")
+read -r -a docker <<<"${DOCKER:-docker}"
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 opts=()
