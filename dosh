@@ -143,17 +143,18 @@ get_tag() {
 }
 
 list() {
+	local symlink
 	local dockerfile
 
-	for i in "$cachedir"/*/*
+	for symlink in "$cachedir"/*/*
 	do
-		if [ ! -e "$i" ]
+		if [ ! -e "$symlink" ]
 		then
 			continue
 		fi
 
-		dockerfile="$(readlink "$i")"
-		echo "${i##*/} $dockerfile"
+		dockerfile="$(readlink "$symlink")"
+		echo "${symlink##*/} $dockerfile"
 	done
 }
 
@@ -202,6 +203,10 @@ EOF
 	context_file="${3:-}"
 	if ! [[ ${context_file:-} ]]
 	then
+		local f
+		local word
+		local words
+
 		while read -r -a words
 		do
 			if ! [[ ${words[0]:-} ]]
