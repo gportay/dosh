@@ -143,18 +143,35 @@ get_tag() {
 }
 
 list() {
-	local symlink
-	local dockerfile
+	local image
+	local images
 
-	for symlink in "$cachedir"/*/*
+	mapfile -t images < <(docker images "dosh-*" --format "{{.Repository}}")
+	printf "%-69s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+	for image in "${images[@]}"
 	do
-		if [ ! -e "$symlink" ]
-		then
-			continue
-		fi
+		local symlink
 
-		dockerfile="$(readlink "$symlink")"
-		echo "${symlink##*/} $dockerfile"
+		for symlink in "$cachedir"/*/"$image"
+		do
+			local status
+			local sha256
+			local checksum
+			local dockerfile
+
+			status="Ready"
+			checksum="${symlink##*/dosh-}"
+			dockerfile="$(readlink "$symlink" || echo "<none>")"
+			read -r -a sha256 < <(sha256sum "$dockerfile" 2>/dev/null || echo "<none>" "$dockerfile")
+			if [[ "$dockerfile" == "<none>" ]] || [[ "${sha256[0]}" == "<none>" ]]
+			then
+				status="Deleted"
+			elif [[ "${sha256[0]}" != "${checksum}" ]]
+			then
+				status="Outdated"
+			fi
+			printf "%-69s %-8s %-64s %s\n" "$image" "$status" "${sha256[0]}" "$dockerfile"
+		done
 	done
 }
 
