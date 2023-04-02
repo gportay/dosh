@@ -44,141 +44,138 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 *POSIX Shell related options*
 
-**-c**
+**-c**::
 	Read commands from command-line.
 
-**-i**
+**-i**::
 	Set interactive.
 
-**-s**
+**-s**::
 	Read commands from standard-input.
 
-**-abefhmnuvxC or -o shopt**,
-**+abefhmnuvxC or +o shopt**
+**-abefhmnuvxC** or **-o shopt**, **+abefhmnuvxC** or **+o shopt**::
 	For a more thorough description of shopts, please refers to sh help.
 
 *Bash specific options:*
 
-**-klprtBDEHIPT** or **-O shopt**,
-**+klprtBDEHIPT** or **+O shopt**
+**-klprtBDEHIPT** or **-O shopt**, **+klprtBDEHIPT** or **+O shopt**::
 	For a more thorough description of shopts, please refers to bash help.
 
 *Dash specific options:*
 
-**-pqEIV**, **+pqEIV**
+**-pqEIV**, **+pqEIV**::
 	For a more thorough description of shopts, please refers to dash help.
 
 **Zsh specific options:**
 
-**-0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ**,
-**+0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ**
+**-0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ**, **+0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ**::
 	For a more thorough description of shopts, please refers to zsh help.
 
 *Docker related options*
 
-**--dockerfile FILE**
+**--dockerfile FILE**::
 	Path to the Dockerfile to use.
 
-**--context TAR**
+**--context TAR**::
 	Path to the context to send to docker daemon.
 
-**--no-auto-context**
+**--no-auto-context**::
 	Disable automatic context sent to docker daemon.
 
-**--no-extra-options**
+**--no-extra-options**::
 	Disable extra options given to docker commands.
 
-**--no-doshprofile**
+**--no-doshprofile**::
 	Disable read of ~/.dosh_profile.
 
-**--no-doshrc**
+**--no-doshrc**::
 	Disable read of ./doshrc.
 
-**--directory DIR**
+**--directory DIR**::
 	Change to directory before doing anything else.
 
-**--root**
+**--root**::
 	Run as root.
 
-**--dind**
+**--dind**::
 	Run dosh in dosh.
 
-**--home**
+**--home**::
 	Bind mount home directory.
 
-**--mount-options OPTIONS**
+**--mount-options OPTIONS**::
 	Set bind mount volume options.
 	For a more thorough description please refers to docker-run(1) manual.
 
-**--shell SHELL**
+**--shell SHELL**::
 	Set shell interpretor.
 	Equivalent to set DOSHELL=<SHELL>.
 
-**--ls**
+**--ls**::
 	List images and exit.
 
-**--gc**
+**--gc**::
 	Cleanup unused images and exit.
 
-**--build**
+**--build**::
 	Build image.
 
-**--rebuild**
+**--rebuild**::
 	Build image again, verbosely.
 	Equivalent to --build --verbose.
 
-**--rmi**
+**--rmi**::
 	Remove image and exit.
 
-**--detach**
+**--detach**::
 	Detach container.
 
-**--exec CONTAINER**
+**--exec CONTAINER**::
 	Execute in container.
 
-**--tag**
+**--tag**::
 	Print docker tag and exit.
 
-**--dry-run**
+**--dry-run**::
 	Do nothing; echo docker commands.
 
 *Miscellaneous options*
 
-**--verbose**
+**--verbose**::
 	Turn on verbose mode.
 
-**--version**
+**--version**::
 	Print version.
 
-**--help**
+**--help**::
 	Print usage.
 
 == ENVIRONMENT VARIABLES
 
-**DOCKER**
+**DOCKER**::
 	The docker executable.
 
-**DOSHELL**
+**DOSHELL**::
 	The full pathname to the shell to run in docker image.
 	Equivalent to --shell <SHELL>.
 
-**DOSHLVL**
+**DOSHLVL**::
 	Incremented by one each time an instance of dosh is started.
 
-**DOSH_DOCKERFILE**
+**DOSH_DOCKERFILE**::
 	The filename of the Dockerfile to use.
 	Equivalent to --dockerfile <FILE>.
 
-**DOSH_DOCKER_RUN_EXTRA_OPTS**
+**DOSH_DOCKER_RUN_EXTRA_OPTS**::
 	Set additionnal parameters to docker run command.
 
-**DOSH_DOCKER_EXEC_EXTRA_OPTS**
+**DOSH_DOCKER_EXEC_EXTRA_OPTS**::
 	Set additionnal parameters to docker exec command.
 
-**DOSH_DOCKER_BUILD_EXTRA_OPTS**
+**DOSH_DOCKER_BUILD_EXTRA_OPTS**::
 	Set additionnal parameters to docker build command.
 
-**DOSH_DOCKER_RMI_EXTRA_OPTS**
+**DOSH_DOCKER_RMI_EXTRA_OPTS**::
 	Set additionnal parameters to docker rmi command.
 
 == EXAMPLES
