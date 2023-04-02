@@ -117,6 +117,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--ls**
 	List images.
 
+**--gc**
+	Cleanup unused images.
+
 **--build**
 	Build image.
 

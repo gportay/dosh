@@ -77,6 +77,7 @@ Docker related options:
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
       --ls                      List images.
+      --gc                      Cleanup unused images.
       --build                   Build image.
       --rebuild                 Build image again, verbosely.
                                 Equivalent to --build --verbose.
@@ -142,24 +143,27 @@ get_tag() {
 	echo "dosh-${sha256[0]}"
 }
 
-list() {
+get_images() {
 	local image
 	local images
 
 	mapfile -t images < <(docker images "dosh-*" --format "{{.Repository}}")
-	printf "%-69s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+
 	for image in "${images[@]}"
 	do
 		local symlink
 
 		for symlink in "$cachedir"/*/"$image"
 		do
+			local file
 			local status
 			local sha256
 			local checksum
 			local dockerfile
 
 			status="Ready"
+			file="${symlink%/*}"
+			file="${file##*/}"
 			checksum="${symlink##*/dosh-}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			read -r -a sha256 < <(sha256sum "$dockerfile" 2>/dev/null || echo "<none>" "$dockerfile")
@@ -170,8 +174,120 @@ list() {
 			then
 				status="Outdated"
 			fi
-			printf "%-69s %-8s %-64s %s\n" "$image" "$status" "${sha256[0]}" "$dockerfile"
+			if [[ ! -e "$symlink" ]]
+			then
+				file="<none>"
+			fi
+			echo "$image" "$file" "$status" "${sha256[0]}" "$dockerfile"
 		done
+	done
+}
+
+list() {
+	local image
+	local images
+
+	mapfile -t images < <(get_images)
+	printf "%-69s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+
+	for image in "${images[@]}"
+	do
+		local tag
+		local file
+		local status
+		local checksum
+		local dockerfile
+
+		read -r tag file status checksum dockerfile _ <<<"$image"
+		printf "%-69s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
+	done
+}
+
+prune() {
+	local image
+	local images
+	local unused
+	local symlink
+	local images_ready
+	local images_unused
+
+	mapfile -t images < <(get_images)
+
+	# first pass: store list of both ready and unused (outdated and deleted) images
+	for image in "${images[@]}"
+	do
+		local tag
+		local file
+		local status
+		local checksum
+		local dockerfile
+
+		read -r tag file status checksum dockerfile _ <<<"$image"
+		if [[ "$status" == "Ready" ]]
+		then
+			images_ready+=("$tag")
+			continue
+		fi
+
+		images_unused+=("$file/$tag")
+	done
+
+	# second pass: unlink outdated images and remove both outdated and deleted images
+	for unused in "${images_unused[@]}"
+	do
+		local tag
+		local rmiopts
+
+		# Verify image is actually unused
+		for image in "${images[@]}"
+		do
+			local tag
+			local file
+			local status
+			local checksum
+			local dockerfile
+
+			read -r tag file status checksum dockerfile _ <<<"$image"
+			if [[ "$tag" == "${unused##*/}" ]] && [[ "$status" == "Ready" ]]
+			then
+				break
+			fi
+		done
+
+		# Image is actually used, skip...
+		if [[ "$tag" == "${unused##*/}" ]] && [[ "$status" == "Ready" ]]
+		then
+			continue
+		fi
+
+		IFS=/ read -r _ tag _ <<<"$unused"
+
+		# Append extra options if any
+		if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
+		then
+			rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
+		fi
+
+		run "${docker[@]}" rmi "${rmiopts[@]}" "$tag" "$@"
+	done
+
+	# third pass: consolidate database
+	for symlink in "$cachedir"/*/"dosh-"*
+	do
+		local tag
+		local checksum
+
+		if [[ -e "$symlink" ]]
+		then
+			continue
+		fi
+
+		checksum="${symlink%/*}"
+		checksum="${checksum##*/}"
+		tag="${symlink##*/}"
+
+		rm "$cachedir/$checksum/$tag"
+		rmdir --ignore-fail-on-non-empty "$cachedir/$checksum"
 	done
 }
 
@@ -311,7 +427,7 @@ docker_rmi() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|build|rebuild|rmi|detach|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|rmi|detach|tag)$ ]]
 	then
 		return 0
 	fi
@@ -489,6 +605,14 @@ if [[ ${ls:-} ]]
 then
 	# List images
 	list
+	exit
+fi
+
+# Remove deleted and outdated images and exit
+if [[ ${gc:-} ]]
+then
+	# Garbage collect unused images
+	prune "$@"
 	exit
 fi
 
