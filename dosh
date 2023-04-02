@@ -76,12 +76,12 @@ Docker related options:
                                 docker-run(1) manual.
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
-      --ls                      List images.
-      --gc                      Cleanup unused images.
+      --ls                      List images and exit.
+      --gc                      Cleanup unused images and exit.
       --build                   Build image.
       --rebuild                 Build image again, verbosely.
                                 Equivalent to --build --verbose.
-      --rmi                     Remove image.
+      --rmi                     Remove image and exit.
       --detach                  Detach container.
       --exec CONTAINER          Execute in container.
       --tag                     Print docker tag and exit.
@@ -213,7 +213,7 @@ prune() {
 
 	mapfile -t images < <(get_images)
 
-	# first pass: store list of both ready and unused (outdated and deleted) images
+	# first pass: store the list of both ready and unused (outdated and deleted) images
 	for image in "${images[@]}"
 	do
 		local tag
@@ -232,13 +232,13 @@ prune() {
 		images_unused+=("$file/$tag")
 	done
 
-	# second pass: unlink outdated images and remove both outdated and deleted images
+	# second pass: unlink the outdated images and remove both outdated and deleted images
 	for unused in "${images_unused[@]}"
 	do
 		local tag
 		local rmiopts
 
-		# Verify image is actually unused
+		# Verify the image is actually unused
 		for image in "${images[@]}"
 		do
 			local tag
@@ -254,7 +254,7 @@ prune() {
 			fi
 		done
 
-		# Image is actually used, skip...
+		# The image is actually used, skip it...
 		if [[ "$tag" == "${unused##*/}" ]] && [[ "$status" == "Ready" ]]
 		then
 			continue
@@ -262,7 +262,7 @@ prune() {
 
 		IFS=/ read -r _ tag _ <<<"$unused"
 
-		# Append extra options if any
+		# Append the extra options if any
 		if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
 		then
 			rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
@@ -271,7 +271,7 @@ prune() {
 		run "${docker[@]}" rmi "${rmiopts[@]}" "$tag" "$@"
 	done
 
-	# third pass: consolidate database
+	# third pass: consolidate the database
 	for symlink in "$cachedir"/*/"dosh-"*
 	do
 		local tag
@@ -286,6 +286,7 @@ prune() {
 		checksum="${checksum##*/}"
 		tag="${symlink##*/}"
 
+		# Remove symlink from database
 		rm "$cachedir/$checksum/$tag"
 		rmdir --ignore-fail-on-non-empty "$cachedir/$checksum"
 	done
@@ -373,14 +374,14 @@ EOF
 		done <doshfile >&2
 	fi
 
-	# Append extra options if any
+	# Append the extra options if any
 	if [[ ${DOSH_DOCKER_BUILD_EXTRA_OPTS:-} ]]
 	then
 		buildopts+=("${DOSH_DOCKER_BUILD_EXTRA_OPTS[@]}")
 	fi
 	buildopts+=(--build-arg "DOSH_USER=$USER")
 
-	# Do not send build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
+	# Do not send the build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
 	then
 		echo "Info: ADD or COPY sends build context to daemon" >&2
@@ -403,6 +404,7 @@ EOF
 
 	rm -f doshfile
 
+	# Add symlink to database
 	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
 	file="$(realpath "$1")"
 	mkdir -p "$cachedir/${sha256[0]}"
@@ -413,7 +415,7 @@ docker_rmi() {
 	local sha256
 	local rmiopts
 
-	# Append extra options if any
+	# Append the extra options if any
 	if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
 	then
 		rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
@@ -421,6 +423,7 @@ docker_rmi() {
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
 
+	# Remove symlink from database
 	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
 	rm "$cachedir/${sha256[0]}/$1"
 	rmdir --ignore-fail-on-non-empty "$cachedir/${sha256[0]}"
@@ -553,7 +556,7 @@ do
 	shift
 done
 
-# Print tag and exit
+# Print the tag and exit
 if [[ "${tag:-}" ]]
 then
 	# Print tag
@@ -561,7 +564,7 @@ then
 	exit
 fi
 
-# Apply dosh options to dosh environment variables
+# Apply the dosh options to the dosh environment variables
 # --shell SHELL to DOSHELL
 if [[ ${shell:-} ]]
 then
@@ -581,16 +584,16 @@ then
 	DOSH_DOCKER_RMI_EXTRA_OPTS=
 fi
 
-# converts DOSH_DOCKER_*_EXTRA_OPTS to arrays
+# converts the DOSH_DOCKER_*_EXTRA_OPTS environment variables to arrays
 read -r -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
 read -r -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
 read -r -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
 read -r -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
 
-# Change directory
+# Change the current directory
 cd "$directory"
 
-# Source profile files
+# Source the profile files
 if [[ ! ${no_doshprofile:-} ]] && [ -e ~/.dosh_profile ]
 then
 	. ~/.dosh_profile
@@ -600,7 +603,7 @@ then
 	. ./doshrc
 fi
 
-# List images and exit
+# List the images and exit
 if [[ ${ls:-} ]]
 then
 	# List images
@@ -608,7 +611,7 @@ then
 	exit
 fi
 
-# Remove deleted and outdated images and exit
+# Remove the deleted and outdated images and exit
 if [[ ${gc:-} ]]
 then
 	# Garbage collect unused images
@@ -616,7 +619,7 @@ then
 	exit
 fi
 
-# Remove image and exit
+# Remove the image and exit
 if [[ ${rmi:-} ]]
 then
 	# Remove image if exist
@@ -628,12 +631,12 @@ fi
 # Run in a new container
 if ! [[ ${exec:-} ]]
 then
-	# Rebuild or automatically build image if it does not exist
+	# Rebuild or automatically build the image if it does not exist
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	imageid="$("${docker[@]}" images -q "$tag")"
 	if [[ ${build:-} ]] || [[ ${rebuild:-} ]] || ! [[ ${imageid:-} ]]
 	then
-		# Reset quiet option when image does not exist or rebuild or if verbose option is set
+		# Reset the quiet option when the image does not exist or it rebuild or if verbose option is set
 		if ! [[ ${imageid:-} ]] || [[ ${rebuild:-} ]] || [[ ${verbose:-} ]]
 		then
 			buildopts=()
@@ -641,38 +644,38 @@ then
 		docker_build "$DOSH_DOCKERFILE" "$tag" "${context:-}" >&2
 	fi
 
-	# Detach container
+	# Detach the container
 	if [[ ${detach:-} ]]
 	then
 		opts+=("--detach")
-	# Remove the container at exit
+	# Remove the container on exit
 	else
 		opts+=("--rm")
 	fi
 
-	# Bind mount home
+	# Bind mount the home directory
 	if [[ ${home:-} ]]
 	then
 		opts+=("--volume" "$HOME:/home/$USER:${mount_options:-rw}")
-	# Bind mount current working directory
+	# Bind mount the current working directory
 	else
 		opts+=("--volume" "$PWD:$PWD:${mount_options:-rw}")
 	fi
 fi
 
-# Set current user privileges for dosh-in-dosh
+# Set the current user privileges for dosh-in-dosh
 if [[ ${dind:-} ]]
 then
 	opts+=("--user" "$UID:dind")
 	opts+=("--volume" "/var/run/docker.sock:/var/run/docker.sock")
 	opts+=("--volume" "$0:/bin/dosh:ro")
-# Set current user privileges
+# Set the current user privileges
 elif ! [[ ${root:-} ]]
 then
 	opts+=("--user" "$UID:${GROUPS[0]}")
 fi
 
-# Set interactive
+# Set the interactive options
 if [[ ${opt_i:-} ]] || [[ ${opt_s:-} ]] || [ "$#" -eq 0 ]
 then
 	opts+=("--interactive")
@@ -684,16 +687,16 @@ then
 	fi
 fi
 
-# Prepend shell options if any
+# Prepend the shell options if any
 if [ ${#shopts[*]} -gt 0 ]
 then
 	set -- "${shopts[@]:-}" "$@"
 fi
 
-# Execute in existing container
+# Execute in an existing container
 if [[ ${exec:-} ]]
 then
-	# Append extra options if any
+	# Append the extra options if any
 	if [[ ${DOSH_DOCKER_EXEC_EXTRA_OPTS:-} ]]
 	then
 		opts+=("${DOSH_DOCKER_EXEC_EXTRA_OPTS[@]}")
@@ -710,7 +713,7 @@ else
 		echo "$tag"
 	fi >&2
 
-	# Append extra options if any
+	# Append the extra options if any
 	if [[ ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} ]]
 	then
 		opts+=("${DOSH_DOCKER_RUN_EXTRA_OPTS[@]}")

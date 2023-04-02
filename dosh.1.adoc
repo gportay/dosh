@@ -115,10 +115,10 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 	Equivalent to set DOSHELL=<SHELL>.
 
 **--ls**
-	List images.
+	List images and exit.
 
 **--gc**
-	Cleanup unused images.
+	Cleanup unused images and exit.
 
 **--build**
 	Build image.
@@ -128,7 +128,7 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 	Equivalent to --build --verbose.
 
 **--rmi**
-	Remove image.
+	Remove image and exit.
 
 **--detach**
 	Detach container.
