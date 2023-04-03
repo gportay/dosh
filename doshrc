@@ -12,6 +12,8 @@
 case "$DOSH_DOCKERFILE" in
 Dockerfile.alpine) DOSHELL=/bin/ash;;
 Dockerfile.zsh)    DOSHELL=/bin/zsh;;
+Dockerfile.archlinux)
+                   DOSHELL=/bin/bash;;
 esac
 
 # Uncomment to use the same shell interpreter in container than the one which
