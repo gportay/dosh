@@ -38,6 +38,14 @@ Advanced dosh image management commands:
 
 *dosh* --gc [OPTIONS]
 
+Extra docker frontend commands:
+
+*dosh* --attach [OPTIONS] [DOCKER_OPTIONS] CONTAINER
+
+*dosh* --kill   [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+
+*dosh* --rm     [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+
 == DESCRIPTION
 
 Runs the _command_ process in a new container; using the current _user_, with

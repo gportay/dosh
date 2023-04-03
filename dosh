@@ -47,6 +47,11 @@ Usage: Typical shell commands:
        ${0##*/} --ls
        ${0##*/} --gc
 
+       Extra docker frontend commands:
+       ${0##*/} --attach [OPTIONS] [DOCKER_OPTIONS] CONTAINER
+       ${0##*/} --kill   [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+       ${0##*/} --rm     [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+
 Run a shell as user in a container and bind mount cwd.
 
 POSIX Shell related options:
