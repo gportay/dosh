@@ -450,7 +450,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|context|directory|mount-options|shell|detach|exec)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|context|directory|mount-options|shell|exec)$ ]]
 	then
 		return 0
 	fi
