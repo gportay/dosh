@@ -38,8 +38,9 @@ Usage: Typical shell commands:
        ${0##*/} -s [(-|+)abefhmnuvxC] [(-|+)o shopt]               [ARGS...]
 
        Advanced dosh container commands:
-       ${0##*/} --detach          [OPTIONS]
-       ${0##*/} --exec CONTAINER  [OPTIONS] [ARGS...]
+       ${0##*/} --detach           [OPTIONS]
+       ${0##*/} --exec CONTAINER   [OPTIONS] [ARGS...]
+       ${0##*/} --attach CONTAINER [OPTIONS]
 
        Advanced dosh image management commands:
        ${0##*/} --rmi [OPTIONS]
@@ -95,6 +96,7 @@ Docker related options:
       --rmi                     Remove image and exit.
       --detach                  Detach container.
       --exec CONTAINER          Execute in container.
+      --attach CONTAINER        Attach container.
       --tag                     Print docker tag and exit.
       --dry-run                 Do nothing; echo docker commands.
 
@@ -122,6 +124,10 @@ Environment variables:
 
       DOSH_DOCKER_EXEC_EXTRA_OPTS
                                 Set additionnal parameters to docker exec
+                                command.
+
+      DOSH_DOCKER_ATTACH_EXTRA_OPTS
+                                Set additionnal parameters to docker attach
                                 command.
 
       DOSH_DOCKER_BUILD_EXTRA_OPTS
@@ -422,6 +428,19 @@ EOF
 	ln -sf "$file" "$cachedir/${sha256[0]}/$2"
 }
 
+docker_attach() {
+	local sha256
+	local attachopts
+
+	# Append the extra options if any
+	if [ "${DOSH_DOCKER_ATTACH_EXTRA_OPTS:-}" ]
+	then
+		attachopts+=("${DOSH_DOCKER_ATTACH_EXTRA_OPTS[@]}")
+	fi
+
+	run "${docker[@]}" attach "${attachopts[@]}" "$@"
+}
+
 docker_rmi() {
 	local sha256
 	local rmiopts
@@ -450,7 +469,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|context|directory|mount-options|shell|exec)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|context|directory|mount-options|shell|exec|attach)$ ]]
 	then
 		return 0
 	fi
@@ -627,6 +646,14 @@ if [[ ${gc:-} ]]
 then
 	# Garbage collect unused images
 	prune "$@"
+	exit
+fi
+
+# Attach the container and exit
+if [[ ${attach:-} ]]
+then
+	# Attach a detached container
+	docker_attach "$attach" "$@"
 	exit
 fi
 

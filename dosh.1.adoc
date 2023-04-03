@@ -28,6 +28,8 @@ Advanced dosh container commands:
 
 *dosh* --exec CONTAINER [OPTIONS] [ARGS...]
 
+*dosh* --attach CONTAINER [OPTIONS]
+
 Advanced dosh image management commands:
 
 *dosh* --rmi [OPTIONS]
@@ -151,6 +153,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--exec CONTAINER**::
 	Execute in container.
 
+**--attach CONTAINER**::
+	Attach container.
+
 **--tag**::
 	Print docker tag and exit.
 
@@ -189,6 +194,9 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **DOSH_DOCKER_EXEC_EXTRA_OPTS**::
 	Set additionnal parameters to docker exec command.
+
+**DOSH_DOCKER_ATTACH_EXTRA_OPTS**::
+	Set additionnal parameters to docker attach command.
 
 **DOSH_DOCKER_BUILD_EXTRA_OPTS**::
 	Set additionnal parameters to docker build command.
@@ -342,9 +350,9 @@ Execute commands in it with _--exec_
 	$ dosh --exec determined_archimedes -c 'hostname'
 	6b0e5f883ca5
 
-Attach to it using *docker-attach(1)*
+Attach to it using _--attach_
 
-	$ docker attach 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+	$ dosh --attach determined_archimedes
 	gportay@6b0e5f883ca5:~$ exit
 	exit
 

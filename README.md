@@ -102,7 +102,7 @@ persistent for the session.
 Every single [docker(1)][docker] command performed in [dosh(1)] can be customized by
 passing extra arguments thanks its corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS**
 environment variable. **xxx** represents one of the *docker* commands used in
-*dosh* (*build*, *rmi*, *run* and *exec*).
+*dosh* (*build*, *rmi*, *run*, *exec* and *attach*).
 
 _Note:_ Only `DOSH_DOCKER_RUN_EXTRA_OPTS` is relevant for interactive usage.
 
