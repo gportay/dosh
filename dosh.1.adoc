@@ -35,9 +35,9 @@ _./doshrc_, if that file exists. This may be inhibited by using the --no-doshrc
 option.
 
 Under the hood, *dosh* builds its _docker image_ using the *Dockerfile(5)* from
-the _current working directory_ inside *docker-build(1)*.  *dosh* appends a
+the _current working directory_ inside *docker-build(1)*. *dosh* appends a
 *groupadd(8)* and a *useradd(8)* _RUN_ commands to it, to add the
-_$USER/$GROUPS_ to the container. Once the image is build, the _command_ is run
+_$USER/$GROUPS_ to the container. Once the image is built, the _command_ is run
 into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 == OPTIONS
@@ -316,12 +316,12 @@ Detach container
 	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
 
 	$ docker ps -a
-CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
-6b0e5f883ca5        dosh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2   "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
+	CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+	6b0e5f883ca5        dosh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2  "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
 
 Execute commands in it with _--exec_
 
-	dosh --exec 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125 -c 'hostname'
+	$ dosh --exec 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125 -c 'hostname'
 	6b0e5f883ca5
 
 Attach to it using *docker-attach(1)*
@@ -341,7 +341,7 @@ And do not forget to remove it using *docker-rm(1)*
 	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
 
 	$ docker ps -a
-CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+	CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 
 == BUGS
 
