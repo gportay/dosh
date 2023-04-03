@@ -33,6 +33,7 @@ usage() {
 	cat <<EOF
 Usage: ${0##*/}    [(-|+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
        ${0##*/} -c [(-|+)abefhmnuvxC] [(-|+)o shopt] COMMAND [NAME [ARGS...]]
+       ${0##*/} -i [(-|+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
        ${0##*/} -s [(-|+)abefhmnuvxC] [(-|+)o shopt]               [ARGS...]
 
 Run a shell as user in a container and bind mount cwd.

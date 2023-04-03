@@ -16,6 +16,8 @@ dosh - run a user shell in a container with pwd bind mounted
 
 *dosh* -c [(-|\+)abefhmnuvxC] [(-|+)o shopt] COMMAND [NAME [ARGS...]]
 
+*dosh* -i [(-|\+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
+
 *dosh* -s [(-|\+)abefhmnuvxC] [(-|+)o shopt]               [ARGS...]
 
 == DESCRIPTION
