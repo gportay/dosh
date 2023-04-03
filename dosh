@@ -31,10 +31,20 @@ VERSION="3"
 
 usage() {
 	cat <<EOF
-Usage: ${0##*/}    [(-|+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
+Usage: Typical shell commands:
+       ${0##*/}    [(-|+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
        ${0##*/} -c [(-|+)abefhmnuvxC] [(-|+)o shopt] COMMAND [NAME [ARGS...]]
        ${0##*/} -i [(-|+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
        ${0##*/} -s [(-|+)abefhmnuvxC] [(-|+)o shopt]               [ARGS...]
+
+       Advanced dosh container commands:
+       ${0##*/} --detach          [OPTIONS]
+       ${0##*/} --exec CONTAINER  [OPTIONS] [ARGS...]
+
+       Advanced dosh image management commands:
+       ${0##*/} --rmi [OPTIONS]
+       ${0##*/} --ls
+       ${0##*/} --gc
 
 Run a shell as user in a container and bind mount cwd.
 

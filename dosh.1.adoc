@@ -12,6 +12,8 @@ dosh - run a user shell in a container with pwd bind mounted
 
 == SYNOPSIS
 
+Typical shell commands:
+
 *dosh*    [(-|\+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
 
 *dosh* -c [(-|\+)abefhmnuvxC] [(-|+)o shopt] COMMAND [NAME [ARGS...]]
@@ -19,6 +21,20 @@ dosh - run a user shell in a container with pwd bind mounted
 *dosh* -i [(-|\+)abefhmnuvxC] [(-|+)o shopt] [SCRIPT_FILE  [ARGS...]]
 
 *dosh* -s [(-|\+)abefhmnuvxC] [(-|+)o shopt]               [ARGS...]
+
+Advanced dosh container commands:
+
+*dosh* --detach [OPTIONS]
+
+*dosh* --exec CONTAINER [OPTIONS] [ARGS...]
+
+Advanced dosh image management commands:
+
+*dosh* --rmi [OPTIONS]
+
+*dosh* --ls [OPTIONS]
+
+*dosh* --gc [OPTIONS]
 
 == DESCRIPTION
 
