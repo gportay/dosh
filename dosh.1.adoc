@@ -321,7 +321,7 @@ Detach container
 
 Execute commands in it with _--exec_
 
-	$ dosh --exec 6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125 -c 'hostname'
+	$ dosh --exec determined_archimedes -c 'hostname'
 	6b0e5f883ca5
 
 Attach to it using *docker-attach(1)*

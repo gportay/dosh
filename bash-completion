@@ -5,29 +5,54 @@
 #
 
 #
-# Copyright (c) 2013-2017 Docker, Inc.
-#                    2017 Gaël PORTAY
+# Copyright (c) 2013-2023 Docker, Inc.
+#               2017,2023 Gaël PORTAY
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 __docker_q() {
-	docker ${host:+-H "$host"} ${config:+--config "$config"} 2>/dev/null "$@"
+	docker ${host:+--host "$host"} ${config:+--config "$config"} ${context:+--context "$context"} 2>/dev/null "$@"
 }
 
-__docker_complete_containers_all() {
-	local IFS=$'\n'
-	local containers=( $(__docker_q ps -aq --no-trunc) )
-	if [ "$1" ]; then
-		containers=( $(__docker_q inspect --format "{{if $1}}{{.Id}}{{end}}" "${containers[@]}") )
+# __docker_containers returns a list of containers. Additional options to
+# `docker ps` may be specified in order to filter the list, e.g.
+# `__docker_containers --filter status=running`
+# By default, only names are returned.
+# Set DOCKER_COMPLETION_SHOW_CONTAINER_IDS=yes to also complete IDs.
+# An optional first option `--id|--name` may be used to limit the
+# output to the IDs or names of matching items. This setting takes
+# precedence over the environment setting.
+__docker_containers() {
+	local format
+	if [ "${1-}" = "--id" ] ; then
+		format='{{.ID}}'
+		shift
+	elif [ "${1-}" = "--name" ] ; then
+		format='{{.Names}}'
+		shift
+	elif [ "${DOCKER_COMPLETION_SHOW_CONTAINER_IDS-}" = yes ] ; then
+		format='{{.ID}} {{.Names}}'
+	else
+		format='{{.Names}}'
 	fi
-	local names=( $(__docker_q inspect --format '{{.Name}}' "${containers[@]}") )
-	names=( "${names[@]#/}" ) # trim off the leading "/" from the container names
-	unset IFS
-	COMPREPLY=( $(compgen -W "${names[*]} ${containers[*]}" -- "$cur") )
+	__docker_q ps --format "$format" "$@"
 }
+
+# __docker_complete_containers applies completion of containers based on the current
+# value of `$cur` or the value of the optional first option `--cur`, if given.
+# Additional filters may be appended, see `__docker_containers`.
+__docker_complete_containers() {
+	local current="$cur"
+	if [ "${1-}" = "--cur" ] ; then
+		current="$2"
+		shift 2
+	fi
+	COMPREPLY=( $(compgen -W "$(__docker_containers "$@")" -- "$current") )
+}
+
 
 __docker_complete_containers_running() {
-    __docker_complete_containers_all '.State.Running'
+	__docker_complete_containers "$@" --filter status=running
 }
 
 _docker_shell() {
