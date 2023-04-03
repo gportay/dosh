@@ -156,6 +156,12 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 **--attach CONTAINER**::
 	Attach container.
 
+**--kill CONTAINER**::
+	Kill container.
+
+**--rm CONTAINER**::
+	Remove container.
+
 **--tag**::
 	Print docker tag and exit.
 
@@ -197,6 +203,12 @@ into *$SHELL -c* using user _$USER_ through *docker-run*.
 
 **DOSH_DOCKER_ATTACH_EXTRA_OPTS**::
 	Set additionnal parameters to docker attach command.
+
+**DOSH_DOCKER_KILL_EXTRA_OPTS**::
+	Set additionnal parameters to docker kill command.
+
+**DOSH_DOCKER_RM_EXTRA_OPTS**::
+	Set additionnal parameters to docker rm command.
 
 **DOSH_DOCKER_BUILD_EXTRA_OPTS**::
 	Set additionnal parameters to docker build command.
@@ -356,15 +368,15 @@ Attach to it using _--attach_
 	gportay@6b0e5f883ca5:~$ exit
 	exit
 
-Stop it using *docker-stop(1)*
+Kill it using _--kill_
 
-	$ docker stop 6b0e5f883ca5
-	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+	$ dosh --kill determined_archimedes
+	determined_archimedes
 
-And do not forget to remove it using *docker-rm(1)*
+And do not forget to remove it using _--rm_
 
-	$ docker rm 6b0e5f883ca5
-	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
+	$ dosh --rm determined_archimedes
+	determined_archimedes
 
 	$ docker ps -a
 	CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES

@@ -97,6 +97,8 @@ Docker related options:
       --detach                  Detach container.
       --exec CONTAINER          Execute in container.
       --attach CONTAINER        Attach container.
+      --kill CONTAINER          Kill container.
+      --rm CONTAINER            Remove container.
       --tag                     Print docker tag and exit.
       --dry-run                 Do nothing; echo docker commands.
 
@@ -128,6 +130,14 @@ Environment variables:
 
       DOSH_DOCKER_ATTACH_EXTRA_OPTS
                                 Set additionnal parameters to docker attach
+                                command.
+
+      DOSH_DOCKER_KILL_EXTRA_OPTS
+                                Set additionnal parameters to docker kill
+                                command.
+
+      DOSH_DOCKER_RM_EXTRA_OPTS
+                                Set additionnal parameters to docker rm
                                 command.
 
       DOSH_DOCKER_BUILD_EXTRA_OPTS
@@ -441,6 +451,32 @@ docker_attach() {
 	run "${docker[@]}" attach "${attachopts[@]}" "$@"
 }
 
+docker_kill() {
+	local sha256
+	local killopts
+
+	# Append the extra options if any
+	if [ "${DOSH_DOCKER_KILL_EXTRA_OPTS:-}" ]
+	then
+		killopts+=("${DOSH_DOCKER_KILL_EXTRA_OPTS[@]}")
+	fi
+
+	run "${docker[@]}" kill "${killopts[@]}" "$@"
+}
+
+docker_rm() {
+	local sha256
+	local rmopts
+
+	# Append the extra options if any
+	if [ "${DOSH_DOCKER_RM_EXTRA_OPTS:-}" ]
+	then
+		rmopts+=("${DOSH_DOCKER_RM_EXTRA_OPTS[@]}")
+	fi
+
+	run "${docker[@]}" rm "${rmopts[@]}" "$@"
+}
+
 docker_rmi() {
 	local sha256
 	local rmiopts
@@ -460,7 +496,7 @@ docker_rmi() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|rmi|detach|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|rmi|detach|kill|rm|tag)$ ]]
 	then
 		return 0
 	fi
@@ -654,6 +690,22 @@ if [[ ${attach:-} ]]
 then
 	# Attach a detached container
 	docker_attach "$attach" "$@"
+	exit
+fi
+
+# Kill the container and exit
+if [[ ${kill:-} ]]
+then
+	# Kill a detached container
+	docker_kill "$@" >&2
+	exit
+fi
+
+# Remove the container and exit
+if [[ ${rm:-} ]]
+then
+	# Remove a detached container
+	docker_rm "$@" >&2
 	exit
 fi
 

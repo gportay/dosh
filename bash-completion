@@ -50,6 +50,9 @@ __docker_complete_containers() {
 	COMPREPLY=( $(compgen -W "$(__docker_containers "$@")" -- "$current") )
 }
 
+__docker_complete_containers_removable() {
+	__docker_complete_containers "$@" --filter status=created --filter status=exited
+}
 
 __docker_complete_containers_running() {
 	__docker_complete_containers "$@" --filter status=running
@@ -129,15 +132,19 @@ _dosh()
 		_filedir -d
 		return
 		;;
-	--exec|--attach)
+	--exec|--attach|--kill)
 		__docker_complete_containers_running
+		return
+		;;
+	--rm)
+		__docker_complete_containers_removable
 		return
 		;;
 	esac
 
 	local shopts="-a -b -e -f -h -m -n -u -v -x -C"
 	local short_opts="-c -s -i -o"
-	local long_opts="--dockerfile --context --no-auto-context --no-extra-options --no-doshprofile --no-doshrc --directory --root --dind --home --mount-options --shell --ls --gc --build --rebuild --rmi --detach --exec --attach --tag --dry-run --verbose --version --help"
+	local long_opts="--dockerfile --context --no-auto-context --no-extra-options --no-doshprofile --no-doshrc --directory --root --dind --home --mount-options --shell --ls --gc --build --rebuild --rmi --detach --exec --attach --kill --rm --tag --dry-run --verbose --version --help"
 	local shell="${DOSHELL:-/bin/sh}"
 	for (( i=0; i < ${#words[@]}; i++ )); do
 		if [[ ${words[i]} == --shell ]]; then
