@@ -1,4 +1,39 @@
+#
+# ./doshrc
+#
+# When dosh is invoked, it first reads and executes commands from the global
+# user file ~/.dosh_profile, if that file exists. After reading that file, it
+# reads and executes commands from the current directory file ./doshrc, if that
+# file exists. The --no-doshprofile and --no-doshrc options may be used to
+# inhibit this behavior.
+
+# Uncomment to specify the shell interpreter dynamically according the
+# Dockerfile to be used.
 case "$DOSH_DOCKERFILE" in
 Dockerfile.alpine) DOSHELL=/bin/ash;;
 Dockerfile.zsh)    DOSHELL=/bin/zsh;;
 esac
+
+# Uncomment to use the same shell interpreter in container than the one which
+# is currently in use (i.e. host side).
+#DOSHELL="$SHELL"
+
+# Uncomment to use the bash interpreter in container.
+#DOSHELL=/bin/bash
+
+# Uncomment to save the bash history from the container locally.
+#if [ -r "$PWD/.bash_history" ]
+#then
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/.bash_history:$HOME/.bash_history")
+#fi
+
+# Uncomment to use the ssh settings from host.
+#if [ -d "$HOME/.ssh" ]
+#then
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$HOME/.ssh:$HOME/.ssh")
+#fi
+#if [ -n "$SSH_AUTH_SOCK" ]
+#then
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env SSH_AUTH_SOCK)
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK")
+#fi
