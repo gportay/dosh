@@ -117,7 +117,7 @@ the `~/.ssh` directory to the container.
 
 ### SHELL PROFILE EXAMPLES
 
-Here are some examples of code to copy/paste in the `.profile`.
+Here are some examples of code to copy/paste in the `~/.profile`.
 
 They significantly improve the *dosh* experience.
 
