@@ -6,8 +6,8 @@
 
 ## DESCRIPTION
 
-[dosh(1)] is an _sh-compatible_ frontend that runs commands in a [docker]
-container; using the current _user_, with _pwd_ bind mounted.
+[dosh(1)] is an _sh-compatible_ frontend for [docker] that runs commands in a
+new container; using the current _user_, with _pwd_ bind mounted.
 
 Commands are read either from the standard input or from a file or from command
 line using one of the standard shell invocations (i.e. thanks to options `-c`,
@@ -18,7 +18,7 @@ in _bash_.
 
 ## DOWNLOAD
 
-Give it a try right now by fetching your own copy!
+Fetch your own copy and give it a try right now!
 
 *Version* | *Checksum* (\*)                                                  |
 --------- | ---------------------------------------------------------------- |
@@ -30,20 +30,12 @@ generation.
 
 ## DOCUMENTATION
 
-Build documentation using _examples/build-doc.dosh_ *dosh(1)* script
-
-	$ examples/build-doc.dosh
-	sha256:ced062433e33
-
-Or using *make(1)* and _Makefile_
+Build the documentation using *make(1)*
 
 	$ make doc
 	asciidoctor -b manpage -o dosh.1 dosh.1.adoc
 	gzip -c dosh.1 >dosh.1.gz
 	rm dosh.1
-
-The _Makefile_ uses [dosh(1)] to build the documentation. It uses the version
-in-tree as the *SHELL* to run the for the [doc] target.
 
 ## INSTALL
 
@@ -55,7 +47,7 @@ Traditional variables *DESTDIR* and *PREFIX* can be overridden
 
 	$ sudo make install PREFIX=/opt/dosh
 
-or
+Or
 
 	$ make install DESTDIR=$PWD/pkg PREFIX=/usr
 
