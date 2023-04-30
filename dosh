@@ -465,7 +465,6 @@ EOF
 }
 
 docker_attach() {
-	local sha256
 	local attachopts
 
 	# Append the extra options if any
@@ -478,7 +477,6 @@ docker_attach() {
 }
 
 docker_kill() {
-	local sha256
 	local killopts
 
 	# Append the extra options if any
@@ -491,7 +489,6 @@ docker_kill() {
 }
 
 docker_rm() {
-	local sha256
 	local rmopts
 
 	# Append the extra options if any
