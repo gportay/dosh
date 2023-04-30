@@ -112,7 +112,7 @@ the container.
 Adding these two following lines to the Shell `~/.profile` automatically binds
 the `~/.ssh` directory to the container.
 
-	DOSH_DOCKER_RUN_EXTRA_OPTS=(--volume "$HOME/.ssh:$HOME/.ssh")
+	DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
 	export DOSH_DOCKER_RUN_EXTRA_OPTS
 
 ### SHELL PROFILE EXAMPLES
@@ -145,7 +145,7 @@ These following lines export some useful environment variables to the container.
 	for env in TERM EDITOR
 	do
 		[ -n "$env" ] || continue
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env "$env")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 	done
 
 #### MAP DOT-FILES
@@ -156,14 +156,14 @@ These following lines map some useful *dot-files* to the container.
 	for vol in $HOME/.config $HOME/.local $HOME/.profile
 	do
 		[ -e "$vol" ] || continue
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
 	# Map extra home dot-files
 	for vol in $HOME/.inputrc $HOME/.gnupg $HOME/.screenrc
 	do
 		[ -e "$vol" ] || continue
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
 *bash(1)* invocation files is a *must-have* to feel like home.
@@ -172,7 +172,7 @@ These following lines map some useful *dot-files* to the container.
 	for vol in $HOME/.bash{_profile,rc,login,logout}
 	do
 		[ -e "$vol" ] || continue
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
 *zsh(1)* too.
@@ -182,7 +182,7 @@ These following lines map some useful *dot-files* to the container.
 	for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout
 	do
 		[ -e "$vol" ] || continue
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
 #### SSH HANDLING
@@ -192,12 +192,12 @@ For a better experience with *SSH*, these following lines should be considered.
 	# Map and export ssh things?
 	if [ -d "$HOME/.ssh" ]
 	then
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$HOME/.ssh:$HOME/.ssh")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
 	fi
 	if [ -n "$SSH_AUTH_SOCK" ]
 	then
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env SSH_AUTH_SOCK)
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
 	fi
 
 #### X
@@ -210,18 +210,18 @@ To enable *X* in docker, these following lines should be considered.
 		for env in DISPLAY XAUTHORITY XSOCK
 		do
 			[ -n "$env" ] || continue
-			DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env "$env")
+			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 		done
 		dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
 		if [ -e "$dotxauthority" ]
 		then
-			DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$dotxauthority:$HOME/.Xauthority")
+			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $dotxauthority:$HOME/.Xauthority"
 		fi
 		unset dotxauthority
 		xsock="${XSOCK:-/tmp/.X11-unix}"
 		if [ -e "$xsock" ]
 		then
-			DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$xsock:/tmp/.X11-unix:ro")
+			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $xsock:/tmp/.X11-unix:ro"
 		fi
 		unset xsock
 	fi
