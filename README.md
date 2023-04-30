@@ -15,9 +15,6 @@ Commands are read either from the standard input or from a file or from command
 line using one of the standard shell invocations (i.e. thanks to options `-c`,
 `-i`, `-s` or without arguments).
 
-Think [dosh(1)] as a _shell_ frontend wrapper on top of _docker-run(1)_ written
-in _bash_.
-
 ## DOWNLOAD
 
 Fetch your own copy and give it a try right now!
