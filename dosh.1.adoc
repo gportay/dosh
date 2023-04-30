@@ -48,25 +48,36 @@ Extra docker frontend commands:
 
 == DESCRIPTION
 
-Runs the _command_ process in a new container; using the current _user_, with
-_pwd_ bind mounted.
+*dosh* is a sh-compatible frontend for *docker(1)* that executes commands read
+from the standard input or from a file.
+
+It runs a shell process in a new container with its own file system, the
+current _working directory_ bind mounted, and the current _user/group_
+privileges set.
 
 When called without arguments, *dosh* defaults to running an interactive shell
 as current _user_.
 
 When a container shell is started, *dosh* reads and executes commands from
 _~/.dosh_profile_, if that file exists. This may be inhibited by using the
---no-doshprofile option.
+option *--no-doshprofile*.
 
 When a container shell is started, *dosh* reads and executes commands from
-_./doshrc_, if that file exists. This may be inhibited by using the --no-doshrc
-option.
+_./doshrc_, if that file exists. This may be inhibited by using the option
+*--no-doshrc*.
 
-Under the hood, *dosh* builds its _docker image_ using the *Dockerfile(5)* from
-the _current working directory_ inside *docker-build(1)*. *dosh* appends a
-*groupadd(8)* and a *useradd(8)* _RUN_ commands to it, to add the
-_$USER/$GROUPS_ to the container. Once the image is built, the _command_ is run
-into *$SHELL -c* using user _$USER_ through *docker-run*.
+*dosh* has specific options to modify its behaviour; the option *--dockerfile*
+specifies the path to the *Dockerfile(5)* to use; the option *--home* bind
+mounts the user's home directory instead of _cwd_; the option *--root* runs the
+container with the _root_ privileges. Other options are specified in the
+section *OPTIONS*.
+
+Under the hood, *dosh* builds and tags automatically a _docker image_ using the
+*Dockerfile(5)* from the _current working directory_ through *docker-build(1)*.
+It appends extra _RUN_ instructions to add the host _$USER/$GROUPS_ through
+*groupadd(8)* and *useradd(8)* to the _docker image_. Once the image is built,
+*dosh* runs the *$SHELL* entry-point with the given arguments specified via the
+command-line through *docker-run(1)*.
 
 == OPTIONS
 
