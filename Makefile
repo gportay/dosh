@@ -42,8 +42,8 @@ install-doc:
 .PHONY: install-bash-completion
 install-bash-completion:
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
-	                             --variable=completionsdir \
-	                             bash-completion)}; \
+	                                                    --variable=completionsdir \
+	                                                    bash-completion)}; \
 	if [ -n "$$completionsdir" ]; then \
 		install -D -m 644 bash-completion $(DESTDIR)$$completionsdir/dosh; \
 	fi
