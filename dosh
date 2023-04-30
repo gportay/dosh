@@ -173,6 +173,13 @@ checksum() {
 	echo "${sha256[0]}"
 }
 
+file_checksum() {
+	local sha256
+
+	read -r -a sha256 < <(sha256sum "$1" 2>/dev/null || echo "<none>" "$1")
+	echo "${sha256[0]}"
+}
+
 add_symlink() {
 	local file
 	local checksum
@@ -190,11 +197,11 @@ remove_symlink() {
 
 get_tag() {
 	local file
-	local sha256
+	local checksum
 
 	file="$(realpath "$1")"
-	read -r -a sha256 < <(sha256sum "$file")
-	echo "dosh-${sha256[0]}"
+	checksum="$(file_checksum "$file")"
+	echo "dosh-$checksum"
 }
 
 get_images() {
@@ -211,20 +218,20 @@ get_images() {
 		do
 			local file
 			local status
-			local sha256
 			local checksum
 			local dockerfile
+			local dockerfile_checksum
 
 			status="Ready"
 			file="${symlink%/*}"
 			file="${file##*/}"
 			checksum="${symlink##*/dosh-}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
-			read -r -a sha256 < <(sha256sum "$dockerfile" 2>/dev/null || echo "<none>" "$dockerfile")
-			if [[ "$dockerfile" == "<none>" ]] || [[ "${sha256[0]}" == "<none>" ]]
+			dockerfile_checksum="$(file_checksum "$dockerfile")"
+			if [[ "$dockerfile" == "<none>" ]] || [[ "$dockerfile_checksum" == "<none>" ]]
 			then
 				status="Deleted"
-			elif [[ "${sha256[0]}" != "${checksum}" ]]
+			elif [[ "$dockerfile_checksum" != "${checksum}" ]]
 			then
 				status="Outdated"
 			fi
@@ -232,7 +239,7 @@ get_images() {
 			then
 				file="<none>"
 			fi
-			echo "$image" "$file" "$status" "${sha256[0]}" "$dockerfile"
+			echo "$image" "$file" "$status" "$dockerfile_checksum" "$dockerfile"
 		done
 	done
 }
