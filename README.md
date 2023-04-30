@@ -1,5 +1,7 @@
 # Docker Shell
 
+[![Packaging status](https://repology.org/badge/vertical-allrepos/dosh.svg)](https://repology.org/project/dosh/versions)
+
 ## NAME
 
 [dosh][dosh(1)] - run a user shell in a container with pwd bind mounted
