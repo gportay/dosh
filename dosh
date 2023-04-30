@@ -166,14 +166,21 @@ run() {
 	"$@"
 }
 
-add_symlink() {
-	local file
+checksum() {
 	local sha256
 
-	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
+	read -r -a sha256 < <(echo -n "$1" | sha256sum -)
+	echo "${sha256[0]}"
+}
+
+add_symlink() {
+	local file
+	local checksum
+
 	file="$(realpath "$1")"
-	mkdir -p "$cachedir/${sha256[0]}"
-	ln -sf "$file" "$cachedir/${sha256[0]}/$2"
+	checksum="$(checksum "$PWD")"
+	mkdir -p "$cachedir/$checksum"
+	ln -sf "$file" "$cachedir/$checksum/$2"
 }
 
 remove_symlink() {
@@ -490,8 +497,8 @@ docker_rm() {
 }
 
 docker_rmi() {
-	local sha256
 	local rmiopts
+	local checksum
 
 	# Append the extra options if any
 	if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
@@ -501,8 +508,8 @@ docker_rmi() {
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
 
-	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
-	remove_symlink "${sha256[0]}" "$1"
+	checksum="$(checksum "$PWD")"
+	remove_symlink "$checksum" "$1"
 }
 
 is_doshopt() {
