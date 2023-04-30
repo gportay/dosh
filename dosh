@@ -113,14 +113,14 @@ Miscellaneous options:
       --help                    Print usage.
 
 Environment variables:
-      DOCKER                    The docker executable.
-
       DOSHELL                   The full pathname to the shell to run in docker
                                 image.
                                 Equivalent to --shell <SHELL>.
 
       DOSHLVL                   Incremented by one each time an instance of dosh
                                 is started.
+
+      DOSH_DOCKER               The docker executable.
 
       DOSH_DOCKERFILE           The filename of the Dockerfile to use.
                                 Equivalent to --dockerfile <FILE>.
@@ -584,7 +584,7 @@ is_shopt_argument() {
 }
 
 shopts=()
-read -r -a docker <<<"${DOCKER[*]:-docker}"
+read -r -a docker <<<"${DOSH_DOCKER[*]:-docker}"
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 opts=()

@@ -78,15 +78,15 @@ Adding these two following lines to the Shell `~/.profile` tells *dosh* to uses
 
 It is not recommended to run [dosh(1)] using `sudo` in case the user does not
 have permission to send the context to the Docker daemon. Instead, consider
-setting the `DOCKER` environment to `sudo docker` as it will only run the
+setting the `DOSH_DOCKER` environment to `sudo docker` as it will only run the
 `docker` commands with the superuser privileges.
 
 On Linux, if you are not a member of the `docker` group, please consider to run
 `dosh` as below:
 
-	DOCKER="sudo docker" dosh
+	DOSH_DOCKER="sudo docker" dosh
 
-The `DOCKER` environment can be set to the Shell profile files to make it
+The `DOSH_DOCKER` environment can be set to the Shell profile files to make it
 persistent for the session.
 
 ### DOCKER EXTRA OPTIONS
@@ -270,7 +270,7 @@ Written by Gaël PORTAY *gael.portay@gmail.com*
 
 ## COPYRIGHT
 
-Copyright (c) 2017-2020 Gaël PORTAY
+Copyright (c) 2017-2020,2023 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the MIT License.

@@ -88,7 +88,7 @@ export XDG_CACHE_HOME
 PATH="$PWD:$PATH"
 trap result 0 SIGINT
 
-export -n DOCKER
+export -n DOSH_DOCKER
 export -n DOSHELL
 export -n DOSH_DOCKERFILE
 export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
@@ -485,8 +485,8 @@ else
 fi
 echo
 
-run "Test DOCKER environment variable"
-if DOCKER="echo docker" dosh | tee /dev/stderr | \
+run "Test DOSH_DOCKER environment variable"
+if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
    grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
 then
 	ok

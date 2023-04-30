@@ -200,15 +200,15 @@ command-line through *docker-run(1)*.
 
 == ENVIRONMENT VARIABLES
 
-**DOCKER**::
-	The docker executable.
-
 **DOSHELL**::
 	The full pathname to the shell to run in docker image.
 	Equivalent to --shell <SHELL>.
 
 **DOSHLVL**::
 	Incremented by one each time an instance of dosh is started.
+
+**DOSH_DOCKER**::
+	The docker executable.
 
 **DOSH_DOCKERFILE**::
 	The filename of the Dockerfile to use.
