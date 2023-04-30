@@ -11,7 +11,7 @@ depends=('docker')
 makedepends=('asciidoctor')
 checkdepends=('shellcheck')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz")
-sha256sums=('3669ed476311b12b29f87f955e22d2c048f162719b886091d3685d04044733e0')
+sha256sums=('1ac2908a28f5bf1f4678d2a60a7363cc0430dd8d658439fb9db80c7da8a80ff0')
 validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
 
 build() {
