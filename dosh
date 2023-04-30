@@ -231,7 +231,7 @@ get_images() {
 			if [[ "$dockerfile" == "<none>" ]] || [[ "$dockerfile_checksum" == "<none>" ]]
 			then
 				status="Deleted"
-			elif [[ "$dockerfile_checksum" != "${checksum}" ]]
+			elif [[ "$dockerfile_checksum" != "$checksum" ]]
 			then
 				status="Outdated"
 			fi
