@@ -166,6 +166,21 @@ run() {
 	"$@"
 }
 
+add_symlink() {
+	local file
+	local sha256
+
+	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
+	file="$(realpath "$1")"
+	mkdir -p "$cachedir/${sha256[0]}"
+	ln -sf "$file" "$cachedir/${sha256[0]}/$2"
+}
+
+remove_symlink() {
+	rm "$cachedir/$1/$2"
+	rmdir --ignore-fail-on-non-empty "$cachedir/$1"
+}
+
 get_tag() {
 	local file
 	local sha256
@@ -318,17 +333,13 @@ prune() {
 		checksum="${checksum##*/}"
 		tag="${symlink##*/}"
 
-		# Remove symlink from database
-		rm "$cachedir/$checksum/$tag"
-		rmdir --ignore-fail-on-non-empty "$cachedir/$checksum"
+		remove_symlink "$checksum" "$tag"
 	done
 }
 
 docker_build() {
 	local did
-	local file
 	local files
-	local sha256
 	local context_file
 
 	if [[ ${DOSH_NOBUILD:-} ]]
@@ -436,11 +447,7 @@ EOF
 
 	rm -f doshfile
 
-	# Add symlink to database
-	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
-	file="$(realpath "$1")"
-	mkdir -p "$cachedir/${sha256[0]}"
-	ln -sf "$file" "$cachedir/${sha256[0]}/$2"
+	add_symlink "$1" "$2"
 }
 
 docker_attach() {
@@ -494,10 +501,8 @@ docker_rmi() {
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
 
-	# Remove symlink from database
 	read -r -a sha256 < <(echo -n "$PWD" | sha256sum -)
-	rm "$cachedir/${sha256[0]}/$1"
-	rmdir --ignore-fail-on-non-empty "$cachedir/${sha256[0]}"
+	remove_symlink "${sha256[0]}" "$1"
 }
 
 is_doshopt() {
