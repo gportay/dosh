@@ -4,12 +4,12 @@
 
 ## NAME
 
-[dosh][dosh(1)] - run a user shell in a container with pwd bind mounted
+[dosh][dosh(1)] - run a user shell in a container with cwd bind mounted
 
 ## DESCRIPTION
 
 [dosh(1)] is an _sh-compatible_ frontend for [docker] that runs commands in a
-new container; using the current _user_, with _pwd_ bind mounted.
+new container; using the current _user_, with _cwd_ bind mounted.
 
 Commands are read either from the standard input or from a file or from command
 line using one of the standard shell invocations (i.e. thanks to options `-c`,

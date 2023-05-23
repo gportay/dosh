@@ -8,7 +8,7 @@
 
 == NAME
 
-dosh - run a user shell in a container with pwd bind mounted
+dosh - run a user shell in a container with cwd bind mounted
 
 == SYNOPSIS
 
