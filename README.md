@@ -39,6 +39,12 @@ Build the documentation using *make(1)*
 
 Run the following command to install *dosh(1)*
 
+To your home directory
+
+	$ make user-install
+
+Or, to your system
+
 	$ sudo make install
 
 Traditional variables *DESTDIR* and *PREFIX* can be overridden
