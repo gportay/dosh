@@ -32,6 +32,8 @@ cqfd - a tool to wrap commands in controlled Docker containers using dosh.
 
 *cqfd* [OPTIONS] help
 
+*cqfd* [OPTIONS] [--] PROGRAM [ARGUMENTS]
+
 == DESCRIPTION
 
 *cqfd(1)* provides a quick and convenient way to run commands in the current
@@ -77,7 +79,8 @@ Linux distribution.
 	Show this help text.
 
 By default, the _run_ command is assumed, with the default command string
-configured in your _.cqfdrc_ (see build.command).
+configured in your _.cqfdrc_ (see build.command). If a program is given
+instead of a command, the _exec_ command is assumed.
 
 Command options for run:
 

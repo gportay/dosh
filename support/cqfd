@@ -30,6 +30,7 @@ Usage: ${0##*/} [OPTIONS] init|deinit
        ${0##*/} [OPTIONS] shell [SHELL_ARGUMENTS]
        ${0##*/} [OPTIONS] version
        ${0##*/} [OPTIONS] help
+       ${0##*/} [OPTIONS] [--] PROGRAM [ARGUMENTS]
 
 A tool to wrap commands in controlled Docker containers using dosh.
 
@@ -63,6 +64,8 @@ Commands:
 
       By default, the 'run' command is assumed, with the default
       command string configured in your .cqfdrc (see build.command).
+      If a program is given instead of a command, the 'exec' command is
+      assumed.
 
 Command options for run:
       -c <argument_string>      Append argument string to the default command
@@ -97,6 +100,16 @@ do
 		printf -v "opt_${opt:2}" "%s" "$2"
 		unset opt
 		shift
+	elif [[ "$1" =~ ^--(init|deinit|exec|flavors|images|gc|ls|prune|run|shell)$ ]]
+	then
+		printf -v "cmd_${1:2}" "%s" 1
+		shift
+		break
+	elif [[ "$1" = -- ]]
+	then
+		cmd_exec=1
+		shift
+		break
 	elif [[ "$1" =~ ^- ]]
 	then
 		echo "Error: $1: Invalid option" >&2
@@ -113,8 +126,8 @@ do
 		shift
 		break
 	else
-		echo "Error: $1: Invalid command" >&2
-		exit 1
+		cmd_exec=1
+		break
 	fi
 	shift
 done
