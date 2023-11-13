@@ -438,6 +438,7 @@ EOF
 	fi
 	buildopts+=(--build-arg "DOSH_USER=$USER")
 	buildopts+=(--build-arg "DOSH_UID=$UID")
+	buildopts+=(--build-arg "DOSH_GID=${GROUPS[0]}")
 	buildopts+=(--build-arg "DOSH_GROUPS=${GROUPS[*]}")
 	buildopts+=(--build-arg "DOSH_HOME=$HOME")
 
