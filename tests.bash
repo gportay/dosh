@@ -96,6 +96,12 @@ export -n DOSH_DOCKER_RMI_EXTRA_OPTS
 export -n DOSH_DOCKER_RUN_EXTRA_OPTS
 export -n DOSH_DOCKER_EXEC_EXTRA_OPTS
 
+no_doshprofile=1
+no_doshrc=1
+
+export no_doshprofile
+export no_doshrc
+
 rmi() {
 	run "Test --rmi option"
 	if   dosh --rmi &&
