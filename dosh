@@ -520,6 +520,20 @@ docker_rmi() {
 	remove_symlink "$checksum" "$1"
 }
 
+has_positional_parameter() {
+	local parameter
+
+	for parameter in "$@"
+	do
+		if ! [[ "$parameter" =~ ^[-+] ]]
+		then
+			return 0
+		fi
+	done
+
+	return 1
+}
+
 is_doshopt() {
 	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|rmi|detach|kill|rm|tag)$ ]]
 	then
@@ -797,7 +811,7 @@ then
 fi
 
 # Set the interactive options
-if [[ ${opt_i:-} ]] || [[ ${opt_s:-} ]] || [ "$#" -eq 0 ]
+if [[ ${opt_i:-} ]] || [[ ${opt_s:-} ]] || ! has_positional_parameter "$@"
 then
 	opts+=("--interactive")
 
