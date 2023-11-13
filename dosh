@@ -437,6 +437,9 @@ EOF
 		buildopts+=("${DOSH_DOCKER_BUILD_EXTRA_OPTS[@]}")
 	fi
 	buildopts+=(--build-arg "DOSH_USER=$USER")
+	buildopts+=(--build-arg "DOSH_UID=$UID")
+	buildopts+=(--build-arg "DOSH_GROUPS=${GROUPS[*]}")
+	buildopts+=(--build-arg "DOSH_HOME=$HOME")
 
 	# Do not send the build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
