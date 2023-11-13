@@ -539,6 +539,11 @@ is_doshopt_argument() {
 }
 
 is_shopt() {
+	local dosh
+
+	dosh="${shell=$DOSHELL}"
+	dosh="${dosh##*/}"
+
 	# Do not handle -o shoptname here
 	# sh (only)
 	if [[ "$1" =~ ^[-+][abcefhimnsuvxC]$ ]]
@@ -547,22 +552,19 @@ is_shopt() {
 	fi
 
 	# bash (specific)
-	if [ "${DOSHELL##*/}" == "bash" ] &&
-	   [[ "$1" =~ ^[-+][klprtBDEHIPT]$ ]]
+	if [ "$dosh" == "bash" ] && [[ "$1" =~ ^[-+][klprtBDEHIPT]$ ]]
 	then
 		return 0
 	fi
 
 	# dash (specific)
-	if [ "${DOSHELL##*/}" == "dash" ] &&
-	   [[ "$1" =~ ^[-+][pqEIV]$ ]]
+	if [ "$dosh" == "dash" ] && [[ "$1" =~ ^[-+][pqEIV]$ ]]
 	then
 		return 0
 	fi
 
 	# zsh (specific)
-	if [ "${DOSHELL##*/}" == "zsh" ] &&
-	   [[ "$1" =~ ^[-+][0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ]$ ]]
+	if [ "$dosh" == "zsh" ] && [[ "$1" =~ ^[-+][0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ]$ ]]
 	then
 		return 0
 	fi
@@ -571,6 +573,11 @@ is_shopt() {
 }
 
 is_shopt_argument() {
+	local dosh
+
+	dosh="${shell=$DOSHELL}"
+	dosh="${dosh##*/}"
+
 	# sh (only)
 	if [[ "$1" =~ ^[-+][o]$ ]]
 	then
@@ -578,8 +585,7 @@ is_shopt_argument() {
 	fi
 
 	# bash (specific)
-	if [ "${DOSHELL##*/}" == "bash" ] &&
-	   [[ "$1" =~ ^[-+]O$ ]]
+	if [ "$dosh" == "bash" ] && [[ "$1" =~ ^[-+]O$ ]]
 	then
 		return 0
 	fi
