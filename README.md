@@ -21,6 +21,7 @@ Fetch your own copy and give it a try right now!
 
 *Version* | *Checksum* (\*)                                                  |
 --------- | ---------------------------------------------------------------- |
+[5]       | 7f1b45a649651da512dd904090c71820c3658fa4fa56feff719611a30235b8a5 |
 [4]       | 1ac2908a28f5bf1f4678d2a60a7363cc0430dd8d658439fb9db80c7da8a80ff0 |
 
 \*: Note that hashes are subject to change as GitHub might update tarball
@@ -287,3 +288,4 @@ the terms of the MIT License.
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
 [4]: https://github.com/gportay/dosh/archive/4.tar.gz
+[5]: https://github.com/gportay/dosh/archive/5.tar.gz
