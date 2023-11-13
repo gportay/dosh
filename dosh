@@ -560,7 +560,7 @@ is_shopt() {
 
 	# Do not handle -o shoptname here
 	# sh (only)
-	if [[ "$1" =~ ^[-+][abcefhimnsuvxC]$ ]]
+	if [[ "$1" =~ ^-[cis]$ ]] || [[ "$1" =~ ^[-+][abefhmnuvxC]$ ]]
 	then
 		return 0
 	fi
