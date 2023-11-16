@@ -19,6 +19,24 @@ EOF
 	exit 0
 fi
 
+if [[ "$1" == "__complete" ]]
+then
+	# Called as docker-shell __complete shell
+	shift
+	shift
+
+	source /usr/share/bash-completion/bash_completion
+	source /usr/share/bash-completion/completions/dosh
+
+	COMP_LINE="dosh $*"
+	COMP_WORDS=(dosh "$@")
+	COMP_CWORD="$#"
+	COMP_POINT="${#COMP_LINE}"
+	_dosh
+	echo "${COMPREPLY[@]}"
+	exit 0
+fi
+
 if [[ "$1" == "help" ]]
 then
 	cat <<EOF
