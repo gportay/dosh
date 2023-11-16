@@ -60,7 +60,7 @@ uninstall:
 	rm -f $(DESTDIR)/etc/profile.d/dosh.sh
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
-	rm -Rf $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
+	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
 	                             --variable=completionsdir \
 	                             bash-completion)}; \
