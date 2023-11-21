@@ -223,8 +223,8 @@ To enable *X* in docker, these following lines should be considered.
 		unset xsock
 	fi
 
-_Note_: To enable *X* through *SSH*, please have a look to the excelent post of
-Jean-Tiare Le Bigot on its blog [yadutaf].
+_Note_: To enable *X* through *SSH*, please have a look to the excellent post
+of Jean-Tiare Le Bigot on its blog [yadutaf].
 
 #### MAKE THE PROMPT SLIGHTLY DIFFERENT
 
