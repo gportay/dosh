@@ -182,7 +182,7 @@ _dosh()
 
 	local args ext=
 	_count_args
-	[[ $args -eq 1 ]] && ext=dosh
+	[[ $args -eq 1 ]] && ext=*sh
 	_filedir $ext
 } &&
 complete -F _dosh dosh posh zdosh
