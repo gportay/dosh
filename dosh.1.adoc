@@ -133,6 +133,9 @@ command-line through *docker-run(1)*.
 **--directory DIR**::
 	Change to directory before doing anything else.
 
+**--working-directory DIR**::
+	Working directory inside the container.
+
 **--root**::
 	Run as root.
 

@@ -386,6 +386,36 @@ else
 fi
 echo
 
+run "Test option --working-directory with root directory"
+if ( dosh "$@" --working-directory / -c "pwd" | tee /dev/stderr | \
+     grep -q '^/$' )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --working-directory with home directory"
+if ( dosh "$@" --working-directory "$HOME" -c "pwd" | tee /dev/stderr | \
+     grep -q "^$HOME$" )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --working-directory with unexistent directory"
+if ( dosh "$@" --working-directory "/opt/dosh" -c "pwd" | tee /dev/stderr | \
+     grep -q "^/opt/dosh$" )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
      dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \

@@ -85,6 +85,7 @@ Docker related options:
       --no-doshprofile          Disable read of ~/.dosh_profile.
       --no-doshrc               Disable read of ./doshrc.
       --directory DIR           Change to directory before doing anything else.
+      --working-directory DIR   Working directory inside the container.
       --root                    Run as root.
       --dind                    Run dosh in dosh.
       --home                    Bind mount home directory.
@@ -544,7 +545,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|context|directory|mount-options|shell|exec|attach)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|context|directory|working-directory|mount-options|shell|exec|attach)$ ]]
 	then
 		return 0
 	fi
@@ -611,6 +612,7 @@ shopts=()
 read -r -a docker <<<"${DOSH_DOCKER[*]:-docker}"
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
+working_directory="$PWD"
 opts=()
 buildopts=("--quiet")
 cachedir="${XDG_CACHE_HOME:-$HOME/.cache}/dosh"
@@ -840,7 +842,7 @@ then
 	run exec "${docker[@]}" exec "${opts[@]}" "$exec" "$DOSHELL" "$@"
 # Run in a new container
 else
-	opts+=("--workdir" "$PWD")
+	opts+=("--workdir" "$working_directory")
 	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
 	opts+=("--entrypoint" "$DOSHELL")
 	if [[ ${verbose:-} ]]
