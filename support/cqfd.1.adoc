@@ -65,6 +65,9 @@ Command options for run:
 
 == OPTIONS
 
+*--reinit*::
+	Reinitialize build container.
+
 *--release*::
 	Release software.
 
