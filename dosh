@@ -360,6 +360,24 @@ prune() {
 	done
 }
 
+# According to docker-build(1)
+#
+# DESCRIPTION
+#
+# Warning, this will send a lot of data to the Docker daemon depending on the
+# contents of the current directory. The build is run by the Docker daemon, not
+# by the CLI, so the whole context must be transferred to the daemon. The
+# Docker CLI reports "Sending build context to Docker daemon" when the context
+# is sent to the daemon.
+#
+# docker_build() tries to limit the context sent to the docker daemon by doing
+# a very limited magic if the Dockerfile contains ADD or COPY instruction to
+# send local files.
+#
+# Consider option --no-auto-context do disable this very limited feature as it
+# does not fully support Dockerfile as defined in the documentation:
+#
+# https://docs.docker.com/engine/reference/builder/
 docker_build() {
 	local did
 	local files
@@ -376,7 +394,7 @@ docker_build() {
 		exit 1
 	fi
 
-	# Inject both user and group id.
+	# Inject both user and group id to the Dockerfile
 	if ! IFS=":" read -r -a did < <(grep '^docker:' /etc/group)
 	then
 		did=( "$USER" x "${GROUPS[0]}" )
@@ -399,6 +417,7 @@ RUN grep -q "^$USER:" /etc/group \
     if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >>"/etc/sudoers.d/$USER"; fi
 EOF
 
+	# List the files from the Dockerfile to send to the docker daemon if no context file is given
 	files=(doshfile)
 	context_file="${3:-}"
 	if ! [[ ${context_file:-} ]]
@@ -427,6 +446,7 @@ EOF
 						continue
 					fi
 
+					# Carry out filename expansion
 					for f in $word
 					do
 						files+=("$f")
@@ -453,17 +473,19 @@ EOF
 	# Do not send the build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
 	then
-		echo "Info: ADD or COPY sends build context to daemon" >&2
+		echo "Info: ADD or COPY instructions sends build context to daemon." >&2
 		echo "      Consider option --context <TAR> to speed up the build of image." >&2
 		echo "      First, generate the context archive as suggested by the command below:" >&2
 		echo "          tar cf context.tar ${files[*]}" >&2
-		echo "      Then, run dosh again and tell it to use the context archive:" >&2
+		echo "      Then, run $0 again and tell it to use the context archive:" >&2
 		echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
 		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file doshfile .
 	else
+		# Or send the files as a context archive
 		if ! [[ ${context_file:-} ]]
 		then
 			run tar c "${files[@]}"
+		# Or send the given context file
 		else
 			run tar rf "$context_file" "doshfile"
 			run cat "$context_file"
@@ -792,7 +814,7 @@ then
 	if [[ ${detach:-} ]]
 	then
 		opts+=("--detach")
-	# Remove the container on exit
+	# Or remove the container on exit
 	else
 		opts+=("--rm")
 	fi
@@ -801,7 +823,7 @@ then
 	if [[ ${home:-} ]]
 	then
 		opts+=("--volume" "$HOME:$HOME:${mount_options:-rw}")
-	# Bind mount the current working directory
+	# Or, bind mount the current working directory
 	else
 		opts+=("--volume" "$PWD:$PWD:${mount_options:-rw}")
 	fi
@@ -813,7 +835,7 @@ then
 	opts+=("--user" "$UID:dind")
 	opts+=("--volume" "/var/run/docker.sock:/var/run/docker.sock")
 	opts+=("--volume" "$0:/bin/dosh:ro")
-# Set the current user privileges
+# Or set the current user privileges
 elif ! [[ ${root:-} ]]
 then
 	opts+=("--user" "$UID:${GROUPS[0]}")
