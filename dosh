@@ -838,6 +838,9 @@ then
 	set -- "${shopts[@]:-}" "$@"
 fi
 
+# Set the working directory
+opts+=("--workdir" "$working_directory")
+
 # Execute in an existing container and exit
 if [[ ${exec:-} ]]
 then
@@ -854,7 +857,6 @@ then
 fi
 
 # Run in a new container
-opts+=("--workdir" "$working_directory")
 opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
 opts+=("--entrypoint" "$DOSHELL")
 if [[ ${verbose:-} ]]

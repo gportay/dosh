@@ -521,6 +521,30 @@ else
 fi
 echo
 
+run "Test option --exec without --working-directory"
+if container="$(dosh --detach)" && \
+   dosh "$@" --exec "$container"  -c 'pwd' | tee /dev/stderr | \
+   diff - <(echo "$PWD"                    | tee /dev/stderr ) && \
+   docker rm -f "$container"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test options --exec and --working-directory with home directory"
+if container="$(dosh --detach)" && \
+   dosh "$@" --exec "$container" --working-directory "$HOME"  -c 'pwd' | tee /dev/stderr | \
+   diff - <(echo "$HOME"                                               | tee /dev/stderr ) && \
+   docker rm -f "$container"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test DOSH_DOCKER environment variable"
 if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
    grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
