@@ -157,11 +157,19 @@ EOF
 }
 
 run() {
+	# Prepend echo to output the command instead
 	if [[ ${dryrun:-} ]]
 	then
-		[ "$1" != "exec" ] || shift
-		echo "${@// /\\ }" >&2
-		return
+		# Preserve exec keyword as first argument if set
+		if [ "$1" == "exec" ]
+		then
+			set -- "$1" echo "${@:1}"
+		else
+			set -- echo "$@"
+		fi
+
+		# Preserve spaces in command line if any
+		set -- "${@// /\\ }"
 	fi
 
 	"$@"
