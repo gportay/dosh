@@ -838,7 +838,7 @@ then
 	set -- "${shopts[@]:-}" "$@"
 fi
 
-# Execute in an existing container
+# Execute in an existing container and exit
 if [[ ${exec:-} ]]
 then
 	# Append the extra options if any
@@ -848,24 +848,26 @@ then
 	fi
 
 	run exec "${docker[@]}" exec "${opts[@]}" "$exec" "$DOSHELL" "$@"
-# Run in a new container
-else
-	opts+=("--workdir" "$working_directory")
-	opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
-	opts+=("--entrypoint" "$DOSHELL")
-	if [[ ${verbose:-} ]]
-	then
-		echo "$tag"
-	fi >&2
 
-	# Append the extra options if any
-	if [[ ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} ]]
-	then
-		opts+=("${DOSH_DOCKER_RUN_EXTRA_OPTS[@]}")
-	fi
-
-	run exec "${docker[@]}" run "${opts[@]}" "$tag" "$@"
+	# Never reached!
+	exit 127
 fi
+
+# Run in a new container
+opts+=("--workdir" "$working_directory")
+opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")
+opts+=("--entrypoint" "$DOSHELL")
+if [[ ${verbose:-} ]]
+then
+	echo "$tag"
+fi >&2
+
+# Append the extra options if any
+if [[ ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} ]]
+then
+	opts+=("${DOSH_DOCKER_RUN_EXTRA_OPTS[@]}")
+fi
+run exec "${docker[@]}" run "${opts[@]}" "$tag" "$@"
 
 # Never reached!
 exit 127
