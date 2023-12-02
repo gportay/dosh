@@ -866,3 +866,6 @@ else
 
 	run exec "${docker[@]}" run "${opts[@]}" "$tag" "$@"
 fi
+
+# Never reached!
+exit 127
