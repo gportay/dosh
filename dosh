@@ -432,7 +432,6 @@ EOF
 						files+=("$f")
 					done
 				done
-				unset f
 			elif [[ ${words[0]^^} =~ ^ENTRYPOINT$ ]]
 			then
 				echo "Info: ENTRYPOINT is overridden by dosh"
