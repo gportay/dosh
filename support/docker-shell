@@ -80,6 +80,12 @@ EOF
 	exit 0
 fi
 
+if [[ "$1" != "shell" ]]
+then
+	DOSHELL="$1"
+	export DOSHELL
+fi
+
 # Called as docker-shell shell
 shift
 exec dosh "$@"

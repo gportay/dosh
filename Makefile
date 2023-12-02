@@ -52,6 +52,8 @@ install-bash-completion:
 install-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin:
 	install -D -m 755 support/docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
+	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
+	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
 
 .PHONY: uninstall
 uninstall: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
@@ -61,6 +63,8 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
+	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
+	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
 	                             --variable=completionsdir \
 	                             bash-completion)}; \
