@@ -801,7 +801,7 @@ then
 	# Bind mount the home directory
 	if [[ ${home:-} ]]
 	then
-		opts+=("--volume" "$HOME:/home/$USER:${mount_options:-rw}")
+		opts+=("--volume" "$HOME:$HOME:${mount_options:-rw}")
 	# Bind mount the current working directory
 	else
 		opts+=("--volume" "$PWD:$PWD:${mount_options:-rw}")
