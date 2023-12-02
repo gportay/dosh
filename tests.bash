@@ -545,6 +545,28 @@ else
 fi
 echo
 
+run "Test option --exec and DOSHLVL environment variable"
+if container="$(dosh --detach)" && \
+   DOSHLVL="1" dosh "$@" --exec "$container" --working-directory "$HOME"  -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+   diff - <(echo "DOSHLVL=2"                                                                         | tee /dev/stderr ) && \
+   docker rm -f "$container"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test DOSHLVL environment variable"
+if DOSHLVL="1" dosh  -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+   diff - <(echo "DOSHLVL=2"                      | tee /dev/stderr ) 
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test DOSH_DOCKER environment variable"
 if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
    grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
