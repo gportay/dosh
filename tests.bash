@@ -596,6 +596,16 @@ else
 fi
 echo
 
+run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with whitespace"
+if DOSH_DOCKER_RUN_EXTRA_OPTS="--env FOO=bar\ baz" dosh -c env 2>&1 | tee /dev/stderr | \
+   grep "^FOO=bar baz$"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with echo short option -e"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="-e ECHO_SHORT_OPTION=true" dosh --dry-run 2>&1 | tee /dev/stderr | \
    grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-[0-9a-z]\{64\}"

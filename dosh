@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2020,2022-2023 Gaël PORTAY
+# Copyright (c) 2017-2020,2022-2024 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
@@ -726,11 +726,16 @@ then
 	DOSH_DOCKER_RMI_EXTRA_OPTS=
 fi
 
-# converts the DOSH_DOCKER_*_EXTRA_OPTS environment variables to arrays
-read -r -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
-read -r -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
-read -r -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
-read -r -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
+# Convert the DOSH_DOCKER_*_EXTRA_OPTS environment variables to arrays; use a
+# backslash to escape whitespace and preserve it.
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
 
 # Change the current directory
 cd "$directory"
