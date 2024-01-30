@@ -4,7 +4,7 @@
 :email: gael.portay@gmail.com
 :lang: en
 :man manual: Docker Shell Manual
-:man source: dosh 5
+:man source: dosh 6
 
 == NAME
 
