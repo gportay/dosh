@@ -238,7 +238,8 @@ get_images() {
 			checksum="${symlink##*/dosh-}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			dockerfile_checksum="$(file_checksum "$dockerfile")"
-			if [[ "$dockerfile" == "<none>" ]] || [[ "$dockerfile_checksum" == "<none>" ]]
+			if [[ "$dockerfile" == "<none>" ]] ||
+			   [[ "$dockerfile_checksum" == "<none>" ]]
 			then
 				status="Deleted"
 			elif [[ "$dockerfile_checksum" != "$checksum" ]]
@@ -284,7 +285,8 @@ prune() {
 
 	mapfile -t images < <(get_images)
 
-	# first pass: store the list of both ready and unused (outdated and deleted) images
+	# first pass: store the list of both ready and unused (outdated and
+	# deleted) images
 	for image in "${images[@]}"
 	do
 		local tag
@@ -303,7 +305,8 @@ prune() {
 		images_unused+=("$file/$tag")
 	done
 
-	# second pass: unlink the outdated images and remove both outdated and deleted images
+	# second pass: unlink the outdated images and remove both outdated and
+	# deleted images
 	for unused in "${images_unused[@]}"
 	do
 		local tag
@@ -319,7 +322,8 @@ prune() {
 			local dockerfile
 
 			read -r tag file status checksum dockerfile _ <<<"$image"
-			if [[ "$tag" == "${unused##*/}" ]] && [[ "$status" == "Ready" ]]
+			if [[ "$tag" == "${unused##*/}" ]] &&
+			   [[ "$status" == "Ready" ]]
 			then
 				break
 			fi
@@ -418,7 +422,8 @@ RUN grep -q "^$USER:" /etc/group \
     if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >>"/etc/sudoers.d/$USER"; fi
 EOF
 
-	# List the files from the Dockerfile to send to the docker daemon if no context file is given
+	# List the files from the Dockerfile to send to the docker daemon if no
+	# context file is given
 	files=(doshfile)
 	context_file="${3:-}"
 	if ! [[ ${context_file:-} ]]
@@ -440,7 +445,8 @@ EOF
 
 				for word in "${words[@]}"
 				do
-					# Skip long option and sources with schema://
+					# Skip long option and sources with
+					# schema://
 					if [[ $word =~ ^-- ]] ||
 					   [[ $word =~ ^.*\:// ]]
 					then
@@ -471,7 +477,8 @@ EOF
 	buildopts+=(--build-arg "DOSH_GROUPS=${GROUPS[*]}")
 	buildopts+=(--build-arg "DOSH_HOME=$HOME")
 
-	# Do not send the build context to the daemon if neither ADD nor COPY instructions in Dockerfile.
+	# Do not send the build context to the daemon if neither ADD nor COPY
+	# instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
 	then
 		echo "Info: ADD or COPY instructions sends build context to daemon." >&2
@@ -808,8 +815,10 @@ then
 	imageid="$("${docker[@]}" images -q "$tag")"
 	if [[ ${build:-} ]] || [[ ${rebuild:-} ]] || ! [[ ${imageid:-} ]]
 	then
-		# Reset the quiet option when the image does not exist or it rebuild or if verbose option is set
-		if ! [[ ${imageid:-} ]] || [[ ${rebuild:-} ]] || [[ ${verbose:-} ]]
+		# Reset the quiet option when the image does not exist or it
+		# rebuild or if verbose option is set
+		if ! [[ ${imageid:-} ]] || [[ ${rebuild:-} ]] ||
+		     [[ ${verbose:-} ]]
 		then
 			buildopts=()
 		fi
