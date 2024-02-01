@@ -653,7 +653,7 @@ do
 	if [ "$1" = "--help" ]
 	then
 		usage
-		exit 0
+		exit
 	elif [ "$1" = "--version" ]
 	then
 		echo "$VERSION"
