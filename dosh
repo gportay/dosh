@@ -96,6 +96,7 @@ Docker related options:
                                 Equivalent to set DOSHELL=<SHELL>.
       --ls                      List images and exit.
       --gc                      Cleanup unused images and exit.
+      --build-only              Build image if needed and exit.
       --build                   Build image.
       --rebuild                 Build image again, verbosely.
                                 Equivalent to --build --verbose.
@@ -565,7 +566,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|rmi|detach|kill|rm|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|build-only|rmi|detach|kill|rm|tag)$ ]]
 	then
 		return 0
 	fi
@@ -832,6 +833,13 @@ then
 	else
 		opts+=("--volume" "$PWD:$PWD:${mount_options:-rw}")
 	fi
+fi
+
+# Image is built already, do not run a container and exit
+if [[ ${build_only:-} ]]
+then
+	# Do nothing
+	exit
 fi
 
 # Set the current user privileges for dosh-in-dosh

@@ -184,6 +184,15 @@ else
 fi
 echo
 
+run "Test option --build-only"
+if dosh --build-only -c "exit 1"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --build"
 if dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Sending build context to Docker daemon'
