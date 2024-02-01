@@ -29,6 +29,7 @@ Commands:
       init                      Initialize project build container.
       flavors                   List flavors from config file to stdout.
       run [command_string]      Run argument(s) inside build container.
+      release [command_string]  Run argument(s) and release software.
       help                      Show this help text.
 
       By default, the 'run' command is assumed, with the default
@@ -63,15 +64,11 @@ do
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
-	elif [[ "$1" =~ ^(init|flavors|run|help)$ ]]
+	elif [[ "$1" =~ ^(init|flavors|run|release|help)$ ]]
 	then
 		eval "cmd_$1=1"
 		shift
 		break
-	elif [[ "$1" =~ ^(release)$ ]]
-	then
-		echo "Error: $1: Unsupported command" >&2
-		exit 1
 	else
 		echo "Error: $1: Invalid command" >&2
 		exit 1
@@ -167,7 +164,7 @@ if [[ "$cmd_run" ]] && [[ "$1" = -c ]]
 then
 	shift
 	command="$command $*"
-elif [[ "$cmd_run" ]] && [[ "$#" -ne 0 ]]
+elif [[ "$cmd_run" ]] || [[ "$cmd_release" ]] && [[ "$#" -ne 0 ]]
 then
 	command="$*"
 fi
@@ -194,4 +191,71 @@ then
 fi
 export DOSH_DOCKER_RUN_EXTRA_OPTS
 
-exec dosh --dockerfile "$dockerfile" --no-doshrc --no-doshprofile -c "$command"
+dosh --dockerfile "$dockerfile" --no-doshrc --no-doshprofile -c "$command"
+
+if [ "$cmd_release" ]
+then
+	tar_opts=()
+
+	if [[ ! "$archive" ]]
+	then
+		echo "Error: archive=\"$archive\": Invalid option" >&2
+		exit 1
+	fi
+
+	archive="${archive:-%Po-%Pn.tar.xz}"
+	archive="${archive//%Gh/$(git rev-parse --short HEAD 2>/dev/null)}"
+	archive="${archive//%GH/$(git rev-parse HEAD 2>/dev/null)}"
+	archive="${archive//%D3/$(date "+%Y-%m-%d")}"
+	archive="${archive//%Po/${org:-cqfd}}"
+	archive="${archive//%Pn/${name:-dosh}}"
+	archive="${archive//%Cf/${opt_b:-build}}"
+
+	if [[ ! "$files" ]]
+	then
+		echo "Error: files=\"$files\": Invalid option" >&2
+		exit 1
+	fi
+
+	read -a files <<<"$files"
+	if [[ "${#files[@]}" -eq 0 ]]
+	then
+		echo "Error: files=${files[@]}: Invalid option" >&2
+		exit 1
+	fi
+
+	if [[ "$tar_transform" = yes ]]
+	then
+		tar_opts+=("--transform" "s/.*\///g")
+	fi
+
+	if [[ "$tar_options" ]]
+	then
+		read -a _array <<<"$tar_options"
+		tar_opts+=("${_array[@]}")
+	fi
+
+	case "$archive" in
+	*.tar.xz)
+		if [[ ! "$XZ_OPT" ]]
+		then
+			XZ_OPT=-9
+		fi
+		export XZ_OPT
+
+		exec tar -cJf "$archive" "${tar_opts[@]}" "${files[@]}"
+		;;
+	*.tar.gz)
+		exec tar -czf "$archive" "${tar_opts[@]}" "${files[@]}"
+		;;
+	*.zip)
+		exec zip -q -9 -r "$archive" "${files[@]}"
+		;;
+	*)
+		echo "Error: archive=\"$archive\": Invalid option" >&2
+		exit 1
+		;;
+	esac
+
+	exit 127
+fi

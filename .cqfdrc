@@ -3,4 +3,7 @@ org=gportay
 name=dosh
 
 [build]
+archive=%Po-%Pn-%Cf_%D3_%GH.tar.xz
+files="dosh dosh.1.gz"
+tar_transform=yes
 command="bash -x examples/build-doc.dosh"
