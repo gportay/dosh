@@ -1,0 +1,189 @@
+#!/bin/bash
+#
+# Copyright (c) 2024 Gaël PORTAY
+#
+# SPDX-License-Identifier: GPL-2.0-only
+#
+
+set -e
+
+VERSION="6"
+
+usage() {
+	cat <<EOF
+Usage: ${0##*/} [OPTIONS] [COMMAND] [COMMAND_OPTIONS] [COMMAND_ARGUMENTS]
+
+A tool to wrap commands in controlled Docker containers using dosh.
+
+Options:
+      --dockerfile FILE         Path to the Dockerfile to use.
+      -f FILE                   Use file as config file (default .cqfdrc).
+      -d DIR                    Use directory as cqfd directory (default .cqfd).
+      -C DIR                    Use the specified working directory.
+      -b STRING                 Target a specific build flavor.
+      -q                        Turn on quiet mode.
+      -v or --version           Show version.
+      -h or --help              Show this help text.
+
+Commands:
+      init                      Initialize project build container.
+      flavors                   List flavors from config file to stdout.
+      run [command_string]      Run argument(s) inside build container.
+      help                      Show this help text.
+
+      By default, the 'run' command is assumed, with the default
+      command string configured in your .cqfdrc (see build.command).
+
+Command options for run:
+      -c <command_arguments>    Append command arguments to the default command
+                                string.
+EOF
+}
+
+opt_f=".cqfdrc"
+opt_d=".cqfd"
+while [ "$#" -ne 0 ]                                                            
+do                                                                              
+	if [[ "$1" =~ ^(-h|--help)$ ]]
+	then
+		usage
+		exit
+	elif [[ "$1" =~ ^(-v|--version)$ ]]
+	then
+		echo "$VERSION"
+		exit
+	elif [[ "$1" =~ ^-q$ ]]
+	then
+		eval "opt_${1:1}=1"
+	elif [[ "$1" =~ ^-(f|d|C|b)$ ]]
+	then
+		eval "opt_${1:1}=\"$2\""
+                shift
+	elif [[ "$1" =~ ^- ]]
+	then
+		echo "Error: $1: Invalid option" >&2
+		exit 1
+	elif [[ "$1" =~ ^(init|flavors|run|help)$ ]]
+	then
+		eval "cmd_$1=1"
+		shift
+		break
+	elif [[ "$1" =~ ^(release)$ ]]
+	then
+		echo "Error: $1: Unsupported command" >&2
+		exit 1
+	else
+		echo "Error: $1: Invalid command" >&2
+		exit 1
+	fi
+	shift
+done
+
+if [[ "$cmd_help" ]]
+then
+	usage
+	exit
+fi
+
+# Stolen from https://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
+cfg_parser ()
+{
+	ini="$(<$1)"                               # read the file
+	ini="${ini//[/\[}"                         # escape [
+	ini="${ini//]/\]}"                         # escape ]
+	IFS=$'\n' && ini=( ${ini} )                # convert to line-array
+	ini=( ${ini[*]//;*/} )                     # remove comments with ;
+	ini=( ${ini[*]/\	=/=} )             # remove tabs before =
+	ini=( ${ini[*]/=\	/=} )              # remove tabs after =
+	ini=( ${ini[*]/\ =\ /=} )                  # remove anything with a space around =
+	ini=( ${ini[*]/#\\[/\}$'\n'cfg.section.} ) # set section prefix
+	ini=( ${ini[*]/%\\]/ \(} )                 # convert text2function (1)
+	ini=( ${ini[*]/=/=\( } )                   # convert item to array
+	ini=( ${ini[*]/%/ \)} )                    # close array parenthesis
+	ini=( ${ini[*]/%\\ \)/ \\} )               # the multiline trick
+	ini=( ${ini[*]/%\( \)/\(\) \{} )           # convert text2function (2)
+	ini=( ${ini[*]/%\} \)/\}} )                # remove extra parenthesis
+	ini[0]=""                                  # remove first element
+	ini[${#ini[*]} + 1]='}'                    # add the last brace
+	eval "$(echo "${ini[*]}")"                 # eval the result
+}
+
+shopt -s compat42
+cfg_parser .cqfdrc
+shopt -u compat42
+
+cfg.section.build
+if [[ "$opt_b" ]]
+then
+	cfg.section.build "$opt_b"
+fi
+dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
+
+if [[ "$cmd_flavors" ]]
+then
+	if [[ ! "$flavors" ]]
+	then
+		mapfile -t flavors < <(compgen -A function -X '!cfg.section.*')
+		flavors=("${flavors[@]/cfg.section./}")
+		for i in "${!flavors[@]}"; do
+			if [[ "${flavors[$i]}" =~ ^(build|project)$ ]]
+			then
+				unset 'flavors[$i]'
+			fi
+		done
+	fi
+
+	echo "${flavors[@]}"
+	exit
+fi
+
+if [[ "$build_context" ]]
+then
+	echo "Warning: build_context=\"$build_context\": Unsupported option" >&2
+fi
+
+if [[ "$user_extra_groups" ]]
+then
+	echo "Warning: user_extra_groups=\"$user_extra_groups\": Unsupported option" >&2
+fi
+
+if [[ "$cmd_init" ]]
+then
+	DOSH_DOCKER_BUILD_EXTRA_OPTS="$CQFD_EXTRA_BUILD_ARGS"
+	export DOSH_DOCKER_BUILD_EXTRA_OPTS
+
+	exec dosh --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
+fi
+
+if [[ "$cmd_run" ]] && [[ "$1" = -c ]]
+then
+	shift
+	command="$command $*"
+elif [[ "$cmd_run" ]] && [[ "$#" -ne 0 ]]
+then
+	command="$*"
+fi
+
+DOSH_DOCKER_RUN_EXTRA_OPTS="--log-driver=none -ti"
+if [[ ! "$CQFD_NO_SSH_CONFIG" ]]
+then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\ }/.ssh:${HOME// /\ }/.ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v /etc/ssh:/etc/ssh"
+
+fi
+if [[ ! "$SSH_AUTH_SOCK" ]]
+then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\ }:${HOME// /\ }/.sockets/ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\ }/.sockets/ssh"
+fi
+if [[ "$docker_run_args" ]]
+then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" $docker_run_args"
+fi
+if [[ "$CQFD_EXTRA_RUN_ARGS" ]]
+then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+="$CQFD_EXTRA_RUN_ARGS"
+fi
+export DOSH_DOCKER_RUN_EXTRA_OPTS
+
+exec dosh --dockerfile "$dockerfile" --no-doshrc --no-doshprofile -c "$command"

@@ -1,0 +1,6 @@
+[project]
+org=gportay
+name=dosh
+
+[build]
+command="bash -x examples/build-doc.dosh"

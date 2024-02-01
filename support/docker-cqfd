@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# Copyright (c) 2024 Gaël PORTAY
+#
+# SPDX-License-Identifier: GPL-2.0-only
+#
+
+if [[ "$1" == "docker-cli-plugin-metadata" ]]
+then
+	cat <<EOF
+{
+	"SchemaVersion":"0.1.0",
+	"Vendor":"Gaël PORTAY",
+	"Version":"$(cqfd --version)",
+	"ShortDescription":"A tool to wrap commands in controlled Docker containers using docker-shell.",
+	"URL":"https://www.portay.io/dosh/"
+}
+EOF
+	exit 0
+fi
+
+if [[ "$1" == "__complete" ]]
+then
+	# Called as docker-cqfd __complete cqfd
+	shift
+	shift
+
+	source /usr/share/bash-completion/bash_completion
+	source /usr/share/bash-completion/completions/cqfd
+
+	COMP_LINE="cqfd $*"
+	COMP_WORDS=(cqfd "$@")
+	COMP_CWORD="$#"
+	COMP_POINT="${#COMP_LINE}"
+	_cqfd
+	echo "${COMPREPLY[@]}"
+	exit 0
+fi
+
+if [[ "$1" == "help" ]]
+then
+	cat <<EOF
+Usage:  docker cqfd [OPTIONS] [COMMAND] [COMMAND_OPTIONS] [COMMAND_ARGUMENTS]
+
+A tool to wrap commands in controlled Docker containers using docker shell.
+
+Options:
+  --dockerfile string    Path to the Dockerfile to use.
+  -f string              Use file as config file (default .cqfdrc).
+  -d string              Use directory as cqfd directory (default .cqfd).
+  -C string              Use the specified working directory.
+  -b string              Target a specific build flavor.
+  -q                     Turn on quiet mode.
+  -v or --version        Show version.
+  -h or --help           Show this help text.
+
+Commands:
+  init                   Initialize project build container.
+  flavors                List flavors from config file to stdout.
+  run [list]             Run argument(s) inside build container.
+  help                   Show this help text.
+
+  By default, the 'run' command is assumed, with the default command string
+  configured in your .cqfdrc (see build.command).
+
+Command options for run:
+  -c list                Append command arguments to the default command
+                         string.
+EOF
+	exit
+fi
+
+# Called as docker-cqfd cqfd
+shift
+exec cqfd "$@"
