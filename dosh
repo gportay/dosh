@@ -801,7 +801,7 @@ fi
 # Remove the image and exit
 if [[ ${rmi:-} ]]
 then
-	# Remove image if exist
+	# Remove an existent image
 	tag="$(get_tag "$DOSH_DOCKERFILE")"
 	docker_rmi "$tag" "$@" >&2
 	exit
