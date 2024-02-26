@@ -85,7 +85,13 @@ then
 	exit
 fi
 
+#
 # Stolen from https://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
+#
+# Copyright (c) 2008,2010-2011 Andrés J. Díaz
+#
+# SPDX-License-Identifier: MIT
+#
 cfg_parser ()
 {
 	ini="$(<$1)"                               # read the file
