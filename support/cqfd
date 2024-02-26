@@ -86,14 +86,17 @@ then
 fi
 
 #
-# Stolen from https://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
+# Stolen and hacked from https://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
 #
 # Copyright (c) 2008,2010-2011 Andrés J. Díaz
+#               2024           Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
 cfg_parser ()
 {
+	local IFS
+
 	ini="$(<$1)"                               # read the file
 	ini="${ini//[/\[}"                         # escape [
 	ini="${ini//]/\]}"                         # escape ]
