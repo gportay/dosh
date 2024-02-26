@@ -59,6 +59,7 @@ Commands:
   flavors                List flavors from config file to stdout.
   run [list]             Run argument(s) inside build container.
   release [list]         Run argument(s) and release software.
+  shell [list]           Run shell command inside build container.
   help                   Show this help text.
 
   By default, the 'run' command is assumed, with the default command string
