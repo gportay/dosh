@@ -95,6 +95,7 @@ fi
 #
 cfg_parser ()
 {
+	local BASH_COMPAT=42
 	local IFS
 
 	ini="$(<$1)"                               # read the file
@@ -117,9 +118,7 @@ cfg_parser ()
 	eval "$(echo "${ini[*]}")"                 # eval the result
 }
 
-shopt -s compat42
 cfg_parser .cqfdrc
-shopt -u compat42
 
 cfg.section.build
 if [[ "$opt_b" ]]
