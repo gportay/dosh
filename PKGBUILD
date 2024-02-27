@@ -1,6 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=(dosh docker-shell dosh-cqfd)
+pkgname=(dosh docker-shell dosh-cqfd docker-cqfd)
 pkgver=6
 pkgrel=1
 pkgdesc='Docker shell'
@@ -51,5 +51,14 @@ package_dosh-cqfd() {
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
 	completionsdir="$(pkg-config --define-variable=prefix=/usr --variable=completionsdir bash-completion)"
 	install -D -m 644 ${startdir}/bash-completion-cqfd "$pkgdir$completionsdir/cqfd"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+package_docker-cqfd() {
+	pkgdesc='Docker CLI plugin for cqfd'
+	rdepends=(cqfd)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
