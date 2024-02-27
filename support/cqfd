@@ -117,6 +117,7 @@ cfg_parser ()
 
 cfg_parser .cqfdrc
 
+cfg.section.project
 cfg.section.build
 if [[ "$opt_b" ]]
 then
