@@ -125,6 +125,15 @@ then
 fi
 dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 
+# Array variables may not (yet) be exported.
+mapfile -t vars < <(compgen -A arrayvar -X '!DOSH_*')
+for var in "${vars[@]}"
+do
+	eval "val=\$$var"
+	unset "$var"
+	export "$var=$val"
+done
+
 if [[ "$cmd_flavors" ]]
 then
 	if [[ ! "$flavors" ]]
