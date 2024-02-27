@@ -1,9 +1,10 @@
 #!/bin/bash
 #
-# Copyright (c) 2019,2023 Gaël PORTAY
+# Copyright (c) 2019,2023-2024 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
 
 DOSH_DOCKER="podman" \
+DOSH_DOCKER_RUN_EXTRA_OPTS="--userns keep-id --group-add keep-groups" \
 exec dosh --no-auto-context "$@"
