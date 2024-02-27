@@ -1,6 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=dosh
+pkgname=(dosh docker-shell)
 pkgver=6
 pkgrel=1
 pkgdesc='Docker shell'
@@ -24,8 +24,19 @@ check() {
 	make -k check
 }
 
-package() {
+package_dosh() {
+	optdepends+=(docker-shell)
+
 	cd "$pkgname-$pkgver"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+package_docker-shell() {
+	pkgdesc='Docker CLI plugin for dosh'
+	rdepends=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

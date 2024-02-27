@@ -1,6 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=dosh-git
+pkgname=(dosh-git docker-shell-git)
 pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
@@ -10,8 +10,6 @@ license=('MIT')
 depends=('docker')
 makedepends=('asciidoctor')
 checkdepends=('shellcheck')
-provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}")
 source=("$pkgname::git+https://github.com/gportay/${pkgname%-git}.git")
 sha256sums=('SKIP')
 validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
@@ -31,8 +29,23 @@ check() {
 	make -k check
 }
 
-package() {
+package_dosh-git() {
+	optdepends+=(docker-shell)
+	provides=("${pkgname%-git}")
+	conflicts=("${pkgname%-git}")
+
 	cd "$srcdir/$pkgname"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+package_docker-shell-git() {
+	pkgdesc='Docker CLI plugin for dosh'
+	rdepends=(dosh)
+	provides=("${pkgname%-git}")
+	conflicts=("${pkgname%-git}")
+
+	cd "$srcdir/dosh-git"
+	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
