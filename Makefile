@@ -55,7 +55,7 @@ install-cli-plugin:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
 
-install-posh install-xdosh:
+install-posh install-xdosh install-zdosh:
 install-%:
 	install -D -m 755 support/$* $(DESTDIR)$(PREFIX)/bin/$*
 
@@ -77,11 +77,12 @@ uninstall:
 	fi
 	rm -f $(DESTDIR)$(PREFIX)/bin/posh
 	rm -f $(DESTDIR)$(PREFIX)/bin/xdosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
 
 .PHONY: user-install-all
 user-install-all: user-install user-install-doc user-install-bash-completion user-install-cli-plugin
 
-user-install user-install-doc user-install-bash-completion user-install-cli-plugin user-install-posh user-install-xdosh user-uninstall:
+user-install user-install-doc user-install-bash-completion user-install-cli-plugin user-install-posh user-install-xdosh user-install-zdosh user-uninstall:
 user-%:
 	$(MAKE) $* PREFIX=$$HOME/.local BASHCOMPLETIONSDIR=$$HOME/.local/share/bash-completion/completions DOCKERLIBDIR=$$HOME/.docker
 
