@@ -183,7 +183,7 @@ then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v /etc/ssh:/etc/ssh"
 
 fi
-if [[ ! "$SSH_AUTH_SOCK" ]]
+if [[ "$SSH_AUTH_SOCK" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\ }:${HOME// /\ }/.sockets/ssh"
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\ }/.sockets/ssh"
