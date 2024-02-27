@@ -49,11 +49,13 @@ install-bash-completion:
 	fi
 
 .PHONY: install-cli-plugin
+install-cli-plugin: CLI_PLUGIN_SHELLS ?= sh bash
 install-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin:
 	install -D -m 755 support/docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
-	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
-	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
+	for sh in $(CLI_PLUGIN_SHELLS); do \
+		ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$$sh; \
+	done
 
 install-posh install-xdosh install-zdosh:
 install-%:
