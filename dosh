@@ -749,6 +749,7 @@ read -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
 cd "$directory"
 
 # Source the profile files
+set +euo pipefail
 if [[ ! ${no_doshprofile:-} ]] && [ -e ~/.dosh_profile ]
 then
 	. ~/.dosh_profile
@@ -757,6 +758,7 @@ if [[ ! ${no_doshrc:-} ]] && [ -e ./doshrc ]
 then
 	. ./doshrc
 fi
+set -euo pipefail
 
 # List the images and exit
 if [[ ${ls:-} ]]

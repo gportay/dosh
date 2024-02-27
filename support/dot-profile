@@ -54,14 +54,14 @@ if [ -d "$HOME/.ssh" ]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
 fi
-if [ -n "$SSH_AUTH_SOCK" ]
+if [ -n "${SSH_AUTH_SOCK:-}" ]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
 fi
 
 # Map and export X things?
-if [ -n "$DISPLAY" ]
+if [ -n "${DISPLAY:-}" ]
 then
 	for env in DISPLAY XAUTHORITY XSOCK
 	do
@@ -85,7 +85,7 @@ fi
 export DOSHELL DOSH_DOCKER_RUN_EXTRA_OPTS
 
 # In dosh?
-if [ -z "$DOSHLVL" ]
+if [ -z "${DOSHLVL:-}" ]
 then
 	return
 fi
