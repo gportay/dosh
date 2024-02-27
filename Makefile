@@ -54,8 +54,13 @@ install-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin:
 	install -D -m 755 support/docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
 	for sh in $(CLI_PLUGIN_SHELLS); do \
-		ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$$sh; \
+		$(MAKE) --no-print-directory install-cli-plugin-$$sh; \
 	done
+
+install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh:
+install-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
+install-cli-plugin-%:
+	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
 install-posh install-xdosh install-zdosh:
 install-%:
@@ -84,7 +89,9 @@ uninstall:
 .PHONY: user-install-all
 user-install-all: user-install user-install-doc user-install-bash-completion user-install-cli-plugin
 
-user-install user-install-doc user-install-bash-completion user-install-cli-plugin user-install-posh user-install-xdosh user-install-zdosh user-uninstall:
+user-install user-install-doc user-install-bash-completion:
+user-install-cli-plugin user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh:
+user-install-posh user-install-xdosh user-install-zdosh user-uninstall:
 user-%:
 	$(MAKE) $* PREFIX=$$HOME/.local BASHCOMPLETIONSDIR=$$HOME/.local/share/bash-completion/completions DOCKERLIBDIR=$$HOME/.docker
 
