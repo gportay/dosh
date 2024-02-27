@@ -110,7 +110,8 @@ cfg_parser ()
 	ini=( ${ini[*]//;*/} )                     # remove comments with ;
 	ini=( ${ini[*]/\	=/=} )             # remove tabs before =
 	ini=( ${ini[*]/=\	/=} )              # remove tabs after =
-	ini=( ${ini[*]/\ =\ /=} )                  # remove anything with a space around =
+	ini=( ${ini[*]/\ =/=} )                    # remove space before =
+	ini=( ${ini[*]/=\ /=} )                    # remove space after =
 	ini=( ${ini[*]/#\\[/\}$'\n'cfg.section.} ) # set section prefix
 	ini=( ${ini[*]/%\\]/ \(} )                 # convert text2function (1)
 	ini=( ${ini[*]/=/=\( } )                   # convert item to array
