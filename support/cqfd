@@ -121,7 +121,7 @@ cfg.section.project
 cfg.section.build
 if [[ "$opt_b" ]]
 then
-	cfg.section.build "$opt_b"
+	"cfg.section.$opt_b"
 fi
 dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 
