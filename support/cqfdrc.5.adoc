@@ -86,6 +86,9 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 	specify the _group_ name if it exists either in the host or inside the
 	docker image.
 
+*docker (optional)*::
+	The program used to invoke the _docker(1)_ client.
+
 *dockerfile (optional)*::
 	The path to the _Dockerfile_. The path is relative to the project
 	directory (i.e. the parent directory of _.cqfd_). By default, _cqfd_

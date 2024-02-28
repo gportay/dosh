@@ -10,7 +10,7 @@ command="bash -x examples/build-man.dosh"
 
 [podman]
 PODMAN_USERNS=keep-id
-CQFD_DOCKER=podman
+docker=podman
 CQFD_SHELL=bash
 CQFD_EXTRA_RUN_ARGS="-e BAZ=baz -e QUX=qux"
 docker_run_args="-e FOO=foo -e BAR=bar"
