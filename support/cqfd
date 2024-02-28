@@ -168,7 +168,7 @@ then
 	DOSH_DOCKER_BUILD_EXTRA_OPTS="$CQFD_EXTRA_BUILD_ARGS"
 	export DOSH_DOCKER_BUILD_EXTRA_OPTS
 
-	exec dosh --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
+	exec "${DOSH[@]:-dosh}" --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
 fi
 
 if [[ "$cmd_run" ]] && [[ "$1" = -c ]]
@@ -208,7 +208,7 @@ then
 fi
 export DOSH_DOCKER_RUN_EXTRA_OPTS
 
-dosh --dockerfile "$dockerfile" --no-doshrc --no-doshprofile -c "$command"
+"${DOSH[@]:-dosh}" --dockerfile "$dockerfile" --no-doshrc --no-doshprofile -c "$command"
 
 if [ "$cmd_release" ]
 then
