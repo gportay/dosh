@@ -94,6 +94,7 @@ cfg_parser ()
 {
 	local BASH_COMPAT=42
 	local IFS
+	local ini
 
 	ini="$(<$1)"                               # read the file
 	ini="${ini//[/\[}"                         # escape [
