@@ -166,6 +166,12 @@ then
 	echo "Warning: user_extra_groups=\"$user_extra_groups\": Unsupported option" >&2
 fi
 
+if [[ "$CQFD_DOCKER" ]]
+then
+	DOSH_DOCKER="$CQFD_DOCKER"
+fi
+export DOSH_DOCKER
+
 if [[ "$cmd_init" ]]
 then
 	DOSH_DOCKER_BUILD_EXTRA_OPTS="$CQFD_EXTRA_BUILD_ARGS"
