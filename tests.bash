@@ -805,6 +805,24 @@ else
 fi
 echo
 
+run "Test series of short options"
+if dosh -ec 'echo "$-"' | tee /dev/stderr | grep 'e'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test series of short options ending with option"
+if dosh -co errexit 'echo "$-"' | tee /dev/stderr | grep 'e'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test --ls option"
 if dosh --ls
 then

@@ -665,11 +665,14 @@ do
 	then
 		echo "$VERSION"
 		exit
+	# It is a dosh option without argument (i.e. --root, --home...)
 	elif is_doshopt "$1"
 	then
 		optname="${1//-/_}"
 		optname="${optname:2}"
 		eval "$optname=1"
+	# It is a dosh option with argument (i.e. --dockerfile Dockerfile.alt,
+	# --directory subdir...)
 	elif is_doshopt_argument "$1"
 	then
 		optname="${1//-/_}"
@@ -683,10 +686,12 @@ do
 	then
 		verbose=true
 		buildopts=()
+	# It is a shell option without argument (i.e. -c, -i, -s...)
 	elif is_shopt "$1"
 	then
 		shopts+=("$1")
 		eval "opt_${1:1:1}=1"
+	# It is a shell option with argument (i.e. -o errexit, +o verbose...)
 	elif is_shopt_argument "$1"
 	then
 		shopts+=("$1")
@@ -696,6 +701,13 @@ do
 			shopts+=("$2")
 			shift
 		fi
+	# It is a serie of a shell options (i.e. -ex, -ic...)
+	elif [[ "$1" =~ ^-([^-]){2,} ]]
+	then
+		[[ "$1" =~ ^${1//?/(.)} ]]
+		shift
+		BASH_REMATCH=("${BASH_REMATCH[@]:2}")
+		set -- "$1" "${BASH_REMATCH[@]/#/-}" "${@:1}"
 	elif [ "$1" = "--" ]
 	then
 		shift
