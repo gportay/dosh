@@ -44,6 +44,7 @@ EOF
 
 opt_f=".cqfdrc"
 opt_d=".cqfd"
+tar_transform="no"
 while [ "$#" -ne 0 ]
 do
 	if [[ "$1" =~ ^(-h|--help)$ ]]
@@ -103,24 +104,38 @@ cfg_parser ()
 	local IFS
 	local ini
 
-	ini="$(<$1)"                               # read the file
+	ini="$(<"$1")"                             # read the file
+	# shellcheck disable=SC2206
 	ini="${ini//[/\[}"                         # escape [
+	# shellcheck disable=SC2206
 	ini="${ini//]/\]}"                         # escape ]
+	# shellcheck disable=SC2206
 	IFS=$'\n' && ini=( ${ini} )                # convert to line-array
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]//;*/} )                     # remove comments with ;
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/$'\t'=/=} )                 # remove tabs before =
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/=$'\t'/=} )                 # remove tabs after =
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/\ =/=} )                    # remove space before =
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/=\ /=} )                    # remove space after =
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/#\\[/\}$'\n'cfg.section.} ) # set section prefix
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/%\\]/ \(} )                 # convert text2function (1)
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/%\(/ \( \)} )               # close array parenthesis
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/%\\ \)/ \\} )               # the multiline trick
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/%\( \)/\(\) \{} )           # convert text2function (2)
+	# shellcheck disable=SC2206
 	ini=( ${ini[*]/%\} \)/\}} )                # remove extra parenthesis
 	ini[0]=""                                  # remove first element
 	ini[${#ini[*]} + 1]='}'                    # add the last brace
-	eval "$(echo "${ini[*]}")"                 # eval the result
+	eval "${ini[*]}"                           # eval the result
 }
 
 cfg_parser "$opt_f"
@@ -137,6 +152,7 @@ dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 mapfile -t vars < <(compgen -A arrayvar -X '!DOSH_*')
 for var in "${vars[@]}"
 do
+	val=
 	eval "val=\$$var"
 	unset "$var"
 	export "$var=$val"
@@ -190,7 +206,7 @@ then
 	exit 1
 elif [[ "$cmd_exec" ]]
 then
-	command="${@@Q}"
+	command="${*@Q}"
 elif [[ "$cmd_run" ]] && [[ "$1" = -c ]] && [[ "$#" -eq 1 ]]
 then
 	usage
@@ -205,7 +221,7 @@ then
 	command="$*"
 elif [[ "$cmd_shell" ]] && [[ "$#" -ne 0 ]]
 then
-	command="${CQFD_SHELL:-/bin/sh} ${@@Q}"
+	command="${CQFD_SHELL:-/bin/sh} ${*@Q}"
 elif [[ "$cmd_shell" ]]
 then
 	command="${CQFD_SHELL:-/bin/sh}"
@@ -260,10 +276,11 @@ then
 		exit 1
 	fi
 
+	# shellcheck disable=SC2162
 	read -a files <<<"$files"
 	if [[ "${#files[@]}" -eq 0 ]]
 	then
-		echo "Error: files=${files[@]}: Invalid option" >&2
+		echo "Error: files=${files[*]}: Invalid option" >&2
 		exit 1
 	fi
 
@@ -274,6 +291,7 @@ then
 
 	if [[ "$tar_options" ]]
 	then
+		# shellcheck disable=SC2162
 		read -a _array <<<"$tar_options"
 		tar_opts+=("${_array[@]}")
 	fi
