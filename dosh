@@ -665,6 +665,13 @@ do
 	then
 		echo "$VERSION"
 		exit
+	elif [ "$1" = "--dry-run" ]
+	then
+		dryrun=true
+	elif [ "$1" = "--verbose" ]
+	then
+		verbose=true
+		buildopts=()
 	# It is a dosh option without argument (i.e. --root, --home...)
 	elif is_doshopt "$1"
 	then
@@ -679,13 +686,6 @@ do
 		optname="${optname:2}"
 		eval "$optname=\"$2\""
 		shift
-	elif [ "$1" = "--dry-run" ]
-	then
-		dryrun=true
-	elif [ "$1" = "--verbose" ]
-	then
-		verbose=true
-		buildopts=()
 	# It is a shell option without argument (i.e. -c, -i, -s...)
 	elif is_shopt "$1"
 	then
