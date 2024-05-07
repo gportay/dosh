@@ -207,11 +207,18 @@ remove_symlink() {
 
 get_tag() {
 	local file
+	local user
 	local checksum
 
 	file="$(realpath "$1")"
 	checksum="$(file_checksum "$file")"
-	echo "dosh-$checksum"
+	user="$2"
+	if [[ ! "${2:-}" ]]
+	then
+		user="$(id -un)"
+	fi
+	user="${user//[^[:alnum:]_.-]/_}"
+	echo "dosh-$user-$checksum"
 }
 
 get_images() {
@@ -722,7 +729,7 @@ done
 if [[ "${tag:-}" ]]
 then
 	# Print tag
-	get_tag "$directory/$dockerfile"
+	get_tag "$directory/$dockerfile" "${USER:-}"
 	exit
 fi
 
@@ -816,7 +823,7 @@ fi
 if [[ ${rmi:-} ]]
 then
 	# Remove an existent image
-	tag="$(get_tag "$DOSH_DOCKERFILE")"
+	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}")"
 	docker_rmi "$tag" "$@" >&2
 	exit
 fi
@@ -825,7 +832,7 @@ fi
 if ! [[ ${exec:-} ]]
 then
 	# Rebuild or automatically build the image if it does not exist
-	tag="$(get_tag "$DOSH_DOCKERFILE")"
+	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}")"
 	imageid="$("${docker[@]}" images -q "$tag")"
 	if [[ ${build:-} ]] || [[ ${rebuild:-} ]] || ! [[ ${imageid:-} ]]
 	then

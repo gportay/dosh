@@ -176,7 +176,7 @@ echo
 
 run "Test option --dry-run"
 if dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -459,7 +459,7 @@ echo
 
 run "Test option --mount-options"
 if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+   grep "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -578,7 +578,7 @@ echo
 
 run "Test DOSH_DOCKER environment variable"
 if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-[0-9a-z]\{64\}"
+   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -617,7 +617,7 @@ echo
 
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with echo short option -e"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="-e ECHO_SHORT_OPTION=true" dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-[0-9a-z]\{64\}"
+   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -636,7 +636,28 @@ fi
 echo
 
 run "Test --tag option"
-if dosh --tag
+if dosh --tag | tee /dev/stderr | \
+   grep -q "^dosh-$USER-[0-9a-z]\{64\}$"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test --tag option with username docker"
+if USER=docker dosh --tag | tee /dev/stderr | \
+   grep -q "^dosh-docker-[0-9a-z]\{64\}$"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test --tag option with username dosh@portay.io to sanitize"
+if USER=dosh@portay.io dosh --tag | tee /dev/stderr | \
+   grep -q "^dosh-dosh_portay.io-[0-9a-z]\{64\}$"
 then
 	ok
 else
@@ -645,7 +666,8 @@ fi
 echo
 
 run "Test --tag option with --dockerfile option"
-if dosh --tag --dockerfile Dockerfile.fedora
+if dosh --tag --dockerfile Dockerfile.fedora | tee /dev/stderr | \
+   grep -q "^dosh-$USER-[0-9a-z]\{64\}$"
 then
 	ok
 else
@@ -654,7 +676,9 @@ fi
 echo
 
 run "Test --tag option with --directory and --dockerfile option in a busybox based distro"
-if ( cd .. && dir="${OLDPWD##*/}" && dosh --tag --directory "$dir" --dockerfile Dockerfile.alpine )
+if ( cd .. && dir="${OLDPWD##*/}" && \
+     dosh --tag --directory "$dir" --dockerfile Dockerfile.alpine | tee /dev/stderr | \
+     grep -q "^dosh-$USER-[0-9a-z]\{64\}$" )
 then
 	ok
 else
