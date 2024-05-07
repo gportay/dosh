@@ -155,8 +155,8 @@ fi
 echo
 
 run "Test option --help"
-if dosh --help | \
-   grep '^Usage: '
+if dosh --help | tee /dev/stderr | \
+   grep -q '^Usage: '
 then
 	ok
 else
@@ -165,8 +165,8 @@ fi
 echo
 
 run "Test option --version"
-if dosh --version | \
-   grep -E '^([0-9a-zA-Z]+)(\.[0-9a-zA-Z]+)*$'
+if dosh --version | tee /dev/stderr | \
+   grep -qE '^([0-9a-zA-Z]+)(\.[0-9a-zA-Z]+)*$'
 then
 	ok
 else
@@ -176,7 +176,7 @@ echo
 
 run "Test option --dry-run"
 if dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -459,7 +459,7 @@ echo
 
 run "Test option --mount-options"
 if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -469,7 +469,7 @@ echo
 
 run "Test option --mount-options (run-time)"
 if ! dosh "$@" --mount-options ro -c "touch read-only" 2>&1 | tee /dev/stderr |
-   grep "^touch: .*: Read-only file system\$"
+   grep -q "^touch: .*: Read-only file system\$"
 then
 	ok
 else
@@ -578,7 +578,7 @@ echo
 
 run "Test DOSH_DOCKER environment variable"
 if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -607,7 +607,7 @@ echo
 
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with whitespace"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--env FOO=bar\ baz" dosh -c env 2>&1 | tee /dev/stderr | \
-   grep "^FOO=bar baz$"
+   grep -q "^FOO=bar baz$"
 then
 	ok
 else
@@ -617,7 +617,7 @@ echo
 
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with echo short option -e"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="-e ECHO_SHORT_OPTION=true" dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
