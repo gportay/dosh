@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2017-2020,2023 Gaël PORTAY
+# Copyright (c) 2017-2020,2023-2024 Gaël PORTAY
 #
 # SPDX-License-Identifier: MIT
 #
