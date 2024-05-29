@@ -16,6 +16,11 @@ doc: SHELL=dosh
 doc: dosh.1.gz
 
 .PHONY: install-all
+install-world: install-all
+install-world: install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh
+install-world: install-posh install-xdosh install-zdosh install-cqfd
+
+.PHONY: install-all
 install-all: install install-doc install-bash-completion install-cli-plugin
 
 .PHONY: install
@@ -90,6 +95,11 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/posh
 	rm -f $(DESTDIR)$(PREFIX)/bin/xdosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
+
+.PHONY: user-install-world
+user-install-world: user-install-all
+user-install-world: user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh
+user-install-world: user-install-posh user-install-xdosh user-install-zdosh user-install-cqfd
 
 .PHONY: user-install-all
 user-install-all: user-install user-install-doc user-install-bash-completion user-install-cli-plugin
