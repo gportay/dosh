@@ -87,6 +87,7 @@ uninstall:
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-zsh
+	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-cqfd
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
 	                             --variable=completionsdir \
 	                             bash-completion)}; \
@@ -96,6 +97,7 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/posh
 	rm -f $(DESTDIR)$(PREFIX)/bin/xdosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/cqfd
 
 .PHONY: user-install-world
 user-install-world: user-install-all
