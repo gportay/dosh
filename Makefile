@@ -86,6 +86,7 @@ uninstall:
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
+	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-zsh
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
 	                             --variable=completionsdir \
 	                             bash-completion)}; \
