@@ -876,12 +876,16 @@ fi
 if [[ ${dind:-} ]]
 then
 	opts+=("--user" "$UID:dind")
+	opts+=("--env" "USER=$USER")
+	opts+=("--env" "HOME=$HOME")
 	opts+=("--volume" "/var/run/docker.sock:/var/run/docker.sock")
 	opts+=("--volume" "$0:/bin/dosh:ro")
 # Or set the current user privileges
 elif ! [[ ${root:-} ]]
 then
 	opts+=("--user" "$UID:${GROUPS[0]}")
+	opts+=("--env" "USER=$USER")
+	opts+=("--env" "HOME=$HOME")
 fi
 
 # Set the interactive options

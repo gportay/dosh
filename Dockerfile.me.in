@@ -3,3 +3,6 @@ RUN groupadd --non-unique --gid @GID@ @USER@
 RUN useradd  --non-unique --gid @GID@ --uid @UID@ --create-home --home-dir @HOME@ --shell /bin/sh @USER@
 RUN groupadd --non-unique --gid @DID_GID@ dind
 RUN usermod  --append --group dind @USER@
+USER @USER@
+ENV USER=nobody
+ENV HOME=/tmp

@@ -176,7 +176,7 @@ echo
 
 run "Test option --dry-run"
 if dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -459,7 +459,7 @@ echo
 
 run "Test option --mount-options"
 if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -578,7 +578,7 @@ echo
 
 run "Test DOSH_DOCKER environment variable"
 if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -617,7 +617,7 @@ echo
 
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with echo short option -e"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="-e ECHO_SHORT_OPTION=true" dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -707,6 +707,16 @@ sed -e "s,@USER@,$USER,g" \
 run "Test when user/group already exists with same UID/GID in Dockerfile"
 if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
    diff - <(/bin/sh                                   -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test USER and HOME are set to user's values"
+if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$USER:$HOME"' | tee /dev/stderr | \
+   diff - <(/bin/sh                                   -c 'echo "$USER:$HOME"' | tee /dev/stderr )
 then
 	ok
 else
