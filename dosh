@@ -753,17 +753,6 @@ then
 	DOSH_DOCKER_RMI_EXTRA_OPTS=
 fi
 
-# Convert the DOSH_DOCKER_*_EXTRA_OPTS environment variables to arrays; use a
-# backslash to escape whitespace and preserve it.
-# shellcheck disable=SC2162
-read -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
-# shellcheck disable=SC2162
-read -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
-# shellcheck disable=SC2162
-read -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
-# shellcheck disable=SC2162
-read -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
-
 # Change the current directory
 cd "$directory"
 
@@ -778,6 +767,17 @@ then
 	. ./doshrc
 fi
 set -euo pipefail
+
+# Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
+# escape whitespace and preserve it.
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
+# shellcheck disable=SC2162
+read -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
 
 # List the images and exit
 if [[ ${ls:-} ]]
