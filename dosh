@@ -176,6 +176,11 @@ run() {
 	"$@"
 }
 
+is_set_and_not_array() {
+	compgen -A variable "$1" >/dev/null && \
+	! compgen -A arrayvar "$1" >/dev/null
+}
+
 checksum() {
 	local sha256
 
@@ -770,26 +775,22 @@ set -euo pipefail
 
 # Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
 # escape whitespace and preserve it.
-if ! compgen -A arrayvar DOSH_DOCKER_RUN_EXTRA_OPTS >/dev/null &&
-     compgen -A variable DOSH_DOCKER_RUN_EXTRA_OPTS >/dev/null
+if is_set_and_not_array DOSH_DOCKER_RUN_EXTRA_OPTS
 then
 	# shellcheck disable=SC2162
 	read -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
 fi
-if ! compgen -A arrayvar DOSH_DOCKER_EXEC_EXTRA_OPTS >/dev/null &&
-     compgen -A variable DOSH_DOCKER_EXEC_EXTRA_OPTS >/dev/null
+if is_set_and_not_array DOSH_DOCKER_EXEC_EXTRA_OPTS
 then
 	# shellcheck disable=SC2162
 	read -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
 fi
-if ! compgen -A arrayvar DOSH_DOCKER_BUILD_EXTRA_OPTS >/dev/null &&
-     compgen -A variable DOSH_DOCKER_BUILD_EXTRA_OPTS >/dev/null
+if is_set_and_not_array DOSH_DOCKER_BUILD_EXTRA_OPTS
 then
 	# shellcheck disable=SC2162
 	read -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
 fi
-if ! compgen -A arrayvar DOSH_DOCKER_RMI_EXTRA_OPTS >/dev/null &&
-     compgen -A variable DOSH_DOCKER_RMI_EXTRA_OPTS >/dev/null
+if is_set_and_not_array DOSH_DOCKER_RMI_EXTRA_OPTS
 then
 	# shellcheck disable=SC2162
 	read -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
