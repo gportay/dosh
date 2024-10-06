@@ -402,7 +402,7 @@ docker_build() {
 
 	if [[ ! -e "$1" ]]
 	then
-		echo "$1: No such Dockerfile"
+		echo "$1: No such Dockerfile" >&2
 		exit 1
 	fi
 
