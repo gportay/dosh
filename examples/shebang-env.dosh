@@ -1,0 +1,10 @@
+#!/usr/bin/env -S dosh --dockerfile Dockerfile.fedora
+#
+# Copyright (c) 2024 Gaël PORTAY
+#
+# SPDX-License-Identifier: MIT
+#
+
+whoami
+echo "$USER" "$0" "$#" "$@"
+cat /etc/os*release

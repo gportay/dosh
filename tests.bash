@@ -517,6 +517,16 @@ else
 fi
 echo
 
+run "Test shebang using env"
+if examples/shebang-env.dosh | tee /dev/stderr | \
+   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test options --detach and --exec"
 if container="$(dosh --detach)" && \
    dosh "$@" --exec "$container"  -c "hostname" | tee /dev/stderr | \
