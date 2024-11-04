@@ -89,8 +89,8 @@ uninstall:
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-zsh
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-cqfd
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
-	                             --variable=completionsdir \
-	                             bash-completion)}; \
+	                                                    --variable=completionsdir \
+	                                                    bash-completion)}; \
 	if [ -n "$$completionsdir" ]; then \
 		rm -f $(DESTDIR)$$completionsdir/dosh; \
 	fi
