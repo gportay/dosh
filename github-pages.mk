@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2017-2018 Gaël PORTAY
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
 # See: https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/

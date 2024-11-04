@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2024 Gaël PORTAY
 #
-# SPDX-License-Identifier: GPL-2.0-only
+# SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
 set -e

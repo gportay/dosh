@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2017-2020,2023-2024 Gaël PORTAY
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
 set -e
