@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 #
-# Copyright (c) 2017-2018 Gaël PORTAY
+# Copyright 2017-2018 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
