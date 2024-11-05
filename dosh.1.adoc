@@ -136,6 +136,9 @@ command-line through *docker-run(1)*.
 **--working-directory DIR**::
 	Working directory inside the container.
 
+**--sudo**::
+	Run docker with sudo.
+
 **--root**::
 	Run as root.
 

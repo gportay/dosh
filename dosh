@@ -90,6 +90,7 @@ Docker related options:
       --no-doshrc               Disable read of ./doshrc.
       --directory DIR           Change to directory before doing anything else.
       --working-directory DIR   Working directory inside the container.
+      --sudo                    Run docker with sudo.
       --root                    Run as root.
       --dind                    Run dosh in dosh.
       --home                    Bind mount home directory.
@@ -125,6 +126,8 @@ Environment variables:
 
       DOSHLVL                   Incremented by one each time an instance of dosh
                                 is started.
+
+      DOSH_SUDO                 Set sudo command.
 
       DOSH_DOCKER               The docker executable.
 
@@ -589,7 +592,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|root|dind|home|ls|gc|build|rebuild|build-only|rmi|detach|kill|rm|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|home|ls|gc|build|rebuild|build-only|rmi|detach|kill|rm|tag)$ ]]
 	then
 		return 0
 	fi
@@ -662,7 +665,6 @@ is_shopt_argument() {
 }
 
 shopts=()
-read -r -a docker <<<"${DOSH_DOCKER[*]:-docker}"
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 directory="."
 working_directory="$PWD"
@@ -671,6 +673,8 @@ buildopts=("--quiet")
 cachedir="${XDG_CACHE_HOME:-$HOME/.cache}/dosh"
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOSHLVL="${DOSHLVL:-0}"
+DOSH_SUDO="${DOSH_SUDO:-sudo}"
+DOSH_DOCKER="${DOSH_DOCKER:-docker}"
 while [ "$#" -ne 0 ]
 do
 	if [ "$1" = "--help" ]
@@ -688,7 +692,7 @@ do
 	then
 		verbose=true
 		buildopts=()
-	# It is a dosh option without argument (i.e. --root, --home...)
+	# It is a dosh option without argument (i.e. --sudo, --root, --home...)
 	elif is_doshopt "$1"
 	then
 		optname="${1//-/_}"
@@ -761,6 +765,9 @@ then
 	DOSH_DOCKER_BUILD_EXTRA_OPTS=
 	DOSH_DOCKER_RMI_EXTRA_OPTS=
 fi
+
+# Set docker executable
+read -r -a docker <<<"${sudo:+$DOSH_SUDO }${DOSH_DOCKER[*]}"
 
 # Change the current directory
 cd "$directory"
