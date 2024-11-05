@@ -776,6 +776,14 @@ fi
 # Set docker executable
 read -r -a docker <<<"${sudo:+$DOSH_SUDO }${DOSH_DOCKER[*]}"
 
+# Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
+# escape whitespace and preserve it.
+for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
+	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
+do
+	to_array "$i"
+done
+
 # Change the current directory
 cd "$directory"
 
@@ -790,14 +798,6 @@ then
 	. ./doshrc
 fi
 set -euo pipefail
-
-# Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
-# escape whitespace and preserve it.
-for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
-	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
-do
-	to_array "$i"
-done
 
 # List the images and exit
 if [[ ${ls:-} ]]

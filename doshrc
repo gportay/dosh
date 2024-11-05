@@ -39,6 +39,3 @@ esac
 #	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env SSH_AUTH_SOCK)
 #	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK")
 #fi
-
-# Left uncommented to make the tests passed.
-DOSH_DOCKER_RUN_EXTRA_OPTS="--env FOO=bar\ baz"
