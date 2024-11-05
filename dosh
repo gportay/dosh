@@ -188,6 +188,13 @@ is_set_and_not_array() {
 	! compgen -A arrayvar "$1" >/dev/null
 }
 
+to_array() {
+	if is_set_and_not_array "$1"
+	then
+		eval "read -a $1 <<<\"\${$1:-}\""
+	fi
+}
+
 checksum() {
 	local sha256
 
@@ -786,26 +793,11 @@ set -euo pipefail
 
 # Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
 # escape whitespace and preserve it.
-if is_set_and_not_array DOSH_DOCKER_RUN_EXTRA_OPTS
-then
-	# shellcheck disable=SC2162
-	read -a DOSH_DOCKER_RUN_EXTRA_OPTS <<<"${DOSH_DOCKER_RUN_EXTRA_OPTS:-}"
-fi
-if is_set_and_not_array DOSH_DOCKER_EXEC_EXTRA_OPTS
-then
-	# shellcheck disable=SC2162
-	read -a DOSH_DOCKER_EXEC_EXTRA_OPTS <<<"${DOSH_DOCKER_EXEC_EXTRA_OPTS:-}"
-fi
-if is_set_and_not_array DOSH_DOCKER_BUILD_EXTRA_OPTS
-then
-	# shellcheck disable=SC2162
-	read -a DOSH_DOCKER_BUILD_EXTRA_OPTS <<<"${DOSH_DOCKER_BUILD_EXTRA_OPTS:-}"
-fi
-if is_set_and_not_array DOSH_DOCKER_RMI_EXTRA_OPTS
-then
-	# shellcheck disable=SC2162
-	read -a DOSH_DOCKER_RMI_EXTRA_OPTS <<<"${DOSH_DOCKER_RMI_EXTRA_OPTS:-}"
-fi
+for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
+	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
+do
+	to_array "$i"
+done
 
 # List the images and exit
 if [[ ${ls:-} ]]
