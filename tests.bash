@@ -224,7 +224,7 @@ fi
 echo
 
 run "Test with a binary argument"
-if ! dosh "$@" echo "one" "two" "three"
+if ! dosh echo "one" "two" "three"
 then
 	ok
 else
@@ -233,7 +233,7 @@ fi
 echo
 
 run "Test option -c without command"
-if ! dosh "$@" -c
+if ! dosh -c
 then
 	ok
 else
@@ -242,8 +242,8 @@ fi
 echo
 
 run "Test option -c with empty command"
-if          dosh "$@"  -c '' | tee /dev/stderr | \
-   diff - <(/bin/sh    -c '' | tee /dev/stderr )
+if          dosh    -c '' | tee /dev/stderr | \
+   diff - <(/bin/sh -c '' | tee /dev/stderr )
 then
 	ok
 else
@@ -252,8 +252,8 @@ fi
 echo
 
 run "Test option -c with commands"
-if          dosh "$@"  -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
-   diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
+if          dosh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
+   diff - <(/bin/sh -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then
 	ok
 else
@@ -262,8 +262,8 @@ fi
 echo
 
 run "Test option -c with commands and arguments"
-if          dosh "$@"  -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
-   diff - <(/bin/sh    -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
+if          dosh    -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
+   diff - <(/bin/sh -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
 then
 	ok
 else
@@ -272,8 +272,8 @@ fi
 echo
 
 run "Test option -s without arguments"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@" -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh   -s | tee /dev/stderr )
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s | tee /dev/stderr )
 then
 	ok
 else
@@ -282,8 +282,8 @@ fi
 echo
 
 run "Test option -s one two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s "one" "two" "three" | tee /dev/stderr )
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s "one" "two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -292,8 +292,8 @@ fi
 echo
 
 run "Test option -s one\ +\ two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s one\ +\ two three | tee /dev/stderr )
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s one\ +\ two three | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s one\ +\ two three | tee /dev/stderr )
 then
 	ok
 else
@@ -302,8 +302,8 @@ fi
 echo
 
 run "Test option -s \"one + two\" three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh "$@"  -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh    -s "one + two" "three" | tee /dev/stderr )
+if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s "one + two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s "one + two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -312,8 +312,8 @@ fi
 echo
 
 run "Test option --root"
-if                      dosh "$@" --root -c 'whoami' | tee /dev/stderr | \
-   diff - <(fakeroot -- /bin/sh          -c 'whoami' | tee /dev/stderr )
+if                      dosh    --root -c 'whoami' | tee /dev/stderr | \
+   diff - <(fakeroot -- /bin/sh        -c 'whoami' | tee /dev/stderr )
 then
 	ok
 else
@@ -331,7 +331,7 @@ else
 fi
 
 run "Test option -c"
-if dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
+if dosh -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
 	ok
@@ -342,7 +342,7 @@ echo
 
 run "Test \$DOSH_DOCKERFILE"
 if DOSH_DOCKERFILE=Dockerfile.fedora \
-   dosh "$@" -c "cat /etc/os*release" | tee /dev/stderr | \
+   dosh -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -352,7 +352,7 @@ fi
 echo
 
 run "Test option --dockerfile"
-if dosh "$@" --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
+if dosh --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -363,7 +363,7 @@ echo
 
 run "Test option --context"
 tar cf context.tar Dockerfile dosh bash-completion support/* examples/*
-if dosh "$@" --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
+if dosh --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
 then
 	ok
@@ -375,7 +375,7 @@ rm context.tar
 
 run "Test option --context with --dockerfile"
 tar cf context.tar Dockerfile.fedora
-if dosh "$@" --build --dockerfile Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
+if dosh --build --dockerfile Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
 then
 	ok
@@ -386,7 +386,7 @@ echo
 rm context.tar
 
 run "Test option --no-auto-context"
-if dosh "$@" --build --no-auto-context -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
+if dosh --build --no-auto-context -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
    grep '^Info: ADD or COPY instructions sends build context to daemon.'
 then
 	ok
@@ -396,7 +396,7 @@ fi
 echo
 
 run "Test option --working-directory with root directory"
-if ( dosh "$@" --working-directory / -c "pwd" | tee /dev/stderr | \
+if ( dosh --working-directory / -c "pwd" | tee /dev/stderr | \
      grep -q '^/$' )
 then
 	ok
@@ -406,7 +406,7 @@ fi
 echo
 
 run "Test option --working-directory with home directory"
-if ( dosh "$@" --working-directory "$HOME" -c "pwd" | tee /dev/stderr | \
+if ( dosh --working-directory "$HOME" -c "pwd" | tee /dev/stderr | \
      grep -q "^$HOME$" )
 then
 	ok
@@ -416,7 +416,7 @@ fi
 echo
 
 run "Test option --working-directory with unexistent directory"
-if ( dosh "$@" --working-directory "/opt/dosh" -c "pwd" | tee /dev/stderr | \
+if ( dosh --working-directory "/opt/dosh" -c "pwd" | tee /dev/stderr | \
      grep -q "^/opt/dosh$" )
 then
 	ok
@@ -427,7 +427,7 @@ echo
 
 run "Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
-     dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     dosh --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
 then
 	ok
@@ -438,7 +438,7 @@ echo
 
 run "Test option --directory with absolute path"
 if ( cd /tmp && dir="$OLDPWD" && \
-     dosh "$@" --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
+     dosh --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
      grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
 then
 	ok
@@ -448,8 +448,8 @@ fi
 echo
 
 run "Test option --home"
-if          echo 'pwd; cd ; pwd' | dosh "$@"  --home -s | tee /dev/stderr | \
-   diff - <(echo 'pwd; cd ; pwd' | /bin/sh           -s | tee /dev/stderr )
+if          echo 'pwd; cd ; pwd' | dosh    --home -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd ; pwd' | /bin/sh        -s | tee /dev/stderr )
 then
 	ok
 else
@@ -468,7 +468,7 @@ fi
 echo
 
 run "Test option --mount-options (run-time)"
-if ! dosh "$@" --mount-options ro -c "touch read-only" 2>&1 | tee /dev/stderr |
+if ! dosh --mount-options ro -c "touch read-only" 2>&1 | tee /dev/stderr |
    grep -q "^touch: .*: Read-only file system\$"
 then
 	ok
@@ -478,8 +478,8 @@ fi
 echo
 
 run "Test option --shell /bin/dash"
-if          echo 'echo $0' | dosh "$@"  --shell /bin/dash -s | tee /dev/stderr | \
-   diff - <(echo '/bin/dash'                                 | tee /dev/stderr )
+if          echo 'echo $0' | dosh --shell /bin/dash -s | tee /dev/stderr | \
+   diff - <(echo '/bin/dash'                           | tee /dev/stderr )
 then
 	ok
 else
@@ -488,8 +488,8 @@ fi
 echo
 
 run "Test default shell"
-if          echo 'echo $0' | dosh "$@"  -s | tee /dev/stderr | \
-   diff - <(echo 'echo $0' | /bin/sh    -s | tee /dev/stderr )
+if          echo 'echo $0' | dosh    -s | tee /dev/stderr | \
+   diff - <(echo 'echo $0' | /bin/sh -s | tee /dev/stderr )
 then
 	ok
 else
@@ -529,10 +529,10 @@ echo
 
 run "Test options --detach and --exec"
 if container="$(dosh --detach)" && \
-   dosh "$@" --exec "$container"  -c "hostname" | tee /dev/stderr | \
-   diff - <(echo "${container:0:12}"            | tee /dev/stderr ) && \
-   docker rm -f "$container"                    | tee /dev/stderr | \
-   diff - <(echo "$container"                   | tee /dev/stderr )
+   dosh --exec "$container"  -c "hostname" | tee /dev/stderr | \
+   diff - <(echo "${container:0:12}"       | tee /dev/stderr ) && \
+   docker rm -f "$container"               | tee /dev/stderr | \
+   diff - <(echo "$container"              | tee /dev/stderr )
 then
 	ok
 else
@@ -542,8 +542,8 @@ echo
 
 run "Test option --exec without --working-directory"
 if container="$(dosh --detach)" && \
-   dosh "$@" --exec "$container"  -c 'pwd' | tee /dev/stderr | \
-   diff - <(echo "$PWD"                    | tee /dev/stderr ) && \
+   dosh --exec "$container"  -c 'pwd' | tee /dev/stderr | \
+   diff - <(echo "$PWD"               | tee /dev/stderr ) && \
    docker rm -f "$container"
 then
 	ok
@@ -554,8 +554,8 @@ echo
 
 run "Test options --exec and --working-directory with home directory"
 if container="$(dosh --detach)" && \
-   dosh "$@" --exec "$container" --working-directory "$HOME"  -c 'pwd' | tee /dev/stderr | \
-   diff - <(echo "$HOME"                                               | tee /dev/stderr ) && \
+   dosh --exec "$container" --working-directory "$HOME"  -c 'pwd' | tee /dev/stderr | \
+   diff - <(echo "$HOME"                                          | tee /dev/stderr ) && \
    docker rm -f "$container"
 then
 	ok
@@ -566,8 +566,8 @@ echo
 
 run "Test option --exec and DOSHLVL environment variable"
 if container="$(dosh --detach)" && \
-   DOSHLVL="1" dosh "$@" --exec "$container" --working-directory "$HOME"  -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
-   diff - <(echo "DOSHLVL=2"                                                                         | tee /dev/stderr ) && \
+   DOSHLVL="1" dosh --exec "$container" --working-directory "$HOME"  -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+   diff - <(echo "DOSHLVL=2"                                                                      | tee /dev/stderr ) && \
    docker rm -f "$container"
 then
 	ok
@@ -597,7 +597,7 @@ fi
 echo
 
 run "Test with a busybox based distro (/bin/ash + adduser/addgroup)"
-if DOSHELL=/bin/ash dosh --dockerfile Dockerfile.alpine --build "$@" -c "cat /etc/os*release"
+if DOSHELL=/bin/ash dosh --dockerfile Dockerfile.alpine --build -c "cat /etc/os*release"
 then
 	ok
 else
