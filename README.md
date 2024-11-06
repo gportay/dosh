@@ -15,17 +15,6 @@ Commands are read either from the standard input or from a file or from command
 line using one of the standard shell invocations (i.e. thanks to options `-c`,
 `-i`, `-s` or without arguments).
 
-## DOWNLOAD
-
-Fetch your own copy and give it a try right now!
-
-*Version* | *Checksum* (\*)                                                  |
---------- | ---------------------------------------------------------------- |
-[6]       | 915e275ca1314789a895504df4e149f0335b8749e2740da99009f71caaa46a38 |
-
-\*: Note that hashes are subject to change as GitHub might update tarball
-generation.
-
 ## DOCUMENTATION
 
 Build the documentation using *make(1)*
@@ -285,4 +274,3 @@ later version.
 [doc]: Makefile#L13-L16
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
-[6]: https://github.com/gportay/dosh/archive/6.tar.gz
