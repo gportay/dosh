@@ -230,6 +230,34 @@ _Note_: Put these lines to the end of the file.
 
 Lines after the if statement are applied in the container.
 
+## USE PODMAN
+
+[podman] is a daemonless alternative to [docker] providing the same command
+line interface, and it can replace [docker] without any troubles.
+
+Adding these two following lines to the Shell `~/.profile` to tell *dosh* to
+use `/usr/bin/podman` to run `docker` commands:
+
+	DOSH_DOCKER="/usr/bin/podman"
+	export DOSH_DOCKER
+
+Also, disable the context using option `--no-auto-context`.
+
+Additionally, for Rootless containers, consider adding the two following extra
+run options to map host UID and GIDs to the container and run it inside a user
+namespace.
+
+Add either the following line to the Shell `~/.profile`:
+
+	DOSH_DOCKER_RUN_EXTRA_OPTS="--userns keep-id --group-add keep-groups"
+
+Or the following line to the dosh `~/.dosh_profile`:
+
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--userns keep-id --group-add keep-groups`)
+
+Alternatively, use the convenient wrapper script [posh](support/posh) to run
+[dosh] using [podman] underneath without touching the Shell and *dosh* files.
+
 ## LINKS
 
 Check for [man-pages][dosh(1)] and its [examples].
@@ -278,3 +306,5 @@ later version.
 [doc]: Makefile#L13-L16
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
+[podman]: https://github.com/containers/podman
+[posh]: support/posh
