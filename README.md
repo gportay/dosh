@@ -250,6 +250,10 @@ Also, here is an extra example that builds the documentation
 
 Enjoy!
 
+## PATCHES
+
+Sumbit patches at *https://github.com/gportay/dosh/pulls*
+
 ## BUGS
 
 Report bugs at *https://github.com/gportay/dosh/issues*
