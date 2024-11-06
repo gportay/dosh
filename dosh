@@ -161,6 +161,12 @@ Environment variables:
       DOSH_DOCKER_RMI_EXTRA_OPTS
                                 Set additionnal parameters to docker rmi
                                 command.
+
+Files:
+
+      ~/.dosh_profile           The personal initialization file.
+
+      ./.doshrc                 The local initialization file.
 EOF
 }
 

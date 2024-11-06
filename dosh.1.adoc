@@ -244,6 +244,14 @@ command-line through *docker-run(1)*.
 **DOSH_DOCKER_RMI_EXTRA_OPTS**::
 	Set additionnal parameters to docker rmi command.
 
+== FILES
+
+**~/.dosh_profile**::
+	The personal initialization file.
+
+**./.doshrc**::
+	The local initialization file.
+
 == EXAMPLES
 
 Run an _interactive shell_ in the latest _Ubuntu_ container
