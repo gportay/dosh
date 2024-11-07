@@ -58,8 +58,8 @@ Instead, the default interpreter can be set using the `DOSHELL` environment
 variable. When this variable is exported, there is no need to override the Shell
 interpreter through the command-line.
 
-Adding these two following lines to the Shell `~/.profile` tells *dosh* to uses
-`/bin/bash` as Shell interpreter.
+Adding these two following lines to the Shell `~/.profile` to tell *dosh* to
+use `/bin/bash` as Shell interpreter.
 
 	DOSHELL="/bin/bash"
 	export DOSHELL
