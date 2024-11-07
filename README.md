@@ -97,6 +97,31 @@ the `~/.ssh` directory to the container.
 	DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
 	export DOSH_DOCKER_RUN_EXTRA_OPTS
 
+### INITIALIZATION FILES
+
+[dosh(1)] reads and executes commands from initialization files when it is
+invoked.
+
+Unlike the standard shells, [dosh(1)] uses files from *personal* and *local*
+locations instead of files from *system* and *personal* locations. The *system*
+initialization file is replaced by a *local* file; and that *local* file is run
+after the *personal* file.
+
+In short, the *personal* file `~/.dosh_profile` is read first, and the *local*
+file `./doshrc` is read then. The former file is hidden to avoid polutting the
+*personal* directory (as `.profile`, `.bash_profile`, `.bashrc`...) while the
+later is not (like `Makefile`, `Dockerfile`...).
+
+The Shell initialization files (`.profile`, `.bash_profile`, `.bashrc`...) are
+read by the host shell. The *dosh* specific [environment-variables] are string
+variables, and they have to be exported to be part of the environment of the
+*dosh(1)* sub-process.
+
+Both *dosh* initialization files aim to override the *dosh* specific variables.
+The extra options [environment-variables] are converted to *bash(1)* arrays
+before the initialization files are read by *dosh(1)*. They have to remain
+*bash(1)* arrays.
+
 ### SHELL PROFILE EXAMPLES
 
 Here are some examples of code to copy/paste in the `~/.profile`.
@@ -304,6 +329,7 @@ later version.
 [dosh]: dosh
 [dosh(1)]: dosh.1.adoc
 [doc]: Makefile#L13-L16
+[environment-variables]: https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
 [podman]: https://github.com/containers/podman
