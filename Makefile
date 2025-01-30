@@ -129,10 +129,6 @@ test tests:
 check: dosh
 	shellcheck --exclude=SC1090 --exclude=SC1091 $^
 
-.PHONY: coverage
-coverage:
-	kcov $(CURDIR)/$@ --include-path=dosh $(CURDIR)/tests.bash
-
 ifneq (,$(BUMP_VERSION))
 .SILENT: bump
 .PHONY: bump
