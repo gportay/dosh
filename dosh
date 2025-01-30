@@ -18,6 +18,7 @@ then
 	echo "Warning: Splitting the single shebang argument into many is not portable!" >&2
 	echo "         Please consider using env(1) and its split option -S instead:" >&2
 	echo "             #!/usr/bin/env -S dosh $*" >&2
+	echo "         That split is going to be deprecated in a future version." >&2
 	read -r -a args <<<"$1"
 	shift
 	exec <"$1"
@@ -817,6 +818,7 @@ do
 	then
 		echo "Warning: $i is converted to array." >&2
 		echo "         Please convert it to shutdown that warning." >&2
+		echo "         That convertion is going to be deprecated in a future version." >&2
 		to_array "$i"
 	fi
 done
