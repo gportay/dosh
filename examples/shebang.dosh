@@ -1,6 +1,6 @@
-#!/usr/bin/dosh
+#!/usr/bin/env dosh
 #
-# Copyright 2017 Gaël PORTAY
+# Copyright 2017,2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #

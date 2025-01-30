@@ -343,7 +343,7 @@ fi
 
 run "Test option -c"
 if dosh -c "cat /etc/os*release" | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+   grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"'
 then
 	ok
 else
@@ -354,7 +354,7 @@ echo
 run "Test \$DOSH_DOCKERFILE"
 if DOSH_DOCKERFILE=Dockerfile.fedora \
    dosh -c "cat /etc/os*release" | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+   grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
 else
@@ -364,7 +364,7 @@ echo
 
 run "Test option --dockerfile"
 if dosh --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+   grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
 else
@@ -375,7 +375,7 @@ echo
 run "Test option --context"
 tar cf context.tar Dockerfile dosh bash-completion support/* examples/*
 if dosh --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+   grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"'
 then
 	ok
 else
@@ -387,7 +387,7 @@ rm context.tar
 run "Test option --context with --dockerfile"
 tar cf context.tar Dockerfile.fedora
 if dosh --build --dockerfile Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+   grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
 else
@@ -439,7 +439,7 @@ echo
 run "Test option --directory with relative path"
 if ( cd .. && dir="${OLDPWD##*/}" && \
      dosh --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
-     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
+     grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"' )
 then
 	ok
 else
@@ -450,7 +450,7 @@ echo
 run "Test option --directory with absolute path"
 if ( cd /tmp && dir="$OLDPWD" && \
      dosh --directory "$dir" -c "cat /etc/os*release" | tee /dev/stderr | \
-     grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"' )
+     grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"' )
 then
 	ok
 else
@@ -510,7 +510,7 @@ echo
 
 run "Test shebang (dind and bash)"
 if dosh --shell /bin/bash --dind -c 'examples/shebang.dosh' | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Ubuntu 16.04[.0-9]* LTS"'
+   grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"'
 then
 	ok
 else
@@ -520,7 +520,7 @@ echo
 
 run "Test shebang with arguments (dind and bash)"
 if dosh --shell /bin/bash --dind -c 'examples/shebang-fedora.dosh' | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+   grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
 else
@@ -530,7 +530,7 @@ echo
 
 run "Test shebang using env"
 if examples/shebang-env.dosh | tee /dev/stderr | \
-   grep -q 'PRETTY_NAME="Fedora 25 (Twenty Five)'
+   grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
 else

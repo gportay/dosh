@@ -13,18 +13,6 @@ then
 	shift
 	set -- -s "$@"
 	exec "$0" "$@"
-elif [ "$__" != "/bin/bash" ] && [ "$__" = "$2" ]
-then
-	# Warning: Splitting the single shebang argument into many is not
-	#          portable! Please consider using env(1) instead:
-	#
-	#              #!/usr/bin/env -S dosh [ARGS...]
-	read -r -a args <<<"$1"
-	shift
-	exec <"$1"
-	shift
-	set -- "${args[@]}" -s "$@"
-	exec "$0" "$@"
 fi
 
 set -e
