@@ -1,5 +1,5 @@
 #
-# Copyright 2017-2020,2023-2024 Gaël PORTAY
+# Copyright 2017-2020,2023-2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -172,9 +172,12 @@ _dosh()
 		return
 	fi
 
-	local args ext=
+	local args
 	_count_args "" "@(-c|[-+]o|--dockerfile|--context|--directory|--working-directory|--mount-options|--shell|--exec|--attach|--kill|--rm)"
-	((args == 1)) && ext="*sh"
-	_filedir $ext
+	if ((args == 1)); then
+		_filedir '*sh'
+		return
+	fi
+	_filedir
 } &&
 complete -F _dosh dosh posh zdosh
