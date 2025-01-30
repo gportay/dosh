@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2024 Gaël PORTAY
+# Copyright 2024-2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.0-or-later
 #
@@ -55,6 +55,7 @@ Options:
 
 Commands:
   init                   Initialize project build container.
+  exec string [list]     Run argument(s) inside build container.
   flavors                List flavors from config file to stdout.
   run [list]             Run argument(s) inside build container.
   release [list]         Run argument(s) and release software.

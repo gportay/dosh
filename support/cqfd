@@ -26,6 +26,7 @@ Options:
 
 Commands:
       init                      Initialize project build container.
+      exec cmd [args]           Run argument(s) inside build container.
       flavors                   List flavors from config file to stdout.
       run [command_string]      Run argument(s) inside build container.
       release [command_string]  Run argument(s) and release software.
@@ -64,7 +65,7 @@ do
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
-	elif [[ "$1" =~ ^(init|flavors|run|release|shell|help)$ ]]
+	elif [[ "$1" =~ ^(init|exec|flavors|run|release|shell|help)$ ]]
 	then
 		eval "cmd_$1=1"
 		shift
@@ -171,7 +172,15 @@ then
 	exec "${DOSH[@]:-dosh}" --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
 fi
 
-if [[ "$cmd_run" ]] && [[ "$1" = -c ]] && [[ "$#" -eq 1 ]]
+if [[ "$cmd_exec" ]] && [[ "$#" -eq 0 ]]
+then
+	usage
+	echo "Error: exec: Too few arguments" >&2
+	exit 1
+elif [[ "$cmd_exec" ]]
+then
+	command="${@@Q}"
+elif [[ "$cmd_run" ]] && [[ "$1" = -c ]] && [[ "$#" -eq 1 ]]
 then
 	usage
 	echo "Error: run -c: Too few arguments" >&2
