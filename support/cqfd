@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2024 Gaël PORTAY
+# Copyright 2024-2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -171,7 +171,12 @@ then
 	exec "${DOSH[@]:-dosh}" --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
 fi
 
-if [[ "$cmd_run" ]] && [[ "$1" = -c ]]
+if [[ "$cmd_run" ]] && [[ "$1" = -c ]] && [[ "$#" -eq 1 ]]
+then
+	usage
+	echo "Error: run -c: Too few arguments" >&2
+	exit 1
+elif [[ "$cmd_run" ]] && [[ "$1" = -c ]]
 then
 	shift
 	command="$command $*"
