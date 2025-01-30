@@ -317,7 +317,7 @@ Written by Gaël PORTAY *gael.portay@gmail.com*
 
 ## COPYRIGHT
 
-Copyright 2017-2020,2023-2024 Gaël PORTAY
+Copyright 2017-2020,2023-2025 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the Free
@@ -328,7 +328,6 @@ later version.
 [non-root-user]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
 [dosh]: dosh
 [dosh(1)]: dosh.1.adoc
-[doc]: Makefile#L13-L16
 [environment-variables]: https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables
 [examples]: dosh.1.adoc#examples
 [yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
