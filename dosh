@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017-2020,2022-2024 Gaël PORTAY
+# Copyright 2017-2020,2022-2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -195,9 +195,13 @@ is_set_and_not_array() {
 }
 
 to_array() {
+	eval "read -a $1 <<<\"\${$1:-}\""
+}
+
+to_array_if_not_array() {
 	if is_set_and_not_array "$1"
 	then
-		eval "read -a $1 <<<\"\${$1:-}\""
+		to_array "$1"
 	fi
 }
 
@@ -787,7 +791,7 @@ read -r -a docker <<<"${sudo:+$DOSH_SUDO }${DOSH_DOCKER[*]}"
 for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
 	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
 do
-	to_array "$i"
+	to_array_if_not_array "$i"
 done
 
 # Change the current directory
@@ -804,6 +808,16 @@ then
 	. ./doshrc
 fi
 set -euo pipefail
+
+# Warn if the DOSH_DOCKER_*_EXTRA_OPTS variables are not arrays.
+for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
+	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
+do
+	if is_set_and_not_array "$i"
+	then
+		echo "Warning: $i is an array! Please convert it." >&2
+	fi
+done
 
 # List the images and exit
 if [[ ${ls:-} ]]
