@@ -809,13 +809,16 @@ then
 fi
 set -euo pipefail
 
-# Warn if the DOSH_DOCKER_*_EXTRA_OPTS variables are not arrays.
+# Warn if the DOSH_DOCKER_*_EXTRA_OPTS variables are not arrays, and convert
+# them if not arrays.
 for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
 	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
 do
 	if is_set_and_not_array "$i"
 	then
-		echo "Warning: $i is an array! Please convert it." >&2
+		echo "Warning: $i is converted to array." >&2
+		echo "         Please convert it to shutdown that warning." >&2
+		to_array "$i"
 	fi
 done
 
