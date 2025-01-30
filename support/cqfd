@@ -70,6 +70,12 @@ do
 		eval "cmd_$1=1"
 		shift
 		break
+	elif [[ "$1" =~ ^(sh|ash|dash|bash|ksh|zsh|csh|tcsh|fish)$ ]]
+	then
+		eval "cmd_shell=1"
+		CQFD_SHELL="$1"
+		shift
+		break
 	else
 		echo "Error: $1: Invalid command" >&2
 		exit 1
