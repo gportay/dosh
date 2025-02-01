@@ -5,15 +5,8 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
-# Called as program loader (shebang #!/usr/bin/dosh)
-__="$_"
-if [ "$__" != "/bin/bash" ] && [ "$__" = "$1" ]
-then
-	exec <"$1"
-	shift
-	set -- -s "$@"
-	exec "$0" "$@"
-elif [ "$__" != "/bin/bash" ] && [ "$__" = "$2" ]
+# Called as program loader with multiple arguments
+if [ "$_" != "/bin/bash" ] && [ "$_" = "$2" ]
 then
 	echo "Warning: Splitting the single shebang argument into many is not portable!" >&2
 	echo "         Please consider using env(1) and its split option -S instead:" >&2
