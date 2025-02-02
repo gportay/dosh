@@ -2,6 +2,19 @@
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/dosh.svg)](https://repology.org/project/dosh/versions)
 
+## TL;DR;
+
+[dosh][dosh(1)] is a bash script providing a shell CLI to *docker-run(1)*.
+
+It runs a user shell with cwd bind mounted to the container built using the
+Dockerfile.
+
+One think `dosh` does...
+
+	docker run --rm [--tty] [--interactive] "--volume=$PWD:$PWD:rw" "--user=$USER" "--entry-point=$SHELL" IMAGE [SHELL_ARGS]
+
+... with a few more magic!
+
 ## NAME
 
 [dosh][dosh(1)] - run a user shell in a container with cwd bind mounted
