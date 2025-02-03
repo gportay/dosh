@@ -28,35 +28,6 @@ Commands are read either from the standard input or from a file or from command
 line using one of the standard shell invocations (i.e. thanks to options `-c`,
 `-i`, `-s` or without arguments).
 
-## DOCUMENTATION
-
-Build the documentation using *make(1)*
-
-	$ make doc
-	asciidoctor -b manpage -o dosh.1 dosh.1.adoc
-	gzip -c dosh.1 >dosh.1.gz
-	rm dosh.1
-
-## INSTALL
-
-Run the following command to install *dosh(1)*
-
-To your home directory
-
-	$ make user-install
-
-Or, to your system
-
-	$ sudo make install
-
-Traditional variables *DESTDIR* and *PREFIX* can be overridden
-
-	$ sudo make install PREFIX=/opt/dosh
-
-Or
-
-	$ make install DESTDIR=$PWD/pkg PREFIX=/usr
-
 ## TUNING
 
 ### DEFAULT SHELL INTERPRETER
@@ -362,6 +333,35 @@ support/Dockerfile`). This feature is unportable; it is deprecated in version 7
 and it is going for removal in a next release. Consider moving the shebang to
 [env(1)] and its `-S` since the half of [2018][coreutils 8.30].
 
+## DOCUMENTATION
+
+Build the documentation using *make(1)*
+
+	$ make doc
+	asciidoctor -b manpage -o dosh.1 dosh.1.adoc
+	gzip -c dosh.1 >dosh.1.gz
+	rm dosh.1
+
+## INSTALL
+
+Run the following command to install *dosh(1)*
+
+To your home directory
+
+	$ make user-install
+
+Or, to your system
+
+	$ sudo make install
+
+Traditional variables *DESTDIR* and *PREFIX* can be overridden
+
+	$ sudo make install PREFIX=/opt/dosh
+
+Or
+
+	$ make install DESTDIR=$PWD/pkg PREFIX=/usr
+
 ## LINKS
 
 Check for [man-pages][dosh(1)] and its [examples].
@@ -403,15 +403,15 @@ the terms of the GNU Lesser General Public License as published by the Free
 Software Foundation, either version 2.1 of the License, or (at your option) any
 later version.
 
+[coreutils 8.30]: https://github.com/coreutils/coreutils/commit/668306ed86c8c79b0af0db8b9c882654ebb66db2
 [docker]: https://github.com/docker/docker
-[non-root-user]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
-[dosh]: dosh
 [dosh(1)]: dosh.1.adoc
-[environment-variables]: https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables
-[execve(2)]: https://linux.die.net/man/2/execve
+[dosh]: dosh
 [env(1)]: https://linux.die.net/man/1/env
+[environment-variables]: https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables
 [examples]: dosh.1.adoc#examples
-[yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
+[execve(2)]: https://linux.die.net/man/2/execve
+[non-root-user]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
 [podman]: https://github.com/containers/podman
 [posh]: support/posh
-[coreutils 8.30]: https://github.com/coreutils/coreutils/commit/668306ed86c8c79b0af0db8b9c882654ebb66db2
+[yadutaf]: https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/
