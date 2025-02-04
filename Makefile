@@ -1,5 +1,5 @@
 #
-# Copyright 2017-2020,2023-2024 Gaël PORTAY
+# Copyright 2017-2020,2023-2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -195,6 +195,13 @@ aur-git: PKGBUILD.tmp
 
 PKGBUILD.tmp: PKGBUILD-git
 	cp $< $@
+
+.PHONY: sh dash bash zsh
+sh dash bash zsh: PATH := $(CURDIR):$(PATH)
+sh dash bash zsh: .SHELLFLAGS := -c -i
+sh dash bash zsh: SHELL := dosh
+sh dash bash zsh:
+	$@
 
 %.1: %.1.adoc
 	asciidoctor -b manpage -o $@ $<
