@@ -175,6 +175,11 @@ then
 	DOSH_DOCKER_BUILD_EXTRA_OPTS="$CQFD_EXTRA_BUILD_ARGS"
 	export DOSH_DOCKER_BUILD_EXTRA_OPTS
 
+	if [[ "$docker_build_args" ]]
+	then
+		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" $docker_build_args"
+	fi
+
 	exec "${DOSH[@]:-dosh}" --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
 fi
 
