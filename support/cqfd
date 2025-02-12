@@ -105,10 +105,6 @@ cfg_parser ()
 	mapfile -t ini <"$1"                                 # convert to line-array
 	ini=("${ini[@]//[/\\[}")                             # escape [
 	ini=("${ini[@]//]/\\]}")                             # escape ]
-	ini=("${ini[@]/$'\t'=/=}")                           # remove tabs before =
-	ini=("${ini[@]/=$'\t'/=}")                           # remove tabs after =
-	ini=("${ini[@]/\ =/=}")                              # remove space before =
-	ini=("${ini[@]/=\ /=}")                              # remove space after =
 	ini=("${ini[@]/#\\[/$'\n}\nfunction cfg_section_'}") # convert section to function (1)
 	ini=("${ini[@]/%\\]/ { :}")                          # convert section to function (2)
 	ini+=("}")                                           # add the last brace
