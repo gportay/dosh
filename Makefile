@@ -117,7 +117,7 @@ user-%:
 ci: export EXIT_ON_ERROR = 1
 ci: export DO_RMI_TESTS = 1
 ci: export DOCKER_BUILDKIT ?= 0
-ci: check coverage
+ci: check tests
 
 DO_RMI_TESTS ?=
 .PHONY: test tests
