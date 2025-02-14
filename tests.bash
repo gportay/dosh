@@ -242,8 +242,8 @@ fi
 echo
 
 run "Test option -c with empty command"
-if          dosh    -c '' | tee /dev/stderr | \
-   diff - <(/bin/sh -c '' | tee /dev/stderr )
+if          dosh -c '' | tee /dev/stderr | \
+   diff - <(sh   -c '' | tee /dev/stderr )
 then
 	ok
 else
@@ -252,8 +252,8 @@ fi
 echo
 
 run "Test option -c with commands"
-if          dosh    -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
-   diff - <(/bin/sh -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
+if          dosh -c 'whoami; echo "$#" "$@"' | tee /dev/stderr | \
+   diff - <(sh   -c 'whoami; echo "$#" "$@"' | tee /dev/stderr )
 then
 	ok
 else
@@ -262,8 +262,8 @@ fi
 echo
 
 run "Test option -c with commands and arguments"
-if          dosh    -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
-   diff - <(/bin/sh -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
+if          dosh -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr | \
+   diff - <(sh   -c 'whoami; echo "$#" "$@"' 'unused' 'one' 'two' | tee /dev/stderr )
 then
 	ok
 else
@@ -272,8 +272,8 @@ fi
 echo
 
 run "Test option -s without arguments"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s | tee /dev/stderr )
+if          echo 'whoami; echo "$#" "$@"' | dosh -s | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$#" "$@"' | sh   -s | tee /dev/stderr )
 then
 	ok
 else
@@ -282,8 +282,8 @@ fi
 echo
 
 run "Test option -s one two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s "one" "two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s "one" "two" "three" | tee /dev/stderr )
+if          echo 'whoami; echo "$#" "$@"' | dosh -s "one" "two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$#" "$@"' | sh   -s "one" "two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -292,8 +292,8 @@ fi
 echo
 
 run "Test option -s one\ +\ two three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s one\ +\ two three | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s one\ +\ two three | tee /dev/stderr )
+if          echo 'whoami; echo "$#" "$@"' | dosh -s one\ +\ two three | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$#" "$@"' | sh   -s one\ +\ two three | tee /dev/stderr )
 then
 	ok
 else
@@ -302,8 +302,8 @@ fi
 echo
 
 run "Test option -s \"one + two\" three"
-if          echo 'whoami; echo "$0" "$#" "$@"' | dosh    -s "one + two" "three" | tee /dev/stderr | \
-   diff - <(echo 'whoami; echo "$0" "$#" "$@"' | /bin/sh -s "one + two" "three" | tee /dev/stderr )
+if          echo 'whoami; echo "$#" "$@"' | dosh -s "one + two" "three" | tee /dev/stderr | \
+   diff - <(echo 'whoami; echo "$#" "$@"' | sh   -s "one + two" "three" | tee /dev/stderr )
 then
 	ok
 else
@@ -323,8 +323,8 @@ fi
 echo
 
 run "Test option --root"
-if                      dosh    --root -c 'whoami' | tee /dev/stderr | \
-   diff - <(fakeroot -- /bin/sh        -c 'whoami' | tee /dev/stderr )
+if                      dosh --root -c 'whoami' | tee /dev/stderr | \
+   diff - <(fakeroot -- sh          -c 'whoami' | tee /dev/stderr )
 then
 	ok
 else
@@ -459,8 +459,8 @@ fi
 echo
 
 run "Test option --home"
-if          echo 'pwd; cd ; pwd' | dosh    --home -s | tee /dev/stderr | \
-   diff - <(echo 'pwd; cd ; pwd' | /bin/sh        -s | tee /dev/stderr )
+if          echo 'pwd; cd ; pwd' | dosh --home -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd ; pwd' | sh          -s | tee /dev/stderr )
 then
 	ok
 else
@@ -499,8 +499,8 @@ fi
 echo
 
 run "Test default shell"
-if          echo 'echo $0' | dosh    -s | tee /dev/stderr | \
-   diff - <(echo 'echo $0' | /bin/sh -s | tee /dev/stderr )
+if          echo 'echo $0' | dosh -s | tee /dev/stderr | \
+   diff - <(echo '/bin/sh'           | tee /dev/stderr )
 then
 	ok
 else
@@ -737,7 +737,7 @@ echo
 
 run "Test USER and HOME are set to user's values"
 if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$USER:$HOME"' | tee /dev/stderr | \
-   diff - <(/bin/sh                                   -c 'echo "$USER:$HOME"' | tee /dev/stderr )
+   diff - <(sh                                        -c 'echo "$USER:$HOME"' | tee /dev/stderr )
 then
 	ok
 else
@@ -769,7 +769,7 @@ cat Dockerfile.not-me
 
 run "Test when user/group already exists with different UID/GID in Dockerfile"
 if          dosh --rebuild --dockerfile Dockerfile.not-me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
-   diff - <(/bin/sh                                       -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
+   diff - <(sh                                            -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
 then
 	ok
 else
