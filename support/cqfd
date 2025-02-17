@@ -246,8 +246,8 @@ then
 	fi
 
 	archive="${archive:-%Po-%Pn.tar.xz}"
-	archive="${archive//%Gh/$(git rev-parse --short HEAD 2>/dev/null)}"
-	archive="${archive//%GH/$(git rev-parse HEAD 2>/dev/null)}"
+	archive="${archive//%Gh/$(git rev-parse --short HEAD 2>/dev/null || echo unset)}"
+	archive="${archive//%GH/$(git rev-parse HEAD 2>/dev/null || echo unset)}"
 	archive="${archive//%D3/$(date "+%Y-%m-%d")}"
 	archive="${archive//%Du/$(date +%s >/dev/null)}"
 	archive="${archive//%Po/${org:-cqfd}}"
