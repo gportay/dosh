@@ -336,6 +336,11 @@ then
 	dosh_opts+=(--dind)
 fi
 
+if [[ "${CQFD_RUN_WITH_SUDO:-false}" = "true" ]]
+then
+	dosh_opts+=(--sudo)
+fi
+
 if [[ "$opt_reinit" ]]
 then
 	dosh_opts+=(--rebuild)

@@ -9,6 +9,9 @@ tar_transform=yes
 command="bash -x examples/build-man.dosh"
 shell=/bin/bash
 
+[rootless]
+CQFD_RUN_WITH_SUDO=true
+
 [podman]
 PODMAN_USERNS=keep-id
 docker=podman
