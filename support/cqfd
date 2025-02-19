@@ -128,6 +128,9 @@ then
 fi
 dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 
+dosh_opts=(--dockerfile "$dockerfile")
+dosh_opts+=(--no-doshrc --no-doshprofile)
+
 # Array variables may not (yet) be exported.
 mapfile -t vars < <(compgen -A arrayvar -X '!DOSH_*')
 for var in "${vars[@]}"
@@ -182,7 +185,7 @@ then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" $docker_build_args"
 	fi
 
-	exec "${DOSH[@]:-dosh}" --rebuild --dockerfile "$dockerfile" --no-doshrc --no-doshprofile </dev/null
+	exec "${DOSH[@]:-dosh}" --rebuild "${dosh_opts[@]}" </dev/null
 fi
 
 if [[ "$cmd_exec" ]] && [[ "$#" -eq 0 ]]
@@ -235,7 +238,17 @@ then
 fi
 export DOSH_DOCKER_RUN_EXTRA_OPTS
 
-"${DOSH[@]:-dosh}" --dockerfile "$dockerfile" --no-doshrc --no-doshprofile -c "$command"
+if [[ "$CQFD_DOCKER_GID" ]]
+then
+	: # Warning: CQFD_DOCKER_GID=\"$CQFD_DOCKER_GID\": Ignored environment
+fi
+
+if [[ "$CQFD_BIND_DOCKER_SOCK" ]]
+then
+	dosh_opts+=(--dind)
+fi
+
+"${DOSH[@]:-dosh}" "${dosh_opts[@]}" -c "$command"
 
 if [ "$cmd_release" ]
 then
