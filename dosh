@@ -247,7 +247,7 @@ get_images() {
 	local image
 	local images
 
-	mapfile -t images < <(docker images "dosh-*" --format "{{.Repository}}")
+	mapfile -t images < <(docker images "dosh-$USER-*" --format "{{.Repository}}")
 
 	for image in "${images[@]}"
 	do
@@ -264,7 +264,7 @@ get_images() {
 			status="Ready"
 			file="${symlink%/*}"
 			file="${file##*/}"
-			checksum="${symlink##*/dosh-}"
+			checksum="${symlink##*/dosh-$USER-}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			dockerfile_checksum="$(file_checksum "$dockerfile")"
 			if [[ "$dockerfile" == "<none>" ]] ||
@@ -285,22 +285,23 @@ get_images() {
 }
 
 list() {
+	local tag
 	local image
 	local images
 
 	mapfile -t images < <(get_images)
-	printf "%-69s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+	read -r tag _ <<<"${images[0]}"
+	printf "%-${#tag}s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
 
 	for image in "${images[@]}"
 	do
-		local tag
 		local file
 		local status
 		local checksum
 		local dockerfile
 
 		read -r tag file status checksum dockerfile _ <<<"$image"
-		printf "%-69s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
+		printf "%-${#tag}s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
 	done
 }
 
