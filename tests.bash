@@ -195,7 +195,7 @@ echo
 
 run "Test option --build"
 if dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '^#0 building with "default" instance using docker driver$'
+   grep '^Sending build context to Docker daemon'
 then
 	ok
 else
@@ -205,7 +205,7 @@ echo
 
 run "Test option --rebuild"
 if dosh --rebuild --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '^#0 building with "default" instance using docker driver$'
+   grep '^Sending build context to Docker daemon'
 then
 	ok
 else
@@ -215,7 +215,7 @@ echo
 
 run "Test DOSH_NOBUILD environment variable"
 if ! DOSH_NOBUILD=1 dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '#0 building with "default" instance using docker driver$'
+   grep '^Sending build context to Docker daemon'
 then
 	ok
 else

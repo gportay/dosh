@@ -116,10 +116,12 @@ user-%:
 .PHONY: ci
 ci: export EXIT_ON_ERROR = 1
 ci: export DO_RMI_TESTS = 1
+ci: export DOCKER_BUILDKIT ?= 0
 ci: check tests
 
 DO_RMI_TESTS ?=
 .PHONY: test tests
+test tests: export DOCKER_BUILDKIT ?= 0
 test tests:
 	@DO_RMI_TESTS=$(DO_RMI_TESTS) ./tests.bash
 
