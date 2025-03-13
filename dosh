@@ -86,6 +86,7 @@ Docker related options:
       --sudo                    Run docker with sudo.
       --root                    Run as root.
       --dind                    Run dosh in dosh.
+      --groups                  Run with host groups.
       --home                    Bind mount home directory.
       --mount-options OPTIONS   Set bind mount volume options.
                                 For a more thorough description please refers to
@@ -414,8 +415,9 @@ prune() {
 #
 # https://docs.docker.com/engine/reference/builder/
 docker_build() {
-	local did
 	local files
+	local group
+	local groups
 	local context_file
 
 	if [[ ${DOSH_NOBUILD:-} ]]
@@ -434,6 +436,23 @@ docker_build() {
 	then
 		did=( "$USER" x "${GROUPS[0]}" )
 	fi
+
+	# Inject host groups to the Dockerfile
+	GROUP_NAMES=("$USER:$UID")
+	mapfile -t groups </etc/group
+	for group in "${groups[@]}"
+	do
+		local gid
+		local name
+
+		IFS=":" read name _ gid _ <<<"$group"
+		for i in "${GROUPS[@]}"
+		do
+			[[ "$i" == "$gid" ]] || continue
+			GROUP_NAMES+=("$name:$gid")
+		done
+	done
+
 	cat "$1" - <<EOF >doshfile
 
 USER root
@@ -449,6 +468,16 @@ RUN grep -q "^$USER:" /etc/group \
     grep -q "^dind:x:${did[2]}:.*$USER" /etc/group \
  || usermod  --append --group dind $USER \
  || addgroup $USER dind; \
+    for i in ${GROUP_NAMES[@]}; do \
+      name=\$(echo "\$i" | cut -d: -f1); \
+      gid=\$(echo "\$i" | cut -d: -f2); \
+      grep -q "^_\$name:" /etc/group \
+ ||   groupadd --non-unique --gid "\$gid" "_\$name" \
+ ||   addgroup -g "\$gid" "_\$name"; \
+      grep -q "^_\$name:x:.*:.*$USER" /etc/group \
+ ||   usermod  --append --group "_\$name" $USER \
+ ||   addgroup $USER "_\$name"; \
+    done; \
     if test -d /etc/sudoers.d; then echo "%$USER ALL=(ALL) NOPASSWD: ALL" >>"/etc/sudoers.d/$USER"; fi
 EOF
 
@@ -603,7 +632,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|home|ls|gc|build|rebuild|build-only|rmi|detach|kill|rm|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|ls|gc|build|rebuild|build-only|rmi|detach|kill|rm|tag)$ ]]
 	then
 		return 0
 	fi
@@ -748,6 +777,7 @@ do
 	fi
 	shift
 done
+unset i
 
 # Print the tag and exit
 if [[ "${tag:-}" ]]
@@ -926,6 +956,16 @@ then
 	opts+=("--user" "$UID:${GROUPS[0]}")
 	opts+=("--env" "USER=$USER")
 	opts+=("--env" "HOME=$HOME")
+fi
+
+# Set the user groups
+if [[ ${groups:-} ]]
+then
+	for i in "${GROUPS[@]}"
+	do
+		opts+=("--group-add" "$i")
+	done
+	unset i
 fi
 
 # Set the interactive options

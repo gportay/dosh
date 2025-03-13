@@ -145,6 +145,9 @@ command-line through *docker-run(1)*.
 **--dind**::
 	Run dosh in dosh.
 
+**--groups**::
+	Run with host groups.
+
 **--home**::
 	Bind mount home directory.
 

@@ -341,6 +341,15 @@ else
 	ko
 fi
 
+run "Test option --groups"
+if          echo 'echo ${GROUPS[@]}' | dosh --shell /bin/bash --groups -s | tee /dev/stderr | \
+   diff - <(echo 'echo ${GROUPS[@]}' | sh                              -s | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+
 run "Test option -c"
 if dosh -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"'
