@@ -468,8 +468,8 @@ fi
 echo
 
 run "Test option --home"
-if          echo 'pwd; cd ; pwd' | dosh --home -s | tee /dev/stderr | \
-   diff - <(echo 'pwd; cd ; pwd' | sh          -s | tee /dev/stderr )
+if          echo 'pwd; cd; pwd' | dosh --home -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd; pwd' | sh          -s | tee /dev/stderr )
 then
 	ok
 else
