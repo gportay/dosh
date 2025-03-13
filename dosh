@@ -787,6 +787,7 @@ for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
 do
 	to_array_if_not_array "$i"
 done
+unset i
 
 # Change the current directory
 cd "$directory"
@@ -816,6 +817,7 @@ do
 		to_array "$i"
 	fi
 done
+unset i
 
 # List the images and exit
 if [[ ${ls:-} ]]
