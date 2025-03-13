@@ -284,14 +284,14 @@ According to [execve(2)]:
 >
 > If the pathname argument of execve() specifies an interpreter script, then
 > interpreter will be invoked with the following arguments:
->	
+>
 >	interpreter [optional-arg] pathname arg...
->	
+>
 > where pathname is the pathname of the file specified as the first argument of
 > execve(), and arg... is the series of words pointed to by the argv argument
 > of execve(), starting at argv[1]. Note that there is no way to get the
 > argv[0] that was passed to the execve() call.
->	
+>
 > For portable use, optional-arg should either be absent, or be specified as a
 > single word (i.e., it should not contain white space); see NOTES below.
 >

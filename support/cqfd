@@ -44,8 +44,8 @@ EOF
 
 opt_f=".cqfdrc"
 opt_d=".cqfd"
-while [ "$#" -ne 0 ]                                                            
-do                                                                              
+while [ "$#" -ne 0 ]
+do
 	if [[ "$1" =~ ^(-h|--help)$ ]]
 	then
 		usage

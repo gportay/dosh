@@ -598,7 +598,7 @@ echo
 
 run "Test DOSHLVL environment variable"
 if DOSHLVL="1" dosh  -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
-   diff - <(echo "DOSHLVL=2"                      | tee /dev/stderr ) 
+   diff - <(echo "DOSHLVL=2"                      | tee /dev/stderr )
 then
 	ok
 else
