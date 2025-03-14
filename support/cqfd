@@ -124,7 +124,7 @@ cfg_parser ()
 	eval "$(echo "${ini[*]}")"                 # eval the result
 }
 
-cfg_parser .cqfdrc
+cfg_parser "$opt_f"
 
 cfg.section.project
 cfg.section.build
