@@ -103,18 +103,18 @@ cfg_parser ()
 	local ini
 
 	mapfile -t ini <"$1"
-	ini=( "${ini[@]//[/\\[}" )                   # escape [
-	ini=( "${ini[@]//]/\\]}" )                   # escape ]
-	ini=( "${ini[@]/#\\[/\}$'\n'cfg.section.}" ) # set section prefix
-	ini=( "${ini[@]/%\\]/(}" )                   # convert text2function (1)
-	ini=( "${ini[@]/%(/()}" )                    # close array parenthesis
-	ini=( "${ini[@]/%\)/) {}" )                  # the multiline trick
-	ini=( "${ini[@]/%\( \)/\(\) \{}" )           # convert text2function (2)
-	ini=( "${ini[@]/%\} \)/\}}" )                # remove extra parenthesis
-	ini[0]="${ini[0]/\}/}"                       # remove first element
-	ini+=( "}" )                                 # add the last brace
-	ini=( "$(printf "%s\n" "${ini[@]}")" )
-	eval "${ini[*]}"                             # eval the result
+	ini=("${ini[@]//[/\\[}")                   # escape [
+	ini=("${ini[@]//]/\\]}")                   # escape ]
+	ini=("${ini[@]/#\\[/\}$'\n'cfg.section.}") # set section prefix
+	ini=("${ini[@]/%\\]/(}")                   # convert text2function (1)
+	ini=("${ini[@]/%(/()}")                    # close array parenthesis
+	ini=("${ini[@]/%\)/) {}")                  # the multiline trick
+	ini=("${ini[@]/%\( \)/\(\) \{}")           # convert text2function (2)
+	ini=("${ini[@]/%\} \)/\}}")                # remove extra parenthesis
+	ini[0]="${ini[0]/\}/}"                     # remove first element
+	ini+=("}")                                 # add the last brace
+	ini=("$(printf "%s\n" "${ini[@]}")")
+	eval "${ini[*]}"                           # eval the result
 }
 
 cfg_parser "$opt_f"
