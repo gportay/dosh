@@ -49,7 +49,7 @@ Command options for run:
 EOF
 }
 
-opt_f=".cqfdrc"
+opt_f="${CQFDRC_FILE:-.cqfdrc}"
 opt_d="${CQFD_DIR:-.cqfd}"
 tar_transform="no"
 while [[ "$#" -ne 0 ]]
