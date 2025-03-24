@@ -94,6 +94,9 @@ Command options for run:
 
 == ENVIRONMENT VARIABLES
 
+*CQFD_DIR*::
+	Directory used as cqfd directory (default _.cqfd_).
+
 *CQFD_DOCKER*::
 	Program used to invoke the _docker_ client.
 

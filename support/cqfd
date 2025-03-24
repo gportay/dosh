@@ -50,7 +50,7 @@ EOF
 }
 
 opt_f=".cqfdrc"
-opt_d=".cqfd"
+opt_d="${CQFD_DIR:-.cqfd}"
 tar_transform="no"
 while [[ "$#" -ne 0 ]]
 do
