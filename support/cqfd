@@ -124,13 +124,13 @@ then
 fi
 
 cfg_parser "$opt_f"
-
 cfg_section_project
 cfg_section_build
 if [[ "$opt_b" ]]
 then
 	"cfg_section_$opt_b"
 fi
+
 dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 
 dosh_opts=(--dockerfile "$dockerfile")
