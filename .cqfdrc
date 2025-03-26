@@ -11,6 +11,6 @@ command="bash -x examples/build-doc.dosh"
 [podman]
 PODMAN_USERNS=keep-id
 CQFD_DOCKER=podman
-CQFD_EXTRA_RUN_ARGS="-e BAZ=baz -e QNUX=qnux"
+CQFD_EXTRA_RUN_ARGS="-e BAZ=baz -e QUX=qux"
 docker_run_args="-e FOO=foo -e BAR=bar"
 command=env
