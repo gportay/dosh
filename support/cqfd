@@ -169,6 +169,11 @@ then
 	echo "Warning: user_extra_groups=\"$user_extra_groups\": Unsupported option" >&2
 fi
 
+if [[ "$custom_img_name" ]]
+then
+	echo "Warning: custom_img_name=\"$custom_img_name\": Unsupported option" >&2
+fi
+
 if [[ "$CQFD_DOCKER" ]]
 then
 	DOSH_DOCKER="$CQFD_DOCKER"
