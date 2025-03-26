@@ -118,6 +118,11 @@ cfg_parser ()
 	eval "${ini[*]}"                                     # eval the result
 }
 
+if [[ "$opt_C" ]]
+then
+	cd "$opt_C"
+fi
+
 cfg_parser "$opt_f"
 
 cfg_section_project
