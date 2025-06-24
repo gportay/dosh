@@ -352,7 +352,7 @@ fi
 
 run "Test option --groups"
 if          echo 'echo ${GROUPS[@]}' | dosh --shell /bin/bash --groups -s | tee /dev/stderr | \
-   diff - <(echo 'echo ${GROUPS[@]}' | sh                              -s | tee /dev/stderr )
+   diff - <(echo 'echo ${GROUPS[@]}' | bash                            -s | tee /dev/stderr )
 then
 	ok
 else
