@@ -34,11 +34,11 @@ Advanced dosh image management commands:
 
 *dosh* --tag
 
-*dosh* --rmi [OPTIONS]
+*dosh* --rmi [DOCKER_RMI_OPTIONS]
 
-*dosh* --ls [OPTIONS]
+*dosh* --ls
 
-*dosh* --gc [OPTIONS]
+*dosh* --gc [DOCKER_RMI_OPTIONS]
 
 Extra docker frontend commands:
 

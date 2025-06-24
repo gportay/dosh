@@ -41,9 +41,9 @@ Usage: Typical shell commands:
 
        Advanced dosh image management commands:
        ${0##*/} --tag
-       ${0##*/} --rmi [OPTIONS]
+       ${0##*/} --rmi [DOCKER_RMI_OPTIONS]
        ${0##*/} --ls
-       ${0##*/} --gc
+       ${0##*/} --gc [DOCKER_RMI_OPTIONS]
 
        Extra docker frontend commands:
        ${0##*/} --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
