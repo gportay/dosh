@@ -77,6 +77,8 @@ Options:
   --rmi                  Remove image and exit.
   --detach               Detach container.
   --exec string          Execute in container.
+  --kill string          Kill container.
+  --rm string            Remove container.
   --dry-run              Do nothing; echo docker commands.
   --verbose              Turn on verbose mode.
   --version              Print version.
