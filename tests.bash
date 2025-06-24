@@ -103,7 +103,7 @@ export no_doshprofile
 export no_doshrc
 
 docker=(docker)
-if grep -q -w docker < <(groups)
+if ! grep -q -w docker < <(groups)
 then
 	docker=(sudo "${docker[@]}")
 	sudo=1
