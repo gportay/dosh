@@ -65,12 +65,12 @@ Options:
                          docker-run(1) manual.
   --shell string         Set shell interpretor.
   --tag                  Print docker tag and exit.
-  --ls                   List images.
+  --ls                   List images and exit.
   --build-only           Build image if needed and exit.
   --build                Build image.
   --rebuild              Build image again, verbosely.
                          Equivalent to --build --verbose.
-  --rmi                  Remove image.
+  --rmi                  Remove image and exit.
   --detach               Detach container.
   --exec string          Execute in container.
   --dry-run              Do nothing; echo docker commands.
