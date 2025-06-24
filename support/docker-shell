@@ -59,6 +59,7 @@ Options:
   --directory string     Change to directory before doing anything else.
   --root                 Run as root.
   --dind                 Run dosh in dosh.
+  --groups               Run with host groups.
   --home                 Bind mount home directory.
   --mount-options string Set bind mount volume options.
                          For a more thorough description please refers to
