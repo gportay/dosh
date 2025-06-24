@@ -70,6 +70,7 @@ Options:
   --shell string         Set shell interpretor.
   --tag                  Print docker tag and exit.
   --ls                   List images and exit.
+  --gc                   Cleanup unused images and exit.
   --build-only           Build image if needed and exit.
   --build                Build image.
   --rebuild              Build image again, verbosely.
