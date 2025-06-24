@@ -46,7 +46,7 @@ Usage: Typical shell commands:
        ${0##*/} --gc
 
        Extra docker frontend commands:
-       ${0##*/} --attach [OPTIONS] [DOCKER_OPTIONS] CONTAINER
+       ${0##*/} --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
        ${0##*/} --kill   CONTAINER [DOCKER_RMI_OPTIONS]
        ${0##*/} --rm     CONTAINER [DOCKER_RM_OPTIONS]
 

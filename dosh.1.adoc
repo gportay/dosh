@@ -42,7 +42,7 @@ Advanced dosh image management commands:
 
 Extra docker frontend commands:
 
-*dosh* --attach [OPTIONS] [DOCKER_OPTIONS] CONTAINER
+*dosh* --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
 
 *dosh* --kill   CONTAINER [DOCKER_KILL_OPTIONS]
 
