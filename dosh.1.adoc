@@ -34,11 +34,11 @@ Advanced dosh image management commands:
 
 *dosh* --tag
 
-*dosh* --rmi [DOCKER_RMI_OPTIONS]
-
 *dosh* --ls
 
 *dosh* --gc [DOCKER_RMI_OPTIONS]
+
+*dosh* --rmi [DOCKER_RMI_OPTIONS]
 
 Extra docker frontend commands:
 
@@ -161,6 +161,9 @@ command-line through *docker-run(1)*.
 	Set shell interpretor.
 	Equivalent to set DOSHELL=<SHELL>.
 
+**--tag**::
+	Print docker tag and exit.
+
 **--ls**::
 	List images and exit.
 
@@ -194,9 +197,6 @@ command-line through *docker-run(1)*.
 
 **--rm CONTAINER**::
 	Remove container.
-
-**--tag**::
-	Print docker tag and exit.
 
 **--dry-run**::
 	Do nothing; echo docker commands.

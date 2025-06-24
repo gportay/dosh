@@ -41,9 +41,9 @@ Usage: Typical shell commands:
 
        Advanced dosh image management commands:
        ${0##*/} --tag
-       ${0##*/} --rmi [DOCKER_RMI_OPTIONS]
        ${0##*/} --ls
        ${0##*/} --gc [DOCKER_RMI_OPTIONS]
+       ${0##*/} --rmi [DOCKER_RMI_OPTIONS]
 
        Extra docker frontend commands:
        ${0##*/} --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
@@ -94,6 +94,7 @@ Docker related options:
                                 docker-run(1) manual.
       --shell SHELL             Set shell interpretor.
                                 Equivalent to set DOSHELL=<SHELL>.
+      --tag                     Print docker tag and exit.
       --ls                      List images and exit.
       --gc                      Cleanup unused images and exit.
       --build-only              Build image if needed and exit.
@@ -106,7 +107,6 @@ Docker related options:
       --attach CONTAINER        Attach container.
       --kill CONTAINER          Kill container.
       --rm CONTAINER            Remove container.
-      --tag                     Print docker tag and exit.
       --dry-run                 Do nothing; echo docker commands.
 
 Miscellaneous options:
@@ -633,7 +633,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|ls|gc|build|rebuild|build-only|rmi|detach|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|tag|ls|gc|build|rebuild|build-only|rmi|detach)$ ]]
 	then
 		return 0
 	fi
@@ -866,6 +866,15 @@ then
 	exit
 fi
 
+# Remove the image and exit
+if [[ ${rmi:-} ]]
+then
+	# Remove an existent image
+	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}")"
+	docker_rmi "$tag" "$@" >&2
+	exit
+fi
+
 # Attach the container and exit
 if [[ ${attach:-} ]]
 then
@@ -887,15 +896,6 @@ if [[ ${rm:-} ]]
 then
 	# Remove a detached container
 	docker_rm "$rm" "$@" >&2
-	exit
-fi
-
-# Remove the image and exit
-if [[ ${rmi:-} ]]
-then
-	# Remove an existent image
-	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}")"
-	docker_rmi "$tag" "$@" >&2
 	exit
 fi
 

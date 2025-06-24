@@ -64,6 +64,7 @@ Options:
                          For a more thorough description please refers to
                          docker-run(1) manual.
   --shell string         Set shell interpretor.
+  --tag                  Print docker tag and exit.
   --ls                   List images.
   --build-only           Build image if needed and exit.
   --build                Build image.
@@ -72,7 +73,6 @@ Options:
   --rmi                  Remove image.
   --detach               Detach container.
   --exec string          Execute in container.
-  --tag                  Print docker tag and exit.
   --dry-run              Do nothing; echo docker commands.
   --verbose              Turn on verbose mode.
   --version              Print version.
