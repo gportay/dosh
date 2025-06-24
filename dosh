@@ -249,7 +249,7 @@ get_images() {
 	local image
 	local images
 
-	mapfile -t images < <(docker images "dosh-$USER-*" --format "{{.Repository}}")
+	mapfile -t images < <("${docker[@]}" images "dosh-$USER-*" --format "{{.Repository}}")
 
 	for image in "${images[@]}"
 	do
