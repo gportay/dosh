@@ -302,10 +302,10 @@ According to [execve(2)]:
 >
 > Notes
 >
-> Linux ignores the set-user-ID and set-group-ID bits on scripts. 
+> Linux ignores the set-user-ID and set-group-ID bits on scripts.
 >
 > A maximum line length of 127 characters is allowed for the first line in a #!
-> executable shell script. 
+> executable shell script.
 >
 > The semantics of the optional-arg argument of an interpreter script vary
 > across implementations. On Linux, the entire string following the interpreter
@@ -313,7 +313,7 @@ According to [execve(2)]:
 > include white space. However, behavior differs on some other systems. Some
 > systems use the first white space to terminate optional-arg. On some systems,
 > an interpreter script can have multiple arguments, and white spaces in
-> optional-arg are used to delimit the arguments. 
+> optional-arg are used to delimit the arguments.
 
 A typical shebang to run a shell script via *dosh* is `#!/usr/bin/dosh`.
 
