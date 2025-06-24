@@ -265,7 +265,7 @@ get_images() {
 			status="Ready"
 			file="${symlink%/*}"
 			file="${file##*/}"
-			checksum="${symlink##*/dosh-$USER-}"
+			checksum="${symlink##*/dosh-"$USER"-}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			dockerfile_checksum="$(file_checksum "$dockerfile")"
 			if [[ "$dockerfile" == "<none>" ]] ||
