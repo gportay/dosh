@@ -40,6 +40,7 @@ Usage: Typical shell commands:
        ${0##*/} --attach CONTAINER [OPTIONS]
 
        Advanced dosh image management commands:
+       ${0##*/} --tag
        ${0##*/} --rmi [OPTIONS]
        ${0##*/} --ls
        ${0##*/} --gc

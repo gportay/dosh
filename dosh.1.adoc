@@ -32,6 +32,8 @@ Advanced dosh container commands:
 
 Advanced dosh image management commands:
 
+*dosh* --tag
+
 *dosh* --rmi [OPTIONS]
 
 *dosh* --ls [OPTIONS]
