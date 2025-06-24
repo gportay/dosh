@@ -716,6 +716,26 @@ else
 fi
 echo
 
+run "Test tags are identical when Dockerfiles are identicals"
+if          dosh --tag                                | tee /dev/stderr | \
+   diff - <(dosh --tag --dockerfile "$PWD/Dockerfile" | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test tags are different when Dockerfiles are differents"
+if !        dosh --tag                                | tee /dev/stderr | \
+   diff - <(dosh --tag --dockerfile Dockerfile.fedora | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test when user is set in Dockerfile"
 if dosh --dockerfile Dockerfile.user -c "whoami"
 then

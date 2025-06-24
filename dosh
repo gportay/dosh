@@ -782,8 +782,11 @@ unset i
 # Print the tag and exit
 if [[ "${tag:-}" ]]
 then
+	# Change the current directory
+	cd "$directory"
+
 	# Print tag
-	get_tag "$directory/$dockerfile" "${USER:-}"
+	get_tag "$dockerfile" "${USER:-}"
 	exit
 fi
 
