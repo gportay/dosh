@@ -779,17 +779,6 @@ do
 done
 unset i
 
-# Print the tag and exit
-if [[ "${tag:-}" ]]
-then
-	# Change the current directory
-	cd "$directory"
-
-	# Print tag
-	get_tag "$dockerfile" "${USER:-}"
-	exit
-fi
-
 # Apply the dosh options to the dosh environment variables
 # --shell SHELL to DOSHELL
 if [[ ${shell:-} ]]
@@ -851,6 +840,14 @@ do
 	fi
 done
 unset i
+
+# Print the tag and exit
+if [[ "${tag:-}" ]]
+then
+	# Print tag
+	get_tag "$dockerfile" "${USER:-}"
+	exit
+fi
 
 # List the images and exit
 if [[ ${ls:-} ]]
