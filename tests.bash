@@ -102,6 +102,15 @@ no_doshrc=1
 export no_doshprofile
 export no_doshrc
 
+docker=(docker)
+if ! grep -q -w docker < <(groups)
+then
+	docker=(sudo "${docker[@]}")
+	sudo=1
+
+	export sudo
+fi
+
 rmi() {
 	run "Test --rmi option"
 	if   dosh --rmi &&
@@ -176,7 +185,7 @@ echo
 
 run "Test option --dry-run"
 if dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "${docker[*]} run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -479,7 +488,7 @@ echo
 
 run "Test option --mount-options"
 if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "${docker[*]} run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
@@ -551,7 +560,7 @@ run "Test options --detach and --exec"
 if container="$(dosh --detach)" && \
    dosh --exec "$container"  -c "hostname" | tee /dev/stderr | \
    diff - <(echo "${container:0:12}"       | tee /dev/stderr ) && \
-   docker rm -f "$container"               | tee /dev/stderr | \
+   "${docker[@]}" rm -f "$container"       | tee /dev/stderr | \
    diff - <(echo "$container"              | tee /dev/stderr )
 then
 	ok
@@ -564,7 +573,7 @@ run "Test option --exec without --working-directory"
 if container="$(dosh --detach)" && \
    dosh --exec "$container"  -c 'pwd' | tee /dev/stderr | \
    diff - <(echo "$PWD"               | tee /dev/stderr ) && \
-   docker rm -f "$container"
+   "${docker[@]}" rm -f "$container"
 then
 	ok
 else
@@ -576,7 +585,7 @@ run "Test options --exec and --working-directory with home directory"
 if container="$(dosh --detach)" && \
    dosh --exec "$container" --working-directory "$HOME"  -c 'pwd' | tee /dev/stderr | \
    diff - <(echo "$HOME"                                          | tee /dev/stderr ) && \
-   docker rm -f "$container"
+   "${docker[@]}" rm -f "$container"
 then
 	ok
 else
@@ -588,7 +597,7 @@ run "Test option --exec and DOSHLVL environment variable"
 if container="$(dosh --detach)" && \
    DOSHLVL="1" dosh --exec "$container" --working-directory "$HOME"  -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
    diff - <(echo "DOSHLVL=2"                                                                      | tee /dev/stderr ) && \
-   docker rm -f "$container"
+   "${docker[@]}" rm -f "$container"
 then
 	ok
 else
@@ -647,7 +656,7 @@ echo
 
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable with echo short option -e"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="-e ECHO_SHORT_OPTION=true" dosh --dry-run 2>&1 | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "${docker[*]} run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh -e ECHO_SHORT_OPTION=true dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else
