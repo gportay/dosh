@@ -47,8 +47,8 @@ Usage: Typical shell commands:
 
        Extra docker frontend commands:
        ${0##*/} --attach [OPTIONS] [DOCKER_OPTIONS] CONTAINER
-       ${0##*/} --kill   [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
-       ${0##*/} --rm     [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+       ${0##*/} --kill   CONTAINER [DOCKER_RMI_OPTIONS]
+       ${0##*/} --rm     CONTAINER [DOCKER_RM_OPTIONS]
 
 Run a shell as user in a container and bind mount cwd.
 
@@ -633,7 +633,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|ls|gc|build|rebuild|build-only|rmi|detach|kill|rm|tag)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|ls|gc|build|rebuild|build-only|rmi|detach|tag)$ ]]
 	then
 		return 0
 	fi
@@ -642,7 +642,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|context|directory|working-directory|mount-options|shell|exec|attach)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|context|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
 	then
 		return 0
 	fi
@@ -878,7 +878,7 @@ fi
 if [[ ${kill:-} ]]
 then
 	# Kill a detached container
-	docker_kill "$@" >&2
+	docker_kill "$kill" "$@" >&2
 	exit
 fi
 
@@ -886,7 +886,7 @@ fi
 if [[ ${rm:-} ]]
 then
 	# Remove a detached container
-	docker_rm "$@" >&2
+	docker_rm "$rm" "$@" >&2
 	exit
 fi
 

@@ -44,9 +44,9 @@ Extra docker frontend commands:
 
 *dosh* --attach [OPTIONS] [DOCKER_OPTIONS] CONTAINER
 
-*dosh* --kill   [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+*dosh* --kill   CONTAINER [DOCKER_KILL_OPTIONS]
 
-*dosh* --rm     [OPTIONS] [DOCKER_OPTIONS] CONTAINER [CONTAINER...]
+*dosh* --rm     CONTAINER [DOCKER_RM_OPTIONS]
 
 == DESCRIPTION
 
