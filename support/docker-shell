@@ -57,6 +57,7 @@ Options:
   --no-doshprofile       Disable read of ~/.dosh_profile.
   --no-doshrc            Disable read of ./doshrc.
   --directory string     Change to directory before doing anything else.
+  --sudo                 Run docker with sudo.
   --root                 Run as root.
   --dind                 Run dosh in dosh.
   --groups               Run with host groups.
