@@ -445,7 +445,7 @@ docker_build() {
 		local gid
 		local name
 
-		IFS=":" read name _ gid _ <<<"$group"
+		IFS=":" read -r name _ gid _ <<<"$group"
 		for i in "${GROUPS[@]}"
 		do
 			[[ "$i" == "$gid" ]] || continue
