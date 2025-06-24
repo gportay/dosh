@@ -961,7 +961,7 @@ fi
 # Set the user groups
 if [[ ${groups:-} ]]
 then
-	for i in "${GROUPS[@]}"
+	for i in "${GROUPS[@]:1}"
 	do
 		opts+=("--group-add" "$i")
 	done
