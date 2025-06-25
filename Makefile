@@ -207,3 +207,8 @@ sh dash bash zsh:
 %.gz: %
 	gzip -c $< >$@
 
+deb: PATH:=$(CURDIR):$(PATH)
+deb: SHELL=dosh
+deb: export DOSH_DOCKERFILE=Dockerfile.debian
+deb:
+	dpkg-buildpackage -us -uc

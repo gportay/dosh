@@ -1,0 +1,4 @@
+FROM debian:latest
+ENV DPKG_FRONTEND=noninteractive
+RUN apt-get -y update && apt-get -y install debhelper
+CMD ["dpkg-buildpackage", "-us", "-uc"]

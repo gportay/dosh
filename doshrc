@@ -14,6 +14,9 @@ Dockerfile.alpine) DOSHELL=/bin/ash;;
 Dockerfile.zsh)    DOSHELL=/bin/zsh;;
 Dockerfile.archlinux)
                    DOSHELL=/bin/bash;;
+Dockerfile.debian) DOSHELL=/bin/bash
+                   home=1
+                   ;;
 esac
 
 # Uncomment to use the same shell interpreter in container than the one which
