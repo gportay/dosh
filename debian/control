@@ -9,3 +9,5 @@ Package: dosh
 Architecture: all
 Depends: ${misc:Depends}
 Description: Run a user shell in a container with cwd bind mounted.
+ dosh(1) is an sh-compatible frontend for docker that runs commands in a new
+ container; using the current user, with cwd bind mounted.

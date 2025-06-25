@@ -1,0 +1,22 @@
+name: debian-package
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        path: dosh
+    - name: Install dependencies
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install build-essential debhelper
+    - name: Build package
+      run: |
+        cd dosh
+        dpkg-buildpackage -us -uc
+    - name: Archive package
+      uses: actions/upload-artifact@v4
+      with:
+        path: |
+          *.deb
