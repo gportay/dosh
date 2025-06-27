@@ -1,0 +1,25 @@
+name: pkg-package
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        pacman -Sy --noconfirm namcap
+    - name: Build package
+      run: |
+        chown -R nobody .
+        runuser -u nobody -- makepkg
+    - name: Lint package
+      run: |
+        runuser -u nobody -- namcap *.pkg.tar*
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
+        files: |
+          *.pkg.tar*
