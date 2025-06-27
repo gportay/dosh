@@ -227,9 +227,12 @@ then
 fi
 
 DOSH_DOCKER_RUN_EXTRA_OPTS="--log-driver=none -ti"
-if [[ ! "$CQFD_NO_SSH_CONFIG" ]]
+if [[ ! "$CQFD_NO_USER_SSH_CONFIG" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\ }/.ssh:${HOME// /\ }/.ssh"
+fi
+if [[ ! "$CQFD_NO_SSH_CONFIG" ]]
+then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v /etc/ssh:/etc/ssh"
 
 fi
