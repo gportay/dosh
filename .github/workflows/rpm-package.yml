@@ -1,0 +1,26 @@
+name: rpm-package
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        dnf install -y gcc git make rpmdevtools rpmlint shellcheck
+    - name: Build package
+      run: |
+        rpmdev-setuptree
+        rpmbuild --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
+        cp ~/rpmbuild/RPMS/*/*.rpm .
+    - name: Lint package
+      run: |
+        rpmlint ${{ github.event.repository.name }}.spec
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
+        files: |
+          *.rpm
