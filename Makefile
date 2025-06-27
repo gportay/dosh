@@ -136,6 +136,7 @@ bump:
 	old="$$(bash dosh --version)"; \
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
+	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD
 	git commit --gpg-sign dosh dosh.1.adoc PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
 	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
