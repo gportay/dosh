@@ -1,1 +1,3 @@
-FROM fedora:29
+FROM fedora:latest
+RUN dnf install -y rpmdevtools rpmlint
+CMD ["rpmbuild", "-ba", "dosh.specs"]
