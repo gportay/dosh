@@ -241,6 +241,9 @@ then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\ }:${HOME// /\ }/.sockets/ssh"
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\ }/.sockets/ssh"
 fi
+if [[ ! "$CQFD_NO_USER_GIT_CONFIG" ]] && [ -f "$HOME/.gitconfig" ]; then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+="--mount \"type=bind,src=${HOME// /\ }/.gitconfig,dst=${HOME// /\ }/.gitconfig\""
+fi
 if [[ "$docker_run_args" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" $docker_run_args"
