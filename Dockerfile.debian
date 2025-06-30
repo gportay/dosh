@@ -1,4 +1,4 @@
 FROM debian:latest
 ENV DPKG_FRONTEND=noninteractive
-RUN apt-get -y update && apt-get -y install asciidoctor debhelper
+RUN apt-get -y update && apt-get -y install asciidoctor bash-completion build-essential debhelper devscripts shellcheck
 CMD ["dpkg-buildpackage", "-us", "-uc"]
