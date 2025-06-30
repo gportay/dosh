@@ -126,6 +126,8 @@ Environment variables:
 
       DOSH_DOCKER               The docker executable.
 
+      DOSH_DOCKER_HOST          The docker daemon socket to conect to.
+
       DOSH_DOCKERFILE           The filename of the Dockerfile to use.
                                 Equivalent to --dockerfile <FILE>.
 
@@ -946,10 +948,14 @@ fi
 # Set the current user privileges for dosh-in-dosh
 if [[ ${dind:-} ]]
 then
+	if [[ ! "${DOSH_DOCKER_HOST:-}" ]]
+	then
+		DOSH_DOCKER_HOST="${DOCKER_HOST:-unix:///var/run/docker.sock}"
+	fi
 	opts+=("--user" "$UID:dind")
 	opts+=("--env" "USER=$USER")
 	opts+=("--env" "HOME=$HOME")
-	opts+=("--volume" "/var/run/docker.sock:/var/run/docker.sock")
+	opts+=("--volume" "${DOSH_DOCKER_HOST/*:\/\//}:/var/run/docker.sock")
 	opts+=("--volume" "$0:/bin/dosh:ro")
 # Or set the current user privileges
 elif ! [[ ${root:-} ]]

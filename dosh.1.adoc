@@ -224,6 +224,9 @@ command-line through *docker-run(1)*.
 **DOSH_DOCKER**::
 	The docker executable.
 
+**DOSH_DOCKER_HOST**::
+	The docker daemon socket to conect to.
+
 **DOSH_DOCKERFILE**::
 	The filename of the Dockerfile to use.
 	Equivalent to --dockerfile <FILE>.

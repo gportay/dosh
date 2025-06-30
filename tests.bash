@@ -89,6 +89,7 @@ PATH="$PWD:$PATH"
 trap result 0 SIGINT
 
 export -n DOSH_DOCKER
+export -n DOSH_DOCKER_HOST
 export -n DOSHELL
 export -n DOSH_DOCKERFILE
 export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
@@ -103,7 +104,12 @@ export no_doshprofile
 export no_doshrc
 
 docker=(docker)
-if ! grep -q -w docker < <(groups)
+if "${docker[@]}" info -f "{{println .SecurityOptions}}" | grep -q rootless
+then
+	DOSH_DOCKER_HOST="${DOCKER_HOST:-unix://$XDG_RUNTIME_DIR/docker.sock}"
+
+	export DOSH_DOCKER_HOST
+elif ! grep -q -w docker < <(groups)
 then
 	docker=(sudo "${docker[@]}")
 	sudo=1
@@ -204,7 +210,7 @@ echo
 
 run "Test option --build"
 if dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '^#0 building with "default" instance using docker driver$'
+   grep '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
 else
@@ -214,7 +220,7 @@ echo
 
 run "Test option --rebuild"
 if dosh --rebuild --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '^#0 building with "default" instance using docker driver$'
+   grep '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
 else
@@ -224,7 +230,7 @@ echo
 
 run "Test DOSH_NOBUILD environment variable"
 if ! DOSH_NOBUILD=1 dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '^#0 building with "default" instance using docker driver$'
+   grep '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
 else
