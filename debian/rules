@@ -1,4 +1,8 @@
 #!/usr/bin/make -f
 override_dh_auto_test:
+
+override_dh_auto_install:
+	$(MAKE) PREFIX=/usr DESTDIR=debian/tmp install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd
+
 %:
 	PREFIX=/usr dh $@

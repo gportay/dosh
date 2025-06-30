@@ -1,0 +1,4 @@
+/usr/lib/docker/cli-plugins/docker-shell
+/usr/lib/docker/cli-plugins/docker-bash
+/usr/lib/docker/cli-plugins/docker-sh
+/usr/lib/docker/cli-plugins/docker-zsh

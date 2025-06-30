@@ -1,0 +1,11 @@
+/usr/bin/dosh
+/usr/lib/docker/cli-plugins/docker-bash
+/usr/lib/docker/cli-plugins/docker-sh
+/usr/lib/docker/cli-plugins/docker-shell
+/usr/lib/docker/cli-plugins/docker-zsh
+/usr/share/dosh/support/cqfd
+/usr/share/dosh/support/doshx
+/usr/share/dosh/support/dot-profile
+/usr/share/dosh/support/posh
+/usr/share/dosh/support/profile
+/usr/share/dosh/support/zdosh
