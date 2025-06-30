@@ -13,7 +13,7 @@ checkdepends=('shellcheck')
 source=("$pkgname::git+https://github.com/gportay/${pkgname%-git}.git"
 	"bash-completion-cqfd-git::https://raw.githubusercontent.com/savoirfairelinux/cqfd/master/bash-completion")
 sha256sums=('SKIP'
-            '6e0e050b2e98625fa657f2d5b8834505e3e4d0839c215b418c4c5e33bb5c5c4f')
+            'SKIP')
 validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
 
 pkgver() {
