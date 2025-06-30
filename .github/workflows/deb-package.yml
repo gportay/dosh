@@ -10,7 +10,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get -y update
-        sudo apt-get -y install build-essential debhelper devscripts
+        sudo apt-get -y install asciidoctor build-essential debhelper devscripts
     - name: Build package
       run: |
         cd ${{ github.event.repository.name }}

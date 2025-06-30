@@ -1,4 +1,4 @@
 FROM debian:latest
 ENV DPKG_FRONTEND=noninteractive
-RUN apt-get -y update && apt-get -y install debhelper
+RUN apt-get -y update && apt-get -y install asciidoctor debhelper
 CMD ["dpkg-buildpackage", "-us", "-uc"]
