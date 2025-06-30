@@ -95,7 +95,7 @@ uninstall:
 		rm -f $(DESTDIR)$$completionsdir/dosh; \
 	fi
 	rm -f $(DESTDIR)$(PREFIX)/bin/posh
-	rm -f $(DESTDIR)$(PREFIX)/bin/xdosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/doshx
 	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/cqfd
 
