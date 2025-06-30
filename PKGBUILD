@@ -44,7 +44,7 @@ package_docker-shell() {
 }
 
 package_dosh-cqfd() {
-	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh.'
+	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
 	rdepends=(dosh)
 
 	cd "dosh-$pkgver"

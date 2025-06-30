@@ -53,7 +53,7 @@ package_docker-shell-git() {
 }
 
 package_dosh-cqfd-git() {
-	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh.'
+	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
 	rdepends=(dosh)
 	provides=("cqfd")
 	conflicts=("cqfd")
