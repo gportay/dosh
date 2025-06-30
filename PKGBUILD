@@ -11,9 +11,9 @@ depends=('docker')
 makedepends=('asciidoctor')
 checkdepends=('shellcheck')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz"
-	"bash-completion-cqfd::https://raw.githubusercontent.com/savoirfairelinux/cqfd/v5.4.0/bash-completion")
+	"bash-completion-cqfd::https://raw.githubusercontent.com/savoirfairelinux/cqfd/v5.7.0/bash-completion")
 sha256sums=('915e275ca1314789a895504df4e149f0335b8749e2740da99009f71caaa46a38'
-            'b231b48d37e72736302b2961ee2ebd392d48796aa4cdf5c84c73f87e5c1607b6')
+            '4af081815df72cde10579b085133f35734221680e3118883980cefe5d853bbb3')
 validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
 
 build() {
