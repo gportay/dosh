@@ -15,10 +15,10 @@ doc: PATH:=$(CURDIR):$(PATH)
 doc: SHELL=dosh
 doc: dosh.1.gz
 
-.PHONY: install-all
+.PHONY: install-world
 install-world: install-all
 install-world: install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh
-install-world: install-posh install-xdosh install-zdosh install-cqfd
+install-world: install-posh install-doshx install-zdosh install-cqfd
 
 .PHONY: install-all
 install-all: install install-doc install-bash-completion install-cli-plugin
@@ -72,7 +72,7 @@ install-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin-%:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
-install-posh install-xdosh install-zdosh install-cqfd:
+install-posh install-doshx install-zdosh install-cqfd:
 install-%:
 	install -D -m 755 support/$* $(DESTDIR)$(PREFIX)/bin/$*
 
@@ -102,14 +102,14 @@ uninstall:
 .PHONY: user-install-world
 user-install-world: user-install-all
 user-install-world: user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh
-user-install-world: user-install-posh user-install-xdosh user-install-zdosh user-install-cqfd
+user-install-world: user-install-posh user-install-doshx user-install-zdosh user-install-cqfd
 
 .PHONY: user-install-all
 user-install-all: user-install user-install-doc user-install-bash-completion user-install-cli-plugin
 
 user-install user-install-doc user-install-bash-completion:
 user-install-cli-plugin user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh:
-user-install-posh user-install-xdosh user-install-zdosh user-install-cqfd user-uninstall:
+user-install-posh user-install-doshx user-install-zdosh user-install-cqfd user-uninstall:
 user-%:
 	$(MAKE) $* PREFIX=$$HOME/.local BASHCOMPLETIONSDIR=$$HOME/.local/share/bash-completion/completions DOCKERLIBDIR=$$HOME/.docker
 
