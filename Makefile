@@ -138,7 +138,9 @@ bump:
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i support/cqfd; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
 	sed -e "/^dosh ($$old)/s,$$old,$(BUMP_VERSION)," -i debian/changelog; \
+	sed -e "/^ -- /s/>  .*/>  $(shell date --rfc-email)/" -i debian/changelog; \
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
+	sed -e "/%changelog/a* $(shell date "+%a %b %d %Y") $$USER" -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD
 	git commit --gpg-sign dosh support/cqfd dosh.1.adoc debian/changelog dosh.spec PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
 	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
