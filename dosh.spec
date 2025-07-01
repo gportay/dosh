@@ -64,6 +64,7 @@ make check
 %license LICENSE
 %doc README.md
 %{_bindir}/dosh
+%{_datadir}/bash-completion/completions/dosh
 %{_datadir}/dosh/support/cqfd
 %{_datadir}/dosh/support/doshx
 %{_datadir}/dosh/support/dot-profile
