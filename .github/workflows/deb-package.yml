@@ -10,7 +10,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get -y update
-        sudo apt-get -y install asciidoctor bash-completion build-essential debhelper devscripts pkgconf
+        sudo apt-get -y install asciidoctor bash-completion build-essential debhelper devscripts pkgconf shellcheck
     - name: Build package
       run: |
         cd ${{ github.event.repository.name }}
