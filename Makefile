@@ -136,6 +136,7 @@ bump:
 	old="$$(bash dosh --version)"; \
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
+	sed -e "/^dosh ($$old)/s,$$old,$(BUMP_VERSION)," -i debian/changelog; \
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD
 	git commit --gpg-sign dosh dosh.1.adoc PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
@@ -208,6 +209,7 @@ sh dash bash zsh:
 %.gz: %
 	gzip -c $< >$@
 
+.PHONY: deb
 deb: PATH:=$(CURDIR):$(PATH)
 deb: SHELL=dosh
 deb: export DOSH_DOCKERFILE=Dockerfile.debian
