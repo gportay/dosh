@@ -223,3 +223,10 @@ deb: SHELL=dosh
 deb: export DOSH_DOCKERFILE=Dockerfile.debian
 deb:
 	dpkg-buildpackage -us -uc
+
+.PHONY: pkg
+pkg: PATH:=$(CURDIR):$(PATH)
+pkg: SHELL=dosh
+pkg: export DOSH_DOCKERFILE=Dockerfile.archlinux
+pkg:
+	makepkg

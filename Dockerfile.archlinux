@@ -1,4 +1,3 @@
-FROM archlinux:latest
-RUN pacman -Suyy base-devel --noconfirm
-RUN pacman -Suyy sudo --noconfirm
-RUN pacman -Suyy git openssh --noconfirm
+FROM archlinux:base-devel
+RUN pacman -Sy --noconfirm asciidoctor bash-completion docker git namcap shellcheck
+CMD ["makepkg"]
