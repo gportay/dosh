@@ -135,6 +135,7 @@ bump:
 	! git tag | grep "^$(BUMP_VERSION)$$"
 	old="$$(bash dosh --version)"; \
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
+	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i support/cqfd; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
 	sed -e "/^dosh ($$old)/s,$$old,$(BUMP_VERSION)," -i debian/changelog; \
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
