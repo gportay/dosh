@@ -7,6 +7,7 @@ License:        Unlicense
 URL:            https://github.com/gportay/%{name}
 Source0:        https://github.com/gportay/%{name}/archive/%{version}.tar.gz
 
+BuildRequires:  asciidoctor
 BuildRequires:  make
 BuildRequires:  shellcheck
 Requires:       bash
@@ -51,6 +52,10 @@ Docker CLI plugin for cqfd.
 make check
 
 
+%build
+%make_build dosh.1.gz
+
+
 %install
 %make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd
 
@@ -65,6 +70,7 @@ make check
 %{_datadir}/dosh/support/posh
 %{_datadir}/dosh/support/profile
 %{_datadir}/dosh/support/zdosh
+%{_datadir}/man/man1/dosh.1.gz
 
 
 %files docker-shell
