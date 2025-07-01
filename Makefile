@@ -140,7 +140,7 @@ bump:
 	sed -e "/^dosh ($$old)/s,$$old,$(BUMP_VERSION)," -i debian/changelog; \
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD
-	git commit --gpg-sign dosh dosh.1.adoc PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
+	git commit --gpg-sign dosh support/cqfd dosh.1.adoc debian/changelog dosh.spec PKGBUILD --patch --message "dosh: version $(BUMP_VERSION)"
 	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
 else
 .SILENT: bump-major
