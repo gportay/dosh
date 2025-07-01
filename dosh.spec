@@ -1,5 +1,5 @@
 Name:           dosh
-Version:        6
+Version:        7
 Release:        1%{?dist}
 Summary:        Run a user shell in a container with cwd bind mounted.
 
@@ -87,5 +87,5 @@ make check
 %{_libdir}/docker/cli-plugins/docker-cqfd
 
 %changelog
-* Fri Jun 27 2025 gportay
+* Tue Jul 01 2025 gportay
 - Initial release.

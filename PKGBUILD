@@ -1,7 +1,7 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
 pkgname=(dosh docker-shell dosh-cqfd docker-cqfd)
-pkgver=6
+pkgver=7
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
