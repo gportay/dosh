@@ -55,8 +55,8 @@ package_dosh-docker-shell-git() {
 package_dosh-cqfd-git() {
 	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
 	depends=(dosh)
-	provides=(cqfd)
-	conflicts=(cqfd)
+	provides=(dosh-cqfd)
+	conflicts=(dosh-cqfd)
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
@@ -66,7 +66,7 @@ package_dosh-cqfd-git() {
 
 package_dosh-docker-cqfd-git() {
 	pkgdesc='Docker CLI plugin for cqfd'
-	depends=(cqfd)
+	depends=(dosh-cqfd)
 	provides=(dosh-docker-cqfd)
 	conflicts=(dosh-docker-cqfd)
 

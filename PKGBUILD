@@ -55,7 +55,7 @@ package_dosh-cqfd() {
 
 package_dosh-docker-cqfd() {
 	pkgdesc='Docker CLI plugin for cqfd'
-	depends=(cqfd)
+	depends=(dosh-cqfd)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
