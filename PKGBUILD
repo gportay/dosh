@@ -7,6 +7,7 @@ pkgdesc='Docker shell'
 arch=(any)
 url=https://github.com/gportay/dosh
 license=(LGPL-2.1-or-later)
+depends=(bash)
 makedepends=(asciidoctor bash-completion)
 checkdepends=(shellcheck)
 source=("dosh-$pkgver::https://github.com/gportay/dosh/archive/$pkgver.tar.gz"
@@ -26,7 +27,7 @@ check() {
 }
 
 package_dosh() {
-	depends=(docker)
+	depends+=(docker)
 	optdepends+=(dosh-docker-shell)
 
 	cd "dosh-$pkgver"
@@ -36,7 +37,7 @@ package_dosh() {
 
 package_dosh-docker-shell() {
 	pkgdesc='Docker CLI plugin for dosh'
-	depends=(dosh)
+	depends+=(dosh)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
@@ -45,7 +46,7 @@ package_dosh-docker-shell() {
 
 package_dosh-cqfd() {
 	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
-	depends=(dosh)
+	depends+=(dosh)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
@@ -55,7 +56,7 @@ package_dosh-cqfd() {
 
 package_dosh-docker-cqfd() {
 	pkgdesc='Docker CLI plugin for cqfd'
-	depends=(dosh-cqfd)
+	depends+=(dosh-cqfd)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd

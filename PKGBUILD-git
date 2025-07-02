@@ -7,6 +7,7 @@ pkgdesc='Docker shell'
 arch=(any)
 url=https://github.com/gportay/dosh
 license=(LGPL-2.1-or-later)
+depends=(bash)
 makedepends=(asciidoctor bash-completion git)
 checkdepends=(shellcheck)
 source=(dosh-git::git+https://github.com/gportay/dosh.git
@@ -31,7 +32,7 @@ check() {
 }
 
 package_dosh-git() {
-	depends=(docker)
+	depends+=(docker)
 	optdepends+=(dosh-docker-shell)
 	provides=(dosh)
 	conflicts=(dosh)
@@ -43,7 +44,7 @@ package_dosh-git() {
 
 package_dosh-docker-shell-git() {
 	pkgdesc='Docker CLI plugin for dosh'
-	depends=(dosh)
+	depends+=(dosh)
 	provides=(dosh-docker-shell)
 	conflicts=(dosh-docker-shell)
 
@@ -54,7 +55,7 @@ package_dosh-docker-shell-git() {
 
 package_dosh-cqfd-git() {
 	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
-	depends=(dosh)
+	depends+=(dosh)
 	provides=(dosh-cqfd)
 	conflicts=(dosh-cqfd)
 
@@ -66,7 +67,7 @@ package_dosh-cqfd-git() {
 
 package_dosh-docker-cqfd-git() {
 	pkgdesc='Docker CLI plugin for cqfd'
-	depends=(dosh-cqfd)
+	depends+=(dosh-cqfd)
 	provides=(dosh-docker-cqfd)
 	conflicts=(dosh-docker-cqfd)
 
