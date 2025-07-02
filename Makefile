@@ -13,7 +13,7 @@ all:
 .PHONY: doc
 doc: PATH:=$(CURDIR):$(PATH)
 doc: SHELL=dosh
-doc: dosh.1.gz
+doc: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 .PHONY: install-world
 install-world: install-all
@@ -45,6 +45,11 @@ install-dot-profile:
 install-doc:
 	install -D -m 644 dosh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 
+.PHONY: install-cqfd-doc
+install-cqfd-doc:
+	install -D -m 644 cqfd.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/cqfd.1.gz
+	install -D -m 644 cqfdrc.5.gz $(DESTDIR)$(PREFIX)/share/man/man5/cqfdrc.5.gz
+
 .PHONY: install-bash-completion
 install-bash-completion:
 	completionsdir=$${BASHCOMPLETIONSDIR:-$$(pkg-config --define-variable=prefix=$(PREFIX) \
@@ -72,9 +77,11 @@ install-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin-%:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
-install-posh install-doshx install-zdosh install-cqfd:
+install-posh install-doshx install-zdosh:
 install-%:
 	install -D -m 755 support/$* $(DESTDIR)$(PREFIX)/bin/$*
+
+install-cqfd: install-cqfd-doc
 
 .PHONY: uninstall
 uninstall: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
@@ -98,6 +105,8 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/doshx
 	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/cqfd
+	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/cqfd.1.gz
+	rm -f $(DESTDIR)$(PREFIX)/share/man/man5/cqfdrc.5.gz
 
 .PHONY: user-install-world
 user-install-world: user-install-all
@@ -212,6 +221,9 @@ sh dash bash zsh:
 	$@
 
 %.1: %.1.adoc
+	asciidoctor -b manpage -o $@ $<
+
+%.5: %.5.adoc
 	asciidoctor -b manpage -o $@ $<
 
 %.gz: %
