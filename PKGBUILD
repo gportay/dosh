@@ -36,7 +36,7 @@ package_dosh() {
 
 package_docker-shell() {
 	pkgdesc='Docker CLI plugin for dosh'
-	rdepends=(dosh)
+	depends=(dosh)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
@@ -45,7 +45,7 @@ package_docker-shell() {
 
 package_dosh-cqfd() {
 	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
-	rdepends=(dosh)
+	depends=(dosh)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
@@ -57,7 +57,7 @@ package_dosh-cqfd() {
 
 package_docker-cqfd() {
 	pkgdesc='Docker CLI plugin for cqfd'
-	rdepends=(cqfd)
+	depends=(cqfd)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd

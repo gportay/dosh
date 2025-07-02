@@ -43,7 +43,7 @@ package_dosh-git() {
 
 package_docker-shell-git() {
 	pkgdesc='Docker CLI plugin for dosh'
-	rdepends=(dosh)
+	depends=(dosh)
 	provides=("${pkgname%-git}")
 	conflicts=("${pkgname%-git}")
 
@@ -54,7 +54,7 @@ package_docker-shell-git() {
 
 package_dosh-cqfd-git() {
 	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
-	rdepends=(dosh)
+	depends=(dosh)
 	provides=("cqfd")
 	conflicts=("cqfd")
 
@@ -68,7 +68,7 @@ package_dosh-cqfd-git() {
 
 package_docker-cqfd-git() {
 	pkgdesc='Docker CLI plugin for cqfd'
-	rdepends=(cqfd)
+	depends=(cqfd)
 	provides=("${pkgname%-git}")
 	conflicts=("${pkgname%-git}")
 
