@@ -7,7 +7,6 @@ pkgdesc='Docker shell'
 arch=('any')
 url="https://github.com/gportay/$pkgname"
 license=('LGPL')
-depends=('docker')
 makedepends=('asciidoctor')
 checkdepends=('shellcheck')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz"
@@ -27,6 +26,7 @@ check() {
 }
 
 package_dosh() {
+	depends=(docker)
 	optdepends+=(docker-shell)
 
 	cd "$pkgname-$pkgver"
