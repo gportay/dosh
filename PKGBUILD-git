@@ -60,7 +60,7 @@ package_dosh-cqfd-git() {
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
-	install -D -m 644 "${startdir}/bash-completion-cqfd-git" "$pkgdir$completionsdir/cqfd"
+	install -D -m 644 "$startdir/bash-completion-cqfd-git" "$pkgdir$completionsdir/cqfd"
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd-git/LICENSE"
 }
 

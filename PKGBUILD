@@ -49,7 +49,7 @@ package_dosh-cqfd() {
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
-	install -D -m 644 "${startdir}/bash-completion-cqfd" "$pkgdir$completionsdir/cqfd"
+	install -D -m 644 "$startdir/bash-completion-cqfd" "$pkgdir$completionsdir/cqfd"
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd/LICENSE"
 }
 
