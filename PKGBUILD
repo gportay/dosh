@@ -1,6 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=(dosh docker-shell dosh-cqfd docker-cqfd)
+pkgname=(dosh dosh-docker-shell dosh-cqfd dosh-docker-cqfd)
 pkgver=7
 pkgrel=1
 pkgdesc='Docker shell'
@@ -27,20 +27,20 @@ check() {
 
 package_dosh() {
 	depends=(docker)
-	optdepends+=(docker-shell)
+	optdepends+=(dosh-docker-shell)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh/LICENSE"
 }
 
-package_docker-shell() {
+package_dosh-docker-shell() {
 	pkgdesc='Docker CLI plugin for dosh'
 	depends=(dosh)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-shell/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-shell/LICENSE"
 }
 
 package_dosh-cqfd() {
@@ -53,11 +53,11 @@ package_dosh-cqfd() {
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd/LICENSE"
 }
 
-package_docker-cqfd() {
+package_dosh-docker-cqfd() {
 	pkgdesc='Docker CLI plugin for cqfd'
 	depends=(cqfd)
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-cqfd/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-cqfd/LICENSE"
 }

@@ -1,6 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=(dosh-git docker-shell-git dosh-cqfd-git docker-cqfd-git)
+pkgname=(dosh-git dosh-docker-shell-git dosh-cqfd-git dosh-docker-cqfd-git)
 pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
@@ -32,7 +32,7 @@ check() {
 
 package_dosh-git() {
 	depends=(docker)
-	optdepends+=(docker-shell)
+	optdepends+=(dosh-docker-shell)
 	provides=(dosh)
 	conflicts=(dosh)
 
@@ -41,15 +41,15 @@ package_dosh-git() {
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-git/LICENSE"
 }
 
-package_docker-shell-git() {
+package_dosh-docker-shell-git() {
 	pkgdesc='Docker CLI plugin for dosh'
 	depends=(dosh)
-	provides=(docker-shell)
-	conflicts=(docker-shell)
+	provides=(dosh-docker-shell)
+	conflicts=(dosh-docker-shell)
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-shell-git/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-shell-git/LICENSE"
 }
 
 package_dosh-cqfd-git() {
@@ -64,13 +64,13 @@ package_dosh-cqfd-git() {
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd-git/LICENSE"
 }
 
-package_docker-cqfd-git() {
+package_dosh-docker-cqfd-git() {
 	pkgdesc='Docker CLI plugin for cqfd'
 	depends=(cqfd)
-	provides=(docker-cqfd)
-	conflicts=(docker-cqfd)
+	provides=(dosh-docker-cqfd)
+	conflicts=(dosh-docker-cqfd)
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-cqfd-git/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-cqfd-git/LICENSE"
 }
