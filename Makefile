@@ -200,6 +200,10 @@ aur-git: PKGBUILD.tmp
 PKGBUILD.tmp: PKGBUILD-git
 	cp $< $@
 
+.PHONY: check-PKGBUILD
+check-PKGBUILD:
+	shellcheck --shell=bash --exclude=SC2034,SC2154,SC2164 PKGBUILD PKGBUILD-git
+
 .PHONY: sh dash bash zsh
 sh dash bash zsh: PATH := $(CURDIR):$(PATH)
 sh dash bash zsh: .SHELLFLAGS := -c -i

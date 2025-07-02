@@ -5,23 +5,23 @@ pkgver=7
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
-url="https://github.com/gportay/$pkgname"
+url="https://github.com/gportay/dosh"
 license=('LGPL')
 makedepends=('asciidoctor' 'bash-completion')
 checkdepends=('shellcheck')
-source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz"
+source=("https://github.com/gportay/dosh/archive/$pkgver.tar.gz"
 	"bash-completion-cqfd::https://raw.githubusercontent.com/savoirfairelinux/cqfd/v5.7.0/bash-completion")
 sha256sums=('4739c3f8cf2385b867e3b9da561ca9c864447c870f0025fb8f32f0cdea5989dd'
             '4af081815df72cde10579b085133f35734221680e3118883980cefe5d853bbb3')
 validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
 
 build() {
-	cd "$pkgname-$pkgver"
+	cd "dosh-$pkgver"
 	make doc SHELL="/bin/sh"
 }
 
 check() {
-	cd "$pkgname-$pkgver"
+	cd "dosh-$pkgver"
 	make -k check
 }
 
@@ -29,9 +29,9 @@ package_dosh() {
 	depends=(docker)
 	optdepends+=(docker-shell)
 
-	cd "$pkgname-$pkgver"
+	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh/LICENSE"
 }
 
 package_docker-shell() {
@@ -40,7 +40,7 @@ package_docker-shell() {
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-shell/LICENSE"
 }
 
 package_dosh-cqfd() {
@@ -49,8 +49,8 @@ package_dosh-cqfd() {
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
-	install -D -m 644 ${startdir}/bash-completion-cqfd "$pkgdir$completionsdir/cqfd"
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 "${startdir}/bash-completion-cqfd" "$pkgdir$completionsdir/cqfd"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd/LICENSE"
 }
 
 package_docker-cqfd() {
@@ -59,5 +59,5 @@ package_docker-cqfd() {
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-cqfd/LICENSE"
 }

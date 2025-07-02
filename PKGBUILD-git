@@ -5,51 +5,51 @@ pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
 arch=('any')
-url="https://github.com/gportay/$pkgname"
+url="https://github.com/gportay/dosh"
 license=('LGPL')
 makedepends=('asciidoctor' 'bash-completion' 'git')
 checkdepends=('shellcheck')
-source=("$pkgname::git+https://github.com/gportay/${pkgname%-git}.git"
+source=("dosh-git::git+https://github.com/gportay/dosh.git"
 	"bash-completion-cqfd-git::https://raw.githubusercontent.com/savoirfairelinux/cqfd/master/bash-completion")
 sha256sums=('SKIP'
             'SKIP')
 validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
 
 pkgver() {
-	cd "$srcdir/$pkgname"
+	cd "$srcdir/dosh-git"
 	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-	cd "$srcdir/$pkgname"
+	cd "$srcdir/dosh-git"
 	make doc SHELL="/bin/sh"
 }
 
 check() {
-	cd "$srcdir/$pkgname"
+	cd "$srcdir/dosh-git"
 	make -k check
 }
 
 package_dosh-git() {
 	depends=(docker)
 	optdepends+=(docker-shell)
-	provides=("${pkgname%-git}")
-	conflicts=("${pkgname%-git}")
+	provides=(dosh)
+	conflicts=(dosh)
 
-	cd "$srcdir/$pkgname"
+	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-git/LICENSE"
 }
 
 package_docker-shell-git() {
 	pkgdesc='Docker CLI plugin for dosh'
 	depends=(dosh)
-	provides=("${pkgname%-git}")
-	conflicts=("${pkgname%-git}")
+	provides=(docker-shell)
+	conflicts=(docker-shell)
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-shell-git/LICENSE"
 }
 
 package_dosh-cqfd-git() {
@@ -60,17 +60,17 @@ package_dosh-cqfd-git() {
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
-	install -D -m 644 ${startdir}/bash-completion-cqfd-git "$pkgdir$completionsdir/cqfd"
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 "${startdir}/bash-completion-cqfd-git" "$pkgdir$completionsdir/cqfd"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd-git/LICENSE"
 }
 
 package_docker-cqfd-git() {
 	pkgdesc='Docker CLI plugin for cqfd'
 	depends=(cqfd)
-	provides=("${pkgname%-git}")
-	conflicts=("${pkgname%-git}")
+	provides=(docker-cqfd)
+	conflicts=(docker-cqfd)
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/docker-cqfd-git/LICENSE"
 }
