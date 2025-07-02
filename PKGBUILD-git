@@ -7,7 +7,7 @@ pkgdesc='Docker shell'
 arch=('any')
 url="https://github.com/gportay/$pkgname"
 license=('LGPL')
-makedepends=('asciidoctor' 'bash-completion')
+makedepends=('asciidoctor' 'bash-completion' 'git')
 checkdepends=('shellcheck')
 source=("$pkgname::git+https://github.com/gportay/${pkgname%-git}.git"
 	"bash-completion-cqfd-git::https://raw.githubusercontent.com/savoirfairelinux/cqfd/master/bash-completion")
