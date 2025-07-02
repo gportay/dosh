@@ -16,13 +16,18 @@ Package: docker-shell
 Architecture: all
 Depends: ${misc:Depends} dosh
 Description: Docker CLI plugin for dosh.
+ Run a user shell in a container with cwd bind mounted.
+ dosh(1) is an sh-compatible frontend for docker that runs commands in a new
+ container; using the current user, with cwd bind mounted.
 
 Package: dosh-cqfd
 Architecture: all
 Depends: ${misc:Depends} dosh
-Description: A tool to wrap commands in controlled Docker containers using dosh.
+Description: A tool to wrap commands in controlled Docker containers using
+ dosh.
 
 Package: docker-cqfd
 Architecture: all
 Depends: ${misc:Depends} dosh-cqfd
 Description: Docker CLI plugin for cqfd.
+ A tool to wrap commands in controlled Docker containers using dosh.
