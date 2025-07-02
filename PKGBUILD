@@ -7,7 +7,7 @@ pkgdesc='Docker shell'
 arch=('any')
 url="https://github.com/gportay/$pkgname"
 license=('LGPL')
-makedepends=('asciidoctor')
+makedepends=('asciidoctor' 'bash-completion')
 checkdepends=('shellcheck')
 source=("https://github.com/gportay/$pkgname/archive/$pkgver.tar.gz"
 	"bash-completion-cqfd::https://raw.githubusercontent.com/savoirfairelinux/cqfd/v5.7.0/bash-completion")
@@ -49,9 +49,7 @@ package_dosh-cqfd() {
 
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
-	if completionsdir="$(pkg-config --define-variable=prefix=/usr --variable=completionsdir bash-completion)"; then
-		install -D -m 644 ${startdir}/bash-completion-cqfd "$pkgdir$completionsdir/cqfd"
-	fi
+	install -D -m 644 ${startdir}/bash-completion-cqfd "$pkgdir$completionsdir/cqfd"
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
