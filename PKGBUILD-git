@@ -4,16 +4,16 @@ pkgname=(dosh-git docker-shell-git dosh-cqfd-git docker-cqfd-git)
 pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
-arch=('any')
-url="https://github.com/gportay/dosh"
-license=('LGPL-2.1-or-later')
-makedepends=('asciidoctor' 'bash-completion' 'git')
-checkdepends=('shellcheck')
-source=("dosh-git::git+https://github.com/gportay/dosh.git"
-	"bash-completion-cqfd-git::https://raw.githubusercontent.com/savoirfairelinux/cqfd/master/bash-completion")
-sha256sums=('SKIP'
-            'SKIP')
-validpgpkeys=('8F3491E60E62695ED780AC672FA122CA0501CA71')
+arch=(any)
+url=https://github.com/gportay/dosh
+license=(LGPL-2.1-or-later)
+makedepends=(asciidoctor bash-completion git)
+checkdepends=(shellcheck)
+source=(dosh-git::git+https://github.com/gportay/dosh.git
+	bash-completion-cqfd-git::https://raw.githubusercontent.com/savoirfairelinux/cqfd/master/bash-completion)
+sha256sums=(SKIP
+            SKIP)
+validpgpkeys=(8F3491E60E62695ED780AC672FA122CA0501CA71)
 
 pkgver() {
 	cd "$srcdir/dosh-git"
@@ -55,8 +55,8 @@ package_docker-shell-git() {
 package_dosh-cqfd-git() {
 	pkgdesc='A tool to wrap commands in controlled Docker containers using dosh'
 	depends=(dosh)
-	provides=("cqfd")
-	conflicts=("cqfd")
+	provides=(cqfd)
+	conflicts=(cqfd)
 
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd

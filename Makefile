@@ -142,7 +142,7 @@ bump:
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/%changelog/a* $(shell date "+%a %b %d %Y") $$USER" -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD; \
-	sed -e "/^sha256sums=/s,'[[:xdigit:]]\{64\,64\}','SKIP'," -i PKGBUILD
+	sed -e "/^sha256sums=/s,[[:xdigit:]]\{64\,64\},SKIP," -i PKGBUILD
 	git commit --gpg-sign dosh support/cqfd dosh.1.adoc debian/changelog dosh.spec PKGBUILD --message "dosh: version $(BUMP_VERSION)"
 	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
 else
