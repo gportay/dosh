@@ -27,11 +27,11 @@ Summary:  Docker CLI plugin for dosh.
 Docker CLI plugin for dosh.
 
 
-%package  dosh-cqfd
+%package  cqfd
 Requires: dosh
 Summary:  Wrap commands in controlled Docker containers using dosh.
 
-%description dosh-cqfd
+%description cqfd
 Wrap commands in controlled Docker containers using dosh.
 cqfd provides a quick and convenient way to run commands in the current
 directory, but within a Docker container defined in a per-project config file.
@@ -82,7 +82,7 @@ make check
 %{_libdir}/docker/cli-plugins/docker-shell
 %{_libdir}/docker/cli-plugins/docker-zsh
 
-%files dosh-cqfd
+%files cqfd
 %{_bindir}/cqfd
 
 %files docker-cqfd
