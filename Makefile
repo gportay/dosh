@@ -187,6 +187,7 @@ commit-check:
 clean:
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 	rm -f PKGBUILD.tmp *.tar.gz src/*.tar.gz *.pkg.tar.xz \
+	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
 	rm -Rf coverage/
 
