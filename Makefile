@@ -267,7 +267,7 @@ clean:
 
 .PHONY: mrproper
 mrproper: clean
-	DO_CLEANUP=1 bash tests.bash
+	XDG_CACHE_HOME=$$PWD/cache bash dosh --gc
 
 .PHONY: sh dash bash zsh
 sh dash bash zsh: PATH := $(CURDIR):$(PATH)
