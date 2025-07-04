@@ -269,6 +269,10 @@ clean:
 mrproper: clean
 	XDG_CACHE_HOME=$$PWD/cache bash dosh --gc
 
+.PHONY: maintainerclean
+maintainerclean: mrproper
+	rm -Rf cache/
+
 .PHONY: sh dash bash zsh
 sh dash bash zsh: PATH := $(CURDIR):$(PATH)
 sh dash bash zsh: .SHELLFLAGS := -c -i
