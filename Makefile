@@ -185,7 +185,7 @@ commit-check:
 
 .PHONY: clean
 clean:
-	rm -f dosh.1.gz
+	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 	rm -f PKGBUILD.tmp *.tar.gz src/*.tar.gz *.pkg.tar.xz \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
 	rm -Rf coverage/
