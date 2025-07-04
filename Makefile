@@ -242,3 +242,10 @@ pkg: SHELL=dosh
 pkg: export DOSH_DOCKERFILE=Dockerfile.archlinux
 pkg:
 	makepkg
+
+.PHONY: rpm
+rpm: PATH:=$(CURDIR):$(PATH)
+rpm: SHELL=dosh
+rpm: export DOSH_DOCKERFILE=Dockerfile.rpm
+rpm:
+	rpmbuild --undefine=_disable_source_fetch --undefine=dist -ba dosh.spec
