@@ -186,7 +186,7 @@ commit-check:
 .PHONY: clean
 clean:
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
-	rm -f PKGBUILD.tmp *.tar.gz src/*.tar.gz *.pkg.tar.xz \
+	rm -f PKGBUILD.tmp *.tar.gz src/*.tar.gz *.pkg.tar* \
 	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
 	rm -f rpmbuild/SOURCES/*.tar.gz rpmbuild/SPECS/*.spec \
