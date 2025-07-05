@@ -1,9 +1,5 @@
 .debhelper/
 debhelper-build-stamp
-docker-cqfd.substvars
-docker-cqfd/
-docker-shell.substvars
-docker-shell/
 dosh-cqfd.substvars
 dosh-cqfd/
 dosh-docker-cqfd.substvars
