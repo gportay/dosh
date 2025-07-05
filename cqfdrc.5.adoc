@@ -13,8 +13,7 @@ cqfdrc - the cqfd configuration file
 == DESCRIPTION
 
 The _.cqfdrc_ file at the root of your project contains the information
-required to support project tooling. It is written in an .ini-like format and
-_samples/dot-cqfdrc_ is an example.
+required to support project tooling. It is written in an .ini-like format.
 
 Here is a sample _.cqfdrc_ file:
 

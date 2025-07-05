@@ -104,7 +104,7 @@ another container or another build command.
 **release [command_string]**::
 	Run argument(s) and release software.
 
-**shell [sh_arguments]::
+**shell [sh_arguments]**::
 	Run shell command inside build container.
 
 **help**::
