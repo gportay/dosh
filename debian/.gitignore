@@ -10,4 +10,7 @@ dosh-docker-cqfd.substvars
 dosh-docker-cqfd/
 dosh-docker-shell.substvars
 dosh-docker-shell/
+dosh.substvars
+dosh/
 files
+tmp/
