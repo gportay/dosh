@@ -5,6 +5,7 @@
 #
 
 PREFIX ?= /usr/local
+VERSION ?= $(shell bash dosh --version)
 
 .PHONY: all
 all:
@@ -249,7 +250,7 @@ pkg: PATH:=$(CURDIR):$(PATH)
 pkg: SHELL=dosh
 pkg: export DOSH_DOCKERFILE=Dockerfile.archlinux
 pkg:
-	makepkg
+	makepkg --skipchecksums
 
 .PHONY: rpm
 rpm: PATH:=$(CURDIR):$(PATH)
@@ -257,3 +258,11 @@ rpm: SHELL=dosh
 rpm: export DOSH_DOCKERFILE=Dockerfile.rpm
 rpm:
 	rpmbuild --undefine=_disable_source_fetch --undefine=dist -ba dosh.spec
+
+rpmbuild/SOURCES/$(VERSION).tar.gz:
+rpmbuild/SOURCES/%.tar.gz:
+	git archive --prefix dosh-$*/ --format tar.gz --output $@ HEAD
+
+dosh-$(VERSION).tar.gz:
+%.tar.gz:
+	git archive --prefix $*/ --format tar.gz --output $@ HEAD

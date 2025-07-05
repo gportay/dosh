@@ -18,7 +18,7 @@ validpgpkeys=(8F3491E60E62695ED780AC672FA122CA0501CA71)
 
 build() {
 	cd "dosh-$pkgver"
-	make doc SHELL="/bin/sh"
+	make cqfd.1.gz cqfdrc.5.gz dosh.1.gz VPATH="$PWD:$PWD/support"
 }
 
 check() {
