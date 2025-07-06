@@ -384,7 +384,7 @@ Enjoy!
 
 ## PATCHES
 
-Sumbit patches at *https://github.com/gportay/dosh/pulls*
+Submit patches at *https://github.com/gportay/dosh/pulls*
 
 ## BUGS
 

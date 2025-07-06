@@ -220,7 +220,7 @@ binaries honoring that variable run shell commands in your defined container.
 
 == PATCHES
 
-Sumbit patches at *https://github.com/gportay/dosh/pulls*
+Submit patches at *https://github.com/gportay/dosh/pulls*
 
 == BUGS
 

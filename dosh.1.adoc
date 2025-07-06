@@ -427,7 +427,7 @@ And do not forget to remove it using _--rm_
 
 == PATCHES
 
-Sumbit patches at *https://github.com/gportay/dosh/pulls*
+Submit patches at *https://github.com/gportay/dosh/pulls*
 
 == BUGS
 
