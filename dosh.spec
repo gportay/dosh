@@ -3,14 +3,17 @@ Version:        7
 Release:        1%{?dist}
 Summary:        Run a user shell in a container with cwd bind mounted.
 
-License:        Unlicense
+License:        LGPL-2.1-or-later
 URL:            https://github.com/gportay/%{name}
 Source0:        https://github.com/gportay/%{name}/archive/%{version}.tar.gz
 
+BuildArch:      noarch
 BuildRequires:  asciidoctor
 BuildRequires:  make
 BuildRequires:  shellcheck
+BuildRequires:  pkgconfig(bash-completion)
 Requires:       bash
+Requires:       docker
 
 %description
 dosh(1) is an sh-compatible frontend for docker that runs commands in a new
@@ -89,5 +92,5 @@ make check
 %{_libdir}/docker/cli-plugins/docker-cqfd
 
 %changelog
-* Tue Jul 01 2025 gportay
+* Tue Jul 01 2025 Gaël PORTAY <gael.portay@gmail.com>
 - Initial release.
