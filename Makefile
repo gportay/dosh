@@ -240,7 +240,7 @@ sh dash bash zsh:
 .PHONY: deb
 deb: PATH:=$(CURDIR):$(PATH)
 deb: SHELL=dosh
-deb: export DOSH_DOCKERFILE=Dockerfile.debian
+deb: export DOSH_DOCKERFILE=Dockerfile.deb
 deb:
 	dpkg-buildpackage -us -uc
 
