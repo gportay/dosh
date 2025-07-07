@@ -2,7 +2,6 @@
 *.tar.gz
 bash-completion-cqfd*
 cache/
-coverage/
 cqfd.1.gz
 cqfdrc.5.gz
 dosh.1.gz
