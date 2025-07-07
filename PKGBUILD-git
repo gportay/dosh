@@ -1,7 +1,7 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
 pkgname=(dosh-git dosh-docker-shell-git dosh-cqfd-git dosh-docker-cqfd-git)
-pkgver=master
+pkgver=r614.a714745
 pkgrel=1
 pkgdesc='Docker shell'
 arch=(any)
