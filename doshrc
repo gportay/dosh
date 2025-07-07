@@ -12,7 +12,7 @@
 case "$DOSH_DOCKERFILE" in
 Dockerfile.alpine) DOSHELL=/bin/ash;;
 Dockerfile.zsh)    DOSHELL=/bin/zsh;;
-Dockerfile.archlinux)
+Dockerfile.pkg)
                    DOSHELL=/bin/bash;;
 Dockerfile.debian) DOSHELL=/bin/bash
                    home=1

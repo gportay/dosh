@@ -247,7 +247,7 @@ deb:
 .PHONY: pkg
 pkg: PATH:=$(CURDIR):$(PATH)
 pkg: SHELL=dosh
-pkg: export DOSH_DOCKERFILE=Dockerfile.archlinux
+pkg: export DOSH_DOCKERFILE=Dockerfile.pkg
 pkg:
 	makepkg --skipchecksums
 
