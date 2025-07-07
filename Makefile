@@ -147,7 +147,6 @@ bump:
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i support/cqfd; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
-	sed -e "/^dosh ($$old) /{s,$$old,$(BUMP_VERSION),;s,UNRELEASE,RELEASE,}" -i debian/changelog; \
 	sed -e "/^ -- /s/>  .*/>  $(shell date --rfc-email)/" -i debian/changelog; \
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/%changelog/a* $(shell date "+%a %b %d %Y") $$USER" -i dosh.spec; \
