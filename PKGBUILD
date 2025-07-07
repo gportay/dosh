@@ -12,8 +12,8 @@ makedepends=(asciidoctor bash-completion)
 checkdepends=(shellcheck)
 source=("dosh-$pkgver.tar.gz::https://github.com/gportay/dosh/archive/$pkgver.tar.gz"
 	"bash-completion-cqfd::https://raw.githubusercontent.com/savoirfairelinux/cqfd/v5.7.0/bash-completion")
-sha256sums=('4739c3f8cf2385b867e3b9da561ca9c864447c870f0025fb8f32f0cdea5989dd'
-            '4af081815df72cde10579b085133f35734221680e3118883980cefe5d853bbb3')
+sha256sums=(4739c3f8cf2385b867e3b9da561ca9c864447c870f0025fb8f32f0cdea5989dd
+            4af081815df72cde10579b085133f35734221680e3118883980cefe5d853bbb3)
 validpgpkeys=(8F3491E60E62695ED780AC672FA122CA0501CA71)
 
 build() {
