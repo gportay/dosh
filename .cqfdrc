@@ -15,3 +15,8 @@ CQFD_SHELL=bash
 CQFD_EXTRA_RUN_ARGS="-e BAZ=baz -e QUX=qux"
 docker_run_args="-e FOO=foo -e BAR=bar"
 command=env
+
+[deb]
+distro='deb'
+docker_run_args="--volume $HOME:$HOME"
+command='bash make-deb.sh'
