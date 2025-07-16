@@ -1,4 +1,4 @@
-name: pkg-package
+name: Deploy Arch Linux package to GitHub Release
 on: workflow_dispatch
 jobs:
   build:

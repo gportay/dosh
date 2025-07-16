@@ -1,4 +1,4 @@
-name: debian-package
+name: Deploy Debian package to GitHub Release
 on: workflow_dispatch
 jobs:
   build:

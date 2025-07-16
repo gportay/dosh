@@ -1,4 +1,4 @@
-name: rpm-package
+name: Deploy RPM package to GitHub Release
 on: workflow_dispatch
 jobs:
   build:
