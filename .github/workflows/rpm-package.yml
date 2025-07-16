@@ -13,7 +13,10 @@ jobs:
     - name: Build package
       run: |
         rpmdev-setuptree
+        cp ${{ github.event.repository.name }}.spec ~/rpmbuild/SPECS/
+        cd ~/rpmbuild/SPECS/
         rpmbuild --undefine=dist --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
+        cd -
         cp ~/rpmbuild/SRPMS/*.rpm ~/rpmbuild/RPMS/*/*.rpm .
     - name: Lint package
       run: |
