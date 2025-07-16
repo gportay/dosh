@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
-        pacman -Sy --noconfirm asciidoctor bash-completion docker git namcap shellcheck
+        pacman -Sy --noconfirm asciidoctor bash-completion git namcap shellcheck
     - name: Build package
       run: |
         chown -R nobody .
