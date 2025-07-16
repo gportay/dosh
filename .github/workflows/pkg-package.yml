@@ -16,6 +16,7 @@ jobs:
         runuser -u nobody -- makepkg --force --skipchecksums
     - name: Lint package
       run: |
+        shellcheck --shell=bash --exclude=SC2034,SC2154,SC2164 PKGBUILD*
         runuser -u nobody -- namcap PKGBUILD* ${{ github.event.repository.name }}*.pkg.tar*
     - name: Create release
       uses: softprops/action-gh-release@v2
