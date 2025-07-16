@@ -8,7 +8,7 @@
 
 == NAME
 
-dosh - run a user shell in a container with cwd bind mounted
+dosh - run a user shell in a container with working directory bind mounted
 
 == SYNOPSIS
 
@@ -70,9 +70,9 @@ _./doshrc_, if that file exists. This may be inhibited by using the option
 
 *dosh* has specific options to modify its behaviour; the option *--dockerfile*
 specifies the path to the *Dockerfile(5)* to use; the option *--home* bind
-mounts the user's home directory instead of _cwd_; the option *--root* runs the
-container with the _root_ privileges. Other options are specified in the
-section *OPTIONS*.
+mounts the user's home directory instead of _working directory_; the option
+*--root* runs the container with the _root_ privileges. Other options are
+specified in the section *OPTIONS*.
 
 Under the hood, *dosh* builds and tags automatically a _docker image_ using the
 *Dockerfile(5)* from the _current working directory_ through *docker-build(1)*.

@@ -6,8 +6,8 @@
 
 [dosh][dosh(1)] is a bash script providing a shell CLI to *docker-run(1)*.
 
-It runs a user shell with cwd bind mounted to the container built using the
-Dockerfile.
+It runs a user shell with working directory bind mounted to the container built
+using the Dockerfile.
 
 One think `dosh` does...
 
@@ -17,12 +17,13 @@ One think `dosh` does...
 
 ## NAME
 
-[dosh][dosh(1)] - run a user shell in a container with cwd bind mounted
+[dosh][dosh(1)] - run a user shell in a container with working directory bind
+mounted
 
 ## DESCRIPTION
 
 [dosh(1)] is an _sh-compatible_ frontend for [docker] that runs commands in a
-new container; using the current _user_, with _cwd_ bind mounted.
+new container; using the current _user_, with _working directory_ bind mounted.
 
 Commands are read either from the standard input or from a file or from command
 line using one of the standard shell invocations (i.e. thanks to options `-c`,

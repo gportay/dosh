@@ -1,7 +1,7 @@
 Name:           dosh
 Version:        7
 Release:        1%{?dist}
-Summary:        Run a user shell in a container with cwd bind mounted
+Summary:        Run a user shell in a container with working directory bind mounted
 
 License:        LGPL-2.1-or-later
 URL:            https://github.com/gportay/%{name}
@@ -17,7 +17,7 @@ Requires:       docker
 
 %description
 dosh(1) is an sh-compatible frontend for docker that runs commands in a new
-container; using the current user, with cwd bind mounted.
+container; using the current user, with working directory bind mounted.
 
 
 %global debug_package %{nil}

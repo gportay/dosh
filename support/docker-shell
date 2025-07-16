@@ -12,7 +12,7 @@ then
 	"SchemaVersion":"0.1.0",
 	"Vendor":"Gaël PORTAY",
 	"Version":"$(dosh --version)",
-	"ShortDescription":"Run a shell as user in a container and bind mount cwd.",
+	"ShortDescription":"Run a shell as user in a container and bind mount working directory.",
 	"URL":"https://www.portay.io/dosh/"
 }
 EOF
@@ -44,7 +44,7 @@ Usage:  docker shell    [OPTIONS] [SCRIPT_FILE  [ARGS...]]
         docker shell -c [OPTIONS] COMMAND [NAME [ARGS...]]
         docker shell -s [OPTIONS] [ARGS...]
 
-Run a shell as user in a container and bind mount cwd.
+Run a shell as user in a container and bind mount working directory.
 
 docker-shell is a wrapper on top of dosh; For a more thorough description of
 dosh, please refers to its help.
