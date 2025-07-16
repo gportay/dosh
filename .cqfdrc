@@ -20,3 +20,7 @@ command=env
 distro='deb'
 docker_run_args="--volume $HOME:$HOME"
 command='bash make-deb.sh'
+
+[pkg]
+distro='pkg'
+command='bash make-pkg.sh'
