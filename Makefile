@@ -175,10 +175,6 @@ bump-minor:
 bump: bump-major
 endif
 
-.PHONY: bump-PKGBUILD
-bump-PKGBUILD: updpkgsums
-	git commit PKGBUILD --patch --message "PKGBUILD: update release $$(bash dosh --version) checksum"
-
 .PHONY: commit-check
 commit-check:
 	git rebase -i -x "$(MAKE) check && $(MAKE) tests"
@@ -191,7 +187,7 @@ clean:
 	   -R debian/.debhelper/ debian/tmp/ \
 	      debian/dosh/ debian/dosh-docker-shell/ \
 	      debian/dosh-cqfd/ debian/dosh-docker-cqfd/
-	rm -f PKGBUILD.tmp *.tar.gz src/*.tar.gz *.pkg.tar* \
+	rm -f *.tar.gz src/*.tar.gz *.pkg.tar* \
 	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
 	rm -f rpmbuild/SOURCES/*.tar.gz rpmbuild/SPECS/*.spec \
@@ -201,21 +197,6 @@ clean:
 .PHONY: mrproper
 mrproper: clean
 	DO_CLEANUP=1 bash tests.bash
-
-.PHONY: updpkgsums
-updpkgsums:
-	updpkgsums
-
-.PHONY: aur
-aur:
-	makepkg --force --syncdeps
-
-.PHONY: aur-git
-aur-git: PKGBUILD.tmp
-	makepkg --force --syncdeps -p $^
-
-PKGBUILD.tmp: PKGBUILD-git
-	cp $< $@
 
 .PHONY: check-PKGBUILD
 check-PKGBUILD:
