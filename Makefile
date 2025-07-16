@@ -251,6 +251,7 @@ pkg: SHELL=dosh
 pkg: export DOSH_DOCKERFILE=Dockerfile.pkg
 pkg:
 	makepkg --force --skipchecksums
+	namcap PKGBUILD* dosh*.pkg.tar*
 
 .PHONY: rpm
 rpm: PATH:=$(CURDIR):$(PATH)
