@@ -87,6 +87,8 @@ make check
 
 %files cqfd
 %{_bindir}/cqfd
+%{_datadir}/man/man1/cqfd.1.gz
+%{_datadir}/man/man5/cqfdrc.5.gz
 
 %files docker-cqfd
 %{_libdir}/docker/cli-plugins/docker-cqfd
