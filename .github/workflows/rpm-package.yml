@@ -13,6 +13,9 @@ jobs:
     - name: Build package
       run: |
         rpmdev-setuptree
+        ver="$(bash ${{ github.event.repository.name }} --version)"
+        tar czf "../$ver.tar.gz" --transform "s/./${{ github.event.repository.name }}-$ver/" .
+        mv "../$ver.tar.gz" ~/rpmbuild/SOURCES/
         cp ${{ github.event.repository.name }}.spec ~/rpmbuild/SPECS/
         cd ~/rpmbuild/SPECS/
         rpmbuild --undefine=dist --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
