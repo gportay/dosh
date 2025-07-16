@@ -259,7 +259,7 @@ rpm: PATH:=$(CURDIR):$(PATH)
 rpm: SHELL=dosh
 rpm: export DOSH_DOCKERFILE=Dockerfile.rpm
 rpm:
-	rpmbuild --undefine=_disable_source_fetch --undefine=dist -ba dosh.spec
+	rpmbuild --undefine=dist --undefine=_disable_source_fetch -ba dosh.spec
 
 rpmbuild/SOURCES/$(VERSION).tar.gz:
 rpmbuild/SOURCES/%.tar.gz:
