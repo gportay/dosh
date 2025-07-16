@@ -12,6 +12,9 @@ jobs:
         pacman -Sy --noconfirm asciidoctor bash-completion git namcap shellcheck
     - name: Build package
       run: |
+        ver="$(bash ${{ github.event.repository.name }} --version)"
+        tar czf "../${{ github.event.repository.name }}-$ver.tar.gz" --transform "s/./${{ github.event.repository.name }}-$ver/" .
+        mv "../${{ github.event.repository.name }}-$ver.tar.gz" .
         chown -R nobody .
         runuser -u nobody -- makepkg --force --skipchecksums
     - name: Lint package
