@@ -250,7 +250,7 @@ pkg: PATH:=$(CURDIR):$(PATH)
 pkg: SHELL=dosh
 pkg: export DOSH_DOCKERFILE=Dockerfile.pkg
 pkg:
-	makepkg --skipchecksums
+	makepkg --force --skipchecksums
 
 .PHONY: rpm
 rpm: PATH:=$(CURDIR):$(PATH)
