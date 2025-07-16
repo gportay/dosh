@@ -22,7 +22,7 @@ mounted
 
 ## DESCRIPTION
 
-[dosh(1)] is an _sh-compatible_ frontend for [docker] that runs commands in a
+[dosh(1)] is an _sh-compatible_ front-end for [docker] that runs commands in a
 new container; using the current _user_, with _working directory_ bind mounted.
 
 Commands are read either from the standard input or from a file or from command

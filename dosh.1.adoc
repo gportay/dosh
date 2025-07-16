@@ -40,7 +40,7 @@ Advanced dosh image management commands:
 
 *dosh* --rmi [DOCKER_RMI_OPTIONS]
 
-Extra docker frontend commands:
+Extra docker front-end commands:
 
 *dosh* --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
 
@@ -50,7 +50,7 @@ Extra docker frontend commands:
 
 == DESCRIPTION
 
-*dosh* is a sh-compatible frontend for *docker(1)* that executes commands read
+*dosh* is a sh-compatible front-end for *docker(1)* that executes commands read
 from the standard input or from a file.
 
 It runs a shell process in a new container with its own file system, the

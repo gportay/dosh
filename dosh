@@ -45,7 +45,7 @@ Usage: Typical shell commands:
        ${0##*/} --gc [DOCKER_RMI_OPTIONS]
        ${0##*/} --rmi [DOCKER_RMI_OPTIONS]
 
-       Extra docker frontend commands:
+       Extra docker front-end commands:
        ${0##*/} --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
        ${0##*/} --kill   CONTAINER [DOCKER_RMI_OPTIONS]
        ${0##*/} --rm     CONTAINER [DOCKER_RM_OPTIONS]

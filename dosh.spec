@@ -16,7 +16,7 @@ Requires:       bash
 Requires:       docker
 
 %description
-dosh(1) is an sh-compatible frontend for docker that runs commands in a new
+dosh(1) is an sh-compatible front-end for docker that runs commands in a new
 container; using the current user, with working directory bind mounted.
 
 

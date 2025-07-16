@@ -9,7 +9,7 @@ Package: dosh
 Architecture: all
 Depends: ${misc:Depends}
 Description: Run a user shell in a container with working directory bind mounted.
- dosh(1) is an sh-compatible frontend for docker that runs commands in a new
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
 Package: dosh-docker-shell
@@ -17,7 +17,7 @@ Architecture: all
 Depends: ${misc:Depends}, dosh
 Description: Docker CLI plugin for dosh.
  Run a user shell in a container with working directory bind mounted.
- dosh(1) is an sh-compatible frontend for docker that runs commands in a new
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
 Package: dosh-cqfd
