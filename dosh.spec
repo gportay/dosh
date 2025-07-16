@@ -1,7 +1,7 @@
 Name:           dosh
 Version:        7
 Release:        1%{?dist}
-Summary:        Run a user shell in a container with cwd bind mounted.
+Summary:        Run a user shell in a container with cwd bind mounted
 
 License:        LGPL-2.1-or-later
 URL:            https://github.com/gportay/%{name}
@@ -24,7 +24,7 @@ container; using the current user, with cwd bind mounted.
 
 %package  docker-shell
 Requires: docker
-Summary:  Docker CLI plugin for dosh.
+Summary:  Docker CLI plugin for dosh
 
 %description docker-shell
 Docker CLI plugin for dosh.
@@ -32,7 +32,7 @@ Docker CLI plugin for dosh.
 
 %package  cqfd
 Requires: dosh
-Summary:  Wrap commands in controlled Docker containers using dosh.
+Summary:  Wrap commands in controlled Docker containers using dosh
 
 %description cqfd
 Wrap commands in controlled Docker containers using dosh.
@@ -43,7 +43,7 @@ directory, but within a Docker container defined in a per-project config file.
 %package  docker-cqfd
 Requires: docker
 Requires: dosh-cqfd
-Summary:  Docker CLI plugin for cqfd.
+Summary:  Docker CLI plugin for cqfd
 
 %description docker-cqfd
 Docker CLI plugin for cqfd.
