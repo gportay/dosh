@@ -260,6 +260,7 @@ rpm: SHELL=dosh
 rpm: export DOSH_DOCKERFILE=Dockerfile.rpm
 rpm:
 	rpmbuild --undefine=dist --undefine=_disable_source_fetch -ba dosh.spec
+	rpmlint ~/rpmbuild/SPECS/dosh.spec ~/rpmbuild/SRPMS/dosh*.rpm ~/rpmbuild/RPMS/dosh*.rpm
 
 rpmbuild/SOURCES/$(VERSION).tar.gz:
 rpmbuild/SOURCES/%.tar.gz:
