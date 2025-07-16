@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
-        dnf install -y asciidoctor bash-completion-devel gcc git make pkgconf rpmdevtools rpmlint shellcheck
+        dnf install -y asciidoctor bash-completion-devel git make pkgconf rpmdevtools rpmlint shellcheck
     - name: Build package
       run: |
         rpmdev-setuptree
