@@ -2,6 +2,13 @@
 
 pkgname=(dosh
 	 dosh-docker-shell
+	 dosh-linux-amd64
+	 dosh-linux-arm64
+	 dosh-linux-armv6
+	 dosh-linux-armv7
+	 dosh-linux-ppc64le
+	 dosh-linux-riscv64
+	 dosh-linux-s390x
 	 dosh-cqfd
 	 dosh-docker-cqfd)
 pkgver=7
@@ -45,6 +52,69 @@ package_dosh-docker-shell() {
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-shell/LICENSE"
+}
+
+package_dosh-linux-amd64() {
+	pkgdesc='Docker shell for linux/amd64 platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-amd64-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-amd64/LICENSE"
+}
+
+package_dosh-linux-arm64() {
+	pkgdesc='Docker shell for linux/arm64 platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-arm64-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-arm64/LICENSE"
+}
+
+package_dosh-linux-armv6() {
+	pkgdesc='Docker shell for linux/arm/v6 platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-armv6-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-armv6/LICENSE"
+}
+
+package_dosh-linux-armv7() {
+	pkgdesc='Docker shell for linux/arm/v7 platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-armv7-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-armv7/LICENSE"
+}
+
+package_dosh-linux-ppc64le() {
+	pkgdesc='Docker shell for linux/ppc64le platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-ppc64le-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-ppc64le/LICENSE"
+}
+
+package_dosh-linux-riscv64() {
+	pkgdesc='Docker shell for linux/riscv64 platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-riscv64-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-riscv64/LICENSE"
+}
+
+package_dosh-linux-s390x() {
+	pkgdesc='Docker shell for linux/s390x platform'
+	depends+=(dosh)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-s390x-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-s390x/LICENSE"
 }
 
 package_dosh-cqfd() {

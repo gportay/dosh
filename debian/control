@@ -20,6 +20,55 @@ Description: Docker CLI plugin for dosh.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
+Package: dosh-linux-amd64
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/amd64 platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-arm64
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/arm64 platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-armv6
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/armv6 platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-armv7
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/armv7 platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-ppc64le
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/ppc64le platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-riscv64
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/riscv64 platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-s390x
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Docker shell for linux/s390x platform.
+ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
 Package: dosh-cqfd
 Architecture: all
 Depends: ${misc:Depends}, dosh

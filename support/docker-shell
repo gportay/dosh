@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2023-2024 Gaël PORTAY
+# Copyright 2023-2025 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -51,6 +51,7 @@ dosh, please refers to its help.
 
 Options:
   --dockerfile string    Path to the Dockerfile to use.
+  --platform string      Set target platform.
   --context string       Path to the context to send to docker daemon.
   --no-auto-context      Disable automatic context sent to docker daemon.
   --no-extra-options     Disable extra options given to docker commands.
