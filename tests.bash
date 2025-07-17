@@ -356,6 +356,15 @@ else
 	ko
 fi
 
+run "Test option --dind"
+if bash dosh --directory .. --dockerfile "$PWD/Dockerfile" --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+   grep -q 'DOSHLVL=2'
+then
+	ok
+else
+	ko
+fi
+
 run "Test option --groups"
 if          echo 'echo ${GROUPS[@]}' | dosh --shell /bin/bash --groups -s | tee /dev/stderr | \
    diff - <(echo 'echo ${GROUPS[@]}' | bash                            -s | tee /dev/stderr )

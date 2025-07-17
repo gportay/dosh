@@ -933,6 +933,7 @@ fi
 # Set the current user privileges for dosh-in-dosh
 if [[ ${dind:-} ]]
 then
+	dosh="$(command -v "$0")"
 	if [[ ! "${DOSH_DOCKER_HOST:-}" ]]
 	then
 		DOSH_DOCKER_HOST="${DOCKER_HOST:-unix:///var/run/docker.sock}"
@@ -941,7 +942,8 @@ then
 	opts+=("--env" "USER=$USER")
 	opts+=("--env" "HOME=$HOME")
 	opts+=("--volume" "${DOSH_DOCKER_HOST/*:\/\//}:/var/run/docker.sock")
-	opts+=("--volume" "$0:/bin/dosh:ro")
+	opts+=("--volume" "$dosh:/bin/dosh:ro")
+	unset dosh
 # Or set the current user privileges
 elif ! [[ ${root:-} ]]
 then
