@@ -5,21 +5,6 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
-# Called as program loader with multiple arguments
-if [ "$_" != "/bin/bash" ] && [ "$_" = "$2" ]
-then
-	echo "Warning: Splitting the single shebang argument into many is not portable!" >&2
-	echo "         Please consider using env(1) and its split option -S instead:" >&2
-	echo "             #!/usr/bin/env -S dosh $*" >&2
-	echo "         That split is going to be deprecated in a future version." >&2
-	read -r -a args <<<"$1"
-	shift
-	exec <"$1"
-	shift
-	set -- "${args[@]}" -s "$@"
-	exec "$0" "$@"
-fi
-
 set -e
 set -u
 set -o pipefail
