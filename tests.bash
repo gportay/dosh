@@ -430,7 +430,7 @@ else
 fi
 echo
 
-run "Test option --working-directory with current directory"
+run "Test option --working-directory with current directory (relative path)"
 if ( dosh --working-directory . -c "pwd" | tee /dev/stderr | \
      grep -q "^$PWD$" )
 then
@@ -440,7 +440,7 @@ else
 fi
 echo
 
-run "Test option --working-directory with parent directory"
+run "Test option --working-directory with parent directory (relative path)"
 if ( dosh --working-directory .. -c "pwd" | tee /dev/stderr | \
      grep -q "^${PWD%/*}$" )
 then
@@ -450,7 +450,7 @@ else
 fi
 echo
 
-run "Test option --working-directory with root directory"
+run "Test option --working-directory with root directory (absolute path)"
 if ( dosh --working-directory / -c "pwd" | tee /dev/stderr | \
      grep -q '^/$' )
 then
@@ -460,7 +460,7 @@ else
 fi
 echo
 
-run "Test option --working-directory with home directory"
+run "Test option --working-directory with home directory (absolute path)"
 if ( dosh --working-directory "$HOME" -c "pwd" | tee /dev/stderr | \
      grep -q "^$HOME$" )
 then
