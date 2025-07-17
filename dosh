@@ -979,7 +979,8 @@ then
 fi
 
 # Set the working directory
-opts+=("--workdir" "$working_directory")
+workdir="$(realpath "$working_directory")"
+opts+=("--workdir" "$workdir")
 
 # Incremented by one level instance
 opts+=("--env" "DOSHLVL=$((DOSHLVL+1))")

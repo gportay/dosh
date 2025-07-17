@@ -430,6 +430,26 @@ else
 fi
 echo
 
+run "Test option --working-directory with current directory"
+if ( dosh --working-directory . -c "pwd" | tee /dev/stderr | \
+     grep -q "^$PWD$" )
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --working-directory with parent directory"
+if ( dosh --working-directory .. -c "pwd" | tee /dev/stderr | \
+     grep -q "^${PWD%/*}$" )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --working-directory with root directory"
 if ( dosh --working-directory / -c "pwd" | tee /dev/stderr | \
      grep -q '^/$' )
