@@ -117,6 +117,9 @@ command-line through *docker-run(1)*.
 **--dockerfile FILE**::
 	Path to the Dockerfile to use.
 
+**--platform TARGET**::
+	Set target platform.
+
 **--context TAR**::
 	Path to the context to send to docker daemon.
 
@@ -439,7 +442,7 @@ Written by Gaël PORTAY *gael.portay@gmail.com*
 
 == COPYRIGHT
 
-Copyright 2017-2020,2023-2024 Gaël PORTAY
+Copyright 2017-2020,2023-2025 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the Free

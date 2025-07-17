@@ -62,6 +62,7 @@ Zsh specific options:
 
 Docker related options:
       --dockerfile FILE         Path to the Dockerfile to use.
+      --platform TARGET         Set target platform.
       --context TAR             Path to the context to send to docker daemon.
       --no-auto-context         Disable automatic context sent to docker daemon.
       --no-extra-options        Disable extra options given to docker commands.
@@ -219,6 +220,7 @@ remove_symlink() {
 get_tag() {
 	local file
 	local user
+	local target 
 	local checksum
 
 	file="$(realpath "$1")"
@@ -229,7 +231,11 @@ get_tag() {
 		user="$(id -un)"
 	fi
 	user="${user//[^[:alnum:]_.-]/_}"
-	echo "dosh-$user-$checksum"
+	if [[ "${3:-}" ]]
+	then
+		target="-${3//\//-}"
+	fi
+	echo "dosh-$user-$checksum${target:-}"
 }
 
 get_images() {
@@ -629,7 +635,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|context|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|platform|context|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
 	then
 		return 0
 	fi
@@ -833,7 +839,7 @@ unset i
 if [[ "${tag:-}" ]]
 then
 	# Print tag
-	get_tag "$dockerfile" "${USER:-}"
+	get_tag "$dockerfile" "${USER:-}" "${platform:-}"
 	exit
 fi
 
@@ -857,7 +863,7 @@ fi
 if [[ ${rmi:-} ]]
 then
 	# Remove an existent image
-	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}")"
+	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}" "${platform:-}")"
 	docker_rmi "$tag" "$@" >&2
 	exit
 fi
@@ -886,11 +892,17 @@ then
 	exit
 fi
 
+# Set target platform for build
+if [[ ${platform:-} ]]
+then
+	DOSH_DOCKER_BUILD_EXTRA_OPTS+=(--platform "$platform")
+fi
+
 # Run in a new container
 if ! [[ ${exec:-} ]]
 then
 	# Rebuild or automatically build the image if it does not exist
-	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}")"
+	tag="$(get_tag "$DOSH_DOCKERFILE" "${USER:-}" "${platform:-}")"
 	imageid="$("${docker[@]}" images -q "$tag")"
 	if [[ ${build:-} ]] || [[ ${rebuild:-} ]] || ! [[ ${imageid:-} ]]
 	then

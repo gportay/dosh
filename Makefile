@@ -20,6 +20,12 @@ doc: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 .PHONY: install-world
 install-world: install-all
 install-world: install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh
+install-world: install-linux-arm64-dosh
+install-world: install-linux-armv6-dosh
+install-world: install-linux-armv7-dosh
+install-world: install-linux-ppc64le-dosh
+install-world: install-linux-riscv64-dosh
+install-world: install-linux-s390x-dosh
 install-world: install-posh install-doshx install-zdosh install-cqfd
 
 .PHONY: install-all
@@ -79,6 +85,15 @@ install-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin-%:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
+install-linux-arm64-dosh:
+install-linux-armv6-dosh:
+install-linux-armv7-dosh:
+install-linux-ppc64le-dosh:
+install-linux-riscv64-dosh:
+install-linux-s390x-dosh:
+install-%-dosh:
+	install -D -m 755 support/$*-dosh $(DESTDIR)$(PREFIX)/bin/$*-dosh
+
 install-posh install-doshx install-zdosh:
 install-%:
 	install -D -m 755 support/$* $(DESTDIR)$(PREFIX)/bin/$*
@@ -103,6 +118,12 @@ uninstall:
 	if [ -n "$$completionsdir" ]; then \
 		rm -f $(DESTDIR)$$completionsdir/dosh; \
 	fi
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm64-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-armv6-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-armv7-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-ppc64le-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-riscv64-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-s390x-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/posh
 	rm -f $(DESTDIR)$(PREFIX)/bin/doshx
 	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
@@ -113,6 +134,12 @@ uninstall:
 .PHONY: user-install-world
 user-install-world: user-install-all
 user-install-world: user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh
+user-install-world: user-install-linux-arm64-dosh
+user-install-world: user-install-linux-armv6-dosh
+user-install-world: user-install-linux-armv7-dosh
+user-install-world: user-install-linux-ppc64le-dosh
+user-install-world: user-install-linux-riscv64-dosh
+user-install-world: user-install-linux-s390x-dosh
 user-install-world: user-install-posh user-install-doshx user-install-zdosh user-install-cqfd
 
 .PHONY: user-install-all
@@ -120,6 +147,12 @@ user-install-all: user-install user-install-doc user-install-bash-completion use
 
 user-install user-install-doc user-install-bash-completion:
 user-install-cli-plugin user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh:
+user-install-linux-arm64-dosh:
+user-install-linux-armv6-dosh:
+user-install-linux-armv7-dosh:
+user-install-linux-ppc64le-dosh:
+user-install-linux-riscv64-dosh:
+user-install-linux-s390x-dosh:
 user-install-posh user-install-doshx user-install-zdosh user-install-cqfd user-uninstall:
 user-%:
 	$(MAKE) $* PREFIX=$$HOME/.local BASHCOMPLETIONSDIR=$$HOME/.local/share/bash-completion/completions DOCKERLIBDIR=$$HOME/.docker
