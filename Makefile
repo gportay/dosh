@@ -191,7 +191,7 @@ clean:
 	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
 	rm -f rpmbuild/SOURCES/*.tar.gz rpmbuild/SPECS/*.spec \
-	      rpmbuild/SRPMS/*.rpm rpmbuild/RPMS/*/*.rpm 
+	      rpmbuild/SRPMS/*.rpm rpmbuild/RPMS/*/*.rpm
 	rm -Rf coverage/
 
 .PHONY: mrproper
