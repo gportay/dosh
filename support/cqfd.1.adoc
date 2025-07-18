@@ -209,7 +209,7 @@ defined container.
 	fi
 	source /etc/os-release
 	echo "$PRETTY_NAME"
-	fred@host:~/projet$ ./get-container-pretty-name.sh 
+	fred@host:~/projet$ ./get-container-pretty-name.sh
 	Debian GNU/Linux 12 (bookworm)
 
 Use cqfd as a standard shell for binaries
