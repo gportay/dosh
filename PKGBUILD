@@ -1,6 +1,9 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=(dosh dosh-docker-shell dosh-cqfd dosh-docker-cqfd)
+pkgname=(dosh
+	 dosh-docker-shell
+	 dosh-cqfd
+	 dosh-docker-cqfd)
 pkgver=7
 pkgrel=1
 pkgdesc='Docker shell'
