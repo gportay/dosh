@@ -1,4 +1,4 @@
-/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-shell
-/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-bash
-/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-sh
-/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-zsh
+/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-shell usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
+/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-bash usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
+/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-sh usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
+/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-zsh usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins

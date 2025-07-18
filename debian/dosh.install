@@ -1,9 +1,9 @@
-/usr/bin/dosh
-/usr/share/bash-completion/completions/dosh
-/usr/share/dosh/support/cqfd
-/usr/share/dosh/support/doshx
-/usr/share/dosh/support/dot-profile
-/usr/share/dosh/support/posh
-/usr/share/dosh/support/profile
-/usr/share/dosh/support/zdosh
-/usr/share/man/man1/dosh.1.gz
+/usr/bin/dosh usr/bin
+/usr/share/bash-completion/completions/dosh usr/share/bash-completion/completions
+/usr/share/dosh/support/cqfd usr/share/dosh/support
+/usr/share/dosh/support/doshx usr/share/dosh/support
+/usr/share/dosh/support/dot-profile usr/share/dosh/support
+/usr/share/dosh/support/posh usr/share/dosh/support
+/usr/share/dosh/support/profile usr/share/dosh/support
+/usr/share/dosh/support/zdosh usr/share/dosh/support
+/usr/share/man/man1/dosh.1.gz usr/share/man/man1
