@@ -338,10 +338,14 @@ and it is going for removal in a next release. Consider moving the shebang to
 
 Build the documentation using *make(1)*
 
-	$ make doc
+	$ make VPATH=support doc
+	asciidoctor -b manpage -o cqfd.1 support/cqfd.1.adoc
+	gzip -c cqfd.1 >cqfd.1.gz
+	asciidoctor -b manpage -o cqfdrc.5 support/cqfdrc.5.adoc
+	gzip -c cqfdrc.5 >cqfdrc.5.gz
 	asciidoctor -b manpage -o dosh.1 dosh.1.adoc
 	gzip -c dosh.1 >dosh.1.gz
-	rm dosh.1
+	rm cqfd.1 dosh.1 cqfdrc.5
 
 ## INSTALL
 
