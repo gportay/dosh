@@ -375,6 +375,52 @@ Build the documentation using *make(1)*
 
 ## INSTALL
 
+### FROM PACKAGES
+
+#### ARCH LINUX DERIVATIVES
+
+First download the package
+
+	$ curl -LO https://github.com/gportay/dosh/releases/download/8/dosh-8-1-any.pkg.tar.zst
+
+Then, install it using the package manager
+
+	$ sudo pacman -U ./dosh-8-1-any.pkg.tar.zst
+
+_Note_: Uninstall it using the package manager
+
+	$ sudo pacman -R dosh
+
+#### DEBIAN DERIVATIVES
+
+First download the package
+
+	$ curl -LO https://github.com/gportay/dosh/releases/download/8/dosh_8_all.deb
+
+Then, install it using the package manager
+
+	$ sudo dpkg -i ./dosh_8_all.deb
+
+_Note_: Uninstall it using the package manager:
+
+	$ sudo dpkg -r dosh
+
+#### RPM DERIVATIVES
+
+First download the package:
+
+	$ curl https://github.com/gportay/dosh/releases/download/8/dosh-8-1.noarch.rpm
+
+Then, install it using the package manager:
+
+	$ sudo dnf install ./dosh-8-1.noarch.rpm
+
+_Note_: Uninstall it using the package manager:
+
+	$ sudo dnf remove dosh
+
+### SOURCES
+
 Run the following command to install *dosh(1)*
 
 To your home directory
