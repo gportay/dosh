@@ -20,6 +20,7 @@ doc: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 .PHONY: install-world
 install-world: install-all
 install-world: install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh
+install-world: install-linux-amd64-dosh
 install-world: install-linux-arm64-dosh
 install-world: install-linux-armv6-dosh
 install-world: install-linux-armv7-dosh
@@ -85,6 +86,7 @@ install-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-cli-plugin-%:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
+install-linux-amd64-dosh:
 install-linux-arm64-dosh:
 install-linux-armv6-dosh:
 install-linux-armv7-dosh:
@@ -118,6 +120,7 @@ uninstall:
 	if [ -n "$$completionsdir" ]; then \
 		rm -f $(DESTDIR)$$completionsdir/dosh; \
 	fi
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-amd64-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm64-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-armv6-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-armv7-dosh
@@ -134,6 +137,7 @@ uninstall:
 .PHONY: user-install-world
 user-install-world: user-install-all
 user-install-world: user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh
+user-install-world: user-install-linux-amd64-dosh
 user-install-world: user-install-linux-arm64-dosh
 user-install-world: user-install-linux-armv6-dosh
 user-install-world: user-install-linux-armv7-dosh
@@ -147,6 +151,7 @@ user-install-all: user-install user-install-doc user-install-bash-completion use
 
 user-install user-install-doc user-install-bash-completion:
 user-install-cli-plugin user-install-cli-plugin-sh user-install-cli-plugin-bash user-install-cli-plugin-zsh:
+user-install-linux-amd64-dosh:
 user-install-linux-arm64-dosh:
 user-install-linux-armv6-dosh:
 user-install-linux-armv7-dosh:
