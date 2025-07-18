@@ -6,6 +6,7 @@
 
 PREFIX ?= /usr/local
 VERSION ?= $(shell bash dosh --version)
+VPATH := $(CURDIR)/support
 
 .PHONY: all
 all:

@@ -338,7 +338,7 @@ and it is going for removal in a next release. Consider moving the shebang to
 
 Build the documentation using *make(1)*
 
-	$ make VPATH=support doc
+	$ make doc
 	asciidoctor -b manpage -o cqfd.1 support/cqfd.1.adoc
 	gzip -c cqfd.1 >cqfd.1.gz
 	asciidoctor -b manpage -o cqfdrc.5 support/cqfdrc.5.adoc

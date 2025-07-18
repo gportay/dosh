@@ -58,7 +58,7 @@ make check
 
 
 %build
-%make_build cqfd.1.gz cqfdrc.5.gz dosh.1.gz VPATH="$PWD:$PWD/support"
+%make_build cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 
 %install

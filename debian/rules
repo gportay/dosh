@@ -3,7 +3,7 @@ override_dh_auto_test:
 	$(MAKE) check
 
 override_dh_auto_build:
-	$(MAKE) cqfd.1.gz cqfdrc.5.gz dosh.1.gz VPATH=$(CURDIR):$(CURDIR)/support
+	$(MAKE) cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 override_dh_auto_install:
 	$(MAKE) PREFIX=/usr DESTDIR=debian/tmp install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd

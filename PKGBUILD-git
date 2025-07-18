@@ -23,7 +23,7 @@ pkgver() {
 
 build() {
 	cd "$srcdir/dosh-git"
-	make cqfd.1.gz cqfdrc.5.gz dosh.1.gz VPATH="$PWD:$PWD/support"
+	make cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 }
 
 check() {
