@@ -1,4 +1,6 @@
 #!/usr/bin/make -f
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
 override_dh_auto_test:
 	$(MAKE) check
 
@@ -6,7 +8,7 @@ override_dh_auto_build:
 	$(MAKE) cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 override_dh_auto_install:
-	$(MAKE) PREFIX=/usr DESTDIR=debian/tmp install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd
+	$(MAKE) PREFIX=/usr DESTDIR=debian/tmp DOCKERLIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/docker install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd
 
 %:
 	PREFIX=/usr dh $@
