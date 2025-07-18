@@ -268,6 +268,28 @@ Or the following line to the dosh `~/.dosh_profile`:
 Alternatively, use the convenient wrapper script [posh](support/posh) to run
 [dosh] using [podman] underneath without touching the Shell and *dosh* files.
 
+## USE CROSS PLATFORM
+
+[dosh(1)] builds and runs images for another [platform][multi-platform] if the
+option `--platform` is set to a target different from the host platform
+(`linux/amd64`, `linux/arm64`...).
+
+	$ dosh -c "uname -m"
+	x86_64
+
+	$ dosh --platform linux/arm64 -c "uname -m"
+	WARNING: The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64/v3) and no specific platform was requested
+	aarch64
+
+Alternatively, use the specific platform helper scripts (`linux-amd64-dosh`,
+`linux-arm64-dosh`) to run [dosh] using the platform prefixed in the executable
+filename.
+
+	$ linux-arm64-dosh -c "uname -m"
+	WARNING: The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64/v3) and no specific platform was requested
+aarch64
+	aarch64
+
 ## USE AS INTERPRETER FOR SHELL SCRIPT
 
 [dosh(1)] is usable as an interpreter for shell script.
@@ -416,6 +438,7 @@ later version.
 [environment-variables]: https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables
 [examples]: dosh.1.adoc#examples
 [execve(2)]: https://linux.die.net/man/2/execve
+[multi-platform]: https://docs.docker.com/build/building/multi-platform/
 [non-root-user]: https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
 [podman]: https://github.com/containers/podman
 [posh]: support/posh
