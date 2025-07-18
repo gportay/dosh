@@ -268,7 +268,7 @@ Or the following line to the dosh `~/.dosh_profile`:
 Alternatively, use the convenient wrapper script [posh](support/posh) to run
 [dosh] using [podman] underneath without touching the Shell and *dosh* files.
 
-### USE AS INTERPRETER FOR SHELL SCRIPT
+## USE AS INTERPRETER FOR SHELL SCRIPT
 
 [dosh(1)] is usable as an interpreter for shell script.
 
