@@ -85,13 +85,16 @@ make check
 %{_libdir}/docker/cli-plugins/docker-shell
 %{_libdir}/docker/cli-plugins/docker-zsh
 
+
 %files cqfd
 %{_bindir}/cqfd
 %{_datadir}/man/man1/cqfd.1.gz
 %{_datadir}/man/man5/cqfdrc.5.gz
 
+
 %files docker-cqfd
 %{_libdir}/docker/cli-plugins/docker-cqfd
+
 
 %changelog
 * Tue Jul 01 2025 Gaël PORTAY <gael.portay@gmail.com>
