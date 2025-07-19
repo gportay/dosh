@@ -10,7 +10,7 @@ VPATH := $(CURDIR)/support
 
 .PHONY: all
 all:
-	@eval $$(cat /etc/os*release); echo $$NAME
+	@eval $$(cat /etc/os*release); echo $$NAME; uname -m
 
 .PHONY: doc
 doc: PATH:=$(CURDIR):$(PATH)
