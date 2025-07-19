@@ -32,4 +32,4 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: |
-          *.rpm
+          ${{ github.event.repository.name }}*.rpm

@@ -26,4 +26,4 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: |
-          *.pkg.tar*
+          ${{ github.event.repository.name }}*.pkg.tar*

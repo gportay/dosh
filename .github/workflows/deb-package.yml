@@ -24,4 +24,4 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: |
-          *.deb
+          ${{ github.event.repository.name }}*.deb
