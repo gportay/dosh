@@ -1,5 +1,9 @@
 # Docker Shell
 
+[![Deploy Arch Linux package to GitHub Release](https://github.com/gportay/dosh/actions/workflows/pkg-package.yml/badge.svg)](https://github.com/gportay/dosh/actions/workflows/pkg-package.yml)
+[![Deploy Debian package to GitHub Release](https://github.com/gportay/dosh/actions/workflows/deb-package.yml/badge.svg)](https://github.com/gportay/dosh/actions/workflows/deb-package.yml)
+[![Deploy RPM package to GitHub Release](https://github.com/gportay/dosh/actions/workflows/rpm-package.yml/badge.svg)](https://github.com/gportay/dosh/actions/workflows/rpm-package.yml)
+
 [![Packaging status](https://repology.org/badge/vertical-allrepos/dosh.svg)](https://repology.org/project/dosh/versions)
 
 ## TL;DR;
