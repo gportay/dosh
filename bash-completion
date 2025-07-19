@@ -184,4 +184,4 @@ _dosh()
 	fi
 	_filedir
 } &&
-complete -F _dosh dosh posh zdosh
+complete -F _dosh dosh posh zdosh linux-amd64-dosh linux-armv6-dosh linux-armv7-dosh linux-arm64-dosh linux-ppc64le-dosh linux-riscv64-dosh linux-s390x-dosh
