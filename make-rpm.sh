@@ -2,6 +2,6 @@
 set -e
 rpmdev-setuptree
 cd ~/rpmbuild/SPECS
-rpmbuild --undefine=dist --undefine=_disable_source_fetch -ba dosh.spec "$@"
+rpmbuild --undefine=_disable_source_fetch -ba dosh.spec "$@"
 cp ~/rpmbuild/SRPMS/*.src.rpm ~/rpmbuild/RPMS/*/*.rpm "$OLDPWD"
 rpmlint *.rpm

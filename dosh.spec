@@ -1,6 +1,6 @@
 Name:           dosh
 Version:        7
-Release:        1%{?dist}
+Release:        1
 Summary:        Run a user shell in a container with working directory bind mounted
 
 License:        LGPL-2.1-or-later

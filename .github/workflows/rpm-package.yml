@@ -18,7 +18,7 @@ jobs:
         mv "../$ver.tar.gz" ~/rpmbuild/SOURCES/
         cp ${{ github.event.repository.name }}.spec ~/rpmbuild/SPECS/
         cd ~/rpmbuild/SPECS/
-        rpmbuild --undefine=dist --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
+        rpmbuild --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
         cd -
         cp ~/rpmbuild/SRPMS/*.rpm ~/rpmbuild/RPMS/*/*.rpm .
     - name: Lint package
