@@ -238,6 +238,10 @@ command-line through *docker-run(1)*.
 	The filename of the Dockerfile to use.
 	Equivalent to --dockerfile <FILE>.
 
+**DOSH_PLATFORM**::
+	The target platform to use.
+	Equivalent to --platform <TARGET>.
+
 **DOSH_DOCKER_RUN_EXTRA_OPTS**::
 	Set additionnal parameters to docker run command.
 

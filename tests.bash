@@ -418,6 +418,26 @@ else
 fi
 echo
 
+run "Test native platform with DOSH_PLATFORM ($native_platform = $native_machine)"
+if DOSH_PLATFORM="$native_platform" dosh --platform "$native_platform" -c "uname -m" | tee /dev/stderr | \
+   grep -q "^$native_machine$"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test cross platform with option --platform ($cross_platform = $cross_machine)"
+if DOSH_PLATFORM="$cross_platform" dosh -c "uname -m" | tee /dev/stderr | \
+   grep -q "^$cross_machine$"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test native platform without option --platform ($native_platform = $native_machine)"
 if dosh -c "uname -m" | tee /dev/stderr | \
    grep -q "^$native_machine$"

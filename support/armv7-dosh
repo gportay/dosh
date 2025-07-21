@@ -4,4 +4,5 @@
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
-exec dosh --platform linux/arm/v7 "$@"
+DOSH_PLATFORM=arm/v7 \
+exec dosh "$@"

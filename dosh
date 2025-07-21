@@ -11,10 +11,10 @@ set -o pipefail
 
 target="${0##*/}"
 target="${target%-dosh}"
-if [ "$target" != "dosh" ]
+if [ "$target" != "dosh" ] && [ ! "${DOSH_PLATFORM:-}" ]
 then
 	target="${target//-/\/}"
-	platform="$target"
+	DOSH_PLATFORM="$target"
 fi
 
 VERSION="7"
@@ -124,6 +124,9 @@ Environment variables:
 
       DOSH_DOCKERFILE           The filename of the Dockerfile to use.
                                 Equivalent to --dockerfile <FILE>.
+
+      DOSH_PLATFORM             The target platform to use.
+                                Equivalent to --platform <TARGET>.
 
       DOSH_DOCKER_RUN_EXTRA_OPTS
                                 Set additionnal parameters to docker run
@@ -717,6 +720,7 @@ is_shopt_argument() {
 
 shopts=()
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
+platform="${DOSH_PLATFORM:-}"
 directory="."
 working_directory="$PWD"
 opts=()
@@ -799,6 +803,11 @@ fi
 if [[ ${dockerfile:-} ]]
 then
 	DOSH_DOCKERFILE="$dockerfile"
+fi
+# --platform TARGET to DOSH_PLATFORM
+if [[ ${platform:-} ]]
+then
+	DOSH_PLATFORM="$platform"
 fi
 # --no-extra-options resets DOSH_DOCKER_*_EXTRA_OPTS
 if [[ ${no_extra_options:-} ]]
