@@ -4,8 +4,7 @@ pkgname=(dosh
 	 dosh-docker-shell
 	 dosh-linux-amd64
 	 dosh-linux-arm64
-	 dosh-linux-armv6
-	 dosh-linux-armv7
+	 dosh-linux-arm
 	 dosh-linux-ppc64le
 	 dosh-linux-riscv64
 	 dosh-linux-s390x
@@ -72,22 +71,13 @@ package_dosh-linux-arm64() {
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-arm64/LICENSE"
 }
 
-package_dosh-linux-armv6() {
-	pkgdesc='Docker shell for linux/arm/v6 platform'
+package_dosh-linux-arm() {
+	pkgdesc='Docker shell for linux/arm platform'
 	depends+=(dosh)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-armv6-dosh
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-armv6/LICENSE"
-}
-
-package_dosh-linux-armv7() {
-	pkgdesc='Docker shell for linux/arm/v7 platform'
-	depends+=(dosh)
-
-	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-armv7-dosh
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-armv7/LICENSE"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-arm/LICENSE"
 }
 
 package_dosh-linux-ppc64le() {

@@ -4,8 +4,7 @@ pkgname=(dosh-git
 	 dosh-docker-shell-git
 	 dosh-linux-amd64-git
 	 dosh-linux-arm64-git
-	 dosh-linux-armv6-git
-	 dosh-linux-armv7-git
+	 dosh-linux-arm-git
 	 dosh-linux-ppc64le-git
 	 dosh-linux-riscv64-git
 	 dosh-linux-s390x-git
@@ -85,26 +84,15 @@ package_dosh-linux-arm64-git() {
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-arm64-git/LICENSE"
 }
 
-package_dosh-linux-armv6-git() {
-	pkgdesc='Docker shell for linux/arm/v6 platform'
+package_dosh-linux-arm-git() {
+	pkgdesc='Docker shell for linux/arm platform'
 	depends+=(dosh)
-	provides=(dosh-linux-armv6)
-	conflicts=(dosh-linux-armv6)
+	provides=(dosh-linux-arm)
+	conflicts=(dosh-linux-arm)
 
 	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-armv6-dosh
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-armv6-git/LICENSE"
-}
-
-package_dosh-linux-armv7-git() {
-	pkgdesc='Docker shell for linux/arm/v7 platform'
-	depends+=(dosh)
-	provides=(dosh-linux-armv7)
-	conflicts=(dosh-linux-armv7)
-
-	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-armv7-dosh
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-armv7-git/LICENSE"
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-arm-git/LICENSE"
 }
 
 package_dosh-linux-ppc64le-git() {

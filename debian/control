@@ -34,17 +34,10 @@ Description: Docker shell for linux/arm64 platform.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
-Package: dosh-linux-armv6
+Package: dosh-linux-arm
 Architecture: all
 Depends: ${misc:Depends}, dosh
-Description: Docker shell for linux/arm/v6 platform.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
-
-Package: dosh-linux-armv7
-Architecture: all
-Depends: ${misc:Depends}, dosh
-Description: Docker shell for linux/arm/v7 platform.
+Description: Docker shell for linux/arm platform.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 

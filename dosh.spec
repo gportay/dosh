@@ -40,20 +40,11 @@ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
 container; using the current user, with working directory bind mounted.
 
 
-%package  linux-armv6
+%package  linux-arm
 Requires: dosh
-Summary:  Docker shell for linux/arm/v6 platform
+Summary:  Docker shell for linux/arm platform
 
-%description linux-armv6
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
-%package  linux-armv7
-Requires: dosh
-Summary:  Docker shell for linux/arm/v7 platform
-
-%description linux-armv7
+%description linux-arm
 dosh(1) is an sh-compatible front-end for docker that runs commands in a new
 container; using the current user, with working directory bind mounted.
 
@@ -125,7 +116,7 @@ make check
 
 
 %install
-%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-armv6-dosh install-linux-armv7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
+%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
 
 
 %files
@@ -150,12 +141,10 @@ make check
 %{_bindir}/linux-arm64-dosh
 
 
-%files linux-armv6
-%{_bindir}/linux-armv6-dosh
-
-
-%files linux-armv7
-%{_bindir}/linux-armv7-dosh
+%files linux-arm
+%{_bindir}/linux-arm-dosh
+%{_bindir}/linux-arm-v6-dosh
+%{_bindir}/linux-arm-v7-dosh
 
 
 %files linux-ppc64le

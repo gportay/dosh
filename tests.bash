@@ -90,6 +90,7 @@ trap result 0 SIGINT
 
 export -n DOSH_DOCKER
 export -n DOSH_DOCKER_HOST
+export -n DOSH_PLATFORM
 export -n DOSHELL
 export -n DOSH_DOCKERFILE
 export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
@@ -447,9 +448,9 @@ fi
 echo
 
 run "Test cross platform helper scripts"
-if support/linux-amd64-dosh -c "uname -m" | tee /dev/stderr | \
+if linux-amd64-dosh -c "uname -m" | tee /dev/stderr | \
    grep -q "^x86_64$" &&
-   support/linux-arm64-dosh -c "uname -m" | tee /dev/stderr | \
+   linux-arm64-dosh -c "uname -m" | tee /dev/stderr | \
    grep -q "^aarch64$"
 then
 	ok

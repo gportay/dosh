@@ -24,8 +24,9 @@ install-world: install-cli-plugin-bash
 install-world: install-cli-plugin-zsh
 install-world: install-linux-amd64-dosh
 install-world: install-linux-arm64-dosh
-install-world: install-linux-armv6-dosh
-install-world: install-linux-armv7-dosh
+install-world: install-linux-arm-dosh
+install-world: install-linux-arm-v6-dosh
+install-world: install-linux-arm-v7-dosh
 install-world: install-linux-ppc64le-dosh
 install-world: install-linux-riscv64-dosh
 install-world: install-linux-s390x-dosh
@@ -98,11 +99,16 @@ install-cli-plugin-%:
 
 install-linux-amd64-dosh:
 install-linux-arm64-dosh:
-install-linux-armv6-dosh:
-install-linux-armv7-dosh:
+install-linux-arm-dosh:
+install-linux-arm-v6-dosh:
+install-linux-arm-v7-dosh:
 install-linux-ppc64le-dosh:
 install-linux-riscv64-dosh:
 install-linux-s390x-dosh:
+install-linux-%-dosh:
+	install -d $(DESTDIR)$(PREFIX)/bin
+	ln -sf dosh $(DESTDIR)$(PREFIX)/bin/linux-$*-dosh
+
 install-posh:
 install-doshx:
 install-zdosh:
@@ -131,8 +137,9 @@ uninstall:
 	fi
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-amd64-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm64-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-armv6-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-armv7-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm-v6-dosh
+	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm-v7-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-ppc64le-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-riscv64-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/linux-s390x-dosh
@@ -150,8 +157,9 @@ user-install-world: user-install-cli-plugin-bash
 user-install-world: user-install-cli-plugin-zsh
 user-install-world: user-install-linux-amd64-dosh
 user-install-world: user-install-linux-arm64-dosh
-user-install-world: user-install-linux-armv6-dosh
-user-install-world: user-install-linux-armv7-dosh
+user-install-world: user-install-linux-arm-dosh
+user-install-world: user-install-linux-arm-v6-dosh
+user-install-world: user-install-linux-arm-v7-dosh
 user-install-world: user-install-linux-ppc64le-dosh
 user-install-world: user-install-linux-riscv64-dosh
 user-install-world: user-install-linux-s390x-dosh
@@ -175,8 +183,9 @@ user-install-cli-plugin-bash:
 user-install-cli-plugin-zsh:
 user-install-linux-amd64-dosh:
 user-install-linux-arm64-dosh:
-user-install-linux-armv6-dosh:
-user-install-linux-armv7-dosh:
+user-install-linux-arm-dosh:
+user-install-linux-arm-v6-dosh:
+user-install-linux-arm-v7-dosh:
 user-install-linux-ppc64le-dosh:
 user-install-linux-riscv64-dosh:
 user-install-linux-s390x-dosh:
