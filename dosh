@@ -267,12 +267,20 @@ get_images() {
 		do
 			local status
 			local checksum
+			local platform
 			local dockerfile
 			local dockerfile_checksum
 
 			status="Unknown"
 			checksum="${symlink##*/dosh-"$USER"-}"
 			checksum="${checksum%%-*}"
+			platform="${symlink##*/dosh-"$USER"-}"
+			platform="${platform#*-}"
+			platform="${platform//-/\/}"
+			if [ "$checksum" = "$platform" ]
+			then
+				platform="$native"
+			fi
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			dockerfile_checksum="$(file_checksum "$dockerfile")"
 
@@ -293,7 +301,7 @@ get_images() {
 			else
 				status="Ready"
 			fi
-			echo "$image" "$status" "$dockerfile_checksum" "$dockerfile"
+			echo "$image" "$platform" "$status" "$dockerfile_checksum" "$dockerfile"
 		done
 	done
 }
@@ -303,18 +311,25 @@ list() {
 	local image
 	local images
 	local maxtag
+	local platform
+	local maxplatform
 
 	mapfile -t images < <(get_images)
 	maxtag=""
+	maxplatform=""
 	for image in "${images[@]}"
 	do
-		read -r tag _ <<<"$image"
+		read -r tag platform _ <<<"$image"
 		if [ "${#tag}" -gt "${#maxtag}" ]
 		then
 			maxtag="$tag"
 		fi
+		if [ "${#platform}" -gt "${#maxplatform}" ]
+		then
+			maxplatform="$platform"
+		fi
 	done
-	printf "%-${#maxtag}s %-9s %s\n" "TAG" "STATUS" "DOCKERFILE"
+	printf "%-${#maxtag}s %-${#maxplatform}s %-9s %s\n" "TAG" "PLATFORM" "STATUS" "DOCKERFILE"
 
 	for image in "${images[@]}"
 	do
@@ -322,8 +337,8 @@ list() {
 		local checksum
 		local dockerfile
 
-		read -r tag status _ dockerfile _ <<<"$image"
-		printf "%-${#maxtag}s %-9s %-64s %s\n" "$tag" "$status" "$dockerfile"
+		read -r tag platform status _ dockerfile _ <<<"$image"
+		printf "%-${#maxtag}s %-${#maxplatform}s %-9s %-64s %s\n" "$tag" "$platform" "$status" "$dockerfile"
 	done
 }
 
@@ -342,7 +357,7 @@ prune() {
 		local status
 		local rmiopts
 
-		read -r tag status _ <<<"$image"
+		read -r tag _ status _ <<<"$image"
 		if [[ "$status" == "Ready" ]]
 		then
 			continue
@@ -758,6 +773,14 @@ do
 	fi
 	shift
 done
+
+# Deduce native platform
+machine="$(uname -m)"
+case "$machine" in
+x86_64)  native="linux/amd64";;
+aarch64) native="linux/arm64";;
+*)       native="linux/$machine";;
+esac
 
 # Apply the dosh options to the dosh environment variables
 # --shell SHELL to DOSHELL
