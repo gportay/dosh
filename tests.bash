@@ -117,6 +117,18 @@ then
 	export sudo
 fi
 
+native_machine=x86_64
+cross_machine=aarch64
+native_platform=linux/amd64
+cross_platform=linux/arm64
+if uname -m | grep -q aarch64
+then
+	native_machine=aarch64
+	cross_machine=x86_64
+	native_platform=linux/arm64
+	cross_platform=linux/amd64
+fi
+
 rmi() {
 	run "Test --rmi option"
 	if   dosh --rmi &&
@@ -398,6 +410,47 @@ echo
 run "Test option --dockerfile"
 if dosh --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test native platform without option --platform ($native_platform = $native_machine)"
+if dosh -c "uname -m" | tee /dev/stderr | \
+   grep -q "^$native_machine$"
+then
+	ok
+else
+	ko
+fi
+
+run "Test native platform with option --platform ($native_platform = $native_machine)"
+if dosh --platform "$native_platform" -c "uname -m" | tee /dev/stderr | \
+   grep -q "^$native_machine$"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test cross platform with option --platform ($cross_platform = $cross_machine)"
+if dosh --platform "$cross_platform" -c "uname -m" | tee /dev/stderr | \
+   grep -q "^$cross_machine$"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test cross platform helper scripts"
+if support/linux-amd64-dosh -c "uname -m" | tee /dev/stderr | \
+   grep -q "^x86_64$" &&
+   support/linux-arm64-dosh -c "uname -m" | tee /dev/stderr | \
+   grep -q "^aarch64$"
 then
 	ok
 else
