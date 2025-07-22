@@ -266,7 +266,7 @@ get_images() {
 			local dockerfile
 			local dockerfile_checksum
 
-			status="Ready"
+			status="Unknown"
 			checksum="${symlink##*/dosh-"$USER"-}"
 			checksum="${checksum%%-*}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
@@ -281,6 +281,9 @@ get_images() {
 			elif [[ "$dockerfile_checksum" != "$checksum" ]]
 			then
 				status="Outdated"
+			# The Dockerfile exists and checksum matches: image is Ready
+			else
+				status="Ready"
 			fi
 			echo "$image" "$status" "$dockerfile_checksum" "$dockerfile"
 		done
