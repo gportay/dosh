@@ -272,9 +272,13 @@ get_images() {
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			dockerfile_checksum="$(file_checksum "$dockerfile")"
 
+			# The symlink does not exist: image is Untracked
+			if [[ ! -e "$symlink" ]]
+			then
+				status="Untracked"
 			# The Dockerfile does not exist: image is Deleted
-			if [[ "$dockerfile" == "<none>" ]] ||
-			   [[ "$dockerfile_checksum" == "<none>" ]]
+			elif [[ "$dockerfile" == "<none>" ]] ||
+			     [[ "$dockerfile_checksum" == "<none>" ]]
 			then
 				status="Deleted"
 			# The Dockerfile checksum mismatches: image is Outdated
@@ -306,7 +310,7 @@ list() {
 			maxtag="$tag"
 		fi
 	done
-	printf "%-${#maxtag}s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+	printf "%-${#maxtag}s %-9s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
 
 	for image in "${images[@]}"
 	do
@@ -315,7 +319,7 @@ list() {
 		local dockerfile
 
 		read -r tag status checksum dockerfile _ <<<"$image"
-		printf "%-${#maxtag}s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
+		printf "%-${#maxtag}s %-9s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
 	done
 }
 

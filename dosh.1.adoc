@@ -306,6 +306,9 @@ command-line through *docker-run(1)*.
 
 == STATUS
 
+**Untracked**:
+	Image with *Dockerfile(5)* untracked since built.
+
 **Deleted**:
 	Image with *Dockerfile(5)* removed since built.
 
