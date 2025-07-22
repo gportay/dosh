@@ -68,6 +68,10 @@ When a container shell is started, *dosh* reads and executes commands from
 _./doshrc_, if that file exists. This may be inhibited by using the option
 *--no-doshrc*.
 
+*dosh* builds and runs images for another _platform_ if the option *--platform*
+is set to a target different from the host platform. Official _platforms_ are
+specified in the section *PLATFORMS*).
+
 *dosh* has specific options to modify its behaviour; the option *--dockerfile*
 specifies the path to the *Dockerfile(5)* to use; the option *--home* bind
 mounts the user's home directory instead of _working directory_; the option
@@ -262,6 +266,20 @@ command-line through *docker-run(1)*.
 
 **./.doshrc**::
 	The local initialization file.
+
+== PLATFORMS
+
+**linux/amd64**::
+	Intel/AMD x86 64-bit.
+
+**linux/arm64**::
+	ARMv8 64-bit.
+
+**linux/arm/v6**::
+	ARMv6 32-bit.
+
+**linux/arm/v7**::
+	ARMv7 32-bit.
 
 == EXAMPLES
 
