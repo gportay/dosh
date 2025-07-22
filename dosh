@@ -325,13 +325,11 @@ prune() {
 	local images
 	local unused
 	local symlink
-	local images_ready
 	local images_unused
 
 	mapfile -t images < <(get_images)
 
-	# first pass: store the list of both ready and unused (outdated and
-	# deleted) images
+	# first pass: list unused images (outdated and deleted)
 	for image in "${images[@]}"
 	do
 		local tag
@@ -343,7 +341,6 @@ prune() {
 		read -r tag file status checksum dockerfile _ <<<"$image"
 		if [[ "$status" == "Ready" ]]
 		then
-			images_ready+=("$tag")
 			continue
 		fi
 
