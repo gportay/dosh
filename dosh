@@ -310,7 +310,7 @@ list() {
 			maxtag="$tag"
 		fi
 	done
-	printf "%-${#maxtag}s %-9s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+	printf "%-${#maxtag}s %-9s %s\n" "TAG" "STATUS" "DOCKERFILE"
 
 	for image in "${images[@]}"
 	do
@@ -318,8 +318,8 @@ list() {
 		local checksum
 		local dockerfile
 
-		read -r tag status checksum dockerfile _ <<<"$image"
-		printf "%-${#maxtag}s %-9s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
+		read -r tag status _ dockerfile _ <<<"$image"
+		printf "%-${#maxtag}s %-9s %-64s %s\n" "$tag" "$status" "$dockerfile"
 	done
 }
 
