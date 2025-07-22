@@ -323,50 +323,20 @@ list() {
 prune() {
 	local image
 	local images
-	local unused
 	local symlink
-	local images_unused
 
 	mapfile -t images < <(get_images)
 
-	# first pass: list unused images (outdated and deleted)
+	# Unlink the outdated images and remove both outdated and deleted
+	# images
 	for image in "${images[@]}"
-	do
-		local tag
-		local status
-
-		read -r tag _ status _ <<<"$image"
-		if [[ "$status" == "Ready" ]]
-		then
-			continue
-		fi
-
-		images_unused+=("$tag")
-	done
-	unset tag
-	unset status
-
-	# second pass: unlink the outdated images and remove both outdated and
-	# deleted images
-	for unused in "${images_unused[@]}"
 	do
 		local tag
 		local status
 		local rmiopts
 
-		# Verify the image is actually unused
-		for image in "${images[@]}"
-		do
-			read -r tag _ status _ <<<"$image"
-			if [[ "$tag" == "$unused" ]] &&
-			   [[ "$status" == "Ready" ]]
-			then
-				break
-			fi
-		done
-
-		# The image is actually used, skip it...
-		if [[ "$tag" == "$unused" ]] && [[ "$status" == "Ready" ]]
+		read -r tag _ status _ <<<"$image"
+		if [[ "$status" == "Ready" ]]
 		then
 			continue
 		fi
@@ -377,10 +347,10 @@ prune() {
 			rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
 		fi
 
-		run "${docker[@]}" rmi "${rmiopts[@]}" "$unused" "$@"
+		run "${docker[@]}" rmi "${rmiopts[@]}" "$tag" "$@"
 	done
 
-	# third pass: consolidate the database
+	# Consolidate the database
 	for symlink in "$cachedir"/*/"dosh-"*
 	do
 		local tag
