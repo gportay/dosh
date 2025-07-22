@@ -78,6 +78,18 @@ mounts the user's home directory instead of _working directory_; the option
 *--root* runs the container with the _root_ privileges. Other options are
 specified in the section *OPTIONS*.
 
+*dosh* keeps track of the built _docker images_, the path and the content of
+the read _Dockerfiles_. It tags the _docker images_ using the *$USER*, the
+*Dockerfile(5)* checksum computed at build-time, and the _platform_ if set; tag
+is specified in section *TAG*. Multiple _docker images_ exist for the same
+*Dockerfile(5)* in file system if its content changes.
+
+The option *--tag* outputs the _dosh image_ tag and exits. The exit immediately
+options *--ls* and *--rmi* respectively list every user's _dosh images_ and
+remove the latest _dosh image_ for given *Dockerfile(5)* if it is built. The
+exit immediately option *--gc* prunes the unused _dosh images_ (*Deleted* and
+*Outdated*). Statuses are specified in section *STATUS*.
+
 Under the hood, *dosh* builds and tags automatically a _docker image_ using the
 *Dockerfile(5)* from the _current working directory_ through *docker-build(1)*.
 It appends extra _RUN_ instructions to add the host _$USER/$GROUPS_ through
@@ -271,6 +283,9 @@ command-line through *docker-run(1)*.
 **./.doshrc**::
 	The local initialization file.
 
+**$XDG_CONFIG_HOME/dosh**, **~/.cache/dosh**::
+	The user cache directory tracking _dosh images_ and _Dockerfiles_.
+
 == PLATFORMS
 
 **linux/amd64**::
@@ -284,6 +299,21 @@ command-line through *docker-run(1)*.
 
 **linux/arm/v7**::
 	ARMv7 32-bit.
+
+== TAG
+
+*dosh* names the _docker images_: _dosh-$USER-$dockerfile_checksum[-$platform]_.
+
+== STATUS
+
+**Deleted**:
+	Image with *Dockerfile(5)* removed since built.
+
+**Outdated**:
+	Image with *Dockerfile(5)* changed since built.
+
+**Ready**:
+	Image with *Dockerfile(5)* unchanged since built.
 
 == EXAMPLES
 
