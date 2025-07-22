@@ -333,16 +333,15 @@ prune() {
 	for image in "${images[@]}"
 	do
 		local tag
-		local file
 		local status
 
-		read -r tag file status _ <<<"$image"
+		read -r tag _ status _ <<<"$image"
 		if [[ "$status" == "Ready" ]]
 		then
 			continue
 		fi
 
-		images_unused+=("$file/$tag")
+		images_unused+=("$tag")
 	done
 
 	# second pass: unlink the outdated images and remove both outdated and
@@ -357,7 +356,7 @@ prune() {
 		for image in "${images[@]}"
 		do
 			read -r tag _ status _ <<<"$image"
-			if [[ "$tag" == "${unused##*/}" ]] &&
+			if [[ "$tag" == "$unused" ]] &&
 			   [[ "$status" == "Ready" ]]
 			then
 				break
@@ -365,12 +364,10 @@ prune() {
 		done
 
 		# The image is actually used, skip it...
-		if [[ "$tag" == "${unused##*/}" ]] && [[ "$status" == "Ready" ]]
+		if [[ "$tag" == "$unused" ]] && [[ "$status" == "Ready" ]]
 		then
 			continue
 		fi
-
-		IFS=/ read -r _ tag _ <<<"$unused"
 
 		# Append the extra options if any
 		if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
@@ -378,7 +375,7 @@ prune() {
 			rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
 		fi
 
-		run "${docker[@]}" rmi "${rmiopts[@]}" "$tag" "$@"
+		run "${docker[@]}" rmi "${rmiopts[@]}" "$unused" "$@"
 	done
 
 	# third pass: consolidate the database
