@@ -283,10 +283,19 @@ list() {
 	local tag
 	local image
 	local images
+	local maxtag
 
 	mapfile -t images < <(get_images)
-	read -r tag _ <<<"${images[0]}"
-	printf "%-${#tag}s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
+	maxtag=""
+	for image in "${images[@]}"
+	do
+		read -r tag _ <<<"$image"
+		if [ "${#tag}" -gt "${#maxtag}" ]
+		then
+			maxtag="$tag"
+		fi
+	done
+	printf "%-${#maxtag}s %-8s %-64s %s\n" "TAG" "STATUS" "CHECKSUM" "DOCKERFILE"
 
 	for image in "${images[@]}"
 	do
@@ -296,7 +305,7 @@ list() {
 		local dockerfile
 
 		read -r tag file status checksum dockerfile _ <<<"$image"
-		printf "%-${#tag}s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
+		printf "%-${#maxtag}s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
 	done
 }
 
