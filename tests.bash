@@ -132,7 +132,7 @@ fi
 
 rmi() {
 	run "Test --rmi option"
-	if   dosh --rmi &&
+	if   dosh --rmi && \
 	   ! dosh --rmi
 	then
 		ok
@@ -479,7 +479,7 @@ echo
 
 run "Test cross platform helper scripts"
 if linux-amd64-dosh -c "uname -m" | tee /dev/stderr | \
-   grep -q "^x86_64$" &&
+   grep -q "^x86_64$" && \
    linux-arm64-dosh -c "uname -m" | tee /dev/stderr | \
    grep -q "^aarch64$"
 then
