@@ -261,15 +261,12 @@ get_images() {
 
 		for symlink in "$cachedir"/*/"$image"
 		do
-			local file
 			local status
 			local checksum
 			local dockerfile
 			local dockerfile_checksum
 
 			status="Ready"
-			file="${symlink%/*}"
-			file="${file##*/}"
 			checksum="${symlink##*/dosh-"$USER"-}"
 			checksum="${checksum%%-*}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
@@ -285,13 +282,7 @@ get_images() {
 			then
 				status="Outdated"
 			fi
-
-			# The cache file symlink is broken: reset to <none>
-			if [[ ! -e "$symlink" ]]
-			then
-				file="<none>"
-			fi
-			echo "$image" "$file" "$status" "$dockerfile_checksum" "$dockerfile"
+			echo "$image" "$status" "$dockerfile_checksum" "$dockerfile"
 		done
 	done
 }
@@ -320,7 +311,7 @@ list() {
 		local checksum
 		local dockerfile
 
-		read -r tag _ status checksum dockerfile _ <<<"$image"
+		read -r tag status checksum dockerfile _ <<<"$image"
 		printf "%-${#maxtag}s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
 	done
 }
@@ -340,7 +331,7 @@ prune() {
 		local status
 		local rmiopts
 
-		read -r tag _ status _ <<<"$image"
+		read -r tag status _ <<<"$image"
 		if [[ "$status" == "Ready" ]]
 		then
 			continue
