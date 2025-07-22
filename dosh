@@ -343,6 +343,8 @@ prune() {
 
 		images_unused+=("$tag")
 	done
+	unset tag
+	unset status
 
 	# second pass: unlink the outdated images and remove both outdated and
 	# deleted images
