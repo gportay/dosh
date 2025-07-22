@@ -335,10 +335,8 @@ prune() {
 		local tag
 		local file
 		local status
-		local checksum
-		local dockerfile
 
-		read -r tag file status checksum dockerfile _ <<<"$image"
+		read -r tag file status _ <<<"$image"
 		if [[ "$status" == "Ready" ]]
 		then
 			continue
@@ -352,18 +350,13 @@ prune() {
 	for unused in "${images_unused[@]}"
 	do
 		local tag
+		local status
 		local rmiopts
 
 		# Verify the image is actually unused
 		for image in "${images[@]}"
 		do
-			local tag
-			local file
-			local status
-			local checksum
-			local dockerfile
-
-			read -r tag file status checksum dockerfile _ <<<"$image"
+			read -r tag _ status _ <<<"$image"
 			if [[ "$tag" == "${unused##*/}" ]] &&
 			   [[ "$status" == "Ready" ]]
 			then
