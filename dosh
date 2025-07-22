@@ -316,12 +316,11 @@ list() {
 
 	for image in "${images[@]}"
 	do
-		local file
 		local status
 		local checksum
 		local dockerfile
 
-		read -r tag file status checksum dockerfile _ <<<"$image"
+		read -r tag _ status checksum dockerfile _ <<<"$image"
 		printf "%-${#maxtag}s %-8s %-64s %s\n" "$tag" "$status" "$checksum" "$dockerfile"
 	done
 }
