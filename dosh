@@ -271,6 +271,7 @@ get_images() {
 			file="${symlink%/*}"
 			file="${file##*/}"
 			checksum="${symlink##*/dosh-"$USER"-}"
+			checksum="${checksum%%-*}"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
 			dockerfile_checksum="$(file_checksum "$dockerfile")"
 
