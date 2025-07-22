@@ -141,6 +141,16 @@ rmi() {
 	fi
 	echo
 
+	run "Test --rmi option with --platform option"
+	if   dosh --rmi --platform "$cross_platform" && \
+	   ! dosh --rmi --platform "$cross_platform"
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
 	run "Test --rmi option with --dockerfile option"
 	if   dosh --rmi --dockerfile Dockerfile.fedora && \
 	   ! dosh --rmi --dockerfile Dockerfile.fedora
