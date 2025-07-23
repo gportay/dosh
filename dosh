@@ -161,6 +161,10 @@ Files:
       ~/.dosh_profile           The personal initialization file.
 
       ./.doshrc                 The local initialization file.
+
+      \$XDG_CONFIG_HOME/dosh, ~/.cache/dosh
+                                The user cache directory tracking dosh images
+                                and Dockerfiles.
 EOF
 }
 
