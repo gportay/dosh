@@ -256,8 +256,7 @@ commit-check:
 .PHONY: clean
 clean:
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
-	rm -f debian/debhelper-build-stamp
-	rm -f debian/files debian/*.substvars \
+	rm -f debian/files debian/debhelper-build-stamp debian/*.substvars \
 	   -R debian/.debhelper/ debian/tmp/ \
 	      debian/dosh/ debian/dosh-docker-shell/ \
 	      debian/dosh-cqfd/ debian/dosh-docker-cqfd/
