@@ -18,7 +18,7 @@ jobs:
         cd ..
     - name: Lint package
       run: |
-        lintian ${{ github.event.repository.name }}*.deb
+        lintian ${{ github.event.repository.name }}*.dsc ${{ github.event.repository.name }}*.deb
     - name: Create release
       uses: softprops/action-gh-release@v2
       if: github.ref_type == 'tag'

@@ -294,7 +294,7 @@ deb: SHELL=dosh
 deb: export DOSH_DOCKERFILE=Dockerfile.deb
 deb:
 	dpkg-buildpackage -us -uc
-	lintian ../dosh*.deb
+	lintian ../dosh*.dsc ../dosh*.deb
 
 .PHONY: pkg
 pkg: PATH:=$(CURDIR):$(PATH)
