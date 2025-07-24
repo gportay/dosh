@@ -3,5 +3,4 @@ set -e
 rpmdev-setuptree
 cd ~/rpmbuild/SPECS
 rpmbuild --undefine=_disable_source_fetch -ba dosh.spec "$@"
-cp ~/rpmbuild/SRPMS/*.src.rpm ~/rpmbuild/RPMS/*/*.rpm "$OLDPWD"
-rpmlint *.rpm
+rpmlint ~/rpmbuild/SPECS/dosh.spec ~/rpmbuild/SRPMS/dosh*.rpm ~/rpmbuild/RPMS/dosh*.rpm
