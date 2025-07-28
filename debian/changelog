@@ -1,3 +1,9 @@
+dosh (9~local) UNRELEASED; urgency=medium
+
+  * --newversion 9~local
+
+ -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 28 Jul 2025 16:42:16 +0000
+
 dosh (8~local2) local; urgency=medium
 
   * --local ~local1
