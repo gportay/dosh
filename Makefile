@@ -221,7 +221,7 @@ bump:
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i dosh; \
 	sed -e "/^VERSION=/s,$$old,$(BUMP_VERSION)," -i support/cqfd; \
 	sed -e "/^:man source:/s,$$old,$(BUMP_VERSION)," -i dosh.1.adoc; \
-	sed -e "/^ -- /s/>  .*/>  $(shell date --rfc-email)/" -i debian/changelog; \
+	sed -e "1idosh ($(BUMP_VERSION)) unstable; urgency=medium\n\n  * New release.\n\n -- $(shell git config user.name) <$(shell git config user.email)>  $(shell date --rfc-email)" -i debian/changelog; \
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/%changelog/a* $(shell date "+%a %b %d %Y") $(shell git config user.name) <$(shell git config user.email)> - $(BUMP_VERSION)-1" -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD; \
