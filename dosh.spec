@@ -177,5 +177,5 @@ make check
 
 
 %changelog
-* Tue Jul 01 2025 Gaël PORTAY <gael.portay@gmail.com>
+* Tue Jul 01 2025 Gaël PORTAY <gael.portay@gmail.com> - 7-1
 - Initial release.
