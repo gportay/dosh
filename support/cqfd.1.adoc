@@ -82,7 +82,7 @@ Command options for run:
 === REGULAR BUILD
 
 To build your project from the configured build environment with the default
-build command as configured in *.cqfdrc(5)*, use:
+build command as configured in *cqfdrc(5)*, use:
 
 	$ cqfd
 
@@ -109,7 +109,7 @@ removed.
 
 The _release_ command behaves exactly like _run_, but creates a release tarball
 for your project additionally. The release files (as specified in your
-*.cqfdrc(5)*) will be included inside the release archive.
+*cqfdrc(5)*) will be included inside the release archive.
 
 	$ cqfd release
 
@@ -123,9 +123,6 @@ another container or another build command.
 
 == ENVIRONMENT VARIABLES
 
-The following environment variables are supported by cqfd to provide the user
-with extra flexibility during his day-to-day development tasks:
-
 *CQFD_DOCKER*::
 	Program used to invoke _docker_ client.
 
@@ -137,7 +134,7 @@ with extra flexibility during his day-to-day development tasks:
 *CQFD_EXTRA_BUILD_ARGS*::
 	A space-separated list of additional docker-build options to be append
 	to the building image. Format is the same as (and passed to)
-	docker-build’s options.  See 'docker build --help'.
+	docker-build’s options. See 'docker build --help'.
 
 *CQFD_NO_SSH_CONFIG*::
 	Set to _true_ to disable forwarding the global _/etc/ssh_
@@ -173,14 +170,14 @@ with extra flexibility during his day-to-day development tasks:
 	Project information config file (See *cqfdrc(5)*).
 
 *.cqfd*::
-	The cqfd directory.
+	Project data directory.
 
 *.cqfd/docker/Dockerfile*::
 	Default docker config file (See *Dockerfile(5)*).
 
 == EXAMPLES
 
-Appending to the build command
+=== APPENDING TO THE BUILD COMMAND
 
 The _-c_ option set immediately after the command run allows appending the
 command of a cqfd run for temporary developments.
@@ -188,7 +185,7 @@ command of a cqfd run for temporary developments.
 	$ cqfd -b centos7 run -c "clean"
 	$ cqfd -b centos7 run -c "TRACING=1"
 
-Running a shell in the container
+=== RUNNING A SHELL IN THE CONTAINER
 
 You can use the _shell_ command to quickly pop a shell in your defined
 container. The shell to be launched (default _/bin/sh_) can be customized using
@@ -197,7 +194,7 @@ the _CQFD_SHELL_ environment variable.
 	fred@host:~/project$ cqfd shell
 	fred@container:~/project$
 
-Use cqfd as an interpreter for shell script
+=== USE CQFD AS AN INTERPRETER FOR SHELL SCRIPT
 
 You can use the _shell_ command to write a shell script and run it in your
 defined container.
@@ -212,7 +209,7 @@ defined container.
 	fred@host:~/projet$ ./get-container-pretty-name.sh
 	Debian GNU/Linux 12 (bookworm)
 
-Use cqfd as a standard shell for binaries
+=== USE CQFD AS A STANDARD SHELL FOR BINARIES
 
 You can even use the _shell_ command to use it as a standard _$SHELL_ so
 binaries honoring that variable run shell commands in your defined container.
