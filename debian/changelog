@@ -1,3 +1,9 @@
+dosh (8~local1) UNRELEASED; urgency=medium
+
+  * --local ~local1
+
+ -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 28 Jul 2025 16:33:48 +0000
+
 dosh (7) unstable; urgency=medium
 
   * Initial release.
