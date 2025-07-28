@@ -1,3 +1,10 @@
+dosh (11~local3+nmu1) UNRELEASED; urgency=high
+
+  * Non-maintainer upload by the Security Team.
+  * --security
+
+ -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 28 Jul 2025 17:08:23 +0000
+
 dosh (11~local3) UNRELEASED; urgency=medium
 
   * QA upload.
