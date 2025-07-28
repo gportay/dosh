@@ -172,6 +172,9 @@ command-line through *docker-run(1)*.
 **--home**::
 	Bind mount home directory.
 
+**--parent**::
+	Bind mount parent directory.
+
 **--mount-options OPTIONS**::
 	Set bind mount volume options.
 	For a more thorough description please refers to docker-run(1) manual.
