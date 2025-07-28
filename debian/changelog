@@ -1,9 +1,10 @@
-dosh (10~local01) UNRELEASED; urgency=medium
+dosh (10~local02) UNRELEASED; urgency=medium
 
   * --newversion 10
   * --local ~local0
+  * --increment
 
- -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 28 Jul 2025 16:52:07 +0000
+ -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 28 Jul 2025 16:54:03 +0000
 
 dosh (9~locan) unstable; urgency=medium
 
