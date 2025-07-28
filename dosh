@@ -83,6 +83,7 @@ Docker related options:
       --dind                    Run dosh in dosh.
       --groups                  Run with host groups.
       --home                    Bind mount home directory.
+      --parent                  Bind mount parent directory.
       --mount-options OPTIONS   Set bind mount volume options.
                                 For a more thorough description please refers to
                                 docker-run(1) manual.
@@ -629,7 +630,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|tag|ls|gc|build|rebuild|build-only|rmi|detach)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|parent|tag|ls|gc|build|rebuild|build-only|rmi|detach)$ ]]
 	then
 		return 0
 	fi
@@ -945,6 +946,10 @@ then
 	if [[ ${home:-} ]]
 	then
 		opts+=("--volume" "$HOME:$HOME:${mount_options:-rw}")
+	# Or, bind mount the parent directory
+	elif [[ ${parent:-} ]]
+	then
+		opts+=("--volume" "${PWD%/*}:${PWD%/*}:${mount_options:-rw}")
 	# Or, bind mount the current working directory
 	else
 		opts+=("--volume" "$PWD:$PWD:${mount_options:-rw}")

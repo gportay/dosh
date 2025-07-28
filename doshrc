@@ -14,7 +14,7 @@ Dockerfile.alpine) DOSHELL=/bin/ash;;
 Dockerfile.zsh)    DOSHELL=/bin/zsh;;
 Dockerfile.pkg)    DOSHELL=/bin/bash;;
 Dockerfile.deb)    DOSHELL=/bin/bash
-                   home=1
+                   parent=1
                    ;;
 Dockerfile.rpm)    DOSHELL=/bin/bash
                    DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild")

@@ -605,6 +605,16 @@ else
 fi
 echo
 
+run "Test option --parent"
+if          echo 'pwd; cd ..; pwd' | dosh --parent -s | tee /dev/stderr | \
+   diff - <(echo 'pwd; cd ..; pwd' | sh            -s | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --mount-options"
 if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
    grep -q "${docker[*]} run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
