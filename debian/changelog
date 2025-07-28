@@ -1,3 +1,10 @@
+dosh (11~local3) UNRELEASED; urgency=medium
+
+  * QA upload.
+  * --qa
+
+ -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 28 Jul 2025 17:06:44 +0000
+
 dosh (11~local2) UNRELEASED; urgency=medium
 
   * --newversion 11
