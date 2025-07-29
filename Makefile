@@ -312,7 +312,7 @@ rpm:
 	rpmlint ~/rpmbuild/SPECS/dosh.spec ~/rpmbuild/SRPMS/dosh*.rpm ~/rpmbuild/RPMS/dosh*.rpm
 
 .PHONY: sources
-sources: dosh-$(VERSION).tar.gz rpmbuild/SOURCES/v$(VERSION).tar.gz
+sources: dosh-$(VERSION).tar.gz rpmbuild/SOURCES/$(VERSION).tar.gz
 
 rpmbuild/SOURCES/$(VERSION).tar.gz:
 rpmbuild/SOURCES/%.tar.gz:
