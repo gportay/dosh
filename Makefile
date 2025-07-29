@@ -88,6 +88,7 @@ install-docker-cli-plugin:
 	done
 
 .PHONY: install-docker-cli-plugin-cqfd
+install-docker-cli-plugin-cqfd: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-docker-cli-plugin-cqfd:
 	install -D -m 755 support/docker-cqfd $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-cqfd
 
