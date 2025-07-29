@@ -19,9 +19,6 @@ doc: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 .PHONY: install-world
 install-world: install-all
-install-world: install-docker-cli-plugin-sh
-install-world: install-docker-cli-plugin-bash
-install-world: install-docker-cli-plugin-zsh
 install-world: install-linux-amd64-dosh
 install-world: install-linux-arm64-dosh
 install-world: install-linux-arm-dosh
@@ -79,7 +76,7 @@ install-bash-completion:
 	fi
 
 .PHONY: install-docker-cli-plugin
-install-docker-cli-plugin: DOCKER_CLI_PLUGIN_SHELLS ?= sh bash
+install-docker-cli-plugin: DOCKER_CLI_PLUGIN_SHELLS ?= sh bash zsh
 install-docker-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-docker-cli-plugin:
 	install -D -m 755 support/docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
@@ -154,9 +151,6 @@ uninstall:
 
 .PHONY: user-install-world
 user-install-world: user-install-all
-user-install-world: user-install-docker-cli-plugin-sh
-user-install-world: user-install-docker-cli-plugin-bash
-user-install-world: user-install-docker-cli-plugin-zsh
 user-install-world: user-install-linux-amd64-dosh
 user-install-world: user-install-linux-arm64-dosh
 user-install-world: user-install-linux-arm-dosh
