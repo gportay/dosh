@@ -34,6 +34,7 @@ install-world: install-posh
 install-world: install-doshx
 install-world: install-zdosh
 install-world: install-cqfd
+install-world: install-cli-plugin-cqfd
 
 .PHONY: install-all
 install-all: install
@@ -167,6 +168,7 @@ user-install-world: user-install-posh
 user-install-world: user-install-doshx
 user-install-world: user-install-zdosh
 user-install-world: user-install-cqfd
+user-install-world: user-install-cli-plugin-cqfd
 
 .PHONY: user-install-all
 user-install-all: user-install
