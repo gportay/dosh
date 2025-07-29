@@ -58,7 +58,7 @@ package_dosh-docker-shell-git() {
 	conflicts=(dosh-docker-shell)
 
 	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin
+	make DESTDIR="$pkgdir/" PREFIX="/usr" install-docker-cli-plugin
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-shell-git/LICENSE"
 }
 
@@ -147,6 +147,6 @@ package_dosh-docker-cqfd-git() {
 	conflicts=(dosh-docker-cqfd)
 
 	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cli-plugin-cqfd
+	make DESTDIR="$pkgdir/" PREFIX="/usr" install-docker-cli-plugin-cqfd
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-cqfd-git/LICENSE"
 }

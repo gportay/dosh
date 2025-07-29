@@ -19,9 +19,9 @@ doc: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 .PHONY: install-world
 install-world: install-all
-install-world: install-cli-plugin-sh
-install-world: install-cli-plugin-bash
-install-world: install-cli-plugin-zsh
+install-world: install-docker-cli-plugin-sh
+install-world: install-docker-cli-plugin-bash
+install-world: install-docker-cli-plugin-zsh
 install-world: install-linux-amd64-dosh
 install-world: install-linux-arm64-dosh
 install-world: install-linux-arm-dosh
@@ -34,13 +34,13 @@ install-world: install-posh
 install-world: install-doshx
 install-world: install-zdosh
 install-world: install-cqfd
-install-world: install-cli-plugin-cqfd
+install-world: install-docker-cli-plugin-cqfd
 
 .PHONY: install-all
 install-all: install
 install-all: install-doc
 install-all: install-bash-completion
-install-all: install-cli-plugin
+install-all: install-docker-cli-plugin
 
 .PHONY: install
 install:
@@ -78,24 +78,24 @@ install-bash-completion:
 		install -D -m 644 bash-completion $(DESTDIR)$$completionsdir/dosh; \
 	fi
 
-.PHONY: install-cli-plugin
-install-cli-plugin: CLI_PLUGIN_SHELLS ?= sh bash
-install-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
-install-cli-plugin:
+.PHONY: install-docker-cli-plugin
+install-docker-cli-plugin: DOCKER_CLI_PLUGIN_SHELLS ?= sh bash
+install-docker-cli-plugin: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
+install-docker-cli-plugin:
 	install -D -m 755 support/docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
-	for sh in $(CLI_PLUGIN_SHELLS); do \
-		$(MAKE) --no-print-directory install-cli-plugin-$$sh; \
+	for sh in $(DOCKER_CLI_PLUGIN_SHELLS); do \
+		$(MAKE) --no-print-directory install-docker-cli-plugin-$$sh; \
 	done
 
-.PHONY: install-cli-plugin-cqfd
-install-cli-plugin-cqfd:
+.PHONY: install-docker-cli-plugin-cqfd
+install-docker-cli-plugin-cqfd:
 	install -D -m 755 support/docker-cqfd $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-cqfd
 
-install-cli-plugin-sh:
-install-cli-plugin-bash:
-install-cli-plugin-zsh:
-install-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
-install-cli-plugin-%:
+install-docker-cli-plugin-sh:
+install-docker-cli-plugin-bash:
+install-docker-cli-plugin-zsh:
+install-docker-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
+install-docker-cli-plugin-%:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
 install-linux-amd64-dosh:
@@ -153,9 +153,9 @@ uninstall:
 
 .PHONY: user-install-world
 user-install-world: user-install-all
-user-install-world: user-install-cli-plugin-sh
-user-install-world: user-install-cli-plugin-bash
-user-install-world: user-install-cli-plugin-zsh
+user-install-world: user-install-docker-cli-plugin-sh
+user-install-world: user-install-docker-cli-plugin-bash
+user-install-world: user-install-docker-cli-plugin-zsh
 user-install-world: user-install-linux-amd64-dosh
 user-install-world: user-install-linux-arm64-dosh
 user-install-world: user-install-linux-arm-dosh
@@ -168,21 +168,21 @@ user-install-world: user-install-posh
 user-install-world: user-install-doshx
 user-install-world: user-install-zdosh
 user-install-world: user-install-cqfd
-user-install-world: user-install-cli-plugin-cqfd
+user-install-world: user-install-docker-cli-plugin-cqfd
 
 .PHONY: user-install-all
 user-install-all: user-install
 user-install-all: user-install-doc
 user-install-all: user-install-bash-completion
-user-install-all: user-install-cli-plugin
+user-install-all: user-install-docker-cli-plugin
 
 user-install:
 user-install-doc:
 user-install-bash-completion:
-user-install-cli-plugin:
-user-install-cli-plugin-sh:
-user-install-cli-plugin-bash:
-user-install-cli-plugin-zsh:
+user-install-docker-cli-plugin:
+user-install-docker-cli-plugin-sh:
+user-install-docker-cli-plugin-bash:
+user-install-docker-cli-plugin-zsh:
 user-install-linux-amd64-dosh:
 user-install-linux-arm64-dosh:
 user-install-linux-arm-dosh:

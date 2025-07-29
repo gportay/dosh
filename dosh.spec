@@ -116,7 +116,7 @@ make check
 
 
 %install
-%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-cli-plugin-sh install-cli-plugin-bash install-cli-plugin-zsh install-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
+%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
 
 
 %files
