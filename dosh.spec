@@ -84,6 +84,16 @@ Summary:  Docker CLI plugin for dosh
 Docker CLI plugin for dosh.
 
 
+%package  posh
+Requires: dosh
+Requires: podman
+Summary:  Run a user shell in a container with working directory bind mounted
+
+%description posh
+posh(1) is an sh-compatible front-end for podman that runs commands in a new
+container; using the current user, with working directory bind mounted.
+
+
 %package  cqfd
 Requires: dosh
 Summary:  Wrap commands in controlled Docker containers using dosh
@@ -116,7 +126,7 @@ make check
 
 
 %install
-%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
+%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-posh install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
 
 
 %files
@@ -164,6 +174,17 @@ make check
 %{_libdir}/docker/cli-plugins/docker-sh
 %{_libdir}/docker/cli-plugins/docker-shell
 %{_libdir}/docker/cli-plugins/docker-zsh
+
+
+%files posh
+%{_bindir}/posh
+
+
+%files podman-shell
+%{_libdir}/podman/cli-plugins/podman-bash
+%{_libdir}/podman/cli-plugins/podman-sh
+%{_libdir}/podman/cli-plugins/podman-shell
+%{_libdir}/podman/cli-plugins/podman-zsh
 
 
 %files cqfd

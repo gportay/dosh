@@ -62,6 +62,13 @@ Description: Docker shell for linux/s390x platform.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
+Package: dosh-posh
+Architecture: all
+Depends: ${misc:Depends}, dosh
+Description: Run a user shell in a container with working directory bind mounted.
+ posh(1) is an sh-compatible front-end for podman that runs commands in a new
+ container; using the current user, with working directory bind mounted.
+
 Package: dosh-cqfd
 Architecture: all
 Depends: ${misc:Depends}, dosh

@@ -8,6 +8,8 @@ dosh-docker-shell.substvars
 dosh-docker-shell/
 dosh-linux-*.substvars
 dosh-linux-*/
+dosh-posh.substvars
+dosh-posh/
 dosh.substvars
 dosh/
 files

@@ -8,7 +8,7 @@ override_dh_auto_build:
 	$(MAKE) cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 override_dh_auto_install:
-	$(MAKE) PREFIX=/usr DESTDIR=debian/tmp DOCKERLIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/docker install-all install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
+	$(MAKE) PREFIX=/usr DESTDIR=debian/tmp DOCKERLIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/docker install-all install-posh install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
 
 %:
 	PREFIX=/usr dh $@

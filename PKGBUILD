@@ -8,6 +8,7 @@ pkgname=(dosh
 	 dosh-linux-ppc64le
 	 dosh-linux-riscv64
 	 dosh-linux-s390x
+	 dosh-posh
 	 dosh-cqfd
 	 dosh-docker-cqfd)
 pkgver=7
@@ -105,6 +106,15 @@ package_dosh-linux-s390x() {
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-s390x-dosh
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-s390x/LICENSE"
+}
+
+package_dosh-posh() {
+	pkgdesc='Podman shell'
+	depends+=(dosh podman)
+
+	cd "dosh-$pkgver"
+	make DESTDIR="$pkgdir/" PREFIX="/usr" install-posh
+	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-posh/LICENSE"
 }
 
 package_dosh-cqfd() {
