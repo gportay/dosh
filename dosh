@@ -785,6 +785,22 @@ aarch64) native="linux/arm64";;
 *)       native="linux/$machine";;
 esac
 
+# Apply the dosh options to the dosh environment variables
+# --shell SHELL to DOSHELL
+if [[ ${shell:-} ]]
+then
+	DOSHELL="$shell"
+fi
+# --dockerfile FILE to DOSH_DOCKERFILE
+if [[ ${dockerfile:-} ]]
+then
+	DOSH_DOCKERFILE="$dockerfile"
+fi
+# --platform TARGET to DOSH_PLATFORM
+if [[ ${platform:-} ]]
+then
+	DOSH_PLATFORM="$platform"
+fi
 # --no-extra-options resets DOSH_DOCKER_*_EXTRA_OPTS
 if [[ ${no_extra_options:-} ]]
 then
@@ -835,23 +851,6 @@ do
 	fi
 done
 unset i
-
-# Apply the dosh options to the dosh environment variables
-# --shell SHELL to DOSHELL
-if [[ ${shell:-} ]]
-then
-	DOSHELL="$shell"
-fi
-# --dockerfile FILE to DOSH_DOCKERFILE
-if [[ ${dockerfile:-} ]]
-then
-	DOSH_DOCKERFILE="$dockerfile"
-fi
-# --platform TARGET to DOSH_PLATFORM
-if [[ ${platform:-} ]]
-then
-	DOSH_PLATFORM="$platform"
-fi
 
 # Print the tag and exit
 if [[ "${tag:-}" ]]

@@ -16,8 +16,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
    man page.
  - Add `Untracked` and internal `Unknown` status.
  - Add `--parent` option to bind-mount parent directory.
- - Allow to set `shell`, `dockerfile`, and `platform` from files
-   `~/.dosh_profile` and `./doshrc`.
 
 ### Removed
 
