@@ -24,8 +24,9 @@ jobs:
     - name: Lint package
       run: |
         # FIXME: E: incorrect-fsf-address /usr/share/licenses/domake/LICENSE
+        #        E: spelling-error ('podman', '%description -l en_US podman -> pod man, pod-man, woodman')
         mkdir -p ~/.config/rpmlint
-        printf "Filters = ['incorrect-fsf-address']\n" >~/.config/rpmlint/.toml
+        printf "Filters = ['incorrect-fsf-address', 'spelling-error']\n" >~/.config/rpmlint/.toml
         rpmlint ${{ github.event.repository.name }}.spec ${{ github.event.repository.name }}*.rpm
     - name: Create release
       uses: softprops/action-gh-release@v2
