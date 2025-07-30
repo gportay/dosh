@@ -180,13 +180,6 @@ make check
 %{_bindir}/posh
 
 
-%files podman-shell
-%{_libdir}/podman/cli-plugins/podman-bash
-%{_libdir}/podman/cli-plugins/podman-sh
-%{_libdir}/podman/cli-plugins/podman-shell
-%{_libdir}/podman/cli-plugins/podman-zsh
-
-
 %files cqfd
 %{_bindir}/cqfd
 %{_datadir}/man/man1/cqfd.1.gz
