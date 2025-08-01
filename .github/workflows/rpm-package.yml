@@ -1,5 +1,9 @@
 name: Deploy RPM package to GitHub Release
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v**
 jobs:
   build:
     runs-on: ubuntu-latest
