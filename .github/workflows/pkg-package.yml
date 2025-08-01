@@ -10,20 +10,44 @@ jobs:
     - name: Install dependencies
       run: |
         pacman -Sy --noconfirm asciidoctor bash-completion git namcap shellcheck
+    - name: Setup GPG
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY_BLOCK }}
+      run: |
+        cat <<EOF >/usr/local/bin/gpg
+        #!/bin/bash
+        argv=(--homedir=/tmp/.gnupg)
+        for i in "\$@"
+        do
+          if [ "\$i" == "--use-agent" ]
+          then
+            argv+=(--batch --pinentry-mode=loopback --passphrase-fd=0)
+            continue
+          fi
+          argv+=("\$i")
+        done
+        exec /usr/bin/gpg "\${argv[@]}"
+        EOF
+        chmod +x /usr/local/bin/gpg
+        echo "$GPG_PRIVATE_KEY" | runuser -u nobody -- gpg --batch --import
     - name: Build package
+      env:
+        PKGEXT: .pkg.tar.zst
+        GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.PGP_PRIVATE_KEY_PASSPHRASE }}
       run: |
         ver="$(bash ${{ github.event.repository.name }} --version)"
         tar czf "../${{ github.event.repository.name }}-$ver.tar.gz" --transform "s/./${{ github.event.repository.name }}-$ver/" .
         mv "../${{ github.event.repository.name }}-$ver.tar.gz" .
         chown -R nobody .
-        runuser -u nobody -- makepkg --force --skipchecksums
+        echo "$GPG_PRIVATE_KEY_PASSPHRASE" | runuser -u nobody -- makepkg --force --skipchecksums --noconfirm --sign
     - name: Lint package
       run: |
         shellcheck --shell=bash --exclude=SC2034,SC2154,SC2164 PKGBUILD*
-        runuser -u nobody -- namcap PKGBUILD* ${{ github.event.repository.name }}*.pkg.tar*
+        runuser -u nobody -- namcap PKGBUILD* ${{ github.event.repository.name }}*.pkg.tar.zst
     - name: Create release
       uses: softprops/action-gh-release@v2
       if: github.ref_type == 'tag'
       with:
         files: |
-          ${{ github.event.repository.name }}*.pkg.tar*
+          ${{ github.event.repository.name }}*.sig
+          ${{ github.event.repository.name }}*.pkg.tar.zst
