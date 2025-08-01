@@ -10,7 +10,14 @@ jobs:
     - name: Install dependencies
       run: |
         dnf install -y asciidoctor bash-completion-devel git make pkgconf rpmdevtools rpmlint shellcheck
+    - name: Setup GPG
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY_BLOCK }}
+      run: |
+        echo "$GPG_PRIVATE_KEY" | gpg --batch --import
     - name: Build package
+      env:
+        GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.PGP_PRIVATE_KEY_PASSPHRASE }}
       run: |
         rpmdev-setuptree
         ver="$(bash ${{ github.event.repository.name }} --version)"
@@ -21,6 +28,7 @@ jobs:
         rpmbuild --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
         cd -
         cp ~/rpmbuild/SRPMS/*.rpm ~/rpmbuild/RPMS/*/*.rpm .
+        for i in ${{ github.event.repository.name }}*.rpm; do echo "$GPG_PRIVATE_KEY_PASSPHRASE" | gpg --batch --pinentry-mode=loopback --passphrase-fd=0 --detach-sign --no-armor "$i"; done
     - name: Lint package
       run: |
         # FIXME: E: incorrect-fsf-address /usr/share/licenses/domake/LICENSE
@@ -34,3 +42,4 @@ jobs:
       with:
         files: |
           ${{ github.event.repository.name }}*.rpm
+          ${{ github.event.repository.name }}*.sig
