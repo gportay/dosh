@@ -11,11 +11,24 @@ jobs:
       run: |
         sudo apt-get -y update
         sudo apt-get -y install asciidoctor bash-completion build-essential debhelper devscripts pkgconf shellcheck
+    - name: Setup GPG
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY_BLOCK }}
+      run: |
+        echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+        cat <<EOF >/usr/local/bin/gpg
+        #!/bin/bash
+        exec /usr/bin/gpg --batch --pinentry-mode=loopback --passphrase-fd=0 "\$@"
+        EOF
+        chmod +x /usr/local/bin/gpg
     - name: Build package
+      env:
+        GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.PGP_PRIVATE_KEY_PASSPHRASE }}
       run: |
         cd ${{ github.event.repository.name }}
-        dpkg-buildpackage -us -uc
+        echo "$GPG_PRIVATE_KEY_PASSPHRASE" | dpkg-buildpackage --force-sign --sign-keyid="${{ vars.PGP_KEY_NAME }}"
         cd ..
+        for i in ${{ github.event.repository.name }}*.deb; do echo "$GPG_PRIVATE_KEY_PASSPHRASE" | gpg --detach-sign --no-armor "$i"; done
     - name: Lint package
       run: |
         lintian ${{ github.event.repository.name }}*.dsc ${{ github.event.repository.name }}*.deb
@@ -24,4 +37,6 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: |
+          ${{ github.event.repository.name }}*.dsc
           ${{ github.event.repository.name }}*.deb
+          ${{ github.event.repository.name }}*.sig
