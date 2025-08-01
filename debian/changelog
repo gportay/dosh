@@ -1,7 +1,5 @@
 dosh (8) unstable; urgency=medium
 
-  * New release.
-
   * Add cqfd man pages.
   * Remove non-portable splitting hashbang single argument.
   * Fix relative path with --working-directory option.
