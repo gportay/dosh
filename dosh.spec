@@ -1,5 +1,5 @@
 Name:           dosh
-Version:        7
+Version:        8
 Release:        1
 Summary:        Run a user shell in a container with working directory bind mounted
 
@@ -191,5 +191,17 @@ make check
 
 
 %changelog
+* Fri Aug 01 2025 Gaël PORTAY <gael.portay@gmail.com> - 8-1
+- Add cqfd man pages.
+- Remove non-portable splitting hashbang single argument.
+- Fix relative path with --working-directory option.
+- Fix mapping path to dosh in container.
+- Add --platform option and DOSH_PLATFORM environment to support multi-platform.
+- Fix collecting unused images.
+- Describe --tag, --ls, --rmi, and --gc options in man page.
+- Describe Untracked, Deleted, Outdated, and Ready image status in man page.
+- Add Untracked and internal Unknown status.
+- Remove "tag-redondant" CHECKSUM column.
+- Add --parent option to bind mount parent directory.
 * Tue Jul 01 2025 Gaël PORTAY <gael.portay@gmail.com> - 7-1
 - Initial release.

@@ -17,7 +17,7 @@ then
 	DOSH_PLATFORM="$target"
 fi
 
-VERSION="7"
+VERSION="8"
 
 usage() {
 	cat <<EOF

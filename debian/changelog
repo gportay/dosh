@@ -1,3 +1,22 @@
+dosh (8) unstable; urgency=medium
+
+  * New release.
+
+  * Add cqfd man pages.
+  * Remove non-portable splitting hashbang single argument.
+  * Fix relative path with --working-directory option.
+  * Fix mapping path to dosh in container.
+  * Add --platform option and DOSH_PLATFORM environment to support
+    multi-platform.
+  * Fix collecting unused images.
+  * Describe --tag, --ls, --rmi, and --gc options in man page.
+  * Describe Untracked, Deleted, Outdated, and Ready image status in man page.
+  * Add Untracked and internal Unknown status.
+  * Remove "tag-redondant" CHECKSUM column.
+  * Add --parent option to bind mount parent directory.
+
+ -- Gaël PORTAY <gael.portay@gmail.com>  Fri, 01 Aug 2025 20:45:04 +0200
+
 dosh (7) unstable; urgency=medium
 
   * Initial release.
