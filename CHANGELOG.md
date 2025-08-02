@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [unreleased]
+## [8] - 2025-08-01
 
 ### Added
 
@@ -37,5 +37,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Initial release.
 
 [multi-platform]: https://docs.docker.com/build/building/multi-platform/
-[unreleased]: https://github.com/gportay/dosh/compare/7...master
+[unreleased]: https://github.com/gportay/dosh/compare/8...master
 [7]: https://github.com/gportay/dosh/releases/tag/7
+[8]: https://github.com/gportay/dosh/releases/tag/8
