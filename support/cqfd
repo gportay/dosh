@@ -29,6 +29,7 @@ Options:
 Commands:
       init                      Initialize project build container.
       deinit                    Deinitialize project build container.
+      ls                        List build containers.
       exec cmd [args]           Run argument(s) inside build container.
       flavors                   List flavors from config file to stdout.
       run [command_string]      Run argument(s) inside build container.
@@ -72,7 +73,7 @@ do
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
-	elif [[ "$1" =~ ^(init|deinit|exec|flavors|run|release|shell|help)$ ]]
+	elif [[ "$1" =~ ^(init|deinit|exec|flavors|ls|run|release|shell|help)$ ]]
 	then
 		eval "cmd_$1=1"
 		shift
@@ -194,6 +195,11 @@ then
 	DOSH_DOCKER="$CQFD_DOCKER"
 fi
 export DOSH_DOCKER
+
+if [[ "$cmd_ls" ]]
+then
+	exec "${DOSH[@]:-dosh}" "${dosh_opts[@]}" --ls </dev/null
+fi
 
 if [[ "$cmd_init" ]]
 then
