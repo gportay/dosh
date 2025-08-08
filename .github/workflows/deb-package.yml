@@ -7,30 +7,33 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
     steps:
     - uses: actions/checkout@v4
       with:
         path: ${{ github.event.repository.name }}
     - name: Install dependencies
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install asciidoctor bash-completion build-essential debhelper devscripts pkgconf shellcheck
+        apt-get -y update
+        apt-get -y install asciidoctor bash-completion build-essential debhelper devscripts pkgconf shellcheck
     - name: Setup GPG
       env:
         GPG_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY_BLOCK }}
       run: |
         echo "$GPG_PRIVATE_KEY" | gpg --batch --import
-        cat <<EOF >/usr/local/bin/gpg
+        mv /usr/bin/gpg /usr/bin/gpg.real
+        cat <<EOF >/usr/bin/gpg
         #!/bin/bash
-        exec /usr/bin/gpg --batch --pinentry-mode=loopback --passphrase-fd=0 "\$@"
+        exec /usr/bin/gpg.real --no-tty --batch --pinentry-mode=loopback --passphrase-fd=0 "\$@"
         EOF
-        chmod +x /usr/local/bin/gpg
+        chmod +x /usr/bin/gpg
     - name: Build package
       env:
         GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.PGP_PRIVATE_KEY_PASSPHRASE }}
       run: |
         cd ${{ github.event.repository.name }}
-        echo "$GPG_PRIVATE_KEY_PASSPHRASE" | dpkg-buildpackage --force-sign --sign-keyid="${{ vars.PGP_KEY_NAME }}"
+        echo "$GPG_PRIVATE_KEY_PASSPHRASE" | dpkg-buildpackage --force-sign --sign-keyid="${{ vars.PGP_KEY_NAME }}" --sign-backend=gpg
         cd ..
         for i in ${{ github.event.repository.name }}*.deb; do echo "$GPG_PRIVATE_KEY_PASSPHRASE" | gpg --detach-sign --no-armor "$i"; done
     - name: Lint package
