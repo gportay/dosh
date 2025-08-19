@@ -37,11 +37,12 @@ Options:
             --reinit            Reinitialize build container.
             --release           Release software.
             --platform TARGET   Set target platform.
-      -f FILE                   Use file as config file (default .cqfdrc).
-      -d DIR                    Use directory as cqfd directory (default .cqfd).
-      -C DIR                    Change to the specified working directory.
-      -b FLAVOR                 Target a specific build flavor.
-      -q                        Turn on quiet mode.
+      -f or --cqfdrc-file FILE  Use file as config file (default .cqfdrc).
+      -d or --cqfd-directory DIR
+                                Use directory as cqfd directory (default .cqfd).
+      -C or --directory DIR     Change to the specified working directory.
+      -b or --build FLAVOR      Target a specific build flavor.
+      -q or --quiet             Turn on quiet mode.
       -v or --version           Show version.
       -D or --verbose           Increase the script's verbosity.
       -h or --help              Show this help text.
@@ -69,8 +70,6 @@ Command options for run:
 EOF
 }
 
-opt_f="${CQFDRC_FILE:-.cqfdrc}"
-opt_d="${CQFD_DIR:-.cqfd}"
 tar_transform="no"
 while [[ "$#" -ne 0 ]]
 do
@@ -89,10 +88,10 @@ do
 	then
 		printf -v "opt_${1:1}" "%s" "$2"
 		shift
-	elif [[ "$1" =~ ^--(reinit|release|verbose)$ ]]
+	elif [[ "$1" =~ ^--(reinit|release|quiet|verbose)$ ]]
 	then
 		printf -v "opt_${1:2}" "%s" 1
-	elif [[ "$1" =~ ^--(platform)$ ]]
+	elif [[ "$1" =~ ^--(platform|cqfdrc-file|cqfd-directory|directory)$ ]]
 	then
 		opt="${1//-/_}"
 		printf -v "opt_${opt:2}" "%s" "$2"
@@ -160,30 +159,30 @@ cfg_parser ()
 	eval "${ini[*]}"                                     # eval the result
 }
 
-if [[ "$opt_C" ]]
+if [[ "$opt_C" ]] || [ "$opt_directory" ]
 then
-	cd "$opt_C"
+	cd "${opt_C:-$opt_directory}"
 fi
 
-cfg_parser "$opt_f"
+cfg_parser "${opt_f:-${opt_cqfdrc_file:-${CQFDRC_FILE:-.cqfdrc}}}"
 cfg_section_project
 cfg_section_build
-if [[ "$opt_b" ]]
+if [[ "$opt_b" ]] || [[ "$opt_build" ]]
 then
-	if ! declare -F "cfg_section_$opt_b" >/dev/null
+	if ! declare -F "cfg_section_${opt_b:-$opt_build}" >/dev/null
 	then
-		echo "Error: $opt_b: Invalid flavor" >&2
+		echo "Error: ${opt_b:-$opt_build}: Invalid flavor" >&2
 		exit 1
 	fi
 
-	"cfg_section_$opt_b"
+	"cfg_section_${opt_b:-$opt_build}"
 fi
 
 dosh_opts+=(--no-doshrc --no-doshprofile)
 
 if ! [[ "$dockerfile" ]]
 then
-	dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
+	dockerfile="${opt_d:-${opt_cqfd_directory:-${CQFD_DIR:-.cqfd}}}/${distro:-docker}/Dockerfile"
 fi
 dosh_opts+=(--dockerfile "$dockerfile")
 if [[ "$opt_D" ]] || [[ "$opt_verbose" ]]
@@ -318,7 +317,7 @@ then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" $docker_build_args"
 	fi
 
-	if [[ "$opt_q" ]]
+	if [[ "$opt_q" ]] || [ "$opt_quiet" ]
 	then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" --quiet"
 	fi

@@ -95,19 +95,19 @@ Command options for run:
 *--platform TARGET*::
 	Set target platform.
 
-*-f FILE*::
+*-f* or *--cqfdrc-file FILE*::
 	Use file as config file (default _.cqfdrc_).
 
-*-d DIR*::
+*-d* or *--cqfd-directory DIR*::
 	Use directory as cqfd directory (default _.cqfd_).
 
-*-C DIR*::
+*-C* or *--directory DIR*::
 	Change to the specified working directory.
 
-*-b FLAVOR*::
+*-b* or *--build FLAVOR*::
 	Target a specific build flavor.
 
-*-q*::
+*-q* or *--quiet*::
 	Turn on quiet mode.
 
 *-v* or *--version*::
