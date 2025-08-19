@@ -29,6 +29,11 @@ line, and right after a section.
 *name*::
 	a short, lowercase name for the project.
 
+*flavors (optional)*::
+	The list of build flavors (see below). Each flavor has its own command
+	just like _build.command_. This property is now automatically deduced
+	from the flavors sections of _.cqfdrc_.
+
 *build_context (optional)*::
 	a directory to pass as the build context to Docker. This should be
 	specified relatively to where _cqfd_ is invoked.  For example, it can
@@ -80,11 +85,6 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 	container. You can either use the _group:gid_ format, or simply specify
 	the _group_ name if it exists either in the host or inside the docker
 	image.
-
-*flavors (optional)*::
-	The list of build flavors (see below). Each flavor has its own command
-	just like _build.command_. This property is now automatically deduced
-	from the flavors sections of _.cqfdrc_.
 
 *docker_build_args (optional)*::
 	Arguments used to invoke _docker build_.
