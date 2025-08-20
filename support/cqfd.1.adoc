@@ -71,6 +71,9 @@ Command options for run:
 *--release*::
 	Release software.
 
+*--platform TARGET*::
+	Set target platform.
+
 *-f FILE*::
 	Use file as config file (default _.cqfdrc_).
 
