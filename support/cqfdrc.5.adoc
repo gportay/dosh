@@ -92,6 +92,9 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 *path (optional)*::
 	Set the _PATH_ environment variable in the build container.
 
+*platform (optional)*::
+	Set the desired target platform.
+
 *docker (optional)*::
 	The program used to invoke the _docker(1)_ client.
 

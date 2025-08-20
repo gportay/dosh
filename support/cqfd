@@ -18,6 +18,7 @@ A tool to wrap commands in controlled Docker containers using dosh.
 Options:
       --reinit                  Reinitialize build container.
       --release                 Release software.
+      --platform TARGET         Set target platform.
       -f FILE                   Use file as config file (default .cqfdrc).
       -d DIR                    Use directory as cqfd directory (default .cqfd).
       -C DIR                    Use the specified working directory.
@@ -72,6 +73,12 @@ do
 	elif [[ "$1" =~ ^--(reinit|release|verbose)$ ]]
 	then
 		printf -v "opt_${1:2}" "%s" 1
+	elif [[ "$1" =~ ^--(platform)$ ]]
+	then
+		opt="${1//-/_}"
+		printf -v "opt_${opt:2}" "%s" "$2"
+		unset opt
+		shift
 	elif [[ "$1" =~ ^- ]]
 	then
 		echo "Error: $1: Invalid option" >&2
@@ -223,6 +230,22 @@ if [[ "$CQFD_DOCKER" ]]
 then
 	DOSH_DOCKER="$CQFD_DOCKER"
 	export DOSH_DOCKER
+fi
+
+if [[ "$opt_platform" ]]
+then
+	platform="$opt_platform"
+fi
+
+if [[ "$platform" ]]
+then
+	CQFD_PLATFORM="$platform"
+fi
+
+if [[ "$CQFD_PLATFORM" ]]
+then
+	DOSH_PLATFORM="$CQFD_PLATFORM"
+	export DOSH_PLATFORM
 fi
 
 if [[ "$cmd_ls" ]] || [[ "$cmd_images" ]]

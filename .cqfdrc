@@ -9,6 +9,12 @@ tar_transform=yes
 command="bash -x examples/build-man.dosh"
 shell=/bin/bash
 
+[arm64]
+platform=linux/arm64
+
+[amd64]
+platform=linux/amd64
+
 [rootless]
 CQFD_RUN_WITH_SUDO=true
 
