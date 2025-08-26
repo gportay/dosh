@@ -65,6 +65,9 @@ Command options for run:
 
 == OPTIONS
 
+*--release*::
+	Release software.
+
 *-f FILE*::
 	Use file as config file (default _.cqfdrc_).
 
