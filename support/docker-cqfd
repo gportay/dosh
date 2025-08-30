@@ -65,6 +65,7 @@ Commands:
   run [list]             Run command string inside build container.
   release [list]         Run command string inside build container and release software.
   shell [list]           Run shell inside build container.
+  version                Show version.
   help                   Show this help text.
 
   By default, the 'run' command is assumed, with the default command string

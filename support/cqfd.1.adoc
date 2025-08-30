@@ -52,6 +52,9 @@ Linux distribution.
 *shell [SHELL_ARGUMENTS]*::
 	Run shell inside build container.
 
+*version*::
+	Show version.
+
 *help*::
 	Show this help text.
 

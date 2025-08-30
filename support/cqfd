@@ -48,6 +48,7 @@ Commands:
       release [command_string]  Run command string inside build container and
                                 release software.
       shell [shell_arguments]   Run shell inside build container.
+      version                   Show version.
       help                      Show this help text.
 
       By default, the 'run' command is assumed, with the default
@@ -92,7 +93,7 @@ do
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
-	elif [[ "$1" =~ ^(init|deinit|exec|flavors|images|gc|ls|prune|run|release|shell|help)$ ]]
+	elif [[ "$1" =~ ^(init|deinit|exec|flavors|images|gc|ls|prune|run|release|shell|version|help)$ ]]
 	then
 		printf -v "cmd_$1" "%s" 1
 		shift
@@ -113,6 +114,12 @@ done
 if [[ "$cmd_help" ]]
 then
 	usage
+	exit
+fi
+
+if [[ "$cmd_version" ]]
+then
+	echo "$VERSION"
 	exit
 fi
 
