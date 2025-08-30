@@ -37,20 +37,20 @@ Linux distribution.
 *prune*::
 	Remove all cqfd container images.
 
-*exec cmd [args]*::
-	Run argument(s) inside build container.
+*exec program [arguments]*::
+	Run command inside build container.
 
 *flavors*::
 	List flavors from config file to stdout.
 
 *run [command_string]*::
-	Run argument(s) inside build container.
+	Run command string inside build container.
 
 *release [command_string]*::
-	Run argument(s) and release software.
+	Run command string inside build container and release software.
 
-*shell [sh_arguments]*::
-	Run shell command inside build container.
+*shell [shell_arguments]*::
+	Run shell inside build container.
 
 *help*::
 	Show this help text.
@@ -60,8 +60,8 @@ configured in your _.cqfdrc_ (see build.command).
 
 Command options for run:
 
-*-c <command_arguments>*::
-	Append command arguments to the default command string.
+*-c argument_string*::
+	Append argument string to the default command string.
 
 == OPTIONS
 
