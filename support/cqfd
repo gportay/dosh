@@ -39,6 +39,7 @@ Commands:
       release [command_string]  Run command string inside build container and
                                 release software.
       shell [shell_arguments]   Run shell inside build container.
+      version                   Show version.
       help                      Show this help text.
 
       By default, the 'run' command is assumed, with the default
