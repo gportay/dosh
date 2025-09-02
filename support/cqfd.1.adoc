@@ -74,7 +74,7 @@ Command options for run:
 *-C DIR*::
 	Use the specified working directory.
 
-*-b STRING*::
+*-b FLAVOR*::
 	Target a specific build flavor.
 
 *-q*::
