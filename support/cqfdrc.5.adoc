@@ -82,9 +82,9 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 
 *user_extra_groups (optional)*::
 	A space-separated list of groups the user should be a member of in the
-	container. You can either use the _group:gid_ format, or simply specify
-	the _group_ name if it exists either in the host or inside the docker
-	image.
+	build container. You can either use the _group:gid_ format, or simply
+	specify the _group_ name if it exists either in the host or inside the
+	docker image.
 
 *docker_build_args (optional)*::
 	Arguments used to invoke _docker build_.
