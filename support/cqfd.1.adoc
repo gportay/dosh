@@ -187,8 +187,8 @@ another container or another build command.
 
 === APPENDING TO THE BUILD COMMAND
 
-The _-c_ option set immediately after the command run allows appending the
-command of a cqfd run for temporary developments.
+The _-c_ option set immediately after the command _run_ allows appending the
+command of a _cqfd run_ for temporary developments.
 
 	$ cqfd -b centos7 run -c "clean"
 	$ cqfd -b centos7 run -c "TRACING=1"
