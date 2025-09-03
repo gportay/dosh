@@ -127,45 +127,6 @@ For tar archives:
   command. For example, setting _tar_options=-h_ will copy all symlink files as
   hardlinks, which is desired in some scenarios.
 
-== EXAMPLES
-
-=== BASIC
-
-Here is a sample _.cqfdrc_ file
-
-	[project]
-	org='fooinc'
-	name='buildroot'
-
-	[build]
-	command='make foobar_defconfig && make && asciidoc README.FOOINC'
-	files='README.FOOINC output/images/sdcard.img'
-	archive='cqfd-%Gh.tar.xz'
-
-=== USING FLAVORS
-
-In some cases, it may be desirable to build the project using variations of the
-build and release methods (for example a debug build). This is made possible in
-*cqfd(1)* with the build _flavors_ feature.
-
-In the _.cqfdrc_ file, one or more flavors may be listed in the _[build]_
-section, referencing other sections named following flavor's name.
-
-	[centos7]
-	command='make CENTOS=1'
-	distro='centos7'
-
-	[debug]
-	command='make DEBUG=1'
-	files='myprogram Symbols.map'
-
-	[build]
-	command='make'
-	files='myprogram'
-
-A _flavor_ will typically redefine some keys of the build section: _command_,
-_files_, _archive_, _distro_.
-
 == PATCHES
 
 Submit patches at *https://github.com/gportay/dosh/pulls*
