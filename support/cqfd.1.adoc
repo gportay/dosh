@@ -93,7 +93,7 @@ Command options for run:
 
 *CQFD_EXTRA_RUN_ARGS*::
 	A space-separated list of additional docker-run options to be append to
-	the starting container. Format is the same as (and passed to)
+	the starting build container. Format is the same as (and passed to)
 	docker-run’s options. See 'docker run --help'.
 
 *CQFD_EXTRA_BUILD_ARGS*::
@@ -103,28 +103,29 @@ Command options for run:
 
 *CQFD_NO_SSH_CONFIG*::
 	Set to _true_ to disable forwarding the global _/etc/ssh_
-	configurations to the container. This may be required if the host's
+	configurations to the build container. This may be required if the host's
 	_ssh_ configuration is not compatible with the _ssh_ version within the
-	container.
+	build container.
 
 *CQFD_NO_USER_SSH_CONFIG*::
 	Set to _true_ to disable forwarding the user's _~/.ssh_ configuration
-	to the container.
+	to the build container.
 
 *CQFD_NO_USER_GIT_CONFIG*::
 	Set to _true_ to disable forwarding the user's _~/.gitconfig_
-	configuration to the container.
+	configuration to the build container.
 
 *CQFD_NO_SSH_AUTH_SOCK*::
 	Set to _true_ to disable forwarding the SSH authentication socket to
-	the container.
+	the build container.
 
 *CQFD_BIND_DOCKER_SOCK*::
-	Set to _true_ to enable forwarding the docker socket to the container.
+	Set to _true_ to enable forwarding the docker socket to the build
+	container.
 
 *CQFD_DOCKER_GID*::
 	The gid of the docker group in host to map to the cqfd group in the
-	container.
+	build container.
 
 *CQFD_SHELL*::
 	The shell to be launched, by default _/bin/sh_.
