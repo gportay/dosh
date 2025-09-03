@@ -31,8 +31,8 @@ line, and right after a section.
 
 *flavors (optional)*::
 	The list of build flavors (see below). Each flavor has its own command
-	just like _build.command_. This property is now automatically deduced
-	from the flavors sections of _.cqfdrc_.
+	just like _build.command_. _flavors_ is *deprecated*, the flavors are
+	now automatically deduced from the flavors sections of _.cqfdrc_.
 
 *build_context (optional)*::
 	a directory to pass as the build context to Docker. This should be
