@@ -86,50 +86,6 @@ Command options for run:
 *-h* or *--help*::
 	Show this help text.
 
-== EXAMPLES
-
-=== REGULAR BUILD
-
-To build your project from the configured build environment with the default
-build command as configured in *cqfdrc(5)*, use:
-
-	$ cqfd
-
-Alternatively, you may want to specify a custom command to be executed from
-inside the build container.
-
-	$ cqfd run make clean
-	$ cqfd run "make linux-dirclean && make foobar-dirclean"
-
-The _run_ command is broken in some situations, and it is then recommended to
-use _exec_ for a single command, _shell -c_ for a command composed with shell
-grammar, or _shell_ to run a shell script with or without arguments:
-
-	$ cqfd exec make clean
-	$ cqfd shell -c "make linux-dirclean && make foobar-dirclean"
-	$ cqfd shell ./build.sh debug
-
-When *cqfd(1)* is running, the current directory is mounted by Docker as a
-volume. As a result, all the build artefacts generated inside the container are
-still accessible in this directory after the container has been stopped and
-removed.
-
-=== RELEASE
-
-The _release_ command behaves exactly like _run_, but creates a release tarball
-for your project additionally. The release files (as specified in your
-*cqfdrc(5)*) will be included inside the release archive.
-
-	$ cqfd release
-
-The resulting release file is then called according to the archive template,
-which defaults to _%Po-%Pn.tar.xz_.
-
-=== FLAVORS
-
-Flavors are used to create alternate build scenarios. For example, to use
-another container or another build command.
-
 == ENVIRONMENT VARIABLES
 
 *CQFD_DOCKER*::
@@ -185,6 +141,48 @@ another container or another build command.
 	Default docker config file (See *Dockerfile(5)*).
 
 == EXAMPLES
+
+=== REGULAR BUILD
+
+To build your project from the configured build environment with the default
+build command as configured in *cqfdrc(5)*, use:
+
+	$ cqfd
+
+Alternatively, you may want to specify a custom command to be executed from
+inside the build container.
+
+	$ cqfd run make clean
+	$ cqfd run "make linux-dirclean && make foobar-dirclean"
+
+The _run_ command is broken in some situations, and it is then recommended to
+use _exec_ for a single command, _shell -c_ for a command composed with shell
+grammar, or _shell_ to run a shell script with or without arguments:
+
+	$ cqfd exec make clean
+	$ cqfd shell -c "make linux-dirclean && make foobar-dirclean"
+	$ cqfd shell ./build.sh debug
+
+When *cqfd(1)* is running, the current directory is mounted by Docker as a
+volume. As a result, all the build artefacts generated inside the container are
+still accessible in this directory after the container has been stopped and
+removed.
+
+=== RELEASE
+
+The _release_ command behaves exactly like _run_, but creates a release tarball
+for your project additionally. The release files (as specified in your
+*cqfdrc(5)*) will be included inside the release archive.
+
+	$ cqfd release
+
+The resulting release file is then called according to the archive template,
+which defaults to _%Po-%Pn.tar.xz_.
+
+=== FLAVORS
+
+Flavors are used to create alternate build scenarios. For example, to use
+another container or another build command.
 
 === APPENDING TO THE BUILD COMMAND
 
