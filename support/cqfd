@@ -202,6 +202,17 @@ then
 	echo "Warning: custom_img_name=\"$custom_img_name\": Unsupported option" >&2
 fi
 
+if [[ "$shell" ]]
+then
+	CQFD_SHELL="$shell"
+fi
+
+if [[ "$CQFD_SHELL" ]]
+then
+	DOSHELL="$CQFD_SHELL"
+	export DOSHELL
+fi
+
 if [[ "$docker" ]]
 then
 	CQFD_DOCKER="$docker"

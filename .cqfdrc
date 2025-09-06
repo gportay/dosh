@@ -7,11 +7,12 @@ archive=%Po-%Pn-%Cf_%D3_%GH.tar.xz
 files="dosh dosh.1.gz"
 tar_transform=yes
 command="bash -x examples/build-man.dosh"
+shell=/bin/bash
 
 [podman]
 PODMAN_USERNS=keep-id
 docker=podman
-CQFD_SHELL=bash
+shell=bash
 CQFD_EXTRA_RUN_ARGS="-e BAZ=baz -e QUX=qux"
 docker_run_args="-e FOO=foo -e BAR=bar"
 command=env
