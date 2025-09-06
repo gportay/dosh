@@ -86,6 +86,9 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 	specify the _group_ name if it exists either in the host or inside the
 	docker image.
 
+*shell (optional)*::
+	The program used to invoke the _shell_ command.
+
 *docker (optional)*::
 	The program used to invoke the _docker(1)_ client.
 
