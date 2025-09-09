@@ -87,13 +87,14 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 	docker image.
 
 *docker_build_args (optional)*::
-	Arguments used to invoke _docker build_.
+	A space-separated list of extra arguments used to invoke _docker
+	build_.
 
 *docker_run_args (optional)*::
-	Arguments used to invoke _docker run_.
+	A space-separated list of extra arguments used to invoke _docker run_.
 
 *docker_rmi_args (optional)*::
-	Arguments used to invoke _docker rmi_.
+	A space-separated list of extra arguments used to invoke _docker rmi_.
 
 ==== CQFD RELEASE
 
