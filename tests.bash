@@ -222,6 +222,16 @@ else
 fi
 echo
 
+run "Test option --verbose"
+if dosh --verbose -c "true" 2>&1 >/dev/null | tee /dev/stderr | \
+    grep "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\} -c true"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --build-only"
 if dosh --build-only -c "exit 1"
 then

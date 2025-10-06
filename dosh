@@ -183,6 +183,11 @@ run() {
 
 		# Preserve spaces in command line if any
 		set -- "${@// /\\ }"
+	# Output the command
+	elif [[ ${verbose:-} ]]
+	then
+		# Preserve spaces in command line if any
+		echo "${@// /\\ }" >&2
 	fi
 
 	"$@"
