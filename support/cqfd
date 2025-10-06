@@ -203,6 +203,11 @@ then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" $docker_build_args"
 	fi
 
+	if [[ "$opt_q" ]]
+	then
+		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" --quiet"
+	fi
+
 	exec "${DOSH[@]:-dosh}" --rebuild "${dosh_opts[@]}" </dev/null
 fi
 
