@@ -209,14 +209,14 @@ to_array_if_not_array() {
 	fi
 }
 
-checksum() {
+hash() {
 	local sha256
 
 	read -r -a sha256 < <(echo -n "$1" | sha256sum -)
 	echo "${sha256[0]}"
 }
 
-file_checksum() {
+file_hash() {
 	local sha256
 
 	read -r -a sha256 < <(sha256sum "$1" 2>/dev/null || echo "<none>" "$1")
@@ -225,12 +225,12 @@ file_checksum() {
 
 add_symlink() {
 	local file
-	local checksum
+	local hash
 
 	file="$(realpath "$1")"
-	checksum="$(checksum "$PWD")"
-	mkdir -p "$cachedir/${docker[-1]}/$checksum"
-	ln -sf "$file" "$cachedir/${docker[-1]}/$checksum/$2"
+	hash="$(hash "$PWD")"
+	mkdir -p "$cachedir/${docker[-1]}/$hash"
+	ln -sf "$file" "$cachedir/${docker[-1]}/$hash/$2"
 }
 
 remove_symlink() {
@@ -240,12 +240,12 @@ remove_symlink() {
 
 get_tag() {
 	local file
+	local hash
 	local user
 	local target
-	local checksum
 
 	file="$(realpath "$1")"
-	checksum="$(file_checksum "$file")"
+	hash="$(file_hash "$file")"
 	user="$2"
 	if [[ ! "${2:-}" ]]
 	then
@@ -256,7 +256,7 @@ get_tag() {
 	then
 		target="-${3//\//-}"
 	fi
-	echo "dosh-$user-$checksum${target:-}"
+	echo "dosh-$user-$hash${target:-}"
 }
 
 get_images() {
@@ -274,24 +274,24 @@ get_images() {
 		do
 			local tag
 			local status
-			local checksum
+			local hash
 			local platform
 			local dockerfile
-			local dockerfile_checksum
+			local dockerfile_hash
 
 			status="Unknown"
-			checksum="${symlink##*/dosh-"$USER"-}"
-			checksum="${checksum%%-*}"
+			hash="${symlink##*/dosh-"$USER"-}"
+			hash="${hash%%-*}"
 			platform="${symlink##*/dosh-"$USER"-}"
 			platform="${platform#*-}"
 			platform="${platform//-/\/}"
-			if [ "$checksum" = "$platform" ]
+			if [ "$hash" = "$platform" ]
 			then
 				platform="$native"
 			fi
-			tag="dosh-$USER-$checksum"
+			tag="dosh-$USER-$hash"
 			dockerfile="$(readlink "$symlink" || echo "<none>")"
-			dockerfile_checksum="$(file_checksum "$dockerfile")"
+			dockerfile_hash="$(file_hash "$dockerfile")"
 
 			# The symlink does not exist: image is Untracked
 			if [[ ! -e "$symlink" ]]
@@ -299,18 +299,18 @@ get_images() {
 				status="Untracked"
 			# The Dockerfile does not exist: image is Deleted
 			elif [[ "$dockerfile" == "<none>" ]] ||
-			     [[ "$dockerfile_checksum" == "<none>" ]]
+			     [[ "$dockerfile_hash" == "<none>" ]]
 			then
 				status="Deleted"
-			# The Dockerfile checksum mismatches: image is Outdated
-			elif [[ "$dockerfile_checksum" != "$checksum" ]]
+			# The Dockerfile hash mismatches: image is Outdated
+			elif [[ "$dockerfile_hash" != "$hash" ]]
 			then
 				status="Outdated"
-			# The Dockerfile exists and checksum matches: image is Ready
+			# The Dockerfile exists and hash matches: image is Ready
 			else
 				status="Ready"
 			fi
-			echo "$image" "$tag" "$platform" "$status" "$dockerfile_checksum" "$dockerfile"
+			echo "$image" "$tag" "$platform" "$status" "$dockerfile_hash" "$dockerfile"
 		done
 	done
 }
@@ -384,18 +384,18 @@ prune() {
 	for symlink in "$cachedir/${docker[-1]}"/*/"dosh-"*
 	do
 		local tag
-		local checksum
+		local hash
 
 		if [[ -e "$symlink" ]]
 		then
 			continue
 		fi
 
-		checksum="${symlink%/*}"
-		checksum="${checksum##*/}"
+		hash="${symlink%/*}"
+		hash="${hash##*/}"
 		tag="${symlink##*/}"
 
-		remove_symlink "$checksum" "$tag"
+		remove_symlink "$hash" "$tag"
 	done
 }
 
@@ -605,8 +605,8 @@ docker_rm() {
 }
 
 docker_rmi() {
+	local hash
 	local rmiopts
-	local checksum
 
 	# Append the extra options if any
 	if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
@@ -616,8 +616,8 @@ docker_rmi() {
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
 
-	checksum="$(checksum "$PWD")"
-	remove_symlink "$checksum" "$1"
+	hash="$(hash "$PWD")"
+	remove_symlink "$hash" "$1"
 }
 
 has_positional_parameter() {
