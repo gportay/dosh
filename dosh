@@ -269,12 +269,13 @@ get_images() {
 	local image
 	local images
 
+	# List images
 	mapfile -t images < <("${docker[@]}" images "dosh-$USER-*" --format "{{.Repository}}")
-
 	for image in "${images[@]}"
 	do
 		local symlink
 
+		# Remove registry if any
 		image="${image##*/}"
 		for symlink in "$cachedir/${docker[-1]}"/*/"$image"
 		do
@@ -322,6 +323,8 @@ get_images() {
 			else
 				status="Running"
 			fi
+
+			# IMAGE TAG PLATFORM STATUS HASH DOCKERFILE
 			echo "$image" "$tag" "$platform" "$status" "$dockerfile_hash" "$dockerfile"
 		done
 	done
@@ -335,6 +338,7 @@ list() {
 	local platform
 	local maxplatform
 
+	# Output header and look for the max tag length of images
 	mapfile -t images < <(get_images)
 	maxtag=""
 	maxplatform=""
@@ -352,6 +356,7 @@ list() {
 	done
 	printf "%-${#maxtag}s %-${#maxplatform}s %-9s %s\n" "TAG" "PLATFORM" "STATUS" "DOCKERFILE"
 
+	# Output the images
 	for image in "${images[@]}"
 	do
 		local status
@@ -367,16 +372,15 @@ prune() {
 	local images
 	local symlink
 
+	# Remove unused images if any
 	mapfile -t images < <(get_images)
-
-	# Unlink the outdated images and remove both outdated and deleted
-	# images
 	for image in "${images[@]}"
 	do
 		local tag
 		local status
 		local rmiopts
 
+		# Skip ready image
 		read -r _ tag _ status _ <<<"$image"
 		if [[ "$status" == "Ready" ]]
 		then
@@ -389,10 +393,11 @@ prune() {
 			rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
 		fi
 
+		# Remove image
 		run "${docker[@]}" rmi "${rmiopts[@]}" "$tag" "$@"
 	done
 
-	# Consolidate the database
+	# Consolidate the database symlinks
 	for symlink in "$cachedir/${docker[-1]}"/*/"dosh-"*
 	do
 		local tag
@@ -403,6 +408,7 @@ prune() {
 			continue
 		fi
 
+		# Remove if symlink is broken
 		hash="${symlink%/*}"
 		hash="${hash##*/}"
 		tag="${symlink##*/}"
