@@ -214,6 +214,20 @@ to_array_if_not_array() {
 	fi
 }
 
+set_user() {
+	local passwd
+
+	IFS=: read -r -a passwd < <(getent passwd "$UID")
+	USER="${passwd[0]}"
+}
+
+set_home() {
+	local passwd
+
+	IFS=: read -r -a passwd < <(getent passwd "$UID")
+	HOME="${passwd[5]}"
+}
+
 hash() {
 	local sha256
 
@@ -957,6 +971,18 @@ do
 	to_array_if_not_array "$i"
 done
 unset i
+
+# Get login name entry if USER unset
+if ! [[ ${USER:-} ]]
+then
+	set_user
+fi
+
+# Get user home directory if HOME unset
+if ! [[ ${HOME:-} ]]
+then
+	set_home
+fi
 
 # Change the current directory
 cd "$directory"
