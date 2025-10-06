@@ -27,5 +27,5 @@ command='bash make-pkg.sh'
 
 [rpm]
 distro='rpm'
-docker_run_args="--volume $PWD/rpmbuild:$HOME/rpmbuild --volume $PWD/cqfd.spec:$HOME/rpmbuild/SPECS/cqfd.spec"
+docker_run_args="--volume $PWD/rpmbuild:$HOME/rpmbuild --volume $PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec"
 command='bash make-rpm.sh'
