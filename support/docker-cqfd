@@ -50,8 +50,8 @@ Options:
   -C string              Use the specified working directory.
   -b string              Target a specific build flavor.
   -q                     Turn on quiet mode.
-  -v or --version        Show version.
-  -h or --help           Show this help text.
+  -v, --version          Show version.
+  -h, --help             Show this help text.
 
 Commands:
   init                   Initialize project build container.
