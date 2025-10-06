@@ -339,9 +339,9 @@ list() {
 	local maxplatform
 
 	# Output header and look for the max tag length of images
-	mapfile -t images < <(get_images)
 	maxtag=""
 	maxplatform=""
+	mapfile -t images < <(get_images)
 	for image in "${images[@]}"
 	do
 		read -r _ tag platform _ <<<"$image"
