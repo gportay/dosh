@@ -229,13 +229,13 @@ add_symlink() {
 
 	file="$(realpath "$1")"
 	checksum="$(checksum "$PWD")"
-	mkdir -p "$cachedir/$checksum"
-	ln -sf "$file" "$cachedir/$checksum/$2"
+	mkdir -p "$cachedir/${docker[-1]}/$checksum"
+	ln -sf "$file" "$cachedir/${docker[-1]}/$checksum/$2"
 }
 
 remove_symlink() {
-	rm "$cachedir/$1/$2"
-	rmdir --ignore-fail-on-non-empty "$cachedir/$1"
+	rm "$cachedir/${docker[-1]}/$1/$2"
+	rmdir --ignore-fail-on-non-empty "$cachedir/${docker[-1]}/$1"
 }
 
 get_tag() {
@@ -269,7 +269,7 @@ get_images() {
 	do
 		local symlink
 
-		for symlink in "$cachedir"/*/"$image"
+		for symlink in "$cachedir/${docker[-1]}"/*/"$image"
 		do
 			local tag
 			local status
@@ -380,7 +380,7 @@ prune() {
 	done
 
 	# Consolidate the database
-	for symlink in "$cachedir"/*/"dosh-"*
+	for symlink in "$cachedir/${docker[-1]}"/*/"dosh-"*
 	do
 		local tag
 		local checksum

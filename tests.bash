@@ -172,6 +172,7 @@ rmi() {
 	fi
 	echo
 
+	rmdir "$XDG_CACHE_HOME/dosh/${docker[-1]}"
 	rmdir "$XDG_CACHE_HOME/dosh"
 	rmdir "$XDG_CACHE_HOME"
 }
