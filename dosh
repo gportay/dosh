@@ -259,6 +259,12 @@ get_tag() {
 	echo "dosh-$user-$hash${target:-}"
 }
 
+is_running() {
+	local ids
+	mapfile -t ids < <("${docker[@]}" ps --filter "ancestor=$1" --filter status=running --quiet)
+	test "${#ids[@]}" -gt 0
+}
+
 get_images() {
 	local image
 	local images
@@ -306,9 +312,15 @@ get_images() {
 			elif [[ "$dockerfile_hash" != "$hash" ]]
 			then
 				status="Outdated"
-			# The Dockerfile exists and hash matches: image is Ready
-			else
+			# The Dockerfile exists and hash matches,
+			# and no container is running: image is Ready
+			elif ! is_running "$image"
+			then
 				status="Ready"
+			# The Dockerfile exists and hash matches,
+			# and at least a container is running: image is Running
+			else
+				status="Running"
 			fi
 			echo "$image" "$tag" "$platform" "$status" "$dockerfile_hash" "$dockerfile"
 		done

@@ -321,6 +321,10 @@ command-line through *docker-run(1)*.
 **Ready**:
 	Image with *Dockerfile(5)* unchanged since built.
 
+**Running**:
+	Image with *Dockerfile(5)* unchanged since built and a container is
+	running.
+
 == EXAMPLES
 
 Run an _interactive shell_ in the latest _Ubuntu_ container
