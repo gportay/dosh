@@ -337,7 +337,6 @@ list() {
 	for image in "${images[@]}"
 	do
 		local status
-		local checksum
 		local dockerfile
 
 		read -r _ tag platform status _ dockerfile _ <<<"$image"
