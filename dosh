@@ -336,11 +336,9 @@ get_images() {
 }
 
 list() {
-	local tag
 	local image
 	local images
 	local maxtag
-	local platform
 	local maxplatform
 
 	# Output header and look for the max tag length of images
@@ -349,6 +347,9 @@ list() {
 	mapfile -t images < <(get_images)
 	for image in "${images[@]}"
 	do
+		local tag
+		local platform
+
 		read -r _ tag platform _ <<<"$image"
 		if [ "${#tag}" -gt "${#maxtag}" ]
 		then
@@ -364,7 +365,9 @@ list() {
 	# Output the images
 	for image in "${images[@]}"
 	do
+		local tag
 		local status
+		local platform
 		local dockerfile
 
 		read -r _ tag platform status _ dockerfile _ <<<"$image"
