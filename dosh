@@ -735,6 +735,8 @@ do
 	then
 		verbose=true
 		buildopts=()
+		BUILDKIT_PROGRESS=plain
+		export BUILDKIT_PROGRESS
 	# It is a dosh option without argument (i.e. --sudo, --root, --home...)
 	elif is_doshopt "$1"
 	then
