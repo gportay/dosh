@@ -269,6 +269,7 @@ get_images() {
 	do
 		local symlink
 
+		image="${image##*/}"
 		for symlink in "$cachedir/${docker[-1]}"/*/"$image"
 		do
 			local tag
