@@ -843,6 +843,7 @@ working_directory="$PWD"
 opts=()
 buildopts=("--quiet")
 cache_directory="${XDG_CACHE_HOME:-$HOME/.cache}/dosh"
+dosh_source="$(realpath "${BASH_SOURCE[0]}")"
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOSHLVL="${DOSHLVL:-0}"
 DOSH_SUDO="${DOSH_SUDO:-sudo}"
@@ -1134,7 +1135,6 @@ fi
 # Set the current user privileges for dosh-in-dosh
 if [[ ${dind:-} ]]
 then
-	dosh="$(command -v "$0")"
 	if [[ ! "${DOSH_DOCKER_HOST:-}" ]]
 	then
 		DOSH_DOCKER_HOST="${DOCKER_HOST:-unix:///var/run/docker.sock}"
@@ -1143,8 +1143,7 @@ then
 	opts+=("--env" "USER=$USER")
 	opts+=("--env" "HOME=$HOME")
 	opts+=("--volume" "${DOSH_DOCKER_HOST/*:\/\//}:/var/run/docker.sock:${mount_options:-rw}")
-	opts+=("--volume" "$dosh:/bin/dosh:ro")
-	unset dosh
+	opts+=("--volume" "$dosh_source:/bin/dosh:ro")
 # Or set the current user privileges
 elif ! [[ ${root:-} ]]
 then
