@@ -22,6 +22,7 @@ Options:
       -b STRING                 Target a specific build flavor.
       -q                        Turn on quiet mode.
       -v or --version           Show version.
+      --verbose                 Increase the script's verbosity.
       -h or --help              Show this help text.
 
 Commands:
@@ -62,6 +63,9 @@ do
 	then
 		eval "opt_${1:1}=\"$2\""
                 shift
+	elif [[ "$1" =~ ^--verbose$ ]]
+	then
+		eval "opt_${1:2}=1"
 	elif [[ "$1" =~ ^- ]]
 	then
 		echo "Error: $1: Invalid option" >&2
@@ -135,6 +139,10 @@ dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 
 dosh_opts=(--dockerfile "$dockerfile")
 dosh_opts+=(--no-doshrc --no-doshprofile)
+if [[ "$opt_verbose" ]]
+then
+	dosh_opts+=(--verbose)
+fi
 
 # Array variables may not (yet) be exported.
 mapfile -t vars < <(compgen -A arrayvar -X '!DOSH_*')
