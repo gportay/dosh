@@ -620,6 +620,13 @@ docker_rmi() {
 	local hash
 	local rmiopts
 
+	# Check if image is running
+	if is_running "$1"
+	then
+		echo "$1: Image is busy" >&2
+		exit 1
+	fi
+
 	# Append the extra options if any
 	if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
 	then
