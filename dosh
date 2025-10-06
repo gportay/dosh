@@ -1132,6 +1132,14 @@ then
 	exit
 fi
 
+# Set the current user privileges
+if ! [[ ${root:-} ]]
+then
+	opts+=("--user" "$UID:${GROUPS[0]}")
+	opts+=("--env" "USER=$USER")
+	opts+=("--env" "HOME=$HOME")
+fi
+
 # Set the current user privileges for dosh-in-dosh
 if [[ ${dind:-} ]]
 then
@@ -1139,17 +1147,9 @@ then
 	then
 		DOSH_DOCKER_HOST="${DOCKER_HOST:-unix:///var/run/docker.sock}"
 	fi
-	opts+=("--user" "$UID:dind")
-	opts+=("--env" "USER=$USER")
-	opts+=("--env" "HOME=$HOME")
+	opts+=("--group-add" "dind")
 	opts+=("--volume" "${DOSH_DOCKER_HOST/*:\/\//}:/var/run/docker.sock:${mount_options:-rw}")
 	opts+=("--volume" "$dosh_source:/bin/dosh:ro")
-# Or set the current user privileges
-elif ! [[ ${root:-} ]]
-then
-	opts+=("--user" "$UID:${GROUPS[0]}")
-	opts+=("--env" "USER=$USER")
-	opts+=("--env" "HOME=$HOME")
 fi
 
 # Set the user groups
