@@ -259,6 +259,10 @@ get_tag() {
 	echo "dosh-$user-$hash${target:-}"
 }
 
+is_built() {
+	"${docker[@]}" image inspect "$1" &>/dev/null
+}
+
 is_running() {
 	local ids
 	mapfile -t ids < <("${docker[@]}" ps --filter "ancestor=$1" --filter status=running --quiet)
@@ -368,24 +372,35 @@ list() {
 }
 
 prune() {
+	local tags
 	local image
 	local images
 	local symlink
+	local symlinks
 
-	# Remove unused images if any
+	# List unused images
+	tags=()
 	mapfile -t images < <(get_images)
 	for image in "${images[@]}"
 	do
 		local tag
 		local status
-		local rmiopts
 
-		# Skip ready image
-		read -r _ tag _ status _ <<<"$image"
-		if [[ "$status" == "Ready" ]]
+		# Append untracked, outdated and deleted image to list
+		read -r tag _ _ status _ <<<"$image"
+		if [ "$status" = "Untracked" ] ||
+		   [ "$status" = "Deleted" ] ||
+		   [ "$status" = "Outdated" ]
 		then
-			continue
+			tags+=("$tag")
 		fi
+	done
+
+	# Remove unused images if any
+	echo "Removing images..."
+	if [ "${#tags[@]}" -gt 0 ]
+	then
+		local rmiopts
 
 		# Append the extra options if any
 		if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
@@ -394,27 +409,36 @@ prune() {
 		fi
 
 		# Remove image
-		run "${docker[@]}" rmi "${rmiopts[@]}" "$tag" "$@"
-	done
+		run "${docker[@]}" rmi --force "${rmiopts[@]}" "${tags[@]}" "$@"
+	fi
+	echo "Total ${#tags[*]} image(s) removed."
 
 	# Consolidate the database symlinks
+	echo "Consolidating database symlinks..."
+	symlinks=()
 	for symlink in "$cachedir/${docker[-1]}"/*/"dosh-"*
 	do
 		local tag
 		local hash
 
-		if [[ -e "$symlink" ]]
+		if [[ ! -e "$symlink" ]] || [[ -L "$symlink" ]]
 		then
 			continue
 		fi
 
-		# Remove if symlink is broken
+		# Remove if symlink is broken or if image does not exist
+		link="${symlink##*/}"
 		hash="${symlink%/*}"
 		hash="${hash##*/}"
 		tag="${symlink##*/}"
-
-		remove_symlink "$hash" "$tag"
+		if [ ! -e "$symlink" ] || ! is_built "$tag"
+		then
+			remove_symlink "$hash" "$tag"
+			echo "Unlinked: $link"
+			symlinks+=("$link")
+		fi
 	done
+	echo "Total ${#symlinks[*]} symlink(s) removed."
 }
 
 # According to docker-build(1)
