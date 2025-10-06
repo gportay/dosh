@@ -46,7 +46,7 @@ EOF
 opt_f=".cqfdrc"
 opt_d=".cqfd"
 tar_transform="no"
-while [ "$#" -ne 0 ]
+while [[ "$#" -ne 0 ]]
 do
 	if [[ "$1" =~ ^(-h|--help)$ ]]
 	then
@@ -240,11 +240,11 @@ then
 fi
 
 DOSH_DOCKER_RUN_EXTRA_OPTS="--log-driver=none -ti"
-if [[ ! "$CQFD_NO_USER_SSH_CONFIG" ]] && [ -d "$HOME/.ssh" ]
+if [[ ! "$CQFD_NO_USER_SSH_CONFIG" ]] && [[ -d "$HOME/.ssh" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\ }/.ssh:${HOME// /\ }/.ssh"
 fi
-if [[ ! "$CQFD_NO_SSH_CONFIG" ]] && [ -d /etc/ssh ]
+if [[ ! "$CQFD_NO_SSH_CONFIG" ]] && [[ -d /etc/ssh ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v /etc/ssh:/etc/ssh"
 
@@ -254,7 +254,7 @@ then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\ }:${HOME// /\ }/.sockets/ssh"
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\ }/.sockets/ssh"
 fi
-if [[ ! "$CQFD_NO_USER_GIT_CONFIG" ]] && [ -f "$HOME/.gitconfig" ]; then
+if [[ ! "$CQFD_NO_USER_GIT_CONFIG" ]] && [[ -f "$HOME/.gitconfig" ]]; then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --mount type=bind,src=${HOME// /\\ }/.gitconfig,dst=${HOME// /\\ }/.gitconfig"
 fi
 if [[ "$docker_run_args" ]]
@@ -279,7 +279,7 @@ fi
 
 "${DOSH[@]:-dosh}" "${dosh_opts[@]}" -c "$command"
 
-if [ "$cmd_release" ]
+if [[ "$cmd_release" ]]
 then
 	tar_opts=()
 
