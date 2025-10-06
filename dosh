@@ -236,7 +236,7 @@ remove_symlink() {
 get_tag() {
 	local file
 	local user
-	local target 
+	local target
 	local checksum
 
 	file="$(realpath "$1")"
