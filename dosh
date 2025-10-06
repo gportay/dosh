@@ -76,6 +76,7 @@ Docker related options:
       --no-extra-options        Disable extra options given to docker commands.
       --no-doshprofile          Disable read of ~/.dosh_profile.
       --no-doshrc               Disable read of ./doshrc.
+      --cache-directory         Cache directory tracking images.
       --directory DIR           Change to directory before doing anything else.
       --working-directory DIR   Working directory inside the container.
       --sudo                    Run docker with sudo.
@@ -229,13 +230,13 @@ add_symlink() {
 
 	file="$(realpath "$1")"
 	hash="$(hash "$PWD")"
-	mkdir -p "$cachedir/${docker[-1]}/$hash"
-	ln -sf "$file" "$cachedir/${docker[-1]}/$hash/$2"
+	mkdir -p "$cache_directory/${docker[-1]}/$hash"
+	ln -sf "$file" "$cache_directory/${docker[-1]}/$hash/$2"
 }
 
 remove_symlink() {
-	rm "$cachedir/${docker[-1]}/$1/$2"
-	rmdir --ignore-fail-on-non-empty "$cachedir/${docker[-1]}/$1"
+	rm "$cache_directory/${docker[-1]}/$1/$2"
+	rmdir --ignore-fail-on-non-empty "$cache_directory/${docker[-1]}/$1"
 }
 
 get_tag() {
@@ -281,7 +282,7 @@ get_images() {
 
 		# Remove registry if any
 		image="${image##*/}"
-		for symlink in "$cachedir/${docker[-1]}"/*/"$image"
+		for symlink in "$cache_directory/${docker[-1]}"/*/"$image"
 		do
 			local tag
 			local status
@@ -416,7 +417,7 @@ prune() {
 	# Consolidate the database symlinks
 	echo "Consolidating database symlinks..."
 	symlinks=()
-	for symlink in "$cachedir/${docker[-1]}"/*/"dosh-"*
+	for symlink in "$cache_directory/${docker[-1]}"/*/"dosh-"*
 	do
 		local tag
 		local hash
@@ -693,7 +694,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|platform|context|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|platform|context|cache-directory|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
 	then
 		return 0
 	fi
@@ -763,7 +764,7 @@ directory="."
 working_directory="$PWD"
 opts=()
 buildopts=("--quiet")
-cachedir="${XDG_CACHE_HOME:-$HOME/.cache}/dosh"
+cache_directory="${XDG_CACHE_HOME:-$HOME/.cache}/dosh"
 DOSHELL="${DOSHELL:-/bin/sh}"
 DOSHLVL="${DOSHLVL:-0}"
 DOSH_SUDO="${DOSH_SUDO:-sudo}"

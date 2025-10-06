@@ -267,7 +267,7 @@ clean:
 
 .PHONY: mrproper
 mrproper: clean
-	XDG_CACHE_HOME=$$PWD/cache bash dosh --gc
+	bash dosh --cache-directory $$PWD/cache --gc
 
 .PHONY: maintainerclean
 maintainerclean: mrproper
