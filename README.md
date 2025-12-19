@@ -381,6 +381,35 @@ _Note_: The shell interpreter run in the container does not need to be
 
 Build the documentation using *make(1)*:
 
+	$ make doc
+	make -C doc html
+	Running Sphinx v7.2.6
+	making output directory... done
+	building [mo]: targets for 0 po files that are out of date
+	writing output... 
+	building [html]: targets for 1 source files that are out of date
+	updating environment: [new config] 1 added, 0 changed, 0 removed
+	reading sources... [100%] index
+	looking for now-outdated files... none found
+	pickling environment... done
+	checking consistency... done
+	preparing documents... done
+	copying assets... copying static files... done
+	copying extra files... done
+	done
+	writing output... [100%] index
+	generating indices... genindex done
+	writing additional pages... search done
+	dumping search index in English (code: en)... done
+	dumping object inventory... done
+	build succeeded.
+	
+	The HTML pages are in build/html.
+
+## MANUAL PAGES
+
+Build the manual pages using *make(1)*:
+
 	$ make man
 	asciidoctor -b manpage -o cqfd.1 support/cqfd.1.adoc
 	gzip -c cqfd.1 >cqfd.1.gz

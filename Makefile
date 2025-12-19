@@ -7,12 +7,16 @@
 PREFIX ?= /usr/local
 VERSION ?= $(shell bash dosh --version)
 VPATH := $(CURDIR)/support
+MAKEFLAGS += --no-print-directory
 
 .PHONY: all
 all:
 	@eval $$(cat /etc/os*release); echo $$NAME; uname -m
 
 .PHONY: doc
+doc: PATH := $(CURDIR):$(PATH)
+doc: SHELL = dosh
+doc: .SHELLFLAGS = --dockerfile docker/sphinx/Dockerfile -c
 doc:
 	$(MAKE) -C $@ html
 
