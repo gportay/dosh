@@ -141,7 +141,17 @@ rmi() {
 	fi
 	echo
 
-	run "Test --rmi option with --platform option"
+	run "Test --rmi option with --platform option ($native_platform = $native_machine)"
+	if   dosh --rmi --platform "$native_platform" && \
+	   ! dosh --rmi --platform "$native_platform"
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
+	run "Test --rmi option with --platform option ($cross_platform = $cross_machine)"
 	if   dosh --rmi --platform "$cross_platform" && \
 	   ! dosh --rmi --platform "$cross_platform"
 	then
@@ -154,6 +164,16 @@ rmi() {
 	run "Test --rmi option with --dockerfile option"
 	if   dosh --rmi --dockerfile Dockerfile.fedora && \
 	   ! dosh --rmi --dockerfile Dockerfile.fedora
+	then
+		ok
+	else
+		ko
+	fi
+	echo
+
+	run "Test --rmi option with --dockerfile and empty --platform option"
+	if   dosh --rmi --platform "" --dockerfile Dockerfile.user && \
+	   ! dosh --rmi --platform "" --dockerfile Dockerfile.user
 	then
 		ok
 	else
