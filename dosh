@@ -888,7 +888,7 @@ is_shopt_argument() {
 }
 
 shopts=()
-dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
+dockerfile="${DOSH_DOCKERFILE:-}"
 platform="${DOSH_PLATFORM:-}"
 mount_options="${DOSH_MOUNT_OPTIONS:-}"
 if test -e /sys/fs/selinux/enforce && grep -q 1 /sys/fs/selinux/enforce
@@ -1067,6 +1067,19 @@ fi
 
 # Change the current directory
 cd "$directory"
+
+# Set Dockerfile if unset
+if [[ ! "${dockerfile:-}" ]]
+then
+	for dockerfile in docker/Dockerfile Dockerfile
+	do
+		if [ -e "$dockerfile" ]
+		then
+			break
+		fi
+	done
+	DOSH_DOCKERFILE="$dockerfile"
+fi
 
 # Source the profile files
 set +euo pipefail

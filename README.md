@@ -10,7 +10,7 @@
 
 [dosh][dosh(1)] is a bash script providing a shell CLI to *docker-run(1)*.
 
-It runs a user shell in a container built from the Dockerfile, with the working
+It runs a user shell in a container built from a Dockerfile, with the working
 directory bind mounted.
 
 In short, `dosh` does...
@@ -18,6 +18,16 @@ In short, `dosh` does...
 	docker run --rm [--tty] [--interactive] "--volume=$PWD:$PWD:rw" "--user=$USER" "--entrypoint=$SHELL" IMAGE [SHELL_ARGS]
 
 ... with a little more magic!
+
+__Important__: [dosh][dosh(1)] reads the Dockerfile from the subdirectory
+`docker/`, and it falls back to the current working directory for historical
+reason. docker-build sends a lot of data to the Docker daemon depending on the
+contents of the Dockerfile's parent directory. dosh does its best to limit the
+context sent to the docker daemon by doing a very limited magic if the
+Dockerfile contains ADD or COPY instructions to send local files. Consider
+using subdirectory `docker/` to disable this very limited feature as dosh does
+not fully implement a Dockerfile parser as defined in the [Dockerfile]
+reference.
 
 ## NAME
 
@@ -353,9 +363,9 @@ Additionally, consider using the [env(1)] split option `-S` (since [coreutils
 8.30]) when passing *dosh* arguments, such as `#!/usr/bin/env -S dosh --home`.
 
 _Important_: *dosh* warns and splits the list of arguments itself when using the
-absolute path (i.e. `#!/usr/bin/dosh --dockerfile support/Dockerfile`) instead
+absolute path (i.e. `#!/usr/bin/dosh --dockerfile docker/Dockerfile`) instead
 of *env* and its split option (i.e. `#!/usr/bin/env -S dosh --dockerfile
-support/Dockerfile`). This feature is not portable; it is deprecated since
+docker/Dockerfile`). This feature is not portable; it is deprecated since
 version 7 and is scheduled for removal in a future release. Consider moving the
 shebang to [env(1)] and its `-S` option, available since mid-[2018][coreutils
 8.30].
@@ -445,10 +455,11 @@ Check out the [man-pages][dosh(1)] and its [examples].
 
 Also, here is an extra example that builds the documentation:
 
-	$ echo "FROM ubuntu" >Dockerfile
-	$ echo "RUN apt-get update && apt-get install -y asciidoctor" >>Dockerfile
+	$ mkdir docker
+	$ echo "FROM ubuntu" >docker/Dockerfile
+	$ echo "RUN apt-get update && apt-get install -y asciidoctor" >>docker/Dockerfile
 
-	$ cat Dockerfile
+	$ cat docker/Dockerfile
 	FROM ubuntu
 	RUN apt-get update && apt-get install -y asciidoctor
 
@@ -481,6 +492,7 @@ the terms of the GNU Lesser General Public License as published by the Free
 Software Foundation, either version 2.1 of the License, or (at your option) any
 later version.
 
+[Dockerfile]: https://docs.docker.com/reference/dockerfile
 [coreutils 8.30]: https://github.com/coreutils/coreutils/commit/668306ed86c8c79b0af0db8b9c882654ebb66db2
 [docker]: https://github.com/docker/docker
 [dosh(1)]: dosh.1.adoc
