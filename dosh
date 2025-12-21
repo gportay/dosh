@@ -600,7 +600,7 @@ EOF
 			path="."
 		fi
 
-		if [[ ${has_add_or_copy:-} ]]
+		if [[ ! -e "$path/.dockerignore"  ]] && [[ ${has_add_or_copy:-} ]]
 		then
 			echo "Info: ADD or COPY instructions sends build context to daemon." >&2
 			echo "      Consider option --context <TAR> to speed up the build of image." >&2
