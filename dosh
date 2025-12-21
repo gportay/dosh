@@ -122,7 +122,7 @@ Environment variables:
 
       DOSH_DOCKER               The docker executable.
 
-      DOSH_DOCKER_HOST          The docker daemon socket to conect to.
+      DOSH_DOCKER_HOST          The docker daemon socket to connect to.
 
       DOSH_DOCKERFILE           The filename of the Dockerfile to use.
                                 Equivalent to --dockerfile <FILE>.

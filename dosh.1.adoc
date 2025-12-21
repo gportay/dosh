@@ -250,7 +250,7 @@ command-line through *docker-run(1)*.
 	The docker executable.
 
 **DOSH_DOCKER_HOST**::
-	The docker daemon socket to conect to.
+	The docker daemon socket to connect to.
 
 **DOSH_DOCKERFILE**::
 	The filename of the Dockerfile to use.
