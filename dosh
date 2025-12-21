@@ -548,6 +548,28 @@ EOF
 				continue
 			elif [[ ${words[0]^^} =~ ^(ADD|COPY)$ ]]
 			then
+				# Transform exec form to shell form
+				if [[ "${words[*]:1}" =~ ^(.*)\[(.+)\]$ ]]
+				then
+					local xword
+					local xwords
+
+					# Set instruction
+					words=("${words[0]}")
+
+					# Append options
+					read -r -a xwords <<<"${BASH_REMATCH[1]}"
+					words+=("${xwords[@]}")
+
+					# Append JSON array
+					IFS=, read -r -a xwords <<<"${BASH_REMATCH[2]}"
+					for xword in "${xwords[@]}"
+					do
+						[[ "$xword" =~ \"(.+)\" ]]
+						words+=("${BASH_REMATCH[1]}")
+					done
+				fi
+
 				# Remove keyword and destination path
 				unset 'words[0]'
 				unset 'words[-1]'
