@@ -464,6 +464,7 @@ prune() {
 #
 # https://docs.docker.com/engine/reference/builder/
 docker_build() {
+	local path
 	local files
 	local group
 	local groups
@@ -503,7 +504,14 @@ docker_build() {
 		done
 	done
 
-	cat "$1" - <<EOF >doshfile
+	# Default to . if Dockerfile is in current working directory
+	path="${1%/*}"
+	if [[ "$path" = "$1" ]]
+	then
+		path="."
+	fi
+
+	cat "$1" - <<EOF >"$path/doshfile"
 
 USER root
 RUN grep -q "^$USER:" /etc/group \
@@ -595,7 +603,7 @@ EOF
 			then
 				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
-		done <doshfile >&2
+		done <"$path/doshfile" >&2
 	fi
 
 	# Append the extra options if any
@@ -613,15 +621,6 @@ EOF
 	# instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
 	then
-		local path
-
-		# Default to . if Dockerfile is in current working directory
-		path="${1%/*}"
-		if [[ "$path" = "$1" ]]
-		then
-			path="."
-		fi
-
 		if [[ ! -e "$path/.dockerignore"  ]] && [[ ${has_add_or_copy:-} ]]
 		then
 			echo "Info: ADD or COPY instructions sends build context to daemon." >&2
@@ -632,21 +631,21 @@ EOF
 			echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
 		fi
 
-		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file doshfile "${path:-.}"
+		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file "$path/doshfile" "$path"
 	else
 		# Or send the files as a context archive
 		if ! [[ ${context_file:-} ]]
 		then
-			run tar c "${files[@]}"
+			run tar c -C "$path" "${files[@]}"
 		# Or send the given context file
 		else
-			run tar rf "$context_file" "doshfile"
+			run tar rf "$context_file" -C "$path" "doshfile"
 			run cat "$context_file"
 		fi | \
 		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file doshfile -
 	fi
 
-	rm -f doshfile
+	rm -f "$path/doshfile"
 
 	add_symlink "$1" "$2"
 }
