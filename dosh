@@ -471,11 +471,13 @@ docker_build() {
 	local context_file
 	local has_add_or_copy
 
+	# Do not build image
 	if [[ ${DOSH_NOBUILD:-} ]]
 	then
 		return
 	fi
 
+	# Dockerfile does not exist
 	if [[ ! -e "$1" ]]
 	then
 		echo "$1: No such Dockerfile" >&2
@@ -511,6 +513,7 @@ docker_build() {
 		path="."
 	fi
 
+	# Append dosh instructions to a temporary Dockerfile
 	cat "$1" - <<EOF >"$path/doshfile"
 
 USER root
@@ -549,11 +552,14 @@ EOF
 		local word
 		local words
 
+		# Parse Dockerfile line by line
 		while read -r -a words
 		do
+			# Empty line
 			if ! [[ ${words[0]:-} ]]
 			then
 				continue
+			# ADD or COPY instruction
 			elif [[ ${words[0]^^} =~ ^(ADD|COPY)$ ]]
 			then
 				# Transform exec form to shell form
@@ -582,6 +588,7 @@ EOF
 				unset 'words[0]'
 				unset 'words[-1]'
 
+				# Loop over long options and sources
 				for word in "${words[@]}"
 				do
 					# Skip long option and sources with
@@ -599,6 +606,7 @@ EOF
 					done
 				done
 				has_add_or_copy=1
+			# ENTRYPOINT instruction
 			elif [[ ${words[0]^^} =~ ^ENTRYPOINT$ ]]
 			then
 				echo "Info: ENTRYPOINT is overridden by dosh"
@@ -621,6 +629,7 @@ EOF
 	# instructions in Dockerfile.
 	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
 	then
+		# Warning user about lot of data sent to the Docker daemon.
 		if [[ ! -e "$path/.dockerignore"  ]] && [[ ${has_add_or_copy:-} ]]
 		then
 			echo "Info: ADD or COPY instructions sends build context to daemon." >&2
@@ -645,6 +654,7 @@ EOF
 		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file doshfile -
 	fi
 
+	# Remove temporary Dockerfile
 	rm -f "$path/doshfile"
 
 	add_symlink "$1" "$2"
