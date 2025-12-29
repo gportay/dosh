@@ -20,47 +20,68 @@ Description: Docker CLI plugin for dosh.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
-Package: dosh-linux-amd64
+Package: dosh-linux-platforms
 Architecture: all
 Depends: ${misc:Depends}, dosh
-Description: Docker shell for linux/amd64 platform.
+Replaces:
+ dosh-linux-amd64 (<< 9),
+ dosh-linux-arm64 (<< 9),
+ dosh-linux-arm (<< 9),
+ dosh-linux-ppc64le (<< 9),
+ dosh-linux-riscv64 (<< 9),
+ dosh-linux-s390x (<< 9),
+Breaks:
+ dosh-linux-amd64 (<< 9),
+ dosh-linux-arm64 (<< 9),
+ dosh-linux-arm (<< 9),
+ dosh-linux-ppc64le (<< 9),
+ dosh-linux-riscv64 (<< 9),
+ dosh-linux-s390x (<< 9),
+Description: Docker shell for linux platforms.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
+
+Package: dosh-linux-amd64
+Architecture: all
+Section: oldlibs
+Depends: ${misc:Depends}, dosh-linux-platforms
+Description: Docker shell for linux/amd64 platform.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-linux-arm64
 Architecture: all
-Depends: ${misc:Depends}, dosh
+Section: oldlibs
+Depends: ${misc:Depends}, dosh-linux-platforms
 Description: Docker shell for linux/arm64 platform.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-linux-arm
 Architecture: all
-Depends: ${misc:Depends}, dosh
+Section: oldlibs
+Depends: ${misc:Depends}, dosh-linux-platforms
 Description: Docker shell for linux/arm platform.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-linux-ppc64le
 Architecture: all
-Depends: ${misc:Depends}, dosh
+Section: oldlibs
+Depends: ${misc:Depends}, dosh-linux-platforms
 Description: Docker shell for linux/ppc64le platform.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-linux-riscv64
 Architecture: all
-Depends: ${misc:Depends}, dosh
+Section: oldlibs
+Depends: ${misc:Depends}, dosh-linux-platforms
 Description: Docker shell for linux/riscv64 platform.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-linux-s390x
 Architecture: all
-Depends: ${misc:Depends}, dosh
+Section: oldlibs
+Depends: ${misc:Depends}, dosh-linux-platforms
 Description: Docker shell for linux/s390x platform.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-posh
 Architecture: all

@@ -100,6 +100,17 @@ install-docker-cli-plugin-%: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 install-docker-cli-plugin-%:
 	ln -sf docker-shell $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-$*
 
+.PHONY: install-linux-platforms
+install-linux-platforms: install-linux-amd64-dosh
+install-linux-platforms: install-linux-arm64-dosh
+install-linux-platforms: install-linux-arm-dosh
+install-linux-platforms: install-linux-arm-v6-dosh
+install-linux-platforms: install-linux-arm-v7-dosh
+install-linux-platforms: install-linux-ppc64le-dosh
+install-linux-platforms: install-linux-riscv64-dosh
+install-linux-platforms: install-linux-s390x-dosh
+install-linux-platforms:
+
 install-linux-amd64-dosh:
 install-linux-arm64-dosh:
 install-linux-arm-dosh:
@@ -182,6 +193,7 @@ user-install-docker-cli-plugin:
 user-install-docker-cli-plugin-sh:
 user-install-docker-cli-plugin-bash:
 user-install-docker-cli-plugin-zsh:
+user-install-linux-platforms:
 user-install-linux-amd64-dosh:
 user-install-linux-arm64-dosh:
 user-install-linux-arm-dosh:
