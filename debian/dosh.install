@@ -3,6 +3,14 @@ debian/tmp/usr/lib/docker/cli-plugins/docker-bash usr/lib/docker/cli-plugins
 debian/tmp/usr/lib/docker/cli-plugins/docker-sh usr/lib/docker/cli-plugins
 debian/tmp/usr/lib/docker/cli-plugins/docker-shell usr/lib/docker/cli-plugins
 debian/tmp/usr/lib/docker/cli-plugins/docker-zsh usr/lib/docker/cli-plugins
+debian/tmp/usr/lib/dosh/bin/linux-amd64-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-arm-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-arm-v6-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-arm-v7-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-arm64-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-ppc64le-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-riscv64-dosh usr/lib/dosh/bin
+debian/tmp/usr/lib/dosh/bin/linux-s390x-dosh usr/lib/dosh/bin
 debian/tmp/usr/share/bash-completion/completions/dosh usr/share/bash-completion/completions
 debian/tmp/usr/share/dosh/rc.d/git.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/history.rc usr/share/dosh/rc.d

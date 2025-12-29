@@ -122,8 +122,8 @@ install-linux-ppc64le-dosh:
 install-linux-riscv64-dosh:
 install-linux-s390x-dosh:
 install-linux-%-dosh:
-	install -d $(DESTDIR)$(PREFIX)/bin
-	ln -sf dosh $(DESTDIR)$(PREFIX)/bin/linux-$*-dosh
+	install -d $(DESTDIR)$(PREFIX)/lib/dosh/bin
+	ln -sf ../../../bin/dosh $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-$*-dosh
 
 install-posh:
 install-doshx:
@@ -151,14 +151,14 @@ uninstall:
 	if [ -n "$$completionsdir" ]; then \
 		rm -f $(DESTDIR)$$completionsdir/dosh; \
 	fi
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-amd64-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm64-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm-v6-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-arm-v7-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-ppc64le-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-riscv64-dosh
-	rm -f $(DESTDIR)$(PREFIX)/bin/linux-s390x-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-amd64-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-arm64-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-arm-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-arm-v6-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-arm-v7-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-ppc64le-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-riscv64-dosh
+	rm -f $(DESTDIR)$(PREFIX)/lib/dosh/bin/linux-s390x-dosh
 	rm -f $(DESTDIR)$(PREFIX)/bin/posh
 	rm -f $(DESTDIR)$(PREFIX)/bin/doshx
 	rm -f $(DESTDIR)$(PREFIX)/bin/zdosh
@@ -274,8 +274,7 @@ clean:
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 	rm -f debian/files debian/debhelper-build-stamp debian/*.substvars \
 	   -R debian/.debhelper/ debian/tmp/ \
-	      debian/dosh/ debian/dosh-cqfd/ \
-	      debian/dosh-linux-platforms/
+	      debian/dosh/ debian/dosh-cqfd/
 	rm -f *.tar.gz src/*.tar.gz *.pkg.tar* \
 	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/

@@ -2,8 +2,6 @@
 debhelper-build-stamp
 dosh-cqfd.substvars
 dosh-cqfd/
-dosh-linux-platforms.substvars
-dosh-linux-platforms/
 dosh-posh.substvars
 dosh-posh/
 dosh.substvars

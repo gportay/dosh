@@ -8,42 +8,13 @@ Build-Depends: debhelper-compat (= 13)
 Package: dosh
 Architecture: all
 Depends: ${misc:Depends}
-Replaces:
- dosh-docker-shell (<< 9),
- dosh-posh (<< 9)
-Breaks:
- dosh-docker-shell (<< 9),
- dosh-posh (<< 9)
 Description: Run a user shell in a container with working directory bind mounted.
- dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
-
-Package: dosh-linux-platforms
-Architecture: all
-Depends: ${misc:Depends}, dosh
-Replaces:
- dosh-linux-amd64 (<< 9),
- dosh-linux-arm64 (<< 9),
- dosh-linux-arm (<< 9),
- dosh-linux-ppc64le (<< 9),
- dosh-linux-riscv64 (<< 9),
- dosh-linux-s390x (<< 9),
-Breaks:
- dosh-linux-amd64 (<< 9),
- dosh-linux-arm64 (<< 9),
- dosh-linux-arm (<< 9),
- dosh-linux-ppc64le (<< 9),
- dosh-linux-riscv64 (<< 9),
- dosh-linux-s390x (<< 9),
-Description: Docker shell for linux platforms.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
 Package: dosh-cqfd
 Architecture: all
 Depends: ${misc:Depends}, dosh
-Replaces: dosh-docker-cqfd (<< 9)
-Breaks: dosh-docker-cqfd (<< 9)
 Description: Wrap commands in controlled Docker containers using dosh.
  cqfd provides a quick and convenient way to run commands in the current
  directory, but within a Docker container defined in a per-project config file.

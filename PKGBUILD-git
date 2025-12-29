@@ -1,8 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=(dosh-git
-	 dosh-linux-platforms-git
-	 dosh-cqfd-git)
+pkgname=(dosh-git dosh-cqfd-git)
 pkgver=master
 pkgrel=1
 pkgdesc='Docker shell'
@@ -40,19 +38,8 @@ package_dosh-git() {
 	conflicts=(dosh)
 
 	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion install-docker-cli-plugin
+	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion install-docker-cli-plugin install-linux-platforms
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-git/LICENSE"
-}
-
-package_dosh-linux-platforms-git() {
-	pkgdesc='Docker shell for linux platforms'
-	depends+=(dosh)
-	provides=(dosh-linux-platforms)
-	conflicts=(dosh-linux-platforms)
-
-	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-platforms
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-platforms-git/LICENSE"
 }
 
 package_dosh-cqfd-git() {

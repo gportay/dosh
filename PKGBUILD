@@ -1,8 +1,6 @@
 # Maintainer: Gaël PORTAY <gael.portay@gmail.com>
 
-pkgname=(dosh
-	 dosh-linux-platforms
-	 dosh-cqfd)
+pkgname=(dosh dosh-cqfd)
 pkgver=8
 pkgrel=1
 pkgdesc='Docker shell'
@@ -33,17 +31,8 @@ package_dosh() {
 	depends+=(docker)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion install-docker-cli-plugin
+	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion install-docker-cli-plugin install-linux-platforms
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh/LICENSE"
-}
-
-package_dosh-linux-platforms() {
-	pkgdesc='Docker shell for linux platforms'
-	depends+=(dosh)
-
-	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-platforms
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-platforms/LICENSE"
 }
 
 package_dosh-cqfd() {

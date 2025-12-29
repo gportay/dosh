@@ -22,15 +22,6 @@ container; using the current user, with working directory bind mounted.
 
 %global debug_package %{nil}
 
-%package  linux-platforms
-Requires: dosh
-Summary:  Docker shell for linux platforms
-
-%description linux-platforms
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
 %package  posh
 Requires: dosh
 Requires: podman
@@ -64,7 +55,7 @@ make check
 
 
 %install
-%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
+%make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-platforms
 
 
 %post
@@ -117,17 +108,14 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_dockerlibdir}/cli-plugins/docker-sh
 %{_dockerlibdir}/cli-plugins/docker-shell
 %{_dockerlibdir}/cli-plugins/docker-zsh
-
-
-%files linux-platforms
-%{_bindir}/linux-amd64-dosh
-%{_bindir}/linux-arm-dosh
-%{_bindir}/linux-arm-v6-dosh
-%{_bindir}/linux-arm-v7-dosh
-%{_bindir}/linux-arm64-dosh
-%{_bindir}/linux-ppc64le-dosh
-%{_bindir}/linux-riscv64-dosh
-%{_bindir}/linux-s390x-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-amd64-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-arm-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-arm-v6-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-arm-v7-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-arm64-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-ppc64le-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-riscv64-dosh
+%{_exec_prefix}/lib/dosh/bin/linux-s390x-dosh
 
 
 %files cqfd
