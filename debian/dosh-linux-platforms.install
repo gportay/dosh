@@ -1,0 +1,8 @@
+debian/tmp/usr/bin/linux-amd64-dosh usr/bin
+debian/tmp/usr/bin/linux-arm-dosh usr/bin
+debian/tmp/usr/bin/linux-arm-v6-dosh usr/bin
+debian/tmp/usr/bin/linux-arm-v7-dosh usr/bin
+debian/tmp/usr/bin/linux-arm64-dosh usr/bin
+debian/tmp/usr/bin/linux-ppc64le-dosh usr/bin
+debian/tmp/usr/bin/linux-riscv64-dosh usr/bin
+debian/tmp/usr/bin/linux-s390x-dosh usr/bin
