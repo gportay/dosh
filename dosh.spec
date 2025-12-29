@@ -31,60 +31,6 @@ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
 container; using the current user, with working directory bind mounted.
 
 
-%package  linux-amd64
-Requires: dosh
-Summary:  Docker shell for linux/amd64 platform
-
-%description linux-amd64
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
-%package  linux-arm64
-Requires: dosh
-Summary:  Docker shell for linux/arm64 platform
-
-%description linux-arm64
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
-%package  linux-arm
-Requires: dosh
-Summary:  Docker shell for linux/arm platform
-
-%description linux-arm
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
-%package  linux-ppc64le
-Requires: dosh
-Summary:  Docker shell for linux/ppc64le platform
-
-%description linux-ppc64le
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
-%package  linux-riscv64
-Requires: dosh
-Summary:  Docker shell for linux/riscv64 platform
-
-%description linux-riscv64
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
-%package  linux-s390x
-Requires: dosh
-Summary:  Docker shell for linux/s390x platform
-
-%description linux-s390x
-dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
-
-
 %package  posh
 Requires: dosh
 Requires: podman
