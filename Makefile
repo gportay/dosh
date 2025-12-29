@@ -274,9 +274,8 @@ clean:
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 	rm -f debian/files debian/debhelper-build-stamp debian/*.substvars \
 	   -R debian/.debhelper/ debian/tmp/ \
-	      debian/dosh/ debian/dosh-docker-shell/ \
-	      debian/dosh-cqfd/ debian/dosh-docker-cqfd/ \
-	      debian/dosh-linux-*/
+	      debian/dosh/ debian/dosh-cqfd/ \
+	      debian/dosh-linux-platforms/
 	rm -f *.tar.gz src/*.tar.gz *.pkg.tar* \
 	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/

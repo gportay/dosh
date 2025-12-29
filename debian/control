@@ -18,13 +18,6 @@ Description: Run a user shell in a container with working directory bind mounted
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
-Package: dosh-docker-shell
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh (>= 9)
-Description: Docker CLI plugin for dosh.
- This is a transitional package. It can safely be removed.
-
 Package: dosh-linux-platforms
 Architecture: all
 Depends: ${misc:Depends}, dosh
@@ -46,54 +39,6 @@ Description: Docker shell for linux platforms.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
 
-Package: dosh-linux-amd64
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-linux-platforms
-Description: Docker shell for linux/amd64 platform.
- This is a transitional package. It can safely be removed.
-
-Package: dosh-linux-arm64
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-linux-platforms
-Description: Docker shell for linux/arm64 platform.
- This is a transitional package. It can safely be removed.
-
-Package: dosh-linux-arm
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-linux-platforms
-Description: Docker shell for linux/arm platform.
- This is a transitional package. It can safely be removed.
-
-Package: dosh-linux-ppc64le
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-linux-platforms
-Description: Docker shell for linux/ppc64le platform.
- This is a transitional package. It can safely be removed.
-
-Package: dosh-linux-riscv64
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-linux-platforms
-Description: Docker shell for linux/riscv64 platform.
- This is a transitional package. It can safely be removed.
-
-Package: dosh-linux-s390x
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-linux-platforms
-Description: Docker shell for linux/s390x platform.
- This is a transitional package. It can safely be removed.
-
-Package: dosh-posh
-Architecture: all
-Depends: ${misc:Depends}, dosh (>= 9)
-Description: Run a user shell in a container with working directory bind mounted.
- This is a transitional package. It can safely be removed.
-
 Package: dosh-cqfd
 Architecture: all
 Depends: ${misc:Depends}, dosh
@@ -102,10 +47,3 @@ Breaks: dosh-docker-cqfd (<< 9)
 Description: Wrap commands in controlled Docker containers using dosh.
  cqfd provides a quick and convenient way to run commands in the current
  directory, but within a Docker container defined in a per-project config file.
-
-Package: dosh-docker-cqfd
-Architecture: all
-Section: oldlibs
-Depends: ${misc:Depends}, dosh-cqfd (>= 9)
-Description: Docker CLI plugin for cqfd.
- This is a transitional package. It can safely be removed.
