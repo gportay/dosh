@@ -143,29 +143,14 @@ make check
 %{_datadir}/man/man1/dosh.1.gz
 
 
-%files linux-amd64
+%files linux-platforms
 %{_bindir}/linux-amd64-dosh
-
-
-%files linux-arm64
 %{_bindir}/linux-arm64-dosh
-
-
-%files linux-arm
 %{_bindir}/linux-arm-dosh
 %{_bindir}/linux-arm-v6-dosh
 %{_bindir}/linux-arm-v7-dosh
-
-
-%files linux-ppc64le
 %{_bindir}/linux-ppc64le-dosh
-
-
-%files linux-riscv64
 %{_bindir}/linux-riscv64-dosh
-
-
-%files linux-s390x
 %{_bindir}/linux-s390x-dosh
 
 
