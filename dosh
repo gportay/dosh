@@ -76,6 +76,7 @@ Docker related options:
       --no-extra-options        Disable extra options given to docker commands.
       --no-doshprofile          Disable read of ~/.dosh_profile.
       --no-doshrc               Disable read of ./doshrc.
+      --rc FILE                 Read file.
       --cache-directory         Cache directory tracking images.
       --directory DIR           Change to directory before doing anything else.
       --working-directory DIR   Working directory inside the container.
@@ -751,6 +752,15 @@ is_doshopt_argument() {
 	return 1
 }
 
+is_doshopt_list_argument() {
+	if [[ "$1" =~ ^--(rc)$ ]]
+	then
+		return 0
+	fi
+
+	return 1
+}
+
 is_shopt() {
 	local dosh
 
@@ -809,6 +819,7 @@ is_shopt_argument() {
 shopts=()
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 platform="${DOSH_PLATFORM:-}"
+rc=()
 directory="."
 working_directory="$PWD"
 opts=()
@@ -852,6 +863,18 @@ do
 		optname="${optname:2}"
 		eval "$optname=\"$2\""
 		unset optname
+		shift
+	# It is a dosh option with list argument (i.e. --rc ssh-agent.rc
+	# --rc x11.rc --rc shell.rc --rc history.rc)
+	elif is_doshopt_list_argument "$1"
+	then
+		optname="${1//-/_}"
+		optname="${optname:2}"
+		# shellcheck disable=SC2034
+		IFS=, read -r -a optvalues <<<"$2"
+		eval "$optname+=(\"\${optvalues[@]}\")"
+		unset optname
+		unset optvalues
 		shift
 	# It is a shell option without argument (i.e. -c, -i, -s...)
 	elif is_shopt "$1"
@@ -943,6 +966,12 @@ if [[ ! ${no_doshrc:-} ]] && [ -e ./doshrc ]
 then
 	source ./doshrc
 fi
+for i in "${rc[@]}"
+do
+	PATH="$PWD:$HOME/.local/share/dosh/rc.d:/usr/local/share/dosh/rc.d:/usr/share/dosh/rc.d:$PATH" \
+	source "$i"
+done
+unset i 
 set -euo pipefail
 
 # Warn if the DOSH_DOCKER_*_EXTRA_OPTS variables are not arrays, and convert

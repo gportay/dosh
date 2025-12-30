@@ -554,6 +554,36 @@ else
 fi
 echo
 
+run "Test option --rc with single file"
+if dosh --rc foo.rc -c 'echo $FOO' | tee /dev/stderr | \
+   grep -q '^foo$'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --rc with two files"
+if dosh --rc foo.rc,bar.rc -c 'echo $FOO:$BAR' | tee /dev/stderr | \
+   grep -q '^foo:bar$'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --rc twice"
+if dosh --rc foo.rc,bar.rc --rc baz.rc -c 'echo $FOO:$BAR:$BAZ' | tee /dev/stderr | \
+   grep -q '^foo:bar:baz$'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --working-directory with current directory (relative path)"
 if ( dosh --working-directory . -c "pwd" | tee /dev/stderr | \
      grep -q "^$PWD$" )

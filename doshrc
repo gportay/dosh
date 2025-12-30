@@ -6,6 +6,8 @@
 # reads and executes commands from the current directory file ./doshrc, if that
 # file exists. The --no-doshprofile and --no-doshrc options may be used to
 # inhibit this behavior.
+#
+# This is run by dosh from the host
 
 # Uncomment to specify the shell interpreter dynamically according the
 # Dockerfile to be used.

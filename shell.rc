@@ -1,0 +1,19 @@
+case "${DOSHELL##*/}" in
+bash)
+	volumes=("$HOME/"{.bash_profile,.bashrc,.bash_logout,.inputrc})
+	;;
+zsh)
+	volumes=("${ZDOTDIR:-$HOME}/"{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout})
+	;;
+*)
+	volumes=("$HOME/.profile")
+	;;
+esac
+
+for vol in "${volumes[@]}"
+do
+	[ -e "$vol" ] || continue
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol")
+done
+unset vol
+unset volumes

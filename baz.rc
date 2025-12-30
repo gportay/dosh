@@ -1,0 +1,1 @@
+DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env BAZ=baz)

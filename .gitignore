@@ -1,5 +1,7 @@
 *.pkg.tar*
 *.tar.gz
+.bash_history
+.zsh_history
 bash-completion-cqfd*
 cache/
 cqfd.1.gz

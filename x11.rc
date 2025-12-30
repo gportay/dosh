@@ -1,0 +1,23 @@
+if [ -n "$DISPLAY" ]
+then
+	for env in DISPLAY XAUTHORITY XSOCK
+	do
+		[ -n "$env" ] || continue
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env "$env")
+	done
+	unset env
+
+	dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
+	if [ -e "$dotxauthority" ]
+	then
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$dotxauthority:$HOME/.Xauthority")
+	fi
+	unset dotxauthority
+
+	xsock="${XSOCK:-/tmp/.X11-unix}"
+	if [ -e "$xsock" ]
+	then
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$xsock:/tmp/.X11-unix:ro")
+	fi
+	unset xsock
+fi
