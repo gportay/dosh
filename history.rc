@@ -9,6 +9,15 @@ then
 	unset histfile
 fi
 
+if [[ "${DOSHELL##*/}" = fish ]]
+then
+	if [[ ! -d .local/share/fish ]]
+	then
+		mkdir -p .local/share/fish
+	fi
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/.local/share/fish:$HOME/.local/share/fish")
+fi
+
 # This is the Z Shell configuration function for new users,
 # zsh-newuser-install.
 # You are seeing this message because you have no zsh startup files

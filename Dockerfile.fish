@@ -1,0 +1,1 @@
+FROM purefish/docker-fish
