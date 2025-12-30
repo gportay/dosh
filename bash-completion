@@ -177,7 +177,7 @@ _dosh()
 	fi
 
 	local args
-	_count_args "" "@(-c|[-+]o|--dockerfile|--context|--directory|--working-directory|--mount-options|--shell|--exec|--attach|--kill|--rm)"
+	_count_args "" "@(-c|[-+]o|--dockerfile|--platform|--context|--directory|--working-directory|--mount-options|--shell|--exec|--attach|--kill|--rm)"
 	if ((args == 1)); then
 		_filedir '*sh'
 		return
