@@ -843,6 +843,7 @@ do
 		optname="${1//-/_}"
 		optname="${optname:2}"
 		eval "$optname=1"
+		unset optname
 	# It is a dosh option with argument (i.e. --dockerfile Dockerfile.alt,
 	# --directory subdir...)
 	elif is_doshopt_argument "$1"
@@ -850,6 +851,7 @@ do
 		optname="${1//-/_}"
 		optname="${optname:2}"
 		eval "$optname=\"$2\""
+		unset optname
 		shift
 	# It is a shell option without argument (i.e. -c, -i, -s...)
 	elif is_shopt "$1"
