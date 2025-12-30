@@ -937,11 +937,11 @@ cd "$directory"
 set +euo pipefail
 if [[ ! ${no_doshprofile:-} ]] && [ -e ~/.dosh_profile ]
 then
-	. ~/.dosh_profile
+	source ~/.dosh_profile
 fi
 if [[ ! ${no_doshrc:-} ]] && [ -e ./doshrc ]
 then
-	. ./doshrc
+	source ./doshrc
 fi
 set -euo pipefail
 
