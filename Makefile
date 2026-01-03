@@ -323,9 +323,12 @@ rpm:
 sources: dosh-$(VERSION).tar.gz rpmbuild/SOURCES/$(VERSION).tar.gz
 
 rpmbuild/SOURCES/$(VERSION).tar.gz:
-rpmbuild/SOURCES/%.tar.gz:
+rpmbuild/SOURCES/%.tar.gz: FORCE
 	git archive --prefix dosh-$*/ --format tar.gz --output $@ HEAD
 
 dosh-$(VERSION).tar.gz:
-%.tar.gz:
+%.tar.gz: FORCE
 	git archive --prefix $*/ --format tar.gz --output $@ HEAD
+
+.PHONY: FORCE
+FORCE:
