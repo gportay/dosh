@@ -275,11 +275,11 @@ clean:
 	rm -f debian/files debian/debhelper-build-stamp debian/*.substvars \
 	   -R debian/.debhelper/ debian/tmp/ \
 	      debian/dosh/ debian/dosh-cqfd/
-	rm -f *.tar.gz src/*.tar.gz *.pkg.tar* \
+	rm -f src/*.tar.gz *.pkg.tar* \
 	      bash-completion-cqfd bash-completion-cqfd-git \
 	   -R src/dosh-*/ pkg/dosh-*/ dosh-git/
-	rm -f rpmbuild/SOURCES/*.tar.gz rpmbuild/SPECS/*.spec \
-	      rpmbuild/SRPMS/*.rpm rpmbuild/RPMS/*/*.rpm
+	rm -f rpmbuild/SPECS/*.spec rpmbuild/SRPMS/*.rpm \
+	      rpmbuild/RPMS/*/*.rpm
 
 .PHONY: mrproper
 mrproper: clean
@@ -288,6 +288,8 @@ mrproper: clean
 .PHONY: maintainer-clean
 maintainer-clean: mrproper
 	rm -Rf cache/
+	rm -f *.tar.gz
+	rm -f rpmbuild/SOURCES/*.tar.gz
 
 .PHONY: sh dash bash zsh
 sh dash bash zsh: PATH := $(CURDIR):$(PATH)
