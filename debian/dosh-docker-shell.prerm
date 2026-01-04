@@ -1,0 +1,17 @@
+#!/bin/sh
+# See deb-prerm(5).
+
+set -e
+
+DEB_HOST_MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
+
+case "$1" in
+remove)
+  rm -f "/usr/lib/$DEB_HOST_MULTIARCH/docker/cli-plugins/docker-bash"
+  rm -f "/usr/lib/$DEB_HOST_MULTIARCH/docker/cli-plugins/docker-sh"
+  rm -f "/usr/lib/$DEB_HOST_MULTIARCH/docker/cli-plugins/docker-shell"
+  rm -f "/usr/lib/$DEB_HOST_MULTIARCH/docker/cli-plugins/docker-zsh"
+  ;;
+esac
+
+#DEBHELPER#

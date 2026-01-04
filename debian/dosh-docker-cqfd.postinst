@@ -1,0 +1,15 @@
+#!/bin/sh
+# See deb-postinst(5).
+
+set -e
+
+DEB_HOST_MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
+
+case "$1" in
+configure)
+  mkdir -p "/usr/lib/$DEB_HOST_MULTIARCH/docker/cli-plugins"
+  ln -sf ../../../../../usr/lib/docker/cli-plugins/docker-cqfd"/usr/lib/$DEB_HOST_MULTIARCH/docker/cli-plugins/docker-cqfd"
+  ;;
+esac
+
+#DEBHELPER#
