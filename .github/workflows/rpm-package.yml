@@ -32,7 +32,7 @@ jobs:
         mv "../$ver.tar.gz" ~/rpmbuild/SOURCES/
         cp ${{ github.event.repository.name }}.spec ~/rpmbuild/SPECS/
         cd ~/rpmbuild/SPECS/
-        rpmbuild --undefine=_disable_source_fetch -ba ${{ github.event.repository.name }}.spec
+        rpmbuild --undefine=_disable_source_fetch --define='_dockerlibdir %{_exec_prefix}/lib/docker' -ba ${{ github.event.repository.name }}.spec
         cd -
         cp ~/rpmbuild/SRPMS/*.rpm ~/rpmbuild/RPMS/*/*.rpm .
         for i in ${{ github.event.repository.name }}*.rpm; do echo "$GPG_PRIVATE_KEY_PASSPHRASE" | gpg --batch --pinentry-mode=loopback --passphrase-fd=0 --detach-sign --no-armor "$i"; done
