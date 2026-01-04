@@ -51,7 +51,7 @@ package_dosh-docker-shell() {
 	depends+=(dosh)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir/" PREFIX="/usr" install-docker-cli-plugin
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-docker-cli-plugin
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-shell/LICENSE"
 }
 
@@ -114,7 +114,7 @@ package_dosh-posh() {
 	depends+=(dosh podman)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir/" PREFIX="/usr" install-posh
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-posh
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-posh/LICENSE"
 }
 
@@ -123,7 +123,7 @@ package_dosh-cqfd() {
 	depends+=(dosh)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir/" PREFIX="/usr" install-cqfd
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-cqfd
 	install -D -m 644 "$startdir/bash-completion-cqfd" "$pkgdir$completionsdir/cqfd"
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-cqfd/LICENSE"
 }
@@ -133,6 +133,6 @@ package_dosh-docker-cqfd() {
 	depends+=(dosh-cqfd)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir/" PREFIX="/usr" install-docker-cli-plugin-cqfd
+	make DESTDIR="$pkgdir" PREFIX="/usr" install-docker-cli-plugin-cqfd
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-docker-cqfd/LICENSE"
 }
