@@ -85,14 +85,6 @@ dosh(1) is an sh-compatible front-end for docker that runs commands in a new
 container; using the current user, with working directory bind mounted.
 
 
-%package  docker-shell
-Requires: docker
-Summary:  Docker CLI plugin for dosh
-
-%description docker-shell
-Docker CLI plugin for dosh.
-
-
 %package  posh
 Requires: dosh
 Requires: podman
@@ -113,15 +105,6 @@ cqfd provides a quick and convenient way to run commands in the current
 directory, but within a Docker container defined in a per-project config file.
 
 
-%package  docker-cqfd
-Requires: docker
-Requires: dosh-cqfd
-Summary:  Docker CLI plugin for cqfd
-
-%description docker-cqfd
-Docker CLI plugin for cqfd.
-
-
 %prep
 %setup -q
 
@@ -138,7 +121,7 @@ make check
 %make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-posh install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
 
 
-%post docker-shell
+%post
 _libdir=$(rpm --eval '%%{_libdir}')
 mkdir -p "$_libdir/docker/cli-plugins"
 ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-bash "$_libdir/docker/cli-plugins/docker-bash"
@@ -147,7 +130,7 @@ ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-shell "$_libdir/docker/
 ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-zsh "$_libdir/docker/cli-plugins/docker-zsh"
 
 
-%preun docker-shell
+%preun
 _libdir=$(rpm --eval '%%{_libdir}')
 rm -f "$_libdir/docker/cli-plugins/docker-bash"
 rm -f "$_libdir/docker/cli-plugins/docker-sh"
@@ -155,13 +138,13 @@ rm -f "$_libdir/docker/cli-plugins/docker-shell"
 rm -f "$_libdir/docker/cli-plugins/docker-zsh"
 
 
-%post docker-cqfd
+%post cqfd
 _libdir=$(rpm --eval '%%{_libdir}')
 mkdir -p "$_libdir/docker/cli-plugins"
 ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-cqfd "$_libdir/docker/cli-plugins/docker-cqfd"
 
 
-%preun docker-cqfd
+%preun cqfd
 _libdir=$(rpm --eval '%%{_libdir}')
 rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 
@@ -182,6 +165,10 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_datadir}/dosh/support/profile
 %{_datadir}/dosh/support/zdosh
 %{_datadir}/man/man1/dosh.1.gz
+%{_dockerlibdir}/cli-plugins/docker-bash
+%{_dockerlibdir}/cli-plugins/docker-sh
+%{_dockerlibdir}/cli-plugins/docker-shell
+%{_dockerlibdir}/cli-plugins/docker-zsh
 
 
 %files linux-platforms
@@ -195,13 +182,6 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_bindir}/linux-s390x-dosh
 
 
-%files docker-shell
-%{_dockerlibdir}/cli-plugins/docker-bash
-%{_dockerlibdir}/cli-plugins/docker-sh
-%{_dockerlibdir}/cli-plugins/docker-shell
-%{_dockerlibdir}/cli-plugins/docker-zsh
-
-
 %files posh
 %{_bindir}/posh
 
@@ -210,9 +190,6 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_bindir}/cqfd
 %{_datadir}/man/man1/cqfd.1.gz
 %{_datadir}/man/man5/cqfdrc.5.gz
-
-
-%files docker-cqfd
 %{_dockerlibdir}/cli-plugins/docker-cqfd
 
 
