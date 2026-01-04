@@ -129,6 +129,34 @@ make check
 %make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-posh install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-amd64-dosh install-linux-arm64-dosh install-linux-arm-dosh install-linux-arm-v6-dosh install-linux-arm-v7-dosh install-linux-ppc64le-dosh install-linux-riscv64-dosh install-linux-s390x-dosh
 
 
+%post docker-shell
+_libdir=$(rpm --eval '%%{_libdir}')
+mkdir -p "$_libdir/docker/cli-plugins"
+ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-bash "$_libdir/docker/cli-plugins/docker-bash"
+ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-sh "$_libdir/docker/cli-plugins/docker-sh"
+ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-shell "$_libdir/docker/cli-plugins/docker-shell"
+ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-zsh "$_libdir/docker/cli-plugins/docker-zsh"
+
+
+%preun docker-shell
+_libdir=$(rpm --eval '%%{_libdir}')
+rm -f "$_libdir/docker/cli-plugins/docker-bash"
+rm -f "$_libdir/docker/cli-plugins/docker-sh"
+rm -f "$_libdir/docker/cli-plugins/docker-shell"
+rm -f "$_libdir/docker/cli-plugins/docker-zsh"
+
+
+%post docker-cqfd
+_libdir=$(rpm --eval '%%{_libdir}')
+mkdir -p "$_libdir/docker/cli-plugins"
+ln -sf ../../../../..%{_dockerlibdir}/cli-plugins/docker-cqfd "$_libdir/docker/cli-plugins/docker-cqfd"
+
+
+%preun docker-cqfd
+_libdir=$(rpm --eval '%%{_libdir}')
+rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
+
+
 %files
 %license LICENSE
 %doc README.md
@@ -174,10 +202,10 @@ make check
 
 
 %files docker-shell
-%{_libdir}/docker/cli-plugins/docker-bash
-%{_libdir}/docker/cli-plugins/docker-sh
-%{_libdir}/docker/cli-plugins/docker-shell
-%{_libdir}/docker/cli-plugins/docker-zsh
+%{_dockerlibdir}/cli-plugins/docker-bash
+%{_dockerlibdir}/cli-plugins/docker-sh
+%{_dockerlibdir}/cli-plugins/docker-shell
+%{_dockerlibdir}/cli-plugins/docker-zsh
 
 
 %files posh
@@ -191,7 +219,7 @@ make check
 
 
 %files docker-cqfd
-%{_libdir}/docker/cli-plugins/docker-cqfd
+%{_dockerlibdir}/cli-plugins/docker-cqfd
 
 
 %changelog
