@@ -1,4 +1,4 @@
-debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-shell usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
-debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-bash usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
-debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-sh usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
-debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-zsh usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
+debian/tmp/usr/lib/docker/cli-plugins/docker-shell usr/lib/docker/cli-plugins
+debian/tmp/usr/lib/docker/cli-plugins/docker-bash usr/lib/docker/cli-plugins
+debian/tmp/usr/lib/docker/cli-plugins/docker-sh usr/lib/docker/cli-plugins
+debian/tmp/usr/lib/docker/cli-plugins/docker-zsh usr/lib/docker/cli-plugins

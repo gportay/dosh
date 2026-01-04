@@ -1,1 +1,1 @@
-debian/tmp/usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins/docker-cqfd usr/lib/${DEB_HOST_MULTIARCH}/docker/cli-plugins
+debian/tmp/usr/lib/docker/cli-plugins/docker-cqfd usr/lib/docker/cli-plugins

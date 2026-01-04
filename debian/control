@@ -13,7 +13,7 @@ Description: Run a user shell in a container with working directory bind mounted
  container; using the current user, with working directory bind mounted.
 
 Package: dosh-docker-shell
-Architecture: any
+Architecture: all
 Depends: ${misc:Depends}, dosh
 Description: Docker CLI plugin for dosh.
  Run a user shell in a container with working directory bind mounted.
@@ -77,7 +77,7 @@ Description: Wrap commands in controlled Docker containers using dosh.
  directory, but within a Docker container defined in a per-project config file.
 
 Package: dosh-docker-cqfd
-Architecture: any
+Architecture: all
 Depends: ${misc:Depends}, dosh-cqfd
 Description: Docker CLI plugin for cqfd.
  Wrap commands in controlled Docker containers using dosh.
