@@ -2,7 +2,6 @@
 
 pkgname=(dosh-git
 	 dosh-linux-platforms-git
-	 dosh-posh-git
 	 dosh-cqfd-git)
 pkgver=master
 pkgrel=1
@@ -54,17 +53,6 @@ package_dosh-linux-platforms-git() {
 	cd "$srcdir/dosh-git"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-platforms
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-platforms-git/LICENSE"
-}
-
-package_dosh-posh-git() {
-	pkgdesc='Podman shell'
-	depends+=(dosh podman)
-	provides=(dosh-posh)
-	conflicts=(dosh-posh)
-
-	cd "$srcdir/dosh-git"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-posh
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-posh-git/LICENSE"
 }
 
 package_dosh-cqfd-git() {
