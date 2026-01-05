@@ -8,8 +8,12 @@ Build-Depends: debhelper-compat (= 13)
 Package: dosh
 Architecture: all
 Depends: ${misc:Depends}
-Replaces: dosh-docker-shell (<< 9)
-Breaks: dosh-docker-shell (<< 9)
+Replaces:
+ dosh-docker-shell (<< 9),
+ dosh-posh (<< 9)
+Breaks:
+ dosh-docker-shell (<< 9),
+ dosh-posh (<< 9)
 Description: Run a user shell in a container with working directory bind mounted.
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
  container; using the current user, with working directory bind mounted.
@@ -86,10 +90,9 @@ Description: Docker shell for linux/s390x platform.
 
 Package: dosh-posh
 Architecture: all
-Depends: ${misc:Depends}, dosh
+Depends: ${misc:Depends}, dosh (>= 9)
 Description: Run a user shell in a container with working directory bind mounted.
- posh(1) is an sh-compatible front-end for podman that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ This is a transitional package. It can safely be removed.
 
 Package: dosh-cqfd
 Architecture: all

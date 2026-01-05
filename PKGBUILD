@@ -2,7 +2,6 @@
 
 pkgname=(dosh
 	 dosh-linux-platforms
-	 dosh-posh
 	 dosh-cqfd)
 pkgver=8
 pkgrel=1
@@ -45,15 +44,6 @@ package_dosh-linux-platforms() {
 	cd "dosh-$pkgver"
 	make DESTDIR="$pkgdir" PREFIX="/usr" install-linux-platforms
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-linux-platforms/LICENSE"
-}
-
-package_dosh-posh() {
-	pkgdesc='Podman shell'
-	depends+=(dosh podman)
-
-	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install-posh
-	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh-posh/LICENSE"
 }
 
 package_dosh-cqfd() {
