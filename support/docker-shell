@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2023-2025 Gaël PORTAY
+# Copyright 2023-2026 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -33,7 +33,7 @@ then
 	COMP_CWORD="$#"
 	COMP_POINT="${#COMP_LINE}"
 	_dosh
-	echo "${COMPREPLY[@]}"
+	printf "%s\n" "${COMPREPLY[@]}" :0
 	exit 0
 fi
 
