@@ -42,6 +42,7 @@ install-all: install-docker-cli-plugin
 .PHONY: install
 install:
 	install -D -m 755 dosh $(DESTDIR)$(PREFIX)/bin/dosh
+	install -D -m 644 git.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/git.rc
 	install -D -m 644 history.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/history.rc
 	install -D -m 644 shell.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/shell.rc
 	install -D -m 644 ssh-agent.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh-agent.rc
