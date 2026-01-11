@@ -2,8 +2,6 @@ name: Deploy Debian package to GitHub Release
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
     paths:
       - "debian/**"
 
