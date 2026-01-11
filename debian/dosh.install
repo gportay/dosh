@@ -4,9 +4,11 @@ debian/tmp/usr/lib/docker/cli-plugins/docker-sh usr/lib/docker/cli-plugins
 debian/tmp/usr/lib/docker/cli-plugins/docker-shell usr/lib/docker/cli-plugins
 debian/tmp/usr/lib/docker/cli-plugins/docker-zsh usr/lib/docker/cli-plugins
 debian/tmp/usr/share/bash-completion/completions/dosh usr/share/bash-completion/completions
+debian/tmp/usr/share/dosh/rc.d/git.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/history.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/shell.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/ssh-agent.rc usr/share/dosh/rc.d
+debian/tmp/usr/share/dosh/rc.d/ssh.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/x11.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/support/cqfd usr/share/dosh/support
 debian/tmp/usr/share/dosh/support/doshx usr/share/dosh/support

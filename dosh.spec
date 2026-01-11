@@ -154,9 +154,11 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %doc README.md
 %{_bindir}/dosh
 %{_datadir}/bash-completion/completions/dosh
+%{_datadir}/dosh/rc.d/git.rc
 %{_datadir}/dosh/rc.d/history.rc
 %{_datadir}/dosh/rc.d/shell.rc
 %{_datadir}/dosh/rc.d/ssh-agent.rc
+%{_datadir}/dosh/rc.d/ssh.rc
 %{_datadir}/dosh/rc.d/x11.rc
 %{_datadir}/dosh/support/cqfd
 %{_datadir}/dosh/support/doshx
