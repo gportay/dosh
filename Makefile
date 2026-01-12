@@ -285,8 +285,8 @@ clean:
 mrproper: clean
 	bash dosh --cache-directory $$PWD/cache --gc
 
-.PHONY: maintainerclean
-maintainerclean: mrproper
+.PHONY: maintainer-clean
+maintainer-clean: mrproper
 	rm -Rf cache/
 
 .PHONY: sh dash bash zsh
