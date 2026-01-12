@@ -77,7 +77,7 @@ Docker related options:
       --no-doshprofile          Disable read of ~/.dosh_profile.
       --no-doshrc               Disable read of ./doshrc.
       --rc FILE                 Read file.
-      --cache-directory         Cache directory tracking images.
+      --cache-directory DIR     Cache directory tracking images.
       --directory DIR           Change to directory before doing anything else.
       --working-directory DIR   Working directory inside the container.
       --sudo                    Run docker with sudo.
