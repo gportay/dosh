@@ -381,11 +381,11 @@ Build the documentation using *make(1)*
 
 First download the package
 
-	$ curl -LO https://github.com/gportay/dosh/releases/download/8/dosh-8-1-any.pkg.tar.zst
+	$ curl -LO https://github.com/gportay/dosh/releases/download/9/dosh-9-1-any.pkg.tar.zst
 
 Then, install it using the package manager
 
-	$ sudo pacman -U ./dosh-8-1-any.pkg.tar.zst
+	$ sudo pacman -U ./dosh-9-1-any.pkg.tar.zst
 
 _Note_: Uninstall it using the package manager
 
@@ -395,11 +395,11 @@ _Note_: Uninstall it using the package manager
 
 First download the package
 
-	$ curl -LO https://github.com/gportay/dosh/releases/download/8/dosh_8_all.deb
+	$ curl -LO https://github.com/gportay/dosh/releases/download/9/dosh_9_all.deb
 
 Then, install it using the package manager
 
-	$ sudo dpkg -i ./dosh_8_all.deb
+	$ sudo dpkg -i ./dosh_9_all.deb
 
 _Note_: Uninstall it using the package manager:
 
@@ -409,11 +409,11 @@ _Note_: Uninstall it using the package manager:
 
 First download the package:
 
-	$ curl https://github.com/gportay/dosh/releases/download/8/dosh-8-1.noarch.rpm
+	$ curl https://github.com/gportay/dosh/releases/download/9/dosh-9-1.noarch.rpm
 
 Then, install it using the package manager:
 
-	$ sudo dnf install ./dosh-8-1.noarch.rpm
+	$ sudo dnf install ./dosh-9-1.noarch.rpm
 
 _Note_: Uninstall it using the package manager:
 

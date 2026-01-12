@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017-2020,2022-2025 Gaël PORTAY
+# Copyright 2017-2020,2022-2026 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -17,7 +17,7 @@ then
 	DOSH_PLATFORM="$target"
 fi
 
-VERSION="8"
+VERSION="9"
 
 usage() {
 	cat <<EOF

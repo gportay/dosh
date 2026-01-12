@@ -1,3 +1,27 @@
+dosh (9) unstable; urgency=medium
+
+  * Fix cqfd's CQFD_NO_USER_GIT_CONFIG environment.
+  * Output commands to stderr if --verbose.
+  * Prints raw build process on verbose.
+  * Add cqfd's verbose option.
+  * Fix cqfd's quiet option.
+  * Optionize cqfd's release command.
+  * Add cqfd's deinit command.
+  * Add cqfd's ls command.
+  * Add cqfd's gc command.
+  * Store cached images by backend.
+  * Add Running status.
+  * Do not collect image with a running container.
+  * Do not remove running image.
+  * Output garbage collected details.
+  * Add --cache-directory option.
+  * Build image from Dockerfile's parent directory.
+  * Output note if ADD or COPY instructions and if no .dockerignore file.
+  * Handle exec form instruction parameters.
+  * Add --rc option.
+
+ -- Gaël PORTAY <gael.portay@gmail.com>  Mon, 12 Jan 2026 06:09:07 +0100
+
 dosh (8) unstable; urgency=medium
 
   * Add cqfd man pages.

@@ -1,5 +1,5 @@
 Name:           dosh
-Version:        8
+Version:        9
 Release:        1
 Summary:        Run a user shell in a container with working directory bind mounted
 
@@ -126,6 +126,26 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 
 
 %changelog
+* Mon Jan 12 2026 Gaël PORTAY <gael.portay@gmail.com> - 9-1
+- Fix cqfd's CQFD_NO_USER_GIT_CONFIG environment.
+- Output commands to stderr if --verbose.
+- Prints raw build process on verbose.
+- Add cqfd's verbose option.
+- Fix cqfd's quiet option.
+- Optionize cqfd's release command.
+- Add cqfd's deinit command.
+- Add cqfd's ls command.
+- Add cqfd's gc command.
+- Store cached images by backend.
+- Add Running status.
+- Do not collect image with a running container.
+- Do not remove running image.
+- Output garbage collected details.
+- Add --cache-directory option.
+- Build image from Dockerfile's parent directory.
+- Output note if ADD or COPY instructions and if no .dockerignore file.
+- Handle exec form instruction parameters.
+- Add --rc option.
 * Fri Aug 01 2025 Gaël PORTAY <gael.portay@gmail.com> - 8-1
 - Add cqfd man pages.
 - Remove non-portable splitting hashbang single argument.
