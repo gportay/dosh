@@ -121,10 +121,10 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 
 %files linux-platforms
 %{_bindir}/linux-amd64-dosh
-%{_bindir}/linux-arm64-dosh
 %{_bindir}/linux-arm-dosh
 %{_bindir}/linux-arm-v6-dosh
 %{_bindir}/linux-arm-v7-dosh
+%{_bindir}/linux-arm64-dosh
 %{_bindir}/linux-ppc64le-dosh
 %{_bindir}/linux-riscv64-dosh
 %{_bindir}/linux-s390x-dosh
