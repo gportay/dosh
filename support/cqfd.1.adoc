@@ -95,7 +95,7 @@ Command options for run:
 *-v* or *--version*::
 	Show version.
 
-*--verbose*::
+*-D* or *--verbose*::
 	Increase the script's verbosity.
 
 *-h* or *--help*::

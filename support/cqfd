@@ -34,7 +34,7 @@ Options:
       -b FLAVOR                 Target a specific build flavor.
       -q                        Turn on quiet mode.
       -v or --version           Show version.
-      --verbose                 Increase the script's verbosity.
+      -D or --verbose           Increase the script's verbosity.
       -h or --help              Show this help text.
 
 Commands:
@@ -73,7 +73,7 @@ do
 	then
 		echo "$VERSION"
 		exit
-	elif [[ "$1" =~ ^-q$ ]]
+	elif [[ "$1" =~ ^-(q|D)$ ]]
 	then
 		printf -v "opt_${1:1}" "%s" 1
 	elif [[ "$1" =~ ^-(f|d|C|b)$ ]]
@@ -177,7 +177,7 @@ then
 	dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
 fi
 dosh_opts+=(--dockerfile "$dockerfile")
-if [[ "$opt_verbose" ]]
+if [[ "$opt_D" ]] || [[ "$opt_verbose" ]]
 then
 	dosh_opts+=(--verbose)
 fi
