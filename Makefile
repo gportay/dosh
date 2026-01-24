@@ -51,6 +51,7 @@ install:
 	install -D -m 644 docker/deb/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	install -D -m 644 docker/pkg/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
 	install -D -m 644 docker/rpm/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
+	install -D -m 644 docker/yocto/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/yocto/Dockerfile
 	install -D -m 755 support/doshx $(DESTDIR)$(PREFIX)/share/dosh/support/doshx
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
 	install -D -m 755 support/zdosh $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh

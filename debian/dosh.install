@@ -15,6 +15,7 @@ debian/tmp/usr/share/bash-completion/completions/dosh usr/share/bash-completion/
 debian/tmp/usr/share/dosh/docker/deb/Dockerfile usr/share/dosh/docker/deb
 debian/tmp/usr/share/dosh/docker/pkg/Dockerfile usr/share/dosh/docker/pkg
 debian/tmp/usr/share/dosh/docker/rpm/Dockerfile usr/share/dosh/docker/rpm
+debian/tmp/usr/share/dosh/docker/yocto/Dockerfile usr/share/dosh/yocto/pkg
 debian/tmp/usr/share/dosh/rc.d/git.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/history.rc usr/share/dosh/rc.d
 debian/tmp/usr/share/dosh/rc.d/shell.rc usr/share/dosh/rc.d
