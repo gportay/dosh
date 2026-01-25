@@ -94,6 +94,7 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_datadir}/dosh/docker/deb/Dockerfile
 %{_datadir}/dosh/docker/pkg/Dockerfile
 %{_datadir}/dosh/docker/rpm/Dockerfile
+%{_datadir}/dosh/docker/ubuntu/Dockerfile
 %{_datadir}/dosh/docker/yocto/Dockerfile
 %{_datadir}/dosh/rc.d/git.rc
 %{_datadir}/dosh/rc.d/history.rc
