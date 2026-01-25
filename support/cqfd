@@ -335,6 +335,11 @@ then
 	dosh_opts+=(--dind)
 fi
 
+if [[ "$path" ]]
+then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e PATH=$path"
+fi
+
 "${DOSH[@]:-dosh}" "${dosh_opts[@]}" -c "$command"
 
 if [[ "$opt_release" ]] || [[ "$cmd_release" ]]
