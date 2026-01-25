@@ -89,6 +89,9 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 *shell (optional)*::
 	The program used to invoke the _shell_ command.
 
+*path (optional)*::
+	Set the _PATH_ environment variable in the build container.
+
 *docker (optional)*::
 	The program used to invoke the _docker(1)_ client.
 
