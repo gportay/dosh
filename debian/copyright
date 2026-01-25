@@ -28,7 +28,9 @@ Files:
 Copyright: Copyright 2025-2026 Gaël PORTAY
 License: LGPL-2.1
 
-Files: docker/yocto/Dockerfile
+Files:
+ docker/ubuntu/Dockerfile
+ docker/yocto/Dockerfile
 Copyright: Copyright 2026 Gaël PORTAY
 License: LGPL-2.1
 
