@@ -12,6 +12,7 @@ debian/tmp/usr/lib/dosh/bin/linux-ppc64le-dosh usr/lib/dosh/bin
 debian/tmp/usr/lib/dosh/bin/linux-riscv64-dosh usr/lib/dosh/bin
 debian/tmp/usr/lib/dosh/bin/linux-s390x-dosh usr/lib/dosh/bin
 debian/tmp/usr/share/bash-completion/completions/dosh usr/share/bash-completion/completions
+debian/tmp/usr/share/dosh/docker/buildroot/Dockerfile usr/share/dosh/docker/buildroot
 debian/tmp/usr/share/dosh/docker/deb/Dockerfile usr/share/dosh/docker/deb
 debian/tmp/usr/share/dosh/docker/kas/Dockerfile usr/share/dosh/docker/kas
 debian/tmp/usr/share/dosh/docker/pkg/Dockerfile usr/share/dosh/docker/pkg
