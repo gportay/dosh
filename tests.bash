@@ -382,7 +382,7 @@ echo
 
 run "Test option --sudo"
 if DOSH_SUDO="echo sudo" dosh --sudo | tee /dev/stderr | \
-   grep -q "sudo docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "sudo docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 
 then
 	ok
@@ -807,7 +807,7 @@ echo
 
 run "Test DOSH_DOCKER environment variable"
 if DOSH_DOCKER="echo docker" dosh | tee /dev/stderr | \
-   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --tty --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+   grep -q "docker run --rm --volume $PWD:$PWD:rw --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else

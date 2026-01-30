@@ -1137,8 +1137,8 @@ if [[ ${opt_i:-} ]] || [[ ${opt_s:-} ]] || ! has_positional_parameter "$@"
 then
 	opts+=("--interactive")
 
-	# Allocate a pseudo-TTY if stdin/stderr are TTY
-	if [ -t 0 ] && [ -t 2 ]
+	# Allocate a pseudo-TTY if stdin/stdout are TTY
+	if [ -t 0 ] && [ -t 1 ]
 	then
 		opts+=("--tty")
 	fi
