@@ -114,6 +114,9 @@ _cqfd_$username_$org_$name_$hash_, using the following variables:
 *docker_rmi_args (optional)*::
 	A space-separated list of extra arguments used to invoke _docker rmi_.
 
+*bind_docker_sock (optional)*::
+	Set to `true` to enable forwarding the docker socket to the container.
+
 ==== CQFD RELEASE
 
 *files*::

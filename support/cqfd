@@ -379,7 +379,7 @@ then
 	: # Warning: CQFD_DOCKER_GID=\"$CQFD_DOCKER_GID\": Ignored environment
 fi
 
-if [[ "$CQFD_BIND_DOCKER_SOCK" ]]
+if [[ "${bind_docker_sock:-false}" = "true" ]] || [[ "${CQFD_BIND_DOCKER_SOCK}" ]]
 then
 	dosh_opts+=(--dind)
 fi
