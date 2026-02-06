@@ -76,7 +76,7 @@ Docker related options:
       --no-extra-options        Disable extra options given to docker commands.
       --no-doshprofile          Disable read of ~/.dosh_profile.
       --no-doshrc               Disable read of ./doshrc.
-      --rc FILE                 Read file.
+      --rc FILE[,FILES]         Read file(s).
       --cache-directory DIR     Cache directory tracking images.
       --directory DIR           Change to directory before doing anything else.
       --working-directory DIR   Working directory inside the container.
