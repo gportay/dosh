@@ -13,7 +13,7 @@ esac
 for vol in "${volumes[@]}"
 do
 	[ -e "$vol" ] || continue
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol")
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$vol:$vol:${mount_options:-rw})
 done
 unset vol
 unset volumes

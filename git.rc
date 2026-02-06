@@ -1,4 +1,4 @@
 if [ -e "$HOME/.gitconfig" ]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$HOME/.gitconfig:$HOME/.gitconfig")
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$HOME/.gitconfig:$HOME/.gitconfig:${mount_options:-rw}")
 fi
