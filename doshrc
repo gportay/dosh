@@ -20,8 +20,8 @@ Dockerfile.deb)    DOSHELL=/bin/bash
                    parent=1
                    ;;
 Dockerfile.rpm)    DOSHELL=/bin/bash
-                   DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild")
-                   DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec")
+                   DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild:${mount_options:-rw}")
+                   DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec:${mount_options:-rw}")
                    ;;
 esac
 
@@ -35,18 +35,18 @@ esac
 # Uncomment to save the bash history from the container locally.
 #if [ -r "$PWD/.bash_history" ]
 #then
-#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/.bash_history:$HOME/.bash_history")
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/.bash_history:$HOME/.bash_history:${mount_options:-rw}")
 #fi
 
 # Uncomment to use the ssh settings from host.
 #if [ -d "$HOME/.ssh" ]
 #then
-#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$HOME/.ssh:$HOME/.ssh")
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$HOME/.ssh:$HOME/.ssh:${mount_options:-rw}")
 #fi
 #if [ -n "${SSH_AUTH_SOCK:-}" ]
 #then
 #	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env SSH_AUTH_SOCK)
-#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK")
+#	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK:${mount_options:-rw}")
 #fi
 
 # Uncomment to enable X.
@@ -60,7 +60,7 @@ esac
 #	dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
 #	if [ -e "$dotxauthority" ]
 #	then
-#		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$dotxauthority:$HOME/.Xauthority")
+#		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$dotxauthority:$HOME/.Xauthority:${mount_options:rw}")
 #	fi
 #	unset dotxauthority
 #	xsock="${XSOCK:-/tmp/.X11-unix}"

@@ -1,5 +1,5 @@
 if [ -n "$SSH_AUTH_SOCK" ]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env "SSH_AUTH_SOCK")
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK")
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK:${mount_options:-rw}")
 fi

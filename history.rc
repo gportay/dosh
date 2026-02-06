@@ -5,7 +5,7 @@ then
 	then
 		touch "$histfile"
 	fi
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/$histfile:$HOME/$histfile")
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/$histfile:$HOME/$histfile:${mount_options:-rw}")
 	unset histfile
 fi
 
@@ -41,5 +41,5 @@ then
 unsetopt HIST_SAVE_BY_COPY
 EOF
 	fi
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env "ZDOTDIR=$PWD" --volume "$PWD/.zshrc:$PWD/.zshrc")
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--env "ZDOTDIR=$PWD" --volume "$PWD/.zshrc:$PWD/.zshrc:${mount_options:-rw}")
 fi

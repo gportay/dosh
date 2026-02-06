@@ -1111,7 +1111,7 @@ then
 	opts+=("--user" "$UID:dind")
 	opts+=("--env" "USER=$USER")
 	opts+=("--env" "HOME=$HOME")
-	opts+=("--volume" "${DOSH_DOCKER_HOST/*:\/\//}:/var/run/docker.sock")
+	opts+=("--volume" "${DOSH_DOCKER_HOST/*:\/\//}:/var/run/docker.sock:${mount_options:-rw}")
 	opts+=("--volume" "$dosh:/bin/dosh:ro")
 	unset dosh
 # Or set the current user privileges

@@ -1,5 +1,5 @@
 #
-# Copyright 2017 Gaël PORTAY
+# Copyright 2017,2026 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -13,11 +13,11 @@ fi
 # Map and export ssh things?
 if [ -d "$HOME/.ssh" ]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh:${mount_options:-rw}"
 fi
 if [ -n "$SSH_AUTH_SOCK" ]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK:${mount_options:-rw}"
 fi
 export DOSH_DOCKER_RUN_EXTRA_OPTS

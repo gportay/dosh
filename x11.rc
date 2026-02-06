@@ -10,7 +10,7 @@ then
 	dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
 	if [ -e "$dotxauthority" ]
 	then
-		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$dotxauthority:$HOME/.Xauthority")
+		DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$dotxauthority:$HOME/.Xauthority:${mount_options:-rw}")
 	fi
 	unset dotxauthority
 
