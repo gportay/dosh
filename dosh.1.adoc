@@ -151,8 +151,8 @@ command-line through *docker-run(1)*.
 **--no-doshrc**::
 	Disable read of ./doshrc.
 
-**--rc FILE**::
-	Read file.
+**--rc FILE[,FILE]**::
+	Read file(s).
 
 **--directory DIR**::
 	Change to directory before doing anything else.
