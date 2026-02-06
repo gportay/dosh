@@ -947,7 +947,8 @@ read -r -a docker <<<"${sudo:+$DOSH_SUDO }${DOSH_DOCKER[*]}"
 # Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
 # escape whitespace and preserve it.
 for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
-	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS
+	 DOSH_DOCKER_BUILD_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS \
+	 DOSHRC
 do
 	to_array_if_not_array "$i"
 done
@@ -966,7 +967,7 @@ if [[ ! ${no_doshrc:-} ]] && [ -e ./doshrc ]
 then
 	source ./doshrc
 fi
-for i in "${rc[@]}"
+for i in "${DOSHRC[@]}" "${rc[@]}"
 do
 	PATH="$PWD:$HOME/.local/share/dosh/rc.d:/usr/local/share/dosh/rc.d:/usr/share/dosh/rc.d:$PATH" \
 	source "$i"
