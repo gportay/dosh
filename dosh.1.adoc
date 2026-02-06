@@ -246,6 +246,10 @@ command-line through *docker-run(1)*.
 	The full pathname to the shell to run in docker image.
 	Equivalent to --shell <SHELL>.
 
+**DOSHRC**::
+	Read file(s).
+	Equivalent to --rc <FILES>.
+
 **DOSHLVL**::
 	Incremented by one each time an instance of dosh is started.
 

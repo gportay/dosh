@@ -92,6 +92,7 @@ export -n DOSH_DOCKER
 export -n DOSH_DOCKER_HOST
 export -n DOSH_PLATFORM
 export -n DOSHELL
+export -n DOSHRC
 export -n DOSH_DOCKERFILE
 export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
 export -n DOSH_DOCKER_RMI_EXTRA_OPTS
@@ -577,6 +578,46 @@ echo
 run "Test option --rc twice"
 if dosh --rc foo.rc,bar.rc --rc baz.rc -c 'echo $FOO:$BAR:$BAZ' | tee /dev/stderr | \
    grep -q '^foo:bar:baz$'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test DOSHLVL environment variable with single file"
+if DOSHRC=foo.rc dosh -c 'echo $FOO' | tee /dev/stderr | \
+   grep -q '^foo$'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test DOSHLVL environment variable with two files"
+if DOSHRC="foo.rc bar.rc" dosh -c 'echo $FOO:$BAR' | tee /dev/stderr | \
+   grep -q '^foo:bar$'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --rc and DOSHLVL environment variable"
+if DOSHRC="foo.rc" dosh --rc bar.rc -c 'echo $FOO:$BAR' | tee /dev/stderr | \
+   grep -q '^foo:bar$'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test option --rc and DOSHLVL environment variable with multiples files"
+if DOSHRC="foo.rc bar.rc" dosh --rc baz.rc,quux.rc -c 'echo $FOO:$BAR:$BAZ:$QUUX' | tee /dev/stderr | \
+   grep -q '^foo:bar:baz:quux$'
 then
 	ok
 else
