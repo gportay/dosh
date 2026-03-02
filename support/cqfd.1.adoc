@@ -31,11 +31,11 @@ Linux distribution.
 *deinit*::
 	Deinitialize project build container.
 
-*ls*::
-	List build containers.
+*images*::
+	List all cqfd container images.
 
-*gc*::
-	Cleanup unused build containers.
+*prune*::
+	Remove all cqfd container images.
 
 *exec cmd [args]*::
 	Run argument(s) inside build container.
