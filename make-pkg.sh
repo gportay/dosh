@@ -1,4 +1,4 @@
-#!/usr/bin/env -S DOSH_DOCKERFILE=Dockerfile.pkg dosh
+#!/usr/bin/env -S DOSH_DOCKERFILE=Dockerfile.pkg dosh --no-doshrc
 set -e
 makepkg --force --skipchecksums "$@"
 shellcheck --shell=bash --exclude=SC2034,SC2154,SC2164 PKGBUILD
