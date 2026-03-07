@@ -843,7 +843,12 @@ is_shopt_argument() {
 shopts=()
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 platform="${DOSH_PLATFORM:-}"
-mount_options="${DOSH_MOUNT_OPTIONS:-rw}"
+mount_options="${DOSH_MOUNT_OPTIONS:-}"
+if test -e /sys/fs/selinux/enforce && grep -q 1 /sys/fs/selinux/enforce
+then
+	mount_options="Z"
+fi
+mount_options="${mount_options:-rw}"
 rc=()
 directory="."
 working_directory="$PWD"

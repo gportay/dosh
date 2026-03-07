@@ -62,13 +62,8 @@ install:
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
 	install -D -m 755 support/sedosh $(DESTDIR)$(PREFIX)/share/dosh/support/sedosh
 	install -D -m 755 support/zdosh $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
-	install -D -m 644 support/profile.sh $(DESTDIR)$(PREFIX)/share/dosh/support/profile.sh
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	install -D -m 755 support/cqfd $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
-
-.PHONY: install-shell-system-profile
-install-shell-system-profile:
-	install -D -m 644 support/profile.sh $(DESTDIR)/etc/profile.d/dosh.sh
 
 .PHONY: install-dot-profile
 install-dot-profile:
@@ -168,7 +163,6 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/posh
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/sedosh
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
-	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/profile.sh
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
