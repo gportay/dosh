@@ -15,7 +15,9 @@ case "$DOSH_DOCKERFILE" in
 Dockerfile)        DOSHELL=/bin/bash;;
 Dockerfile.alpine) DOSHELL=/bin/ash;;
 Dockerfile.zsh)    DOSHELL=/bin/zsh;;
-Dockerfile.pkg)    DOSHELL=/bin/bash;;
+docker/pkg/Dockerfile)
+                   DOSHELL=/bin/bash
+                   ;;
 docker/deb/Dockerfile)
                    DOSHELL=/bin/bash
                    parent=1
