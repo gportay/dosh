@@ -49,6 +49,7 @@ install:
 	install -D -m 644 ssh.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh.rc
 	install -D -m 644 x11.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/x11.rc
 	install -D -m 644 docker/deb/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
+	install -D -m 644 docker/pkg/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
 	install -D -m 644 docker/rpm/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
 	install -D -m 755 support/doshx $(DESTDIR)$(PREFIX)/share/dosh/support/doshx
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
@@ -320,7 +321,7 @@ deb:
 .PHONY: pkg
 pkg: PATH:=$(CURDIR):$(PATH)
 pkg: SHELL=dosh
-pkg: export DOSH_DOCKERFILE=Dockerfile.pkg
+pkg: export DOSH_DOCKERFILE=docker/pkg/Dockerfile
 pkg:
 	makepkg --force --skipchecksums
 	shellcheck --shell=bash --exclude=SC2034,SC2154,SC2164 PKGBUILD*
