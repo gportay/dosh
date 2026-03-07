@@ -48,6 +48,7 @@ install:
 	install -D -m 644 ssh-agent.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh-agent.rc
 	install -D -m 644 ssh.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh.rc
 	install -D -m 644 x11.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/x11.rc
+	install -D -m 644 docker/deb/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	install -D -m 644 docker/rpm/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
 	install -D -m 755 support/doshx $(DESTDIR)$(PREFIX)/share/dosh/support/doshx
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
@@ -311,7 +312,7 @@ sh dash bash zsh:
 .PHONY: deb
 deb: PATH:=$(CURDIR):$(PATH)
 deb: SHELL=dosh
-deb: export DOSH_DOCKERFILE=Dockerfile.deb
+deb: export DOSH_DOCKERFILE=docker/deb/Dockerfile
 deb:
 	dpkg-buildpackage -us -uc
 	lintian ../dosh*.dsc ../dosh*.deb
