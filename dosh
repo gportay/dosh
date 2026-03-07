@@ -131,6 +131,9 @@ Environment variables:
       DOSH_PLATFORM             The target platform to use.
                                 Equivalent to --platform <TARGET>.
 
+      DOSH_MOUNT_OPTIONS        Set bind mount volume options.
+                                Equivalent to --mount-options <OPTIONS>.
+
       DOSH_DOCKER_RUN_EXTRA_OPTS
                                 Set additionnal parameters to docker run
                                 command.
@@ -819,6 +822,7 @@ is_shopt_argument() {
 shopts=()
 dockerfile="${DOSH_DOCKERFILE:-Dockerfile}"
 platform="${DOSH_PLATFORM:-}"
+mount_options="${DOSH_MOUNT_OPTIONS:-rw}"
 rc=()
 directory="."
 working_directory="$PWD"

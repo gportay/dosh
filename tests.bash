@@ -717,9 +717,29 @@ else
 fi
 echo
 
+run "Test DOSH_MOUNT_OPTIONS environment variable"
+if DOSH_MOUNT_OPTIONS=z dosh --dry-run 2>&1 | tee /dev/stderr | \
+   grep -q "${docker[*]} run --rm --volume $PWD:$PWD:z --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test DOSH_MOUNT_OPTIONS environment variable (run-time)"
+if ! dosh --mount-options ro -c "touch read-only" 2>&1 | tee /dev/stderr |
+   grep -q "^touch: .*: Read-only file system\$"
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --mount-options"
-if dosh --dry-run --mount-options ro 2>&1 | tee /dev/stderr | \
-   grep -q "${docker[*]} run --rm --volume $PWD:$PWD:ro --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
+if dosh --dry-run --mount-options Z 2>&1 | tee /dev/stderr | \
+   grep -q "${docker[*]} run --rm --volume $PWD:$PWD:Z --user $UID:${GROUPS[0]} --env USER=$USER --env HOME=$HOME --interactive --workdir $PWD --env DOSHLVL=1 --entrypoint /bin/sh dosh-$USER-[0-9a-z]\{64\}"
 then
 	ok
 else

@@ -4,6 +4,13 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
+# Change SELinux label to unshare the volume with the containers?
+if test -e /sys/fs/selinux/enforce && grep -q 1 /sys/fs/selinux/enforce
+then
+	DOSH_MOUNT_OPTIONS="Z"
+	export DOSH_MOUNT_OPTIONS
+fi
+
 # Not /bin/sh?
 if [ "$SHELL" != "/bin/sh" ]
 then
@@ -13,11 +20,11 @@ fi
 # Map and export ssh things?
 if [ -d "$HOME/.ssh" ]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh:${mount_options:-rw}"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $HOME/.ssh:$HOME/.ssh:${DOSH_MOUNT_OPTIONS:-rw}"
 fi
 if [ -n "$SSH_AUTH_SOCK" ]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env SSH_AUTH_SOCK"
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK:${mount_options:-rw}"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK:${DOSH_MOUNT_OPTIONS:-rw}"
 fi
 export DOSH_DOCKER_RUN_EXTRA_OPTS

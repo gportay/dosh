@@ -267,6 +267,10 @@ command-line through *docker-run(1)*.
 	The target platform to use.
 	Equivalent to --platform <TARGET>.
 
+**DOSH_MOUNT_OPTIONS**::
+	Set bind mount volume options.
+	Equivalent to --mount-options <OPTIONS>.
+
 **DOSH_DOCKER_RUN_EXTRA_OPTS**::
 	Set additionnal parameters to docker run command.
 
