@@ -21,6 +21,10 @@ Copyright:
  Copyright © 2006-2008, Ian Macdonald <ian@caliban.org>
 License: LGPL-2.1 and Apache-2.0
 
+Files: docker/rpm/Dockerfile
+Copyright: Copyright 2025-2026 Gaël PORTAY
+License: LGPL-2.1
+
 Files:
  dosh
  dosh.1.adoc

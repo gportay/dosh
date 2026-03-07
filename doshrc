@@ -19,7 +19,8 @@ Dockerfile.pkg)    DOSHELL=/bin/bash;;
 Dockerfile.deb)    DOSHELL=/bin/bash
                    parent=1
                    ;;
-Dockerfile.rpm)    DOSHELL=/bin/bash
+docker/rpm/Dockerfile)
+                   DOSHELL=/bin/bash
                    DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild:${mount_options:-rw}")
                    DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec:${mount_options:-rw}")
                    ;;
