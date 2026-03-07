@@ -109,6 +109,7 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_datadir}/dosh/support/dot-profile
 %{_datadir}/dosh/support/posh
 %{_datadir}/dosh/support/profile
+%{_datadir}/dosh/support/sedosh
 %{_datadir}/dosh/support/zdosh
 %{_datadir}/man/man1/dosh.1.gz
 %{_dockerlibdir}/cli-plugins/docker-bash

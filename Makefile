@@ -57,6 +57,7 @@ install:
 	install -D -m 644 docker/yocto/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/yocto/Dockerfile
 	install -D -m 755 support/doshx $(DESTDIR)$(PREFIX)/share/dosh/support/doshx
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
+	install -D -m 755 support/sedosh $(DESTDIR)$(PREFIX)/share/dosh/support/sedosh
 	install -D -m 755 support/zdosh $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
 	install -D -m 644 support/profile $(DESTDIR)$(PREFIX)/share/dosh/support/profile
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile

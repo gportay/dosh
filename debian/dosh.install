@@ -30,5 +30,6 @@ debian/tmp/usr/share/dosh/support/doshx usr/share/dosh/support
 debian/tmp/usr/share/dosh/support/dot-profile usr/share/dosh/support
 debian/tmp/usr/share/dosh/support/posh usr/share/dosh/support
 debian/tmp/usr/share/dosh/support/profile usr/share/dosh/support
+debian/tmp/usr/share/dosh/support/sedosh usr/share/dosh/support
 debian/tmp/usr/share/dosh/support/zdosh usr/share/dosh/support
 debian/tmp/usr/share/man/man1/dosh.1.gz usr/share/man/man1

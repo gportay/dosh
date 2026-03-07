@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Copyright 2026 Gaël PORTAY
+#
+# SPDX-License-Identifier: LGPL-2.1-or-later
+#
+
+DOSH_MOUNT_OPTIONS="Z" \
+exec dosh "$@"
