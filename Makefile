@@ -12,10 +12,10 @@ VPATH := $(CURDIR)/support
 all:
 	@eval $$(cat /etc/os*release); echo $$NAME; uname -m
 
-.PHONY: doc
-doc: PATH:=$(CURDIR):$(PATH)
-doc: SHELL=dosh
-doc: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
+.PHONY: man
+man: PATH:=$(CURDIR):$(PATH)
+man: SHELL=dosh
+man: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 .PHONY: install-world
 install-world: install-all
@@ -35,7 +35,7 @@ install-world: install-docker-cli-plugin-cqfd
 
 .PHONY: install-all
 install-all: install
-install-all: install-doc
+install-all: install-man
 install-all: install-bash-completion
 install-all: install-docker-cli-plugin
 
@@ -71,12 +71,12 @@ install-shell-system-profile:
 install-dot-profile:
 	cat >>~/.profile support/dot-profile
 
-.PHONY: install-doc
-install-doc:
+.PHONY: install-man
+install-man:
 	install -D -m 644 dosh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 
-.PHONY: install-cqfd-doc
-install-cqfd-doc:
+.PHONY: install-cqfd-man
+install-cqfd-man:
 	install -D -m 644 cqfd.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/cqfd.1.gz
 	install -D -m 644 cqfdrc.5.gz $(DESTDIR)$(PREFIX)/share/man/man5/cqfdrc.5.gz
 
@@ -139,7 +139,7 @@ install-zdosh:
 install-%:
 	install -D -m 755 support/$* $(DESTDIR)$(PREFIX)/bin/$*
 
-install-cqfd: install-cqfd-doc
+install-cqfd: install-cqfd-man
 
 .PHONY: uninstall
 uninstall: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
@@ -192,12 +192,12 @@ user-install-world: user-install-docker-cli-plugin-cqfd
 
 .PHONY: user-install-all
 user-install-all: user-install
-user-install-all: user-install-doc
+user-install-all: user-install-man
 user-install-all: user-install-bash-completion
 user-install-all: user-install-docker-cli-plugin
 
 user-install:
-user-install-doc:
+user-install-man:
 user-install-bash-completion:
 user-install-docker-cli-plugin:
 user-install-docker-cli-plugin-sh:

@@ -44,7 +44,7 @@ Copyright: Copyright 2017-2020,2022-2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files:
- examples/build-doc.dosh
+ examples/build-man.dosh
  examples/shebang.dosh
 Copyright: Copyright 2017,2025 Gaël PORTAY
 License: LGPL-2.1

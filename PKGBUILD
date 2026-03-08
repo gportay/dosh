@@ -31,7 +31,7 @@ package_dosh() {
 	depends+=(docker)
 
 	cd "dosh-$pkgver"
-	make DESTDIR="$pkgdir" PREFIX="/usr" install install-doc install-bash-completion install-docker-cli-plugin install-linux-platforms
+	make DESTDIR="$pkgdir" PREFIX="/usr" install install-man install-bash-completion install-docker-cli-plugin install-linux-platforms
 	install -D -m 644 LICENSE "$pkgdir/usr/share/licenses/dosh/LICENSE"
 }
 
