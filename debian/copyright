@@ -32,6 +32,7 @@ License: LGPL-2.1
 Files:
  docker/buildroot/Dockerfile
  docker/kas/Dockerfile
+ docker/raspberrypios/Dockerfile
  docker/ubuntu/Dockerfile
  docker/yocto/Dockerfile
 Copyright: Copyright 2026 Gaël PORTAY

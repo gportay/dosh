@@ -16,6 +16,9 @@ debian/tmp/usr/share/dosh/docker/buildroot/Dockerfile usr/share/dosh/docker/buil
 debian/tmp/usr/share/dosh/docker/deb/Dockerfile usr/share/dosh/docker/deb
 debian/tmp/usr/share/dosh/docker/kas/Dockerfile usr/share/dosh/docker/kas
 debian/tmp/usr/share/dosh/docker/pkg/Dockerfile usr/share/dosh/docker/pkg
+debian/tmp/usr/share/dosh/docker/raspberrypios/Dockerfile usr/share/dosh/docker/raspberrypios
+debian/tmp/usr/share/dosh/docker/raspberrypios/raspberrypi-archive-stable.gpg usr/share/dosh/docker/raspberrypios
+debian/tmp/usr/share/dosh/docker/raspberrypios/raspi.list usr/share/dosh/docker/raspberrypios
 debian/tmp/usr/share/dosh/docker/rpm/Dockerfile usr/share/dosh/docker/rpm
 debian/tmp/usr/share/dosh/docker/ubuntu/Dockerfile usr/share/dosh/docker/ubuntu
 debian/tmp/usr/share/dosh/docker/yocto/Dockerfile usr/share/dosh/docker/yocto

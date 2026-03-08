@@ -52,6 +52,9 @@ install:
 	install -D -m 644 docker/deb/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	install -D -m 644 docker/kas/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/kas/Dockerfile
 	install -D -m 644 docker/pkg/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
+	install -D -m 644 docker/raspberrypios/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/raspberrypios/Dockerfile
+	install -D -m 644 docker/raspberrypios/raspberrypi-archive-stable.gpg $(DESTDIR)$(PREFIX)/share/dosh/docker/raspberrypios/raspberrypi-archive-stable.gpg
+	install -D -m 644 docker/raspberrypios/raspi.list $(DESTDIR)$(PREFIX)/share/dosh/docker/raspberrypios/raspi.list
 	install -D -m 644 docker/rpm/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
 	install -D -m 644 docker/ubuntu/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/ubuntu/Dockerfile
 	install -D -m 644 docker/yocto/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/yocto/Dockerfile
@@ -155,6 +158,9 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/kas/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/raspberrypios/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/raspberrypios/raspberrypi-archive-stable.gpg
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/raspberrypios/raspi.list
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/ubuntu/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/yocto/Dockerfile
