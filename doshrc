@@ -12,21 +12,27 @@
 # Uncomment to specify the shell interpreter dynamically according the
 # Dockerfile to be used.
 case "$DOSH_DOCKERFILE" in
-Dockerfile)        DOSHELL=/bin/bash;;
-Dockerfile.alpine) DOSHELL=/bin/ash;;
-Dockerfile.zsh)    DOSHELL=/bin/zsh;;
+docker/Dockerfile)
+	DOSHELL=/bin/bash
+	;;
+docker/tests/Dockerfile.alpine)
+	DOSHELL=/bin/ash
+	;;
+docker/tests/Dockerfile.zsh)
+	DOSHELL=/bin/zsh
+	;;
 docker/pkg/Dockerfile)
-                   DOSHELL=/bin/bash
-                   ;;
+	DOSHELL=/bin/bash
+	;;
 docker/deb/Dockerfile)
-                   DOSHELL=/bin/bash
-                   parent=1
-                   ;;
+	DOSHELL=/bin/bash
+	parent=1
+	;;
 docker/rpm/Dockerfile)
-                   DOSHELL=/bin/bash
-                   DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild:${mount_options:-rw}")
-                   DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec:${mount_options:-rw}")
-                   ;;
+	DOSHELL=/bin/bash
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild:${mount_options:-rw}")
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec:${mount_options:-rw}")
+	;;
 esac
 
 # Uncomment to use the same shell interpreter in container than the one which

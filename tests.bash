@@ -163,8 +163,8 @@ rmi() {
 	echo
 
 	run "Test --rmi option with --dockerfile option"
-	if   dosh --rmi --dockerfile Dockerfile.fedora && \
-	   ! dosh --rmi --dockerfile Dockerfile.fedora
+	if   dosh --rmi --dockerfile docker/tests/Dockerfile.fedora && \
+	   ! dosh --rmi --dockerfile docker/tests/Dockerfile.fedora
 	then
 		ok
 	else
@@ -173,8 +173,8 @@ rmi() {
 	echo
 
 	run "Test --rmi option with --dockerfile and empty --platform option"
-	if   dosh --rmi --platform "" --dockerfile Dockerfile.user && \
-	   ! dosh --rmi --platform "" --dockerfile Dockerfile.user
+	if   dosh --rmi --platform "" --dockerfile docker/tests/Dockerfile.user && \
+	   ! dosh --rmi --platform "" --dockerfile docker/tests/Dockerfile.user
 	then
 		ok
 	else
@@ -184,8 +184,8 @@ rmi() {
 
 	run "Test --rmi option with --directory and --dockerfile option in a busybox based distro"
 	if ( cd .. && dir="${OLDPWD##*/}" && \
-	       dosh --rmi --directory "$dir" --dockerfile Dockerfile.alpine && \
-	     ! dosh --rmi --directory "$dir" --dockerfile Dockerfile.alpine )
+	       dosh --rmi --directory "$dir" --dockerfile docker/tests/Dockerfile.alpine && \
+	     ! dosh --rmi --directory "$dir" --dockerfile docker/tests/Dockerfile.alpine )
 	then
 		ok
 	else
@@ -206,7 +206,7 @@ then
 fi
 
 run "Test with missing Dockerfile"
-if ! dosh --dockerfile Dockerfile.missing -c "echo Oops"
+if ! dosh --dockerfile docker/tests/Dockerfile.missing -c "echo Oops"
 then
 	ok
 else
@@ -412,7 +412,7 @@ else
 fi
 
 run "Test option --dind"
-if bash dosh --directory .. --dockerfile "$PWD/Dockerfile" --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+if bash dosh --directory .. --dockerfile "$PWD/docker/Dockerfile" --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
    grep -q 'DOSHLVL=2'
 then
 	ok
@@ -440,7 +440,7 @@ fi
 echo
 
 run "Test \$DOSH_DOCKERFILE"
-if DOSH_DOCKERFILE=Dockerfile.fedora \
+if DOSH_DOCKERFILE=docker/tests/Dockerfile.fedora \
    dosh -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
@@ -451,7 +451,7 @@ fi
 echo
 
 run "Test option --dockerfile"
-if dosh --dockerfile Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
+if dosh --dockerfile docker/tests/Dockerfile.fedora -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
@@ -522,7 +522,7 @@ fi
 echo
 
 run "Test option --context"
-tar cf context.tar Dockerfile dosh bash-completion support/* examples/*
+tar cf context.tar docker/Dockerfile dosh bash-completion support/* examples/*
 if dosh --build --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"'
 then
@@ -534,8 +534,8 @@ echo
 rm context.tar
 
 run "Test option --context with --dockerfile"
-tar cf context.tar Dockerfile.fedora
-if dosh --build --dockerfile Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
+tar cf context.tar docker/tests/Dockerfile.fedora
+if dosh --build --dockerfile docker/tests/Dockerfile.fedora --context context.tar -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Fedora 29 (Container Image)"'
 then
 	ok
@@ -857,7 +857,7 @@ fi
 echo
 
 run "Test with a busybox based distro (/bin/ash + adduser/addgroup)"
-if DOSHELL=/bin/ash dosh --dockerfile Dockerfile.alpine --build -c "cat /etc/os*release"
+if DOSHELL=/bin/ash dosh --dockerfile docker/tests/Dockerfile.alpine --build -c "cat /etc/os*release"
 then
 	ok
 else
@@ -936,7 +936,7 @@ fi
 echo
 
 run "Test --tag option with --dockerfile option"
-if dosh --tag --dockerfile Dockerfile.fedora | tee /dev/stderr | \
+if dosh --tag --dockerfile docker/tests/Dockerfile.fedora | tee /dev/stderr | \
    grep -q "^dosh-$USER-[0-9a-z]\{64\}$"
 then
 	ok
@@ -947,7 +947,7 @@ echo
 
 run "Test --tag option with --directory and --dockerfile option in a busybox based distro"
 if ( cd .. && dir="${OLDPWD##*/}" && \
-     dosh --tag --directory "$dir" --dockerfile Dockerfile.alpine | tee /dev/stderr | \
+     dosh --tag --directory "$dir" --dockerfile docker/tests/Dockerfile.alpine | tee /dev/stderr | \
      grep -q "^dosh-$USER-[0-9a-z]\{64\}$" )
 then
 	ok
@@ -957,8 +957,8 @@ fi
 echo
 
 run "Test tags are identical when Dockerfiles are identicals"
-if          dosh --tag                                | tee /dev/stderr | \
-   diff - <(dosh --tag --dockerfile "$PWD/Dockerfile" | tee /dev/stderr )
+if          dosh --tag                                       | tee /dev/stderr | \
+   diff - <(dosh --tag --dockerfile "$PWD/docker/Dockerfile" | tee /dev/stderr )
 then
 	ok
 else
@@ -968,7 +968,7 @@ echo
 
 run "Test tags are different when Dockerfiles are differents"
 if !        dosh --tag                                | tee /dev/stderr | \
-   diff - <(dosh --tag --dockerfile Dockerfile.fedora | tee /dev/stderr )
+   diff - <(dosh --tag --dockerfile docker/tests/Dockerfile.fedora | tee /dev/stderr )
 then
 	ok
 else
@@ -977,7 +977,7 @@ fi
 echo
 
 run "Test when user is set in Dockerfile"
-if dosh --dockerfile Dockerfile.user -c "whoami"
+if dosh --dockerfile docker/tests/Dockerfile.user -c "whoami"
 then
 	ok
 else
@@ -992,11 +992,11 @@ sed -e "s,@USER@,$USER,g" \
     -e "s,@GID@,${GROUPS[0]},g" \
     -e "s,@HOME@,$HOME,g" \
     -e "s,@DID_GID@,${did[2]},g" \
-    Dockerfile.me.in >Dockerfile.me
+    docker/tests/Dockerfile.me.in >docker/tests/Dockerfile.me
 
 run "Test when user/group already exists with same UID/GID in Dockerfile"
-if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
-   diff - <(/bin/sh                                   -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr )
+if          dosh --rebuild --dockerfile docker/tests/Dockerfile.me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
+   diff - <(/bin/sh                                                -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr )
 then
 	ok
 else
@@ -1005,8 +1005,8 @@ fi
 echo
 
 run "Test USER and HOME are set to user's values"
-if          dosh --rebuild --dockerfile Dockerfile.me -c 'echo "$USER:$HOME"' | tee /dev/stderr | \
-   diff - <(sh                                        -c 'echo "$USER:$HOME"' | tee /dev/stderr )
+if          dosh --rebuild --dockerfile docker/tests/Dockerfile.me -c 'echo "$USER:$HOME"' | tee /dev/stderr | \
+   diff - <(sh                                                     -c 'echo "$USER:$HOME"' | tee /dev/stderr )
 then
 	ok
 else
@@ -1015,7 +1015,7 @@ fi
 echo
 
 run "Test --rmi option"
-if   DOSH_DOCKERFILE=Dockerfile.me \
+if   DOSH_DOCKERFILE=docker/tests/Dockerfile.me \
      dosh --rmi
 then
 	ok
@@ -1023,7 +1023,7 @@ else
 	ko
 fi
 echo
-rm -f Dockerfile.me
+rm -f docker/tests/Dockerfile.me
 
 uid="$((UID+1))"
 gid="$((GROUPS[0]+1))"
@@ -1033,12 +1033,12 @@ sed -e "s,@USER@,$USER,g" \
     -e "s,@GID@,$gid,g" \
     -e "s,@HOME@,$HOME,g" \
     -e "s,@DID_GID@,${did[2]},g" \
-    Dockerfile.me.in >Dockerfile.not-me
-cat Dockerfile.not-me
+    docker/tests/Dockerfile.me.in >docker/tests/Dockerfile.not-me
+cat docker/tests/Dockerfile.not-me
 
 run "Test when user/group already exists with different UID/GID in Dockerfile"
-if          dosh --rebuild --dockerfile Dockerfile.not-me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
-   diff - <(sh                                            -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
+if          dosh --rebuild --dockerfile docker/tests/Dockerfile.not-me -c 'echo "$(id -un):$(id -u):$(id -g)"' | tee /dev/stderr | \
+   diff - <(sh                                                         -c 'echo "$(id -u ):$(id -u):$(id -g)"' | tee /dev/stderr )
 then
 	ok
 else
@@ -1047,14 +1047,14 @@ fi
 echo
 
 run "Test --rmi option with --dockerfile option"
-if   dosh --rmi --dockerfile Dockerfile.not-me
+if   dosh --rmi --dockerfile docker/tests/Dockerfile.not-me
 then
 	ok
 else
 	ko
 fi
 echo
-rm -f Dockerfile.not-me
+rm -f docker/tests/Dockerfile.not-me
 
 run "Test with shopt arguments using /bin/bash (dind)"
 if          dosh --shell /usr/bin/dosh --dind -- --shell /bin/bash -- +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \

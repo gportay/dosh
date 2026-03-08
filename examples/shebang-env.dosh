@@ -1,6 +1,6 @@
-#!/usr/bin/env -S dosh --dockerfile Dockerfile.fedora
+#!/usr/bin/env -S dosh --dockerfile docker/tests/Dockerfile.fedora
 #
-# Copyright 2024 Gaël PORTAY
+# Copyright 2024,2026 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #

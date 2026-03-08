@@ -404,7 +404,7 @@ Read the contents outside the container
 
 Specify the *Dockerfile(5)* to use
 
-	$ dosh --dockerfile Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
+	$ dosh --dockerfile docker/tests/Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
 	sha256:44d9de323a55
 	NAME=Fedora
 
