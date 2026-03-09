@@ -291,6 +291,9 @@ line, through *docker-run(1)*.
 	The filename of the Dockerfile to use.
 	Equivalent to --dockerfile <FILE>.
 
+**DOSH_DOCKERFILES**::
+	The list of path to Dockerfile to lookup.
+
 **DOSH_PLATFORM**::
 	The target platform to use.
 	Equivalent to --platform <TARGET>.

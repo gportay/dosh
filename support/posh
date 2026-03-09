@@ -1,10 +1,11 @@
 #!/bin/bash
 #
-# Copyright 2019,2023-2024 Gaël PORTAY
+# Copyright 2019,2023-2024,2026 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
 
 DOSH_DOCKER="${PODMAN:-podman}" \
+DOSH_DOCKERFILES="${DOSH_DOCKERFILES:-container/Containerfile:Containerfile:docker/Dockerfile:Dockerfile}" \
 DOSH_DOCKER_RUN_EXTRA_OPTS="--userns keep-id --group-add keep-groups" \
 exec dosh --no-auto-context "$@"

@@ -150,6 +150,8 @@ Environment variables:
       DOSH_DOCKERFILE           The filename of the Dockerfile to use.
                                 Equivalent to --dockerfile <FILE>.
 
+      DOSH_DOCKERFILES          The list of path to Dockerfile to lookup.
+
       DOSH_PLATFORM             The target platform to use.
                                 Equivalent to --platform <TARGET>.
 
@@ -1071,7 +1073,8 @@ cd "$directory"
 # Set Dockerfile if unset
 if [[ ! "${dockerfile:-}" ]]
 then
-	for dockerfile in docker/Dockerfile Dockerfile
+	IFS=: read -r -a dockerfiles <<<"${DOSH_DOCKERFILES:-docker/Dockerfile:Dockerfile}"
+	for dockerfile in "${dockerfiles[@]}"
 	do
 		if [ -e "$dockerfile" ]
 		then
