@@ -12,7 +12,7 @@ Files:
  Makefile
  README.md
  tests.bash
-Copyright: Copyright 2017-2020,2023-2025 Gaël PORTAY
+Copyright: Copyright 2017-2020,2023-2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files: bash-completion
@@ -25,7 +25,7 @@ License: LGPL-2.1 and Apache-2.0
 Files:
  dosh
  dosh.1.adoc
-Copyright: Copyright 2017-2020,2022-2025 Gaël PORTAY
+Copyright: Copyright 2017-2020,2022-2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files:
