@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017-2020,2023-2025 Gaël PORTAY
+# Copyright 2017-2020,2023-2026 Gaël PORTAY
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 #
