@@ -65,10 +65,6 @@ install:
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	install -D -m 755 support/cqfd $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 
-.PHONY: install-dot-profile
-install-dot-profile:
-	cat >>~/.profile support/dot-profile
-
 .PHONY: install-man
 install-man:
 	install -D -m 644 dosh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
