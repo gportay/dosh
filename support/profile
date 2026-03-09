@@ -1,9 +1,3 @@
-#
-# Copyright 2017,2026 Gaël PORTAY
-#
-# SPDX-License-Identifier: LGPL-2.1-or-later
-#
-
 # Change SELinux label to unshare the volume with the containers?
 if test -e /sys/fs/selinux/enforce && grep -q 1 /sys/fs/selinux/enforce
 then

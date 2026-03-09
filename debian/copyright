@@ -91,10 +91,6 @@ Files: support/posh
 Copyright: Copyright 2019,2023-2024 Gaël PORTAY
 License: LGPL-2.1
 
-Files: support/profile
-Copyright: Copyright 2017,2026 Gaël PORTAY
-License: LGPL-2.1
-
 Files: support/sedosh
 Copyright: Copyright 2026 Gaël PORTAY
 License: LGPL-2.1
