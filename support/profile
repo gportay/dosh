@@ -10,9 +10,3 @@ then
 	DOSH_MOUNT_OPTIONS="Z"
 	export DOSH_MOUNT_OPTIONS
 fi
-
-# Not /bin/sh?
-if [ "$SHELL" != "/bin/sh" ]
-then
-	export DOSHELL="$SHELL"
-fi
