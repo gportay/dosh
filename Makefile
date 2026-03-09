@@ -63,8 +63,8 @@ install:
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	install -D -m 755 support/cqfd $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 
-.PHONY: install-profile
-install-profile:
+.PHONY: install-shell-system-profile
+install-shell-system-profile:
 	install -D -m 644 support/profile.sh $(DESTDIR)/etc/profile.d/dosh.sh
 
 .PHONY: install-dot-profile
