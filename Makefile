@@ -59,13 +59,13 @@ install:
 	install -D -m 755 support/posh $(DESTDIR)$(PREFIX)/share/dosh/support/posh
 	install -D -m 755 support/sedosh $(DESTDIR)$(PREFIX)/share/dosh/support/sedosh
 	install -D -m 755 support/zdosh $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
-	install -D -m 644 support/profile $(DESTDIR)$(PREFIX)/share/dosh/support/profile
+	install -D -m 644 support/profile.sh $(DESTDIR)$(PREFIX)/share/dosh/support/profile.sh
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	install -D -m 755 support/cqfd $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 
 .PHONY: install-profile
 install-profile:
-	install -D -m 644 support/profile $(DESTDIR)/etc/profile.d/dosh.sh
+	install -D -m 644 support/profile.sh $(DESTDIR)/etc/profile.d/dosh.sh
 
 .PHONY: install-dot-profile
 install-dot-profile:
