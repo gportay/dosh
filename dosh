@@ -976,7 +976,7 @@ do
 	PATH="$PWD:$HOME/.local/share/dosh/rc.d:/usr/local/share/dosh/rc.d:/usr/share/dosh/rc.d:$PATH" \
 	source "$i"
 done
-unset i 
+unset i
 set -euo pipefail
 
 # Warn if the DOSH_DOCKER_*_EXTRA_OPTS variables are not arrays, and convert
