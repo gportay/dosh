@@ -56,6 +56,7 @@ make check
 
 %install
 %make_install PREFIX=/usr DOCKERLIBDIR=%{_libdir}/docker install-all install-cqfd install-docker-cli-plugin-sh install-docker-cli-plugin-bash install-docker-cli-plugin-zsh install-docker-cli-plugin-cqfd install-linux-platforms
+make install-shell-system-profile
 
 
 %post
