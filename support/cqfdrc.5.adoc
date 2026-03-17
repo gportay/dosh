@@ -141,11 +141,11 @@ where _org_ and _name_ come from the project's configuration keys. The .tar.xz,
 
 For tar archives:
 
-* Setting _tar_transform=yes_ (optional) will cause all files specified for
-  the archive to be stored at the root of the archive, which is desirable in
-  some scenarios.
+* (Optional) Setting _tar_transform=yes_ or _tar_transform=true_ will cause all
+  files specified for the archive to be stored at the root of the archive,
+  which is desirable in some scenarios.
 
-* Setting _tar_options_ (optional) will pass extra options to the tar
+* (Optional) Setting _tar_options_ will pass extra options to the tar
   command. For example, setting _tar_options=-h_ will archive the files that
   symlinks point to instead of the symlinks themselves, which is desirable in
   some scenarios.

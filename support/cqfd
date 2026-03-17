@@ -347,21 +347,21 @@ if [ -t 0 ] && [ -t 1 ]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -t"
 fi
-if [[ ! "$CQFD_NO_USER_SSH_CONFIG" ]] && [[ -d "$HOME/.ssh" ]]
+if [[ ! "${CQFD_NO_USER_SSH_CONFIG:-false}" =~ ^(true|yes)$ ]] && [[ -d "$HOME/.ssh" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\\ }/.ssh:${HOME// /\\ }/.ssh"
 fi
-if [[ ! "$CQFD_NO_SSH_CONFIG" ]] && [[ -d /etc/ssh ]]
+if [[ ! "${CQFD_NO_SSH_CONFIG:-false}" =~ ^(true|yes)$ ]] && [[ -d /etc/ssh ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v /etc/ssh:/etc/ssh"
 
 fi
-if [[ ! "$CQFD_NO_SSH_AUTH_SOCK" ]] && [[ "$SSH_AUTH_SOCK" ]]
+if [[ ! "${CQFD_NO_SSH_AUTH_SOCK:-false}" =~ ^(true|yes)$ ]] && [[ "$SSH_AUTH_SOCK" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\\ }:${HOME// /\\ }/.sockets/ssh"
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\\ }/.sockets/ssh"
 fi
-if [[ ! "$CQFD_NO_USER_GIT_CONFIG" ]] && [[ -f "$HOME/.gitconfig" ]]; then
+if [[ ! "${CQFD_NO_USER_GIT_CONFIG:-false}" =~ ^(true|yes)$ ]] && [[ -f "$HOME/.gitconfig" ]]; then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\\ }/.gitconfig:${HOME// /\\ }/.gitconfig"
 fi
 if [[ "$docker_run_args" ]]
@@ -379,12 +379,12 @@ then
 	: # Warning: CQFD_DOCKER_GID=\"$CQFD_DOCKER_GID\": Ignored environment
 fi
 
-if [[ "${bind_docker_sock:-false}" = "true" ]] || [[ "${CQFD_BIND_DOCKER_SOCK}" ]]
+if [[ "${bind_docker_sock:-false}" =~ ^(true|yes)$ ]] || [[ "${CQFD_BIND_DOCKER_SOCK:-false}" =~ ^(true|yes)$ ]]
 then
 	dosh_opts+=(--dind)
 fi
 
-if [[ "${CQFD_RUN_WITH_SUDO:-false}" = "true" ]]
+if [[ "${CQFD_RUN_WITH_SUDO:-false}" =~ ^(true|yes)$ ]]
 then
 	dosh_opts+=(--sudo)
 fi
@@ -428,7 +428,7 @@ then
 		exit 1
 	fi
 
-	if [[ "$tar_transform" = yes ]]
+	if [[ "${tar_transform:-false}" =~ ^(yes|true)$ ]]
 	then
 		tar_opts+=("--transform" "s/.*\///g")
 	fi
