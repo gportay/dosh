@@ -145,6 +145,13 @@ install-cqfd: install-cqfd-man
 uninstall: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dosh
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/buildroot/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/kas/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/ubuntu/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/yocto/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
