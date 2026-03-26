@@ -158,6 +158,13 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/rpm/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/ubuntu/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/yocto/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/doshx
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/posh
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/sedosh
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/profile.sh
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
