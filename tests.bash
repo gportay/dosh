@@ -411,7 +411,7 @@ else
 	ko
 fi
 
-run "Test option --dind"
+run "Test option --dind with parent directory (relative path)"
 if bash dosh --directory .. --dockerfile "$PWD/docker/Dockerfile" --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
    grep -q 'DOSHLVL=2'
 then
