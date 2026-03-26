@@ -145,6 +145,12 @@ install-cqfd: install-cqfd-man
 uninstall: DOCKERLIBDIR ?= $(PREFIX)/lib/docker
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dosh
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/git.rc
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/history.rc
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/shell.rc
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh-agent.rc
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh.rc
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/x11.rc
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/buildroot/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/kas/Dockerfile
