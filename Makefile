@@ -166,7 +166,6 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
-	rm -Rf $(DESTDIR)$(PREFIX)/share/dosh/
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-bash
