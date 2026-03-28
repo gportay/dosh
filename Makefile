@@ -12,6 +12,10 @@ VPATH := $(CURDIR)/support
 all:
 	@eval $$(cat /etc/os*release); echo $$NAME; uname -m
 
+.PHONY: doc
+doc:
+	$(MAKE) -C $@ html
+
 .PHONY: man
 man: PATH := $(CURDIR):$(PATH)
 man: SHELL = dosh
@@ -296,6 +300,7 @@ commit-check:
 
 .PHONY: clean
 clean:
+	$(MAKE) -C doc $@
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 	rm -f debian/files debian/debhelper-build-stamp debian/*.substvars \
 	   -R debian/.debhelper/ debian/tmp/ \
