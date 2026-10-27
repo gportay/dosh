@@ -10,14 +10,14 @@
 
 [dosh][dosh(1)] is a bash script providing a shell CLI to *docker-run(1)*.
 
-It runs a user shell with working directory bind mounted to the container built
-using the Dockerfile.
+It runs a user shell in a container built from the Dockerfile, with the working
+directory bind mounted.
 
-One think `dosh` does...
+In short, `dosh` does...
 
 	docker run --rm [--tty] [--interactive] "--volume=$PWD:$PWD:rw" "--user=$USER" "--entrypoint=$SHELL" IMAGE [SHELL_ARGS]
 
-... with a few more magic!
+... with a little more magic!
 
 ## NAME
 
@@ -27,28 +27,29 @@ mounted
 ## DESCRIPTION
 
 [dosh(1)] is an _sh-compatible_ front-end for [docker] that runs commands in a
-new container; using the current _user_, with _working directory_ bind mounted.
+new container, using the current _user_, with the _working directory_ bind
+mounted.
 
-Commands are read either from the standard input or from a file or from command
-line using one of the standard shell invocations (i.e. thanks to options `-c`,
-`-i`, `-s` or without arguments).
+Commands are read either from the standard input, from a file, or from the
+command line, using one of the standard shell invocations (i.e. options `-c`,
+`-i`, `-s`, or no arguments).
 
 ## TUNING
 
 ### DEFAULT SHELL INTERPRETER
 
-[dosh(1)] uses `/bin/sh` as default interpreter as it is the only reliable Shell
-available. The default interpreter can be set by option `--shell SHELL`; but it
-needs to be set to every call to *dosh*.
+[dosh(1)] uses `/bin/sh` as the default interpreter, as it is the only shell
+reliably available. The interpreter can be set with the option `--shell SHELL`,
+but it then needs to be set on every call to *dosh*.
 
 	dosh --shell /bin/bash
 
 Instead, the default interpreter can be set using the `DOSHELL` environment
-variable. When this variable is exported, there is no need to override the Shell
-interpreter through the command-line.
+variable. When this variable is exported, there is no need to override the shell
+interpreter on the command line.
 
-Adding these two following lines to the Shell `~/.profile` to tell *dosh* to
-use `/bin/bash` as Shell interpreter.
+Add the following two lines to the shell `~/.profile` to tell *dosh* to use
+`/bin/bash` as the shell interpreter.
 
 	DOSHELL="/bin/bash"
 	export DOSHELL
@@ -58,20 +59,20 @@ use `/bin/bash` as Shell interpreter.
 [dosh(1)] relies on the setup of Docker. See its documentation to run Docker as
 [non-root-user].
 
-It is not recommended to run [dosh(1)] using `sudo` in case the user does not
-have permission to send the context to the Docker daemon. Instead, consider
-using the option `--sudo` as it will only run the `docker` commands with the
-superuser privileges.
+If the user does not have permission to send the context to the Docker daemon,
+running [dosh(1)] with `sudo` is not recommended. Instead, consider using the
+option `--sudo`, as it only runs the `docker` commands with superuser
+privileges.
 
-On Linux, if you are not a member of the `docker` group, please consider to run
-`dosh` as below:
+On Linux, if you are not a member of the `docker` group, consider running `dosh`
+as below:
 
 	dosh --sudo
 
 ### DOCKER EXTRA OPTIONS
 
 Every [docker(1)][docker] command performed in [dosh(1)] can be customized by
-passing extra arguments thanks its corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS**
+passing extra arguments through its corresponding **DOSH_DOCKER_xxx_EXTRA_OPTS**
 environment variable. **xxx** represents one of the *docker* commands used in
 *dosh* (*build*, *rmi*, *run*, *exec*, *attach*, *kill* and *rm*).
 
@@ -80,7 +81,7 @@ _Note:_ Only `DOSH_DOCKER_RUN_EXTRA_OPTS` is relevant for interactive usage.
 As an example, consider mapping extra personal *dot-files* to feel at home in
 the container.
 
-Adding these two following lines to the Shell `~/.profile` automatically binds
+Adding the following two lines to the shell `~/.profile` automatically binds
 the `~/.ssh` directory to the container.
 
 	DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $HOME/.ssh:$HOME/.ssh"
@@ -93,20 +94,20 @@ invoked.
 
 Unlike the standard shells, [dosh(1)] uses files from *personal* and *local*
 locations instead of files from *system* and *personal* locations. The *system*
-initialization file is replaced by a *local* file; and that *local* file is run
+initialization file is replaced by a *local* file, and that *local* file is run
 after the *personal* file.
 
 In short, the *personal* file `~/.dosh_profile` is read first, and the *local*
-file `./doshrc` is read then. The former file is hidden to avoid polutting the
-*personal* directory (as `.profile`, `.bash_profile`, `.bashrc`...) while the
-later is not (like `Makefile`, `Dockerfile`...).
+file `./doshrc` is read next. The former is hidden to avoid polluting the
+*personal* directory (like `.profile`, `.bash_profile`, `.bashrc`...) while the
+latter is not (like `Makefile`, `Dockerfile`...).
 
-The Shell initialization files (`.profile`, `.bash_profile`, `.bashrc`...) are
-read by the host shell. The *dosh* specific [environment-variables] are string
+The shell initialization files (`.profile`, `.bash_profile`, `.bashrc`...) are
+read by the host shell. The *dosh*-specific [environment-variables] are string
 variables, and they have to be exported to be part of the environment of the
 *dosh(1)* sub-process.
 
-Both *dosh* initialization files aim to override the *dosh* specific variables.
+Both *dosh* initialization files aim to override the *dosh*-specific variables.
 The extra options [environment-variables] are converted to *bash(1)* arrays
 before the initialization files are read by *dosh(1)*. They have to remain
 *bash(1)* arrays.
@@ -119,8 +120,7 @@ They significantly improve the *dosh* experience.
 
 #### REUSE SAME SHELL INTERPRETER
 
-This asks *dosh* to use the same Shell interpreter as the one which is currently
-in use.
+This tells *dosh* to use the same shell interpreter as the one currently in use.
 
 	# Not sh?
 	if [ "$SHELL" != "/bin/sh" ]
@@ -128,14 +128,14 @@ in use.
 		export DOSHELL="$SHELL"
 	fi
 
-_Important:_ Be aware that when the Shell interpreter is not installed in the
+_Important:_ Be aware that when the shell interpreter is not installed in the
 container, *dosh* ends with the following error:
 
 	docker: Error response from daemon: oci runtime error: container_linux.go:265: starting container process caused "exec: \"/bin/zsh\": stat /bin/zsh: no such file or directory".
 
 #### EXPORT ENVIRONMENT
 
-These following lines export some useful environment variables to the container.
+The following lines export some useful environment variables to the container.
 
 	# Export some environment variables
 	for env in TERM EDITOR
@@ -146,7 +146,7 @@ These following lines export some useful environment variables to the container.
 
 #### MAP DOT-FILES
 
-These following lines map some useful *dot-files* to the container.
+The following lines map some useful *dot-files* to the container.
 
 	# Map some home dot-files
 	for vol in $HOME/.config $HOME/.local $HOME/.profile
@@ -162,7 +162,7 @@ These following lines map some useful *dot-files* to the container.
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --volume $vol:$vol"
 	done
 
-*bash(1)* invocation files is a *must-have* to feel like home.
+*bash(1)* invocation files are a *must-have* to feel at home.
 
 	# Map bash dot-files
 	for vol in $HOME/.bash{_profile,rc,login,logout}
@@ -183,7 +183,7 @@ These following lines map some useful *dot-files* to the container.
 
 #### SSH HANDLING
 
-For a better experience with *SSH*, these following lines should be considered.
+For a better experience with *SSH*, consider the following lines.
 
 	# Map and export ssh things?
 	if [ -d "$HOME/.ssh" ]
@@ -198,7 +198,7 @@ For a better experience with *SSH*, these following lines should be considered.
 
 #### X
 
-To enable *X* in docker, these following lines should be considered.
+To enable *X* in docker, consider the following lines.
 
 	# Map and export X things?
 	if [ -n "$DISPLAY" ]
@@ -222,12 +222,12 @@ To enable *X* in docker, these following lines should be considered.
 		unset xsock
 	fi
 
-_Note_: To enable *X* through *SSH*, please have a look to the excellent post
-of Jean-Tiare Le Bigot on its blog [yadutaf].
+_Note_: To enable *X* through *SSH*, have a look at the excellent post by
+Jean-Tiare Le Bigot on his blog [yadutaf].
 
 #### MAKE THE PROMPT SLIGHTLY DIFFERENT
 
-Colorize the prompt from the container in a different way to distinguish *dosh*
+Colorize the prompt in the container differently to distinguish *dosh*
 sessions.
 
 	# In dosh?
@@ -240,28 +240,28 @@ sessions.
 	PS1="${PS1//32/33}"
 	PROMPT="${PROMPT//blue/green}"
 
-_Note_: Put these lines to the end of the file.
+_Note_: Put these lines at the end of the file.
 
-Lines after the if statement are applied in the container.
+Lines after the if statement only apply in the container.
 
 ## USE PODMAN
 
 [podman] is a daemonless alternative to [docker] providing the same command
-line interface, and it can replace [docker] without any troubles.
+line interface, and it can replace [docker] without any trouble.
 
-Adding these two following lines to the Shell `~/.profile` to tell *dosh* to
-use `/usr/bin/podman` to run `docker` commands:
+Add the following two lines to the shell `~/.profile` to tell *dosh* to use
+`/usr/bin/podman` to run `docker` commands:
 
 	DOSH_DOCKER="/usr/bin/podman"
 	export DOSH_DOCKER
 
-Also, disable the context using option `--no-auto-context`.
+Also, disable the context using the option `--no-auto-context`.
 
-Additionally, for Rootless containers, consider adding the two following extra
-run options to map host UID and GIDs to the container and run it inside a user
-namespace.
+Additionally, for rootless containers, consider adding the following two extra
+run options to map the host UID and GIDs to the container and run it inside a
+user namespace.
 
-Add either the following line to the Shell `~/.profile`:
+Add either the following line to the shell `~/.profile`:
 
 	DOSH_DOCKER_RUN_EXTRA_OPTS="--userns keep-id --group-add keep-groups"
 
@@ -270,7 +270,7 @@ Or the following line to the dosh `~/.dosh_profile`:
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--userns keep-id --group-add keep-groups)
 
 Alternatively, use the convenient wrapper script [posh](support/posh) to run
-[dosh] using [podman] underneath without touching the Shell and *dosh* files.
+[dosh] using [podman] underneath without touching the shell and *dosh* files.
 
 ## USE CROSS PLATFORM
 
@@ -293,9 +293,9 @@ filename.
 	WARNING: The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64/v3) and no specific platform was requested
 	aarch64
 
-## USE AS INTERPRETER FOR SHELL SCRIPT
+## USE AS INTERPRETER FOR SHELL SCRIPTS
 
-[dosh(1)] is usable as an interpreter for shell script.
+[dosh(1)] can be used as an interpreter for shell scripts.
 
 According to [execve(2)]:
 
@@ -343,25 +343,26 @@ According to [execve(2)]:
 
 A typical shebang to run a shell script via *dosh* is `#!/usr/bin/dosh`.
 
-However, the abosulte path to *dosh* is unpredictable since it may be installed
-in `/bin`, `/usr/bin`, `/usr/local/bin`, or in the user home `~/.local/bin`, or
+However, the absolute path to *dosh* is unpredictable since it may be installed
+in `/bin`, `/usr/bin`, `/usr/local/bin`, in the user home `~/.local/bin`, or
 even in `/opt`.
 
 Therefore, the most appropriate shebang to run *dosh* is `#!/usr/bin/env dosh`.
 
 Additionally, consider using the [env(1)] split option `-S` (since [coreutils
-8.30]) if using *dosh* arguments such as `#!/usr/bin/env -S dosh --home`.
+8.30]) when passing *dosh* arguments, such as `#!/usr/bin/env -S dosh --home`.
 
-_Important_: *dosh* warns and splits the list of arguments itself if using the
+_Important_: *dosh* warns and splits the list of arguments itself when using the
 absolute path (i.e. `#!/usr/bin/dosh --dockerfile support/Dockerfile`) instead
-of using *env* and its split option (i.e. `#!/usr/bin/env -S dosh --dockerfile
-support/Dockerfile`). This feature is unportable; it is deprecated in version 7
-and it is going for removal in a next release. Consider moving the shebang to
-[env(1)] and its `-S` since the half of [2018][coreutils 8.30].
+of *env* and its split option (i.e. `#!/usr/bin/env -S dosh --dockerfile
+support/Dockerfile`). This feature is not portable; it is deprecated since
+version 7 and is scheduled for removal in a future release. Consider moving the
+shebang to [env(1)] and its `-S` option, available since mid-[2018][coreutils
+8.30].
 
 ## DOCUMENTATION
 
-Build the documentation using *make(1)*
+Build the documentation using *make(1)*:
 
 	$ make man
 	asciidoctor -b manpage -o cqfd.1 support/cqfd.1.adoc
@@ -378,25 +379,25 @@ Build the documentation using *make(1)*
 
 #### ARCH LINUX DERIVATIVES
 
-First download the package
+First, download the package:
 
 	$ curl -LO https://github.com/gportay/dosh/releases/download/9/dosh-9-1-any.pkg.tar.zst
 
-Then, install it using the package manager
+Then, install it using the package manager:
 
 	$ sudo pacman -U ./dosh-9-1-any.pkg.tar.zst
 
-_Note_: Uninstall it using the package manager
+_Note_: Uninstall it using the package manager:
 
 	$ sudo pacman -R dosh
 
 #### DEBIAN DERIVATIVES
 
-First download the package
+First, download the package:
 
 	$ curl -LO https://github.com/gportay/dosh/releases/download/9/dosh_9_all.deb
 
-Then, install it using the package manager
+Then, install it using the package manager:
 
 	$ sudo dpkg -i ./dosh_9_all.deb
 
@@ -406,7 +407,7 @@ _Note_: Uninstall it using the package manager:
 
 #### RPM DERIVATIVES
 
-First download the package:
+First, download the package:
 
 	$ curl -LO https://github.com/gportay/dosh/releases/download/9/dosh-9-1.noarch.rpm
 
@@ -420,29 +421,29 @@ _Note_: Uninstall it using the package manager:
 
 ### SOURCES
 
-Run the following command to install *dosh(1)*
+Run one of the following commands to install *dosh(1)*.
 
-To your home directory
+To your home directory:
 
 	$ make user-install
 
-Or, to your system
+Or, to your system:
 
 	$ sudo make install
 
-Traditional variables *DESTDIR* and *PREFIX* can be overridden
+The traditional variables *DESTDIR* and *PREFIX* can be overridden:
 
 	$ sudo make install PREFIX=/opt/dosh
 
-Or
+Or:
 
 	$ make install DESTDIR=$PWD/pkg PREFIX=/usr
 
 ## LINKS
 
-Check for [man-pages][dosh(1)] and its [examples].
+Check out the [man-pages][dosh(1)] and its [examples].
 
-Also, here is an extra example that builds the documentation
+Also, here is an extra example that builds the documentation:
 
 	$ echo "FROM ubuntu" >Dockerfile
 	$ echo "RUN apt-get update && apt-get install -y asciidoctor" >>Dockerfile
