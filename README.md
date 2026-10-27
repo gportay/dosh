@@ -267,7 +267,7 @@ Add either the following line to the Shell `~/.profile`:
 
 Or the following line to the dosh `~/.dosh_profile`:
 
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--userns keep-id --group-add keep-groups`)
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--userns keep-id --group-add keep-groups)
 
 Alternatively, use the convenient wrapper script [posh](support/posh) to run
 [dosh] using [podman] underneath without touching the Shell and *dosh* files.
