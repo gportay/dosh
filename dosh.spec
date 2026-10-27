@@ -1,7 +1,7 @@
 Name:           dosh
 Version:        9
 Release:        1
-Summary:        Run a user shell in a container with working directory bind mounted
+Summary:        Run a user shell in a container with the working directory bind mounted
 
 License:        LGPL-2.1-or-later
 URL:            https://github.com/gportay/%{name}
@@ -17,7 +17,7 @@ Requires:       docker
 
 %description
 dosh(1) is an sh-compatible front-end for docker that runs commands in a new
-container; using the current user, with working directory bind mounted.
+container, using the current user, with the working directory bind mounted.
 
 
 %global debug_package %{nil}
@@ -25,11 +25,11 @@ container; using the current user, with working directory bind mounted.
 %package  posh
 Requires: dosh
 Requires: podman
-Summary:  Run a user shell in a container with working directory bind mounted
+Summary:  Run a user shell in a container with the working directory bind mounted
 
 %description posh
 posh(1) is an sh-compatible front-end for podman that runs commands in a new
-container; using the current user, with working directory bind mounted.
+container, using the current user, with the working directory bind mounted.
 
 
 %package  cqfd
