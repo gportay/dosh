@@ -72,7 +72,7 @@ License: LGPL-2.1 and Expat
 Files:
  support/cqfd.1.adoc
  support/cqfdrc.5.adoc
-Copyright: Copyright 2024-2025 Gaël PORTAY
+Copyright: Copyright 2024-2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files: support/docker-cqfd

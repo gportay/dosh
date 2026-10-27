@@ -473,7 +473,7 @@ Written by Gaël PORTAY *gael.portay@gmail.com*
 
 ## COPYRIGHT
 
-Copyright 2017-2020,2023-2025 Gaël PORTAY
+Copyright 2017-2020,2023-2026 Gaël PORTAY
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Lesser General Public License as published by the Free
