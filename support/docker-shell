@@ -12,7 +12,7 @@ then
 	"SchemaVersion":"0.1.0",
 	"Vendor":"Gaël PORTAY",
 	"Version":"$(dosh --version)",
-	"ShortDescription":"Run a shell as user in a container and bind mount working directory.",
+	"ShortDescription":"Run a shell as the current user in a container and bind mount the working directory.",
 	"URL":"https://www.portay.io/dosh/"
 }
 EOF
@@ -44,48 +44,50 @@ Usage:  docker shell    [OPTIONS] [SCRIPT_FILE  [ARGS...]]
         docker shell -c [OPTIONS] COMMAND [NAME [ARGS...]]
         docker shell -s [OPTIONS] [ARGS...]
 
-Run a shell as user in a container and bind mount working directory.
+Run a shell as the current user in a container and bind mount the working
+directory.
 
-docker-shell is a wrapper on top of dosh; For a more thorough description of
-dosh, please refers to its help.
+docker-shell is a wrapper on top of dosh; for a more thorough description of
+dosh, please refer to its help.
 
 Options:
   --dockerfile string    Path to the Dockerfile to use.
   --platform string      Set target platform.
-  --context string       Path to the context to send to docker daemon.
-  --no-auto-context      Disable automatic context sent to docker daemon.
+  --context string       Path to the context to send to the docker daemon.
+  --no-auto-context      Disable the automatic context sent to the docker
+                         daemon.
   --no-extra-options     Disable extra options given to docker commands.
-  --no-doshprofile       Disable read of ~/.dosh_profile.
-  --no-doshrc            Disable read of ./doshrc.
+  --no-doshprofile       Disable reading of ~/.dosh_profile.
+  --no-doshrc            Disable reading of ./doshrc.
   --rc string            Read file(s).
   --cache-directory string
                          Cache directory tracking images.
-  --directory string     Change to directory before doing anything else.
+  --directory string     Change to the directory before doing anything else.
   --working-directory string
                          Working directory inside the container.
   --sudo                 Run docker with sudo.
   --root                 Run as root.
   --dind                 Run dosh in dosh.
   --groups               Run with host groups.
-  --home                 Bind mount home directory.
-  --parent               Bind mount parent directory.
-  --mount-options string Set bind mount volume options.
-                         For a more thorough description please refers to
-                         docker-run(1) manual.
-  --shell string         Set shell interpretor.
-  --tag                  Print docker tag and exit.
+  --home                 Bind mount the home directory.
+  --parent               Bind mount the parent directory.
+  --mount-options string Set the bind mount volume options.
+                         For a more thorough description, please refer to
+                         the docker-run(1) manual.
+  --shell string         Set the shell interpreter.
+  --tag                  Print the docker tag and exit.
   --ls                   List images and exit.
-  --gc                   Cleanup unused images and exit.
-  --build-only           Build image if needed and exit.
-  --build                Build image.
-  --rebuild              Build image again, verbosely.
+  --gc                   Clean up unused images and exit.
+  --build-only           Build the image if needed and exit.
+  --build                Build the image.
+  --rebuild              Build the image again, verbosely.
                          Equivalent to --build --verbose.
-  --rmi                  Remove image and exit.
-  --detach               Detach container.
-  --exec string          Execute in container.
-  --attach string        Attach container.
-  --kill string          Kill container.
-  --rm string            Remove container.
+  --rmi                  Remove the image and exit.
+  --detach               Detach the container.
+  --exec string          Execute in the container.
+  --attach string        Attach to the container.
+  --kill string          Kill the container.
+  --rm string            Remove the container.
   --dry-run              Do nothing; echo docker commands.
   --verbose              Turn on verbose mode.
   --version              Print version.
