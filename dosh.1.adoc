@@ -470,6 +470,9 @@ Use _/bin/sh_ as default _$SHELL_
 	$ dosh --shell /bin/sh
 	$ echo $0
 	/bin/sh
+	$ dosh --shell /bin/bash
+	gportay@a6d7f01cd20f:~/src/dosh $ echo $0
+	/bin/bash
 
 Detach container
 
