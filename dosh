@@ -40,7 +40,7 @@ Usage: Typical shell commands:
 
        Extra docker front-end commands:
        ${0##*/} --attach CONTAINER [DOCKER_ATTACH_OPTIONS]
-       ${0##*/} --kill   CONTAINER [DOCKER_RMI_OPTIONS]
+       ${0##*/} --kill   CONTAINER [DOCKER_KILL_OPTIONS]
        ${0##*/} --rm     CONTAINER [DOCKER_RM_OPTIONS]
 
 Run a shell as the current user in a container and bind mount the working
