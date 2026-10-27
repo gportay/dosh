@@ -297,7 +297,7 @@ command-line through *docker-run(1)*.
 **~/.dosh_profile**::
 	The personal initialization file.
 
-**./.doshrc**::
+**./doshrc**::
 	The local initialization file.
 
 **$XDG_CONFIG_HOME/dosh**, **~/.cache/dosh**::
