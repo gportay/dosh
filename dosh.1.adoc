@@ -8,7 +8,7 @@
 
 == NAME
 
-dosh - run a user shell in a container with working directory bind mounted
+dosh - run a user shell in a container with the working directory bind mounted
 
 == SYNOPSIS
 
@@ -58,7 +58,7 @@ current _working directory_ bind mounted, and the current _user/group_
 privileges set.
 
 When called without arguments, *dosh* defaults to running an interactive shell
-as current _user_.
+as the current _user_.
 
 When a container shell is started, *dosh* reads and executes commands from
 _~/.dosh_profile_, if that file exists. This may be inhibited by using the
@@ -70,65 +70,66 @@ _./doshrc_, if that file exists. This may be inhibited by using the option
 
 *dosh* builds and runs images for another _platform_ if the option *--platform*
 is set to a target different from the host platform. Official _platforms_ are
-specified in the section *PLATFORMS*).
+listed in the section *PLATFORMS*.
 
-*dosh* has specific options to modify its behaviour; the option *--dockerfile*
+*dosh* has specific options to modify its behaviour: the option *--dockerfile*
 specifies the path to the *Dockerfile(5)* to use; the option *--home* bind
-mounts the user's home directory instead of _working directory_; the option
-*--root* runs the container with the _root_ privileges. Other options are
-specified in the section *OPTIONS*.
+mounts the user's home directory instead of the _working directory_; the option
+*--root* runs the container with _root_ privileges. Other options are described
+in the section *OPTIONS*.
 
-*dosh* keeps track of the built _docker images_, the path and the content of
-the read _Dockerfiles_. It tags the _docker images_ using the *$USER*, the
-*Dockerfile(5)* checksum computed at build-time, and the _platform_ if set; tag
-is specified in section *TAG*. Multiple _docker images_ exist for the same
-*Dockerfile(5)* in file system if its content changes.
+*dosh* keeps track of the built _docker images_, and of the path and content of
+the _Dockerfiles_ read. It tags the _docker images_ using the *$USER*, the
+*Dockerfile(5)* checksum computed at build time, and the _platform_ if set; the
+tag is described in the section *TAG*. Multiple _docker images_ exist for the
+same *Dockerfile(5)* in the file system if its content changes.
 
-The option *--tag* outputs the _dosh image_ tag and exits. The exit immediately
-options *--ls* and *--rmi* respectively list every user's _dosh images_ and
-remove the latest _dosh image_ for given *Dockerfile(5)* if it is built. The
-exit immediately option *--gc* prunes the unused _dosh images_ (*Deleted* and
-*Outdated*). Statuses are specified in section *STATUS*.
+The option *--tag* outputs the _dosh image_ tag and exits. The options *--ls*
+and *--rmi* exit immediately after, respectively, listing all of the user's
+_dosh images_ and removing the latest _dosh image_ for the given
+*Dockerfile(5)*, if it is built. The option *--gc* prunes the unused _dosh
+images_ (*Deleted* and *Outdated*) and exits immediately. Statuses are described
+in the section *STATUS*.
 
-Under the hood, *dosh* builds and tags automatically a _docker image_ using the
+Under the hood, *dosh* automatically builds and tags a _docker image_ using the
 *Dockerfile(5)* from the _current working directory_ through *docker-build(1)*.
-It appends extra _RUN_ instructions to add the host _$USER/$GROUPS_ through
-*groupadd(8)* and *useradd(8)* to the _docker image_. Once the image is built,
-*dosh* runs the *$SHELL* entry-point with the given arguments specified via the
-command-line through *docker-run(1)*.
+It appends extra _RUN_ instructions to add the host _$USER/$GROUPS_ to the
+_docker image_ through *groupadd(8)* and *useradd(8)*. Once the image is built,
+*dosh* runs the *$SHELL* entry point, with the arguments given on the command
+line, through *docker-run(1)*.
 
 == OPTIONS
 
-*POSIX Shell related options*
+*POSIX shell related options:*
 
 **-c**::
-	Read commands from command-line.
+	Read commands from the command line.
 
 **-i**::
 	Set interactive.
 
 **-s**::
-	Read commands from standard-input.
+	Read commands from the standard input.
 
 **-abefhmnuvxC** or **-o shopt**, **+abefhmnuvxC** or **+o shopt**::
-	For a more thorough description of shopts, please refers to sh help.
+	For a more thorough description of shopts, please refer to sh help.
 
 *Bash specific options:*
 
 **-klprtBDEHIPT** or **-O shopt**, **+klprtBDEHIPT** or **+O shopt**::
-	For a more thorough description of shopts, please refers to bash help.
+	For a more thorough description of shopts, please refer to bash help.
 
 *Dash specific options:*
 
 **-pqEIV**, **+pqEIV**::
-	For a more thorough description of shopts, please refers to dash help.
+	For a more thorough description of shopts, please refer to dash help.
 
-**Zsh specific options:**
+*Zsh specific options:*
 
 **-0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ**, **+0123456789dgklprtwyBDEFGHIJKLMNOPQRSTUVWXYZ**::
-	For a more thorough description of shopts, please refers to zsh help.
+	For a more thorough description of shopts, please refer to zsh help.
 
-*Docker related options*
+*Docker related options:*
 
 **--dockerfile FILE**::
 	Path to the Dockerfile to use.
@@ -137,25 +138,25 @@ command-line through *docker-run(1)*.
 	Set target platform.
 
 **--context TAR**::
-	Path to the context to send to docker daemon.
+	Path to the context to send to the docker daemon.
 
 **--no-auto-context**::
-	Disable automatic context sent to docker daemon.
+	Disable the automatic context sent to the docker daemon.
 
 **--no-extra-options**::
 	Disable extra options given to docker commands.
 
 **--no-doshprofile**::
-	Disable read of ~/.dosh_profile.
+	Disable reading of ~/.dosh_profile.
 
 **--no-doshrc**::
-	Disable read of ./doshrc.
+	Disable reading of ./doshrc.
 
 **--rc FILE[,FILE]**::
 	Read file(s).
 
 **--directory DIR**::
-	Change to directory before doing anything else.
+	Change to the directory before doing anything else.
 
 **--cache-directory DIR**::
 	Cache directory tracking images.
@@ -176,60 +177,60 @@ command-line through *docker-run(1)*.
 	Run with host groups.
 
 **--home**::
-	Bind mount home directory.
+	Bind mount the home directory.
 
 **--parent**::
-	Bind mount parent directory.
+	Bind mount the parent directory.
 
 **--mount-options OPTIONS**::
-	Set bind mount volume options.
-	For a more thorough description please refers to docker-run(1) manual.
+	Set the bind mount volume options.
+	For a more thorough description, please refer to the docker-run(1) manual.
 
 **--shell SHELL**::
-	Set shell interpretor.
-	Equivalent to set DOSHELL=<SHELL>.
+	Set the shell interpreter.
+	Equivalent to setting DOSHELL=<SHELL>.
 
 **--tag**::
-	Print docker tag and exit.
+	Print the docker tag and exit.
 
 **--ls**::
 	List images and exit.
 
 **--gc**::
-	Cleanup unused images and exit.
+	Clean up unused images and exit.
 
 **--build-only**::
-	Build image if needed and exit.
+	Build the image if needed and exit.
 
 **--build**::
-	Build image.
+	Build the image.
 
 **--rebuild**::
-	Build image again, verbosely.
+	Build the image again, verbosely.
 	Equivalent to --build --verbose.
 
 **--rmi**::
-	Remove image and exit.
+	Remove the image and exit.
 
 **--detach**::
-	Detach container.
+	Detach the container.
 
 **--exec CONTAINER**::
-	Execute in container.
+	Execute in the container.
 
 **--attach CONTAINER**::
-	Attach container.
+	Attach to the container.
 
 **--kill CONTAINER**::
-	Kill container.
+	Kill the container.
 
 **--rm CONTAINER**::
-	Remove container.
+	Remove the container.
 
 **--dry-run**::
 	Do nothing; echo docker commands.
 
-*Miscellaneous options*
+*Miscellaneous options:*
 
 **--verbose**::
 	Turn on verbose mode.
@@ -243,7 +244,7 @@ command-line through *docker-run(1)*.
 == ENVIRONMENT VARIABLES
 
 **DOSHELL**::
-	The full pathname to the shell to run in docker image.
+	The full pathname to the shell to run in the docker image.
 	Equivalent to --shell <SHELL>.
 
 **DOSHRC**::
@@ -268,29 +269,29 @@ command-line through *docker-run(1)*.
 	Equivalent to --platform <TARGET>.
 
 **DOSH_MOUNT_OPTIONS**::
-	Set bind mount volume options.
+	Set the bind mount volume options.
 	Equivalent to --mount-options <OPTIONS>.
 
 **DOSH_DOCKER_RUN_EXTRA_OPTS**::
-	Set additionnal parameters to docker run command.
+	Set additional parameters to the docker run command.
 
 **DOSH_DOCKER_EXEC_EXTRA_OPTS**::
-	Set additionnal parameters to docker exec command.
+	Set additional parameters to the docker exec command.
 
 **DOSH_DOCKER_ATTACH_EXTRA_OPTS**::
-	Set additionnal parameters to docker attach command.
+	Set additional parameters to the docker attach command.
 
 **DOSH_DOCKER_KILL_EXTRA_OPTS**::
-	Set additionnal parameters to docker kill command.
+	Set additional parameters to the docker kill command.
 
 **DOSH_DOCKER_RM_EXTRA_OPTS**::
-	Set additionnal parameters to docker rm command.
+	Set additional parameters to the docker rm command.
 
 **DOSH_DOCKER_BUILD_EXTRA_OPTS**::
-	Set additionnal parameters to docker build command.
+	Set additional parameters to the docker build command.
 
 **DOSH_DOCKER_RMI_EXTRA_OPTS**::
-	Set additionnal parameters to docker rmi command.
+	Set additional parameters to the docker rmi command.
 
 == FILES
 
@@ -324,24 +325,24 @@ command-line through *docker-run(1)*.
 == STATUS
 
 **Untracked**::
-	Image with *Dockerfile(5)* untracked since built.
+	Image whose *Dockerfile(5)* has been untracked since it was built.
 
 **Deleted**::
-	Image with *Dockerfile(5)* removed since built.
+	Image whose *Dockerfile(5)* has been removed since it was built.
 
 **Outdated**::
-	Image with *Dockerfile(5)* changed since built.
+	Image whose *Dockerfile(5)* has changed since it was built.
 
 **Ready**::
-	Image with *Dockerfile(5)* unchanged since built.
+	Image whose *Dockerfile(5)* is unchanged since it was built.
 
 **Running**::
-	Image with *Dockerfile(5)* unchanged since built and a container is
-	running.
+	Image whose *Dockerfile(5)* is unchanged since it was built, with a
+	container running.
 
 == EXAMPLES
 
-Run an _interactive shell_ in the latest _Ubuntu_ container
+Run an _interactive shell_ in the latest _Ubuntu_ container:
 
 	$ echo "FROM ubuntu" >Dockerfile
 	$ cat Dockerfile
@@ -351,7 +352,7 @@ Run an _interactive shell_ in the latest _Ubuntu_ container
 	sha256:777c682a9816
 	gportay@4c3fb2d195d8:~$ 
 
-Check for the _distribution_
+Check the _distribution_:
 
 	gportay@4c3fb2d195d8:~$ cat /etc/os-release
 	DISTRIB_ID=Ubuntu
@@ -370,17 +371,17 @@ Check for the _distribution_
 	VERSION_CODENAME=xenial
 	UBUNTU_CODENAME=xenial
 
-Check for _user_
+Check the _user_:
 
 	gportay@4c3fb2d195d8:~$ whoami
 	gportay
 
-Exit from container
+Exit the container:
 
 	gportay@4c3fb2d195d8:~$ exit
 	logout
 
-Run the _commands_ above in the same container as a _shell_ script
+Run the _commands_ above in the same container as a _shell_ script:
 
 	$ dosh -c "cat /etc/os-release && whoami"
 	NAME="Ubuntu"
@@ -397,30 +398,30 @@ Run the _commands_ above in the same container as a _shell_ script
 	gportay
 	logout
 
-Check for _PWD_ bind mountage ; write the _distribution_ name to local file
+Check the _PWD_ bind mount; write the _distribution_ name to a local file:
 
 	$ dosh -c "grep '^NAME=' /etc/os-release >os-release"
 
-Read the contents outside the container
+Read the contents outside the container:
 
 	$ cat os-release
 	NAME="Ubuntu"
 
-Specify the *Dockerfile(5)* to use
+Specify the *Dockerfile(5)* to use:
 
 	$ dosh --dockerfile docker/tests/Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
 	sha256:44d9de323a55
 	NAME=Fedora
 
-Change to another _directory_ before doing anything else
+Change to another _directory_ before doing anything else:
 
 	$ cd /tmp
 	$ dosh --directory "$OLDPWD" -c "grep '^NAME=' /etc/os-release"
 	NAME="Ubuntu"
 	$ cd -
 
-Run shell as _root_ with _--root_ to perform privileged user operations into
-container
+Run the shell as _root_ with _--root_ to perform privileged operations in the
+container:
 
 	$ dosh --root
 	root@4c3fb2d195d8:/# whoami
@@ -432,7 +433,7 @@ container
 	asciidoctor is already the newest version (1.5.4-1).
 	0 upgraded, 0 newly installed, 0 to remove and 6 not upgraded.
 
-Rebuild image if *Dockerfile(5)* has changed
+Rebuild the image if the *Dockerfile(5)* has changed:
 
 	$ echo "RUN apt-get update && apt-get install -y asciidoctor" >>Dockerfile
 	$ cat Dockerfile
@@ -449,7 +450,7 @@ Rebuild image if *Dockerfile(5)* has changed
 	gportay@0406c4779648:~$ exit
 	logout
 
-Bind mount _$HOME_ directory
+Bind mount the _$HOME_ directory:
 
 	$ echo $PWD
 	/home/gportay/src/dosh
@@ -462,7 +463,7 @@ Bind mount _$HOME_ directory
 	gportay@098ac1e92f20 ~/src/dosh $ echo $HOME
 	/home/gportay
 
-Use _/bin/sh_ as default _$SHELL_
+Use _/bin/sh_ as the default _$SHELL_:
 
 	$ echo $0
 	bash
@@ -474,7 +475,7 @@ Use _/bin/sh_ as default _$SHELL_
 	gportay@a6d7f01cd20f:~/src/dosh $ echo $0
 	/bin/bash
 
-Detach container
+Detach a container:
 
 	$ dosh --detach
 	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
@@ -483,23 +484,23 @@ Detach container
 	CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 	6b0e5f883ca5        dosh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2  "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
 
-Execute commands in it with _--exec_
+Execute commands in it with _--exec_:
 
 	$ dosh --exec determined_archimedes -c 'hostname'
 	6b0e5f883ca5
 
-Attach to it using _--attach_
+Attach to it using _--attach_:
 
 	$ dosh --attach determined_archimedes
 	gportay@6b0e5f883ca5:~$ exit
 	exit
 
-Kill it using _--kill_
+Kill it using _--kill_:
 
 	$ dosh --kill determined_archimedes
 	determined_archimedes
 
-And do not forget to remove it using _--rm_
+And do not forget to remove it using _--rm_:
 
 	$ dosh --rm determined_archimedes
 	determined_archimedes
