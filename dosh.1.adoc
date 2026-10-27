@@ -300,7 +300,7 @@ command-line through *docker-run(1)*.
 **./doshrc**::
 	The local initialization file.
 
-**$XDG_CONFIG_HOME/dosh**, **~/.cache/dosh**::
+**$XDG_CACHE_HOME/dosh**, **~/.cache/dosh**::
 	The user cache directory tracking _dosh images_ and _Dockerfiles_.
 
 == PLATFORMS
