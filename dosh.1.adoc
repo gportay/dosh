@@ -343,7 +343,7 @@ command-line through *docker-run(1)*.
 
 Run an _interactive shell_ in the latest _Ubuntu_ container
 
-	$ echo FROM ubuntu >Dockerfile
+	$ echo "FROM ubuntu" >Dockerfile
 	$ cat Dockerfile
 	FROM ubuntu
 
@@ -382,7 +382,7 @@ Exit from container
 
 Run the _commands_ above in the same container as a _shell_ script
 
-	$ dosh "cat /etc/os-release && whoami"
+	$ dosh -c "cat /etc/os-release && whoami"
 	NAME="Ubuntu"
 	VERSION="16.04.1 LTS (Xenial Xerus)"
 	ID=ubuntu
