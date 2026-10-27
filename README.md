@@ -408,7 +408,7 @@ _Note_: Uninstall it using the package manager:
 
 First download the package:
 
-	$ curl https://github.com/gportay/dosh/releases/download/9/dosh-9-1.noarch.rpm
+	$ curl -LO https://github.com/gportay/dosh/releases/download/9/dosh-9-1.noarch.rpm
 
 Then, install it using the package manager:
 
