@@ -8,13 +8,13 @@ Build-Depends: debhelper-compat (= 13)
 Package: dosh
 Architecture: all
 Depends: ${misc:Depends}
-Description: Run a user shell in a container with working directory bind mounted.
+Description: Run a user shell in a container with the working directory bind mounted
  dosh(1) is an sh-compatible front-end for docker that runs commands in a new
- container; using the current user, with working directory bind mounted.
+ container, using the current user, with the working directory bind mounted.
 
 Package: dosh-cqfd
 Architecture: all
 Depends: ${misc:Depends}, dosh
-Description: Wrap commands in controlled Docker containers using dosh.
+Description: Wrap commands in controlled Docker containers using dosh
  cqfd provides a quick and convenient way to run commands in the current
  directory, but within a Docker container defined in a per-project config file.
