@@ -15,7 +15,7 @@ using the Dockerfile.
 
 One think `dosh` does...
 
-	docker run --rm [--tty] [--interactive] "--volume=$PWD:$PWD:rw" "--user=$USER" "--entry-point=$SHELL" IMAGE [SHELL_ARGS]
+	docker run --rm [--tty] [--interactive] "--volume=$PWD:$PWD:rw" "--user=$USER" "--entrypoint=$SHELL" IMAGE [SHELL_ARGS]
 
 ... with a few more magic!
 
