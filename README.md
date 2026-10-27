@@ -451,7 +451,7 @@ Also, here is an extra example that builds the documentation
 	FROM ubuntu
 	RUN apt-get update && apt-get install -y asciidoctor
 
-	$ dosh -c asciidoctor -b manpage -o - dosh.1.adoc | gzip -c - >dosh.1.gz
+	$ dosh -c "asciidoctor -b manpage -o - dosh.1.adoc | gzip -c - >dosh.1.gz"
 	sha256:ced062433e33
 
 	$ man ./dosh.1.gz
