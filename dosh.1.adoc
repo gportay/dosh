@@ -254,6 +254,9 @@ line, through *docker-run(1)*.
 **DOSHLVL**::
 	Incremented by one each time an instance of dosh is started.
 
+**DOSH_SUDO**::
+	Set sudo command.
+
 **DOSH_DOCKER**::
 	The docker executable.
 
