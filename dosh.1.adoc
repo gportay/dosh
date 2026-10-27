@@ -323,19 +323,19 @@ command-line through *docker-run(1)*.
 
 == STATUS
 
-**Untracked**:
+**Untracked**::
 	Image with *Dockerfile(5)* untracked since built.
 
-**Deleted**:
+**Deleted**::
 	Image with *Dockerfile(5)* removed since built.
 
-**Outdated**:
+**Outdated**::
 	Image with *Dockerfile(5)* changed since built.
 
-**Ready**:
+**Ready**::
 	Image with *Dockerfile(5)* unchanged since built.
 
-**Running**:
+**Running**::
 	Image with *Dockerfile(5)* unchanged since built and a container is
 	running.
 
