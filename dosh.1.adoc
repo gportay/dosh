@@ -434,7 +434,7 @@ container
 
 Rebuild image if *Dockerfile(5)* has changed
 
-	$ echo RUN apt-get update && apt-get install -y asciidoctor >>Dockerfile
+	$ echo "RUN apt-get update && apt-get install -y asciidoctor" >>Dockerfile
 	$ cat Dockerfile
 	FROM ubuntu
 	RUN apt-get update && apt-get install -y asciidoctor
