@@ -354,8 +354,8 @@ Additionally, consider using the [env(1)] split option `-S` (since [coreutils
 8.30]) if using *dosh* arguments such as `#!/usr/bin/env -S dosh --home`.
 
 _Important_: *dosh* warns and splits the list of arguments itself if using the
-absolute path (i.e. `#!/usr/bin/dosh --docker support/Dockerfile`) instead of
-using *env* and its split option (i.e. `#!/usr/bin/env -S dosh --dockerfile
+absolute path (i.e. `#!/usr/bin/dosh --dockerfile support/Dockerfile`) instead
+of using *env* and its split option (i.e. `#!/usr/bin/env -S dosh --dockerfile
 support/Dockerfile`). This feature is unportable; it is deprecated in version 7
 and it is going for removal in a next release. Consider moving the shebang to
 [env(1)] and its `-S` since the half of [2018][coreutils 8.30].
