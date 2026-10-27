@@ -120,6 +120,9 @@ Environment variables:
                                 docker image.
                                 Equivalent to --shell <SHELL>.
 
+      DOSHRC                    Read file(s).
+                                Equivalent to --rc <FILES>.
+
       DOSHLVL                   Incremented by one each time an instance of dosh
                                 is started.
 
