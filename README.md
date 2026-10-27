@@ -444,8 +444,8 @@ Check for [man-pages][dosh(1)] and its [examples].
 
 Also, here is an extra example that builds the documentation
 
-	$ echo FROM ubuntu >Dockerfile
-	$ echo RUN apt-get update && apt-get install -y asciidoctor >>Dockerfile
+	$ echo "FROM ubuntu" >Dockerfile
+	$ echo "RUN apt-get update && apt-get install -y asciidoctor" >>Dockerfile
 
 	$ cat Dockerfile
 	FROM ubuntu
