@@ -364,7 +364,8 @@ Run an _interactive shell_ in the latest _Ubuntu_ container:
 	FROM ubuntu
 
 	$ dosh
-	sha256:777c682a9816
+	#0 building with "default" instance using docker driver
+	...
 	gportay@4c3fb2d195d8:~$ 
 
 Check the _distribution_:
@@ -425,7 +426,8 @@ Read the contents outside the container:
 Specify the *Dockerfile(5)* to use:
 
 	$ dosh --dockerfile docker/tests/Dockerfile.fedora -c "grep '^NAME=' /etc/os-release"
-	sha256:44d9de323a55
+	#0 building with "default" instance using docker driver
+	...
 	NAME=Fedora
 
 Change to another _directory_ before doing anything else:
@@ -455,7 +457,8 @@ Rebuild the image if the *Dockerfile(5)* has changed:
 	FROM ubuntu
 	RUN apt-get update && apt-get install -y asciidoctor
 	$ dosh --build
-	sha256:777c682a9816
+	#0 building with "default" instance using docker driver
+	...
 	gportay@31dd533203ea:~$ which asciidoctor
 	/usr/bin/asciidoctor
 	gportay@31dd533203ea:~$ exit
