@@ -98,6 +98,9 @@ export -n DOSH_DOCKER_BUILD_EXTRA_OPTS
 export -n DOSH_DOCKER_RMI_EXTRA_OPTS
 export -n DOSH_DOCKER_RUN_EXTRA_OPTS
 export -n DOSH_DOCKER_EXEC_EXTRA_OPTS
+export -n DOSH_DOCKER_ATTACH_EXTRA_OPTS
+export -n DOSH_DOCKER_KILL_EXTRA_OPTS
+export -n DOSH_DOCKER_RM_EXTRA_OPTS
 
 no_doshprofile=1
 no_doshrc=1
@@ -918,6 +921,17 @@ echo
 run "Test --no-extra-options option"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
    dosh --no-extra-options -c "which dosh" | grep '/usr/bin/dosh'
+then
+	ok
+else
+	ko
+fi
+echo
+
+run "Test DOSH_DOCKER_KILL_EXTRA_OPTS environment variable with an option and its argument"
+if DOSH_DOCKER="printf [%s]" DOSH_DOCKER_KILL_EXTRA_OPTS="--signal KILL" \
+   dosh --kill foo 2>&1 | tee /dev/stderr | \
+   grep -q '^\[kill\]\[--signal\]\[KILL\]\[foo\]$'
 then
 	ok
 else
