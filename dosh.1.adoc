@@ -315,11 +315,23 @@ line, through *docker-run(1)*.
 **linux/arm64**::
 	ARMv8 64-bit.
 
+**linux/arm**::
+	ARM 32-bit.
+
 **linux/arm/v6**::
 	ARMv6 32-bit.
 
 **linux/arm/v7**::
 	ARMv7 32-bit.
+
+**linux/ppc64le**::
+	IBM POWER 64-bit little-endian.
+
+**linux/riscv64**::
+	RISC-V 64-bit.
+
+**linux/s390x**::
+	IBM Z 64-bit.
 
 == TAG
 
