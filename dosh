@@ -973,6 +973,12 @@ fi
 # Set docker executable
 read -r -a docker <<<"${sudo:+$DOSH_SUDO }${DOSH_DOCKER[*]}"
 
+# Separate the DOSHRC files with commas, as option --rc, or with whitespaces
+if is_set_and_not_array DOSHRC
+then
+	DOSHRC="${DOSHRC//,/ }"
+fi
+
 # Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
 # escape whitespace and preserve it.
 for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \

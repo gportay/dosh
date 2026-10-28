@@ -608,6 +608,16 @@ else
 fi
 echo
 
+run "Test DOSHRC environment variable with two files separated by a comma"
+if DOSHRC="foo.rc,bar.rc" dosh -c 'echo $FOO:$BAR' | tee /dev/stderr | \
+   grep -q '^foo:bar$'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --rc and DOSHLVL environment variable"
 if DOSHRC="foo.rc" dosh --rc bar.rc -c 'echo $FOO:$BAR' | tee /dev/stderr | \
    grep -q '^foo:bar$'
