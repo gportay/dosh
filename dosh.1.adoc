@@ -88,8 +88,8 @@ The option *--tag* outputs the _dosh image_ tag and exits. The options *--ls*
 and *--rmi* exit immediately after, respectively, listing all of the user's
 _dosh images_ and removing the latest _dosh image_ for the given
 *Dockerfile(5)*, if it is built. The option *--gc* prunes the unused _dosh
-images_ (*Deleted* and *Outdated*) and exits immediately. Statuses are described
-in the section *STATUS*.
+images_ (*Untracked*, *Deleted* and *Outdated*) of every *Dockerfile(5)* and
+exits immediately. Statuses are described in the section *STATUS*.
 
 Under the hood, *dosh* automatically builds and tags a _docker image_ using the
 *Dockerfile(5)* from the _current working directory_ through *docker-build(1)*.

@@ -1054,7 +1054,7 @@ then
 	exit
 fi
 
-# Remove the deleted and outdated images and exit
+# Remove the untracked, deleted and outdated images and exit
 if [[ ${gc:-} ]]
 then
 	# Garbage collect unused images
