@@ -499,8 +499,8 @@ Detach a container:
 	6b0e5f883ca5e176452bb234bccf70623a35b5d5f12ae56761a392a3e9f40125
 
 	$ docker ps -a
-	CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
-	6b0e5f883ca5        dosh-dbc94874ef3f1be8f595c79fcaf36fd691dc2af3b7b29f291210cecc8f2beca2  "/bin/bash -c 'cd /ho"   7 seconds ago       Up 6 seconds                            determined_archimedes
+	CONTAINER ID   IMAGE                                                                           COMMAND       CREATED         STATUS         PORTS   NAMES
+	6b0e5f883ca5   dosh-gportay-45f4ab7c5c8f26f67feddee1f36e45a4a72d21bee273d7259b5e1d125c003156   "/bin/bash"   7 seconds ago   Up 6 seconds           determined_archimedes
 
 Execute commands in it with _--exec_:
 
@@ -524,7 +524,7 @@ And do not forget to remove it using _--rm_:
 	determined_archimedes
 
 	$ docker ps -a
-	CONTAINER ID        IMAGE                                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+	CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
 
 == PATCHES
 
