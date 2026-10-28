@@ -140,7 +140,7 @@ The following lines export some useful environment variables to the container.
 	# Export some environment variables
 	for env in TERM EDITOR
 	do
-		[ -n "$env" ] || continue
+		printenv "$env" >/dev/null || continue
 		DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 	done
 
@@ -205,7 +205,7 @@ To enable *X* in docker, consider the following lines.
 	then
 		for env in DISPLAY XAUTHORITY XSOCK
 		do
-			[ -n "$env" ] || continue
+			printenv "$env" >/dev/null || continue
 			DOSH_DOCKER_RUN_EXTRA_OPTS+=" --env $env"
 		done
 		dotxauthority="${XAUTHORITY:-$HOME/.Xauthority}"
