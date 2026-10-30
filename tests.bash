@@ -588,7 +588,7 @@ else
 fi
 echo
 
-run "Test DOSHLVL environment variable with single file"
+run "Test DOSHRC environment variable with single file"
 if DOSHRC=foo.rc dosh -c 'echo $FOO' | tee /dev/stderr | \
    grep -q '^foo$'
 then
@@ -598,7 +598,7 @@ else
 fi
 echo
 
-run "Test DOSHLVL environment variable with two files"
+run "Test DOSHRC environment variable with two files"
 if DOSHRC="foo.rc bar.rc" dosh -c 'echo $FOO:$BAR' | tee /dev/stderr | \
    grep -q '^foo:bar$'
 then
@@ -618,7 +618,7 @@ else
 fi
 echo
 
-run "Test option --rc and DOSHLVL environment variable"
+run "Test option --rc and DOSHRC environment variable"
 if DOSHRC="foo.rc" dosh --rc bar.rc -c 'echo $FOO:$BAR' | tee /dev/stderr | \
    grep -q '^foo:bar$'
 then
@@ -628,7 +628,7 @@ else
 fi
 echo
 
-run "Test option --rc and DOSHLVL environment variable with multiples files"
+run "Test option --rc and DOSHRC environment variable with multiples files"
 if DOSHRC="foo.rc bar.rc" dosh --rc baz.rc,quux.rc -c 'echo $FOO:$BAR:$BAZ:$QUUX' | tee /dev/stderr | \
    grep -q '^foo:bar:baz:quux$'
 then
