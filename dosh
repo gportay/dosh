@@ -973,10 +973,10 @@ fi
 # Set docker executable
 read -r -a docker <<<"${sudo:+$DOSH_SUDO }${DOSH_DOCKER[*]}"
 
-# Separate the DOSHRC files with commas, as option --rc, or with whitespaces
+# Convert the DOSHRC variable to array.
 if is_set_and_not_array DOSHRC
 then
-	DOSHRC="${DOSHRC//,/ }"
+	IFS=, to_array_if_not_array DOSHRC
 fi
 
 # Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
@@ -984,7 +984,7 @@ fi
 for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
 	 DOSH_DOCKER_ATTACH_EXTRA_OPTS DOSH_DOCKER_KILL_EXTRA_OPTS \
 	 DOSH_DOCKER_RM_EXTRA_OPTS DOSH_DOCKER_BUILD_EXTRA_OPTS \
-	 DOSH_DOCKER_RMI_EXTRA_OPTS DOSHRC
+	 DOSH_DOCKER_RMI_EXTRA_OPTS
 do
 	to_array_if_not_array "$i"
 done

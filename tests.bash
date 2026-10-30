@@ -599,16 +599,6 @@ fi
 echo
 
 run "Test DOSHRC environment variable with two files"
-if DOSHRC="foo.rc bar.rc" dosh -c 'echo $FOO:$BAR' | tee /dev/stderr | \
-   grep -q '^foo:bar$'
-then
-	ok
-else
-	ko
-fi
-echo
-
-run "Test DOSHRC environment variable with two files separated by a comma"
 if DOSHRC="foo.rc,bar.rc" dosh -c 'echo $FOO:$BAR' | tee /dev/stderr | \
    grep -q '^foo:bar$'
 then
@@ -629,7 +619,7 @@ fi
 echo
 
 run "Test option --rc and DOSHRC environment variable with multiples files"
-if DOSHRC="foo.rc bar.rc" dosh --rc baz.rc,quux.rc -c 'echo $FOO:$BAR:$BAZ:$QUUX' | tee /dev/stderr | \
+if DOSHRC="foo.rc,bar.rc" dosh --rc baz.rc,quux.rc -c 'echo $FOO:$BAR:$BAZ:$QUUX' | tee /dev/stderr | \
    grep -q '^foo:bar:baz:quux$'
 then
 	ok
