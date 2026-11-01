@@ -1164,7 +1164,7 @@ fi
 echo
 
 run "Test series of short options"
-if dosh -ec 'echo "$-"' | tee /dev/stderr | grep 'e'
+if dosh -ec 'echo "$-"' | tee /dev/stderr | grep -q 'e'
 then
 	ok
 else
@@ -1173,7 +1173,7 @@ fi
 echo
 
 run "Test series of short options ending with option"
-if dosh -co errexit 'echo "$-"' | tee /dev/stderr | grep 'e'
+if dosh -co errexit 'echo "$-"' | tee /dev/stderr | grep -q 'e'
 then
 	ok
 else
