@@ -288,7 +288,7 @@ echo
 
 run "Test DOSH_NOBUILD environment variable"
 if ! DOSH_NOBUILD=1 dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
-   grep '^#0 building with "\w\+" instance using docker driver$'
+   grep -q '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
 else
