@@ -497,7 +497,7 @@ docker_build() {
 	local has_add_or_copy
 
 	# Do not build image
-	if [[ ${DOSH_NOBUILD:-} ]]
+	if [[ ${DOSH_NOBUILD:-0} -ne 0 ]]
 	then
 		return
 	fi
