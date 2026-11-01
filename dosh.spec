@@ -95,6 +95,9 @@ rm -f "$_libdir/docker/cli-plugins/docker-cqfd"
 %{_datadir}/dosh/docker/deb/Dockerfile
 %{_datadir}/dosh/docker/kas/Dockerfile
 %{_datadir}/dosh/docker/pkg/Dockerfile
+%{_datadir}/dosh/docker/raspberrypios/Dockerfile
+%{_datadir}/dosh/docker/raspberrypios/raspberrypi-archive-stable.gpg
+%{_datadir}/dosh/docker/raspberrypios/raspi.list
 %{_datadir}/dosh/docker/rpm/Dockerfile
 %{_datadir}/dosh/docker/ubuntu/Dockerfile
 %{_datadir}/dosh/docker/yocto/Dockerfile
