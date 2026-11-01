@@ -417,7 +417,7 @@ fi
 echo
 
 run "Test option --dind"
-if dosh --shell /usr/bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
+if dosh --shell /bin/dosh --dind -c 'echo "DOSHLVL=$DOSHLVL"' | tee /dev/stderr | \
    grep -q 'DOSHLVL=2'
 then
 	ok
@@ -931,7 +931,7 @@ echo
 
 run "Test --no-extra-options option"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
-   dosh --no-extra-options -c "which dosh" | tee /dev/stderr | grep -q '/usr/bin/dosh'
+   dosh --no-extra-options -c "which sh" | tee /dev/stderr | grep -q '/bin/sh'
 then
 	ok
 else
@@ -1102,8 +1102,8 @@ echo
 rm -f docker/tests/Dockerfile.not-me
 
 run "Test with shopt arguments using /bin/bash (dind)"
-if          dosh --shell /usr/bin/dosh --dind -- --shell /bin/bash -- +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
-   diff - <(dosh                                 --shell /bin/bash    +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
+if          dosh --shell /bin/dosh --dind -- --shell /bin/bash -- +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr | \
+   diff - <(dosh                             --shell /bin/bash    +B -x -o errexit +h -c 'echo "$-"; echo "$BASHOPTS"; shopt -s' | tee /dev/stderr )
 then
 	ok
 else
