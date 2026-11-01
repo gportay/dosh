@@ -890,7 +890,7 @@ echo
 
 run "Test DOSH_DOCKER_RUN_EXTRA_OPTS environment variable"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
-   dosh -c "which dosh" | grep "$HOME/.local/bin/dosh"
+   dosh -c "which dosh" | tee /dev/stderr | grep -q "$HOME/.local/bin/dosh"
 then
 	ok
 else
@@ -920,7 +920,7 @@ echo
 
 run "Test --no-extra-options option"
 if DOSH_DOCKER_RUN_EXTRA_OPTS="--volume $PWD:$HOME/.local/bin --env PATH=$HOME/.local/bin:/usr/bin" \
-   dosh --no-extra-options -c "which dosh" | grep '/usr/bin/dosh'
+   dosh --no-extra-options -c "which dosh" | tee /dev/stderr | grep -q '/usr/bin/dosh'
 then
 	ok
 else
