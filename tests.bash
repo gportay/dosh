@@ -101,6 +101,7 @@ export -n DOSH_DOCKER_EXEC_EXTRA_OPTS
 export -n DOSH_DOCKER_ATTACH_EXTRA_OPTS
 export -n DOSH_DOCKER_KILL_EXTRA_OPTS
 export -n DOSH_DOCKER_RM_EXTRA_OPTS
+export -n DOSH_NOBUILD
 
 no_doshprofile=1
 no_doshrc=1
