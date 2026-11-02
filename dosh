@@ -270,13 +270,13 @@ add_symlink() {
 
 	file="$(realpath "$1")"
 	hash="$(hash "$PWD")"
-	mkdir -p "$cache_directory/${docker[-1]}/$hash"
-	ln -sf "$file" "$cache_directory/${docker[-1]}/$hash/$2"
+	run mkdir -p "$cache_directory/${docker[-1]}/$hash"
+	run ln -sf "$file" "$cache_directory/${docker[-1]}/$hash/$2"
 }
 
 remove_symlink() {
-	rm "$cache_directory/${docker[-1]}/$1/$2"
-	rmdir --ignore-fail-on-non-empty "$cache_directory/${docker[-1]}/$1"
+	run rm "$cache_directory/${docker[-1]}/$1/$2"
+	run rmdir --ignore-fail-on-non-empty "$cache_directory/${docker[-1]}/$1"
 }
 
 get_tag() {
