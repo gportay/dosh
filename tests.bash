@@ -268,7 +268,7 @@ fi
 echo
 
 run "Test option --build"
-if dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
+if dosh --build --verbose -c "true" 2>&1 | tee /dev/stderr | \
    grep '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
@@ -278,7 +278,7 @@ fi
 echo
 
 run "Test option --rebuild"
-if dosh --rebuild --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
+if dosh --rebuild --verbose -c "true" 2>&1 | tee /dev/stderr | \
    grep '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
@@ -288,7 +288,7 @@ fi
 echo
 
 run "Test DOSH_NOBUILD environment variable"
-if ! DOSH_NOBUILD=1 dosh --build --verbose -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
+if ! DOSH_NOBUILD=1 dosh --build --verbose -c "true" 2>&1 | tee /dev/stderr | \
    grep -q '^#0 building with "\w\+" instance using docker driver$'
 then
 	ok
