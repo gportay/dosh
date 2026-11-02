@@ -558,7 +558,7 @@ docker_build() {
 	fi
 
 	# Append dosh instructions to a temporary Dockerfile
-	cat "$1" - <<EOF >"$path/doshfile"
+	cat "$1" - <<EOF >doshfile
 
 USER root
 RUN grep -q "^$USER:" /etc/group \
@@ -588,7 +588,7 @@ EOF
 
 	# List the files from the Dockerfile to send to the docker daemon if no
 	# context file is given
-	files=(doshfile)
+	files=()
 	context_file="${3:-}"
 	if ! [[ ${context_file:-} ]]
 	then
@@ -655,7 +655,7 @@ EOF
 			then
 				echo "Info: ENTRYPOINT is overridden by dosh"
 			fi
-		done <"$path/doshfile" >&2
+		done <doshfile >&2
 	fi
 
 	# Append the extra options if any
@@ -681,10 +681,10 @@ EOF
 
 	# Do not send the build context to the daemon if neither ADD nor COPY
 	# instructions in Dockerfile.
-	if [[ ${#files[@]} -gt 1 ]] && [[ ${no_auto_context:-} ]]
+	if [[ ${#files[@]} -gt 0 ]] && [[ ${no_auto_context:-} ]]
 	then
 		# Warning user about lot of data sent to the Docker daemon.
-		if [[ ! -e "$path/.dockerignore"  ]] && [[ ${has_add_or_copy:-} ]]
+		if [[ ! -e .dockerignore  ]] && [[ ${has_add_or_copy:-} ]]
 		then
 			echo "Info: ADD or COPY instructions sends build context to daemon." >&2
 			echo "      Consider option --context <TAR> to speed up the build of image." >&2
@@ -694,22 +694,23 @@ EOF
 			echo "          $0 --context context.tar ${BASH_ARGV[*]}" >&2
 		fi
 
-		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file "$path/doshfile" "$path"
+		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file doshfile "$path"
 	else
 		# Or send the files as a context archive
 		if ! [[ ${context_file:-} ]]
 		then
-			run tar c -C "$path" "${files[@]}"
+			files+=("$PWD/doshfile")
+			run tar c -C "$path" --transform="s,${PWD#*/}/doshfile,doshfile," "${files[@]}" 2>/dev/null
 		# Or send the given context file
 		else
-			run tar rf "$context_file" -C "$path" "doshfile"
+			run tar rf "$context_file" doshfile
 			run cat "$context_file"
 		fi | \
 		run "${docker[@]}" build "${buildopts[@]}" --tag "$2" --file doshfile -
 	fi
 
 	# Remove temporary Dockerfile
-	rm -f "$path/doshfile"
+	rm -f doshfile
 
 	add_symlink "$1" "$2"
 }
