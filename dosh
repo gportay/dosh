@@ -142,16 +142,16 @@ Environment variables:
       DOSH_MOUNT_OPTIONS        Set the bind mount volume options.
                                 Equivalent to --mount-options <OPTIONS>.
 
-      DOSH_DOCKER_RUN_EXTRA_OPTS
-                                Set additional parameters to the docker run
+      DOSH_DOCKER_ATTACH_EXTRA_OPTS
+                                Set additional parameters to the docker attach
+                                command.
+
+      DOSH_DOCKER_BUILD_EXTRA_OPTS
+                                Set additional parameters to the docker build
                                 command.
 
       DOSH_DOCKER_EXEC_EXTRA_OPTS
                                 Set additional parameters to the docker exec
-                                command.
-
-      DOSH_DOCKER_ATTACH_EXTRA_OPTS
-                                Set additional parameters to the docker attach
                                 command.
 
       DOSH_DOCKER_KILL_EXTRA_OPTS
@@ -162,12 +162,12 @@ Environment variables:
                                 Set additional parameters to the docker rm
                                 command.
 
-      DOSH_DOCKER_BUILD_EXTRA_OPTS
-                                Set additional parameters to the docker build
-                                command.
-
       DOSH_DOCKER_RMI_EXTRA_OPTS
                                 Set additional parameters to the docker rmi
+                                command.
+
+      DOSH_DOCKER_RUN_EXTRA_OPTS
+                                Set additional parameters to the docker run
                                 command.
 
 Files:
@@ -973,13 +973,13 @@ fi
 # --no-extra-options resets DOSH_DOCKER_*_EXTRA_OPTS
 if [[ ${no_extra_options:-} ]]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS=
-	DOSH_DOCKER_EXEC_EXTRA_OPTS=
 	DOSH_DOCKER_ATTACH_EXTRA_OPTS=
-	DOSH_DOCKER_KILL_EXTRA_OPTS=
-	DOSH_DOCKER_RM_EXTRA_OPTS=
 	DOSH_DOCKER_BUILD_EXTRA_OPTS=
+	DOSH_DOCKER_EXEC_EXTRA_OPTS=
+	DOSH_DOCKER_KILL_EXTRA_OPTS=
 	DOSH_DOCKER_RMI_EXTRA_OPTS=
+	DOSH_DOCKER_RM_EXTRA_OPTS=
+	DOSH_DOCKER_RUN_EXTRA_OPTS=
 fi
 
 # Set docker executable
@@ -993,10 +993,10 @@ fi
 
 # Convert the DOSH_DOCKER_*_EXTRA_OPTS variables to arrays; use a backslash to
 # escape whitespace and preserve it.
-for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
-	 DOSH_DOCKER_ATTACH_EXTRA_OPTS DOSH_DOCKER_KILL_EXTRA_OPTS \
-	 DOSH_DOCKER_RM_EXTRA_OPTS DOSH_DOCKER_BUILD_EXTRA_OPTS \
-	 DOSH_DOCKER_RMI_EXTRA_OPTS
+for i in DOSH_DOCKER_ATTACH_EXTRA_OPTS DOSH_DOCKER_BUILD_EXTRA_OPTS \
+	 DOSH_DOCKER_EXEC_EXTRA_OPTS DOSH_DOCKER_KILL_EXTRA_OPTS \
+	 DOSH_DOCKER_RM_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS \
+	 DOSH_DOCKER_RUN_EXTRA_OPTS
 do
 	to_array_if_not_array "$i"
 done
@@ -1037,10 +1037,10 @@ set -euo pipefail
 
 # Warn if the DOSH_DOCKER_*_EXTRA_OPTS variables are not arrays, and convert
 # them if not arrays.
-for i in DOSH_DOCKER_RUN_EXTRA_OPTS DOSH_DOCKER_EXEC_EXTRA_OPTS \
-	 DOSH_DOCKER_ATTACH_EXTRA_OPTS DOSH_DOCKER_KILL_EXTRA_OPTS \
-	 DOSH_DOCKER_RM_EXTRA_OPTS DOSH_DOCKER_BUILD_EXTRA_OPTS \
-	 DOSH_DOCKER_RMI_EXTRA_OPTS
+for i in DOSH_DOCKER_ATTACH_EXTRA_OPTS DOSH_DOCKER_BUILD_EXTRA_OPTS \
+	 DOSH_DOCKER_EXEC_EXTRA_OPTS DOSH_DOCKER_KILL_EXTRA_OPTS \
+	 DOSH_DOCKER_RM_EXTRA_OPTS DOSH_DOCKER_RMI_EXTRA_OPTS \
+	 DOSH_DOCKER_RUN_EXTRA_OPTS
 do
 	if is_set_and_not_array "$i"
 	then
