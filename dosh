@@ -531,11 +531,11 @@ docker_build() {
 		done
 	done
 
-	# Default to . if Dockerfile is in current working directory
+	# Default to cwd if Dockerfile is in current working directory
 	path="${1%/*}"
 	if [[ "$path" = "$1" ]]
 	then
-		path="."
+		path="$PWD"
 	fi
 
 	# Append dosh instructions to a temporary Dockerfile
