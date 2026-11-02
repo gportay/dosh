@@ -297,6 +297,16 @@ else
 fi
 echo
 
+run "Test option --no-cache"
+if ! dosh --dockerfile docker/tests/Dockerfile.ubuntu --rebuild --no-cache -c "true" 2>&1 | tee /dev/stderr | \
+   grep '^ => CACHED [\w/\w] '
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test with a binary argument"
 if ! dosh echo "one" "two" "three"
 then

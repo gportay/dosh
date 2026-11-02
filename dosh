@@ -102,6 +102,7 @@ Docker related options:
       --build                   Build the image.
       --rebuild                 Build the image again, verbosely.
                                 Equivalent to --build --verbose.
+      --no-cache                Do not use cache when building the image.
       --rmi                     Remove the image and exit.
       --detach                  Detach the container.
       --exec CONTAINER          Execute in the container.
@@ -644,6 +645,12 @@ EOF
 	then
 		buildopts+=("${DOSH_DOCKER_BUILD_EXTRA_OPTS[@]}")
 	fi
+
+	# Append the dosh build options
+	if [[ "${no_cache:-}" ]]
+	then
+		buildopts+=(--no-cache)
+	fi
 	buildopts+=(--build-arg "DOSH_USER=$USER")
 	buildopts+=(--build-arg "DOSH_UID=$UID")
 	buildopts+=(--build-arg "DOSH_GID=${GROUPS[0]}")
@@ -759,7 +766,7 @@ has_positional_parameter() {
 }
 
 is_doshopt() {
-	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|parent|tag|ls|gc|build|rebuild|build-only|rmi|detach)$ ]]
+	if [[ "$1" =~ ^--(no-auto-context|no-extra-options|no-doshprofile|no-doshrc|sudo|root|dind|groups|home|parent|tag|ls|gc|build|rebuild|build-only|no-cache|rmi|detach)$ ]]
 	then
 		return 0
 	fi

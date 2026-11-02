@@ -82,6 +82,7 @@ Options:
   --build                Build the image.
   --rebuild              Build the image again, verbosely.
                          Equivalent to --build --verbose.
+  --no-cache             Do not use cache when building the image.
   --rmi                  Remove the image and exit.
   --detach               Detach the container.
   --exec string          Execute in the container.
