@@ -143,6 +143,27 @@ line, through *docker-run(1)*.
 **--no-auto-context**::
 	Disable the automatic context sent to the docker daemon.
 
+**--docker-attach-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-attach command.
+
+**--docker-build-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-build command.
+
+**--docker-exec-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-exec command.
+
+**--docker-kill-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-kill command.
+
+**--docker-rm-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-rm command.
+
+**--docker-rmi-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-rmi command.
+
+**--docker-run-extra-options OPTIONS[,OPTIONS...]**::
+	Set extra options to the docker-run command.
+
 **--no-extra-options**::
 	Disable extra options given to docker commands.
 

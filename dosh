@@ -76,6 +76,20 @@ Docker related options:
                                 daemon.
       --no-auto-context         Disable the automatic context sent to the
                                 docker daemon.
+      --docker-attach-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-attach command.
+      --docker-build-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-build command.
+      --docker-exec-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-exec command.
+      --docker-kill-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-kill command.
+      --docker-rm-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-rm command.
+      --docker-rmi-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-rmi command.
+      --docker-run-extra-options OPTIONS[,OPTIONS...]
+                                Set extra options to the docker-run command.
       --no-extra-options        Disable extra options given to docker commands.
       --no-doshprofile          Disable reading of ~/.dosh_profile.
       --no-doshrc               Disable reading of ./doshrc.
@@ -437,6 +451,10 @@ prune() {
 		then
 			rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
 		fi
+		if [ "${docker_rmi_extra_options:-}" ]
+		then
+			rmiopts+=("${docker_rmi_extra_options[@]}")
+		fi
 
 		# Remove image
 		run "${docker[@]}" rmi --force "${rmiopts[@]}" "${tags[@]}" "$@"
@@ -645,6 +663,10 @@ EOF
 	then
 		buildopts+=("${DOSH_DOCKER_BUILD_EXTRA_OPTS[@]}")
 	fi
+	if [[ ${docker_build_extra_options:-} ]]
+	then
+		buildopts+=("${docker_build_extra_options[@]}")
+	fi
 
 	# Append the dosh build options
 	if [[ "${no_cache:-}" ]]
@@ -700,6 +722,10 @@ docker_attach() {
 	then
 		attachopts+=("${DOSH_DOCKER_ATTACH_EXTRA_OPTS[@]}")
 	fi
+	if [ "${docker_attach_extra_options:-}" ]
+	then
+		attachopts+=("${docker_attach_extra_options[@]}")
+	fi
 
 	run "${docker[@]}" attach "${attachopts[@]}" "$@"
 }
@@ -712,6 +738,10 @@ docker_kill() {
 	then
 		killopts+=("${DOSH_DOCKER_KILL_EXTRA_OPTS[@]}")
 	fi
+	if [ "${docker_kill_extra_options:-}" ]
+	then
+		killopts+=("${docker_kill_extra_options[@]}")
+	fi
 
 	run "${docker[@]}" kill "${killopts[@]}" "$@"
 }
@@ -723,6 +753,10 @@ docker_rm() {
 	if [ "${DOSH_DOCKER_RM_EXTRA_OPTS:-}" ]
 	then
 		rmopts+=("${DOSH_DOCKER_RM_EXTRA_OPTS[@]}")
+	fi
+	if [ "${docker_rm_extra_options:-}" ]
+	then
+		rmopts+=("${docker_rm_extra_options[@]}")
 	fi
 
 	run "${docker[@]}" rm "${rmopts[@]}" "$@"
@@ -743,6 +777,10 @@ docker_rmi() {
 	if [ "${DOSH_DOCKER_RMI_EXTRA_OPTS:-}" ]
 	then
 		rmiopts+=("${DOSH_DOCKER_RMI_EXTRA_OPTS[@]}")
+	fi
+	if [ "${docker_rmi_extra_options:-}" ]
+	then
+		rmiopts+=("${docker_rmi_extra_options[@]}")
 	fi
 
 	run "${docker[@]}" rmi "${rmiopts[@]}" "$@"
@@ -775,7 +813,7 @@ is_doshopt() {
 }
 
 is_doshopt_argument() {
-	if [[ "$1" =~ ^--(dockerfile|platform|context|cache-directory|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
+	if [[ "$1" =~ ^--(dockerfile|platform|context|docker-attach-extra-options|docker-build-extra-options|docker-exec-extra-options|docker-kill-extra-options|docker-rm-extra-options|docker-rmi-extra-options|docker-run-extra-options|cache-directory|directory|working-directory|mount-options|shell|exec|attach|kill|rm)$ ]]
 	then
 		return 0
 	fi
@@ -999,6 +1037,17 @@ for i in DOSH_DOCKER_ATTACH_EXTRA_OPTS DOSH_DOCKER_BUILD_EXTRA_OPTS \
 	 DOSH_DOCKER_RUN_EXTRA_OPTS
 do
 	to_array_if_not_array "$i"
+done
+unset i
+
+# Convert the docker_*_extra_options variables to arrays; use a backslash to
+# escape coma and preserve it.
+for i in docker_attach_extra_options docker_build_extra_options \
+	 docker_exec_extra_options docker_kill_extra_options \
+	 docker_rm_extra_options docker_rmi_extra_options \
+	 docker_run_extra_options
+do
+	IFS=, to_array_if_not_array "$i"
 done
 unset i
 
@@ -1227,6 +1276,10 @@ then
 	then
 		opts+=("${DOSH_DOCKER_EXEC_EXTRA_OPTS[@]}")
 	fi
+	if [[ ${docker_exec_extra_options:-} ]]
+	then
+		opts+=("${docker_exec_extra_options[@]}")
+	fi
 
 	run exec "${docker[@]}" exec "${opts[@]}" "$exec" "$DOSHELL" "$@"
 
@@ -1245,6 +1298,10 @@ fi >&2
 if [[ ${DOSH_DOCKER_RUN_EXTRA_OPTS:-} ]]
 then
 	opts+=("${DOSH_DOCKER_RUN_EXTRA_OPTS[@]}")
+fi
+if [[ ${docker_run_extra_options:-} ]]
+then
+	opts+=("${docker_run_extra_options[@]}")
 fi
 run exec "${docker[@]}" run "${opts[@]}" "$tag" "$@"
 

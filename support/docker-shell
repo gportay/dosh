@@ -56,6 +56,20 @@ Options:
   --context string       Path to the context to send to the docker daemon.
   --no-auto-context      Disable the automatic context sent to the docker
                          daemon.
+  --docker-attach-extra-options string
+                         Set extra options to the docker-attach command.
+  --docker-build-extra-options string
+                         Set extra options to the docker-build command.
+  --docker-exec-extra-options string
+                         Set extra options to the docker-exec command.
+  --docker-kill-extra-options string
+                         Set extra options to the docker-kill command.
+  --docker-rm-extra-options string
+                         Set extra options to the docker-rm command.
+  --docker-rmi-extra-options string
+                         Set extra options to the docker-rmi command.
+  --docker-run-extra-options string
+                         Set extra options to the docker-run command.
   --no-extra-options     Disable extra options given to docker commands.
   --no-doshprofile       Disable reading of ~/.dosh_profile.
   --no-doshrc            Disable reading of ./doshrc.

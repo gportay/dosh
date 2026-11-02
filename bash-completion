@@ -140,6 +140,90 @@ _dosh()
 		COMPREPLY=( $( PATH="$PWD:$HOME/.local/share/dosh/rc.d:/usr/local/share/dosh/rc.d:/usr/share/dosh/rc.d" compgen -A file -P "$prefix" -S "," -- "$realcur" ) )
 		return
 		;;
+	--docker-attach-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker attach "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
+	--docker-build-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker build "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
+	--docker-exec-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker exec "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
+	--docker-kill-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker kill "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
+	--docker-rm-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker rm "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
+	--docker-rmi-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker rmi "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
+	--docker-run-extra-options)
+		local realcur prefix
+		realcur="${cur##*,}"
+		prefix="${cur%$realcur}"
+		COMP_WORDS=(docker run "${realcur:--}")
+		COMP_LINE="${COMP_WORDS[*]}"
+		COMP_POINT="${#COMP_LINE}"
+		_command_offset 0
+		compopt -o nospace
+		COMPREPLY=( $( compgen -W "${COMPREPLY[*]}" -P "$prefix" -S "," -- "${realcur:--}" ) )
+		return
+		;;
 	--cache-directory|--directory|--working-directory)
 		_filedir -d
 		return
@@ -156,7 +240,7 @@ _dosh()
 
 	local shopts="-a -b -e -f -h -m -n -u -v -x -C"
 	local short_opts="-c -s -i -o"
-	local long_opts="--dockerfile --platform --context --no-auto-context --no-extra-options --no-doshprofile --no-doshrc --rc --cache-directory --directory --working-directory --sudo --root --dind --groups --home --parent --mount-options --shell --ls --gc --build-only --build --rebuild --no-cache --rmi --detach --exec --attach --kill --rm --tag --dry-run --verbose --version --help"
+	local long_opts="--dockerfile --platform --context --no-auto-context --docker-attach-extra-options --docker-build-extra-options --docker-exec-extra-options --docker-kill-extra-options --docker-rm-extra-options --docker-rmi-extra-options --docker-run-extra-options --no-extra-options --no-doshprofile --no-doshrc --rc --cache-directory --directory --working-directory --sudo --root --dind --groups --home --parent --mount-options --shell --ls --gc --build-only --build --rebuild --no-cache --rmi --detach --exec --attach --kill --rm --tag --dry-run --verbose --version --help"
 	local shell="${DOSHELL:-/bin/sh}"
 	for (( i=0; i < ${#words[@]}; i++ )); do
 		if [[ ${words[i]} == --shell ]]; then
@@ -185,7 +269,7 @@ _dosh()
 	fi
 
 	local args
-	_count_args "" "@(-c|[-+]o|--dockerfile|--platform|--context|--rc|--cache-directory|--directory|--working-directory|--mount-options|--shell|--exec|--attach|--kill|--rm)"
+	_count_args "" "@(-c|[-+]o|--dockerfile|--platform|--context|--docker-attach-extra-options|--docker-build-extra-options|--docker-exec-extra-options|--docker-kill-extra-options|--docker-rm-extra-options|--docker-rmi-extra-options|--docker-run-extra-options|--rc|--cache-directory|--directory|--working-directory|--mount-options|--shell|--exec|--attach|--kill|--rm)"
 	if ((args == 1)); then
 		_filedir '*sh'
 		return
