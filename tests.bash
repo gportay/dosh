@@ -550,7 +550,7 @@ echo
 rm context.tar
 
 run "Test option --no-auto-context"
-if dosh --build --no-auto-context -c "cat /etc/os*release" 2>&1 >/dev/null | tee /dev/stderr | \
+if dosh --build --no-auto-context -c "true" 2>&1 | tee /dev/stderr | \
    grep '^Info: ADD or COPY instructions sends build context to daemon.'
 then
 	ok
