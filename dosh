@@ -1106,7 +1106,7 @@ unset i
 if [[ "${tag:-}" ]]
 then
 	# Print tag
-	get_tag "$dockerfile" "${USER:-}" "${platform:-}"
+	get_tag "$DOSH_DOCKERFILE" "${USER:-}" "${platform:-}"
 	exit
 fi
 
