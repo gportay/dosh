@@ -500,13 +500,14 @@ prune() {
 # is sent to the daemon.
 #
 # docker_build() tries to limit the context sent to the docker daemon by doing
-# a very limited magic if the Dockerfile contains ADD or COPY instruction to
-# send local files.
+# some very limited magic if the Dockerfile contains ADD or COPY instructions
+# to send local files.
 #
-# Consider option --no-auto-context do disable this very limited feature as it
-# does not fully support Dockerfile as defined in the documentation:
+# Consider option --no-auto-context to disable this very limited feature as it
+# does not fully implement a Dockerfile parser as defined in the Dockerfile
+# reference:
 #
-# https://docs.docker.com/engine/reference/builder/
+# https://docs.docker.com/reference/dockerfile
 docker_build() {
 	local path
 	local files
