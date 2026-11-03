@@ -569,6 +569,16 @@ else
 fi
 echo
 
+run "Test ENTRYPOINT info log"
+if dosh --rebuild -c "true" 2>&1 | tee /dev/stderr | \
+   grep '^Info: ENTRYPOINT is overridden by dosh.$'
+then
+	ok
+else
+	ko
+fi
+echo
+
 run "Test option --rc with single file"
 if dosh --rc foo.rc -c 'echo $FOO' | tee /dev/stderr | \
    grep -q '^foo$'
