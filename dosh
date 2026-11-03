@@ -653,7 +653,7 @@ EOF
 			# ENTRYPOINT instruction
 			elif [[ ${words[0]^^} =~ ^ENTRYPOINT$ ]]
 			then
-				echo "Info: ENTRYPOINT is overridden by dosh"
+				echo "Info: ENTRYPOINT is overridden by dosh."
 			fi
 		done <doshfile >&2
 	fi
