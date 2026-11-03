@@ -561,7 +561,7 @@ rm context.tar
 
 run "Test option --no-auto-context"
 if dosh --build --dockerfile docker/tests/Dockerfile.context --no-auto-context -c "true" 2>&1 | tee /dev/stderr | \
-   grep '^Info: ADD or COPY instructions sends build context to daemon.'
+   grep '^Info: ADD or COPY instructions sends build context to daemon.$'
 then
 	ok
 else
