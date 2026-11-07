@@ -92,16 +92,16 @@ Command options for run:
 == ENVIRONMENT VARIABLES
 
 *CQFD_DOCKER*::
-	Program used to invoke _docker_ client.
+	Program used to invoke the _docker_ client.
 
 *CQFD_EXTRA_RUN_ARGS*::
-	A space-separated list of additional docker-run options to be append to
-	the starting build container. Format is the same as (and passed to)
+	A space-separated list of additional docker-run options to be appended
+	when starting the build container. Format is the same as (and passed to)
 	docker-run’s options. See 'docker run --help'.
 
 *CQFD_EXTRA_BUILD_ARGS*::
-	A space-separated list of additional docker-build options to be append
-	to the building image. Format is the same as (and passed to)
+	A space-separated list of additional docker-build options to be appended
+	when building the image. Format is the same as (and passed to)
 	docker-build’s options. See 'docker build --help'.
 
 *CQFD_EXTRA_RMI_ARGS*::
@@ -111,7 +111,7 @@ Command options for run:
 
 *CQFD_NO_SSH_CONFIG*::
 	Set to _true_ to disable forwarding the global _/etc/ssh_
-	configurations to the build container. This may be required if the host's
+	configuration to the build container. This may be required if the host's
 	_ssh_ configuration is not compatible with the _ssh_ version within the
 	build container.
 
@@ -132,7 +132,7 @@ Command options for run:
 	container.
 
 *CQFD_DOCKER_GID*::
-	The gid of the docker group in host to map to the cqfd group in the
+	The gid of the docker group on the host to map to the cqfd group in the
 	build container.
 
 *CQFD_SHELL*::
@@ -141,13 +141,13 @@ Command options for run:
 == FILES
 
 *.cqfdrc*::
-	Project information config file (See *cqfdrc(5)*).
+	Project information config file (see *cqfdrc(5)*).
 
 *.cqfd*::
 	Project data directory.
 
 *.cqfd/docker/Dockerfile*::
-	Default docker config file (See *Dockerfile(5)*).
+	Default docker config file (see *Dockerfile(5)*).
 
 == PATCHES
 
