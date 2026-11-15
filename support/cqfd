@@ -158,7 +158,7 @@ do
 	export "$var=$val"
 	unset val
 done
-unset var
+unset var vars
 
 if [[ "$cmd_flavors" ]]
 then
