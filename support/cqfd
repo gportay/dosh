@@ -196,8 +196,8 @@ fi
 if [[ "$CQFD_DOCKER" ]]
 then
 	DOSH_DOCKER="$CQFD_DOCKER"
+	export DOSH_DOCKER
 fi
-export DOSH_DOCKER
 
 if [[ "$cmd_ls" ]] || [[ "$cmd_images" ]]
 then
