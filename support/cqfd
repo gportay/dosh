@@ -268,7 +268,11 @@ then
 	command="${CQFD_SHELL:-/bin/sh}"
 fi
 
-DOSH_DOCKER_RUN_EXTRA_OPTS="--log-driver=none -ti"
+DOSH_DOCKER_RUN_EXTRA_OPTS="--log-driver=none -i"
+if [ -t 0 ] && [ -t 1 ]
+then
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -t"
+fi
 if [[ ! "$CQFD_NO_USER_SSH_CONFIG" ]] && [[ -d "$HOME/.ssh" ]]
 then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\ }/.ssh:${HOME// /\ }/.ssh"
