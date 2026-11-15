@@ -139,10 +139,10 @@ then
 	"cfg_section_$opt_b"
 fi
 
-dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
+dosh_opts=(--no-doshrc --no-doshprofile)
 
-dosh_opts=(--dockerfile "$dockerfile")
-dosh_opts+=(--no-doshrc --no-doshprofile)
+dockerfile="${opt_d:-.cqfd}/${distro:-docker}/Dockerfile"
+dosh_opts+=(--dockerfile "$dockerfile")
 if [[ "$opt_verbose" ]]
 then
 	dosh_opts+=(--verbose)
