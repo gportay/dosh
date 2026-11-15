@@ -156,6 +156,7 @@ do
 	eval "val=\$$var"
 	unset "$var"
 	export "$var=$val"
+	unset val
 done
 unset var
 
