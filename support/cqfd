@@ -136,6 +136,12 @@ cfg_section_project
 cfg_section_build
 if [[ "$opt_b" ]]
 then
+	if ! declare -F "cfg_section_$opt_b" >/dev/null
+	then
+		echo "Error: $opt_b: Invalid flavor" >&2
+		exit 1
+	fi
+
 	"cfg_section_$opt_b"
 fi
 
