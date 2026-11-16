@@ -62,26 +62,26 @@ do
 		exit
 	elif [[ "$1" =~ ^-q$ ]]
 	then
-		eval "opt_${1:1}=1"
+		printf -v "opt_${1:1}" "%s" 1
 	elif [[ "$1" =~ ^-(f|d|C|b)$ ]]
 	then
 		printf -v "opt_${1:1}" "%s" "$2"
 		shift
 	elif [[ "$1" =~ ^--(release|verbose)$ ]]
 	then
-		eval "opt_${1:2}=1"
+		printf -v "opt_${1:2}" "%s" 1
 	elif [[ "$1" =~ ^- ]]
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
 	elif [[ "$1" =~ ^(init|deinit|exec|flavors|images|gc|ls|prune|run|release|shell|help)$ ]]
 	then
-		eval "cmd_$1=1"
+		printf -v "cmd_$1" "%s" 1
 		shift
 		break
 	elif [[ "$1" =~ ^(sh|ash|dash|bash|ksh|zsh|csh|tcsh|fish)$ ]]
 	then
-		eval "cmd_shell=1"
+		cmd_shell=1
 		CQFD_SHELL="$1"
 		shift
 		break
@@ -158,7 +158,7 @@ fi
 mapfile -t vars < <(compgen -A arrayvar -X '!DOSH_*')
 for var in "${vars[@]}"
 do
-	eval "val=\$$var"
+	val="${!var}"
 	unset "$var"
 	export "$var=$val"
 	unset val
