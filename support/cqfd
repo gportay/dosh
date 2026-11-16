@@ -65,7 +65,7 @@ do
 		eval "opt_${1:1}=1"
 	elif [[ "$1" =~ ^-(f|d|C|b)$ ]]
 	then
-		eval "opt_${1:1}=\"$2\""
+		printf -v "opt_${1:1}" "%s" "$2"
 		shift
 	elif [[ "$1" =~ ^--(release|verbose)$ ]]
 	then
