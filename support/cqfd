@@ -158,7 +158,6 @@ fi
 mapfile -t vars < <(compgen -A arrayvar -X '!DOSH_*')
 for var in "${vars[@]}"
 do
-	val=
 	eval "val=\$$var"
 	unset "$var"
 	export "$var=$val"
