@@ -6,6 +6,8 @@ bash-completion-cqfd*
 cache/
 cqfd.1.gz
 cqfdrc.5.gz
+docker/tests/Dockerfile.me
+docker/tests/Dockerfile.not-me
 dosh.1.gz
 pkg/
 src/
