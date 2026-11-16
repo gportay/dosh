@@ -275,7 +275,7 @@ then
 fi
 if [[ ! "$CQFD_NO_USER_SSH_CONFIG" ]] && [[ -d "$HOME/.ssh" ]]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\ }/.ssh:${HOME// /\ }/.ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\\ }/.ssh:${HOME// /\\ }/.ssh"
 fi
 if [[ ! "$CQFD_NO_SSH_CONFIG" ]] && [[ -d /etc/ssh ]]
 then
@@ -284,8 +284,8 @@ then
 fi
 if [[ ! "$CQFD_NO_SSH_AUTH_SOCK" ]] && [[ "$SSH_AUTH_SOCK" ]]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\ }:${HOME// /\ }/.sockets/ssh"
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\ }/.sockets/ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${SSH_AUTH_SOCK// /\\ }:${HOME// /\\ }/.sockets/ssh"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e SSH_AUTH_SOCK=${HOME// /\\ }/.sockets/ssh"
 fi
 if [[ ! "$CQFD_NO_USER_GIT_CONFIG" ]] && [[ -f "$HOME/.gitconfig" ]]; then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -v ${HOME// /\\ }/.gitconfig:${HOME// /\\ }/.gitconfig"
