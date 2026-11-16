@@ -1,4 +1,5 @@
 FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y asciidoctor
 RUN apt-get update && apt-get install -y docker.io
 RUN apt-get update && apt-get install -y sudo make fakeroot bash-completion zsh wget
