@@ -3,12 +3,9 @@
 FROM --platform=linux/arm64 debian:bookworm
 
 # https://github.com/moby/moby/issues/4032
-ENV DPKG_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # https://archive.raspberrypi.com/debian/
 COPY raspberrypi-archive-stable.gpg /etc/apt/trusted.gpg.d/raspberrypi-archive-stable.gpg
 COPY raspi.list /etc/apt/sources.list.d/raspi.list
 RUN apt-get update && apt-get upgrade -y
-
-# https://github.com/moby/moby/issues/4032
-ENV DPKG_FRONTEND=
