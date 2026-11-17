@@ -5,9 +5,6 @@ FROM ubuntu:20.04
 # https://github.com/moby/moby/issues/4032
 ARG DEBIAN_FRONTEND=noninteractive
 
-# https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/
-RUN apt-get update && apt-get install -y asciidoctor
-
 # https://docs.docker.com/engine/install/debian/#uninstall-old-versions
 RUN apt-get update && apt-get install -y docker.io
 

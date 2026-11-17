@@ -15,6 +15,7 @@ all:
 .PHONY: man
 man: PATH:=$(CURDIR):$(PATH)
 man: SHELL=dosh
+man: .SHELLFLAGS=--dockerfile docker/asciidoctor/Dockerfile -c
 man: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
 .PHONY: install-world
