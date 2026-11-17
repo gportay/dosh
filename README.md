@@ -370,6 +370,13 @@ version 7 and is scheduled for removal in a future release. Consider moving the
 shebang to [env(1)] and its `-S` option, available since mid-[2018][coreutils
 8.30].
 
+## REQUIREMENTS
+
+[dosh(1)] is a [bash] script; it requires *bash(1)* 4.2 or later on the host.
+
+_Note_: The shell interpreter run in the container does not need to be
+*bash(1)*; it defaults to `/bin/sh` (see [DEFAULT SHELL INTERPRETER]).
+
 ## DOCUMENTATION
 
 Build the documentation using *make(1)*:
@@ -492,7 +499,9 @@ the terms of the GNU Lesser General Public License as published by the Free
 Software Foundation, either version 2.1 of the License, or (at your option) any
 later version.
 
+[DEFAULT SHELL INTERPRETER]: #default-shell-interpreter
 [Dockerfile]: https://docs.docker.com/reference/dockerfile
+[bash]: https://www.gnu.org/software/bash/
 [coreutils 8.30]: https://github.com/coreutils/coreutils/commit/668306ed86c8c79b0af0db8b9c882654ebb66db2
 [docker]: https://github.com/docker/docker
 [dosh(1)]: dosh.1.adoc
