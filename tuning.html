@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tuning &mdash; dosh 9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=0a35f0ec"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Use Podman" href="podman.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dosh
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#default-shell-interpreter">Default shell interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manage-dosh-as-a-non-root-user">Manage dosh as a non-root user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-extra-options">Docker extra options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initialization-files">Initialization files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shell-profile-examples">Shell profile examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reuse-same-shell-interpreter">Reuse same shell interpreter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#export-environment">Export environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-dot-files">Map dot-files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-handling">SSH handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#x">X</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#make-the-prompt-slightly-different">Make the prompt slightly different</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="podman.html">Use Podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross-platform.html">Use cross platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpreter.html">Use as interpreter for shell scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dosh</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tuning</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tuning.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tuning">
+<h1>Tuning<a class="headerlink" href="#tuning" title="Link to this heading"></a></h1>
+<section id="default-shell-interpreter">
+<span id="id1"></span><h2>Default shell interpreter<a class="headerlink" href="#default-shell-interpreter" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc">dosh(1)</a> uses <code class="docutils literal notranslate"><span class="pre">/bin/sh</span></code> as the default interpreter, as it is the only shell
+reliably available. The interpreter can be set with the option
+<code class="docutils literal notranslate"><span class="pre">--shell</span> <span class="pre">SHELL</span></code>, but it then needs to be set on every call to <em>dosh</em>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dosh</span> <span class="o">--</span><span class="n">shell</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p>Instead, the default interpreter can be set using the <code class="docutils literal notranslate"><span class="pre">DOSHELL</span></code> environment
+variable. When this variable is exported, there is no need to override the shell
+interpreter on the command line.</p>
+<p>Add the following two lines to the shell <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code> to tell <em>dosh</em> to use
+<code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code> as the shell interpreter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DOSHELL</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span>
+<span class="n">export</span> <span class="n">DOSHELL</span>
+</pre></div>
+</div>
+</section>
+<section id="manage-dosh-as-a-non-root-user">
+<h2>Manage dosh as a non-root user<a class="headerlink" href="#manage-dosh-as-a-non-root-user" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc">dosh(1)</a> relies on the setup of Docker. See its documentation to run Docker
+as <a class="reference external" href="https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user">non-root-user</a>.</p>
+<p>If the user does not have permission to send the context to the Docker daemon,
+running <a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc">dosh(1)</a> with <code class="docutils literal notranslate"><span class="pre">sudo</span></code> is not recommended. Instead, consider using the
+option <code class="docutils literal notranslate"><span class="pre">--sudo</span></code>, as it only runs the <code class="docutils literal notranslate"><span class="pre">docker</span></code> commands with superuser
+privileges.</p>
+<p>On Linux, if you are not a member of the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group, consider running
+<code class="docutils literal notranslate"><span class="pre">dosh</span></code> as below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dosh</span> <span class="o">--</span><span class="n">sudo</span>
+</pre></div>
+</div>
+</section>
+<section id="docker-extra-options">
+<h2>Docker extra options<a class="headerlink" href="#docker-extra-options" title="Link to this heading"></a></h2>
+<p>Every <a class="reference external" href="https://github.com/docker/docker">docker(1)</a> command performed in <a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc">dosh(1)</a> can be customized
+by passing extra arguments through its corresponding
+<strong>DOSH_DOCKER_xxx_EXTRA_OPTS</strong> environment variable. <strong>xxx</strong> represents one of
+the <em>docker</em> commands used in <em>dosh</em> (<em>build</em>, <em>rmi</em>, <em>run</em>, <em>exec</em>, <em>attach</em>,
+<em>kill</em> and <em>rm</em>).</p>
+<p><em>Note:</em> Only <code class="docutils literal notranslate"><span class="pre">DOSH_DOCKER_RUN_EXTRA_OPTS</span></code> is relevant for interactive usage.</p>
+<p>As an example, consider mapping extra personal <em>dot-files</em> to feel at home in
+the container.</p>
+<p>Adding the following two lines to the shell <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code> automatically binds
+the <code class="docutils literal notranslate"><span class="pre">~/.ssh</span></code> directory to the container.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">=</span><span class="s2">&quot;--volume $HOME/.ssh:$HOME/.ssh&quot;</span>
+<span class="n">export</span> <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span>
+</pre></div>
+</div>
+</section>
+<section id="initialization-files">
+<h2>Initialization files<a class="headerlink" href="#initialization-files" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc">dosh(1)</a> reads and executes commands from initialization files when it is
+invoked.</p>
+<p>Unlike the standard shells, <a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc">dosh(1)</a> uses files from <em>personal</em> and <em>local</em>
+locations instead of files from <em>system</em> and <em>personal</em> locations. The <em>system</em>
+initialization file is replaced by a <em>local</em> file, and that <em>local</em> file is run
+after the <em>personal</em> file.</p>
+<p>In short, the <em>personal</em> file <code class="docutils literal notranslate"><span class="pre">~/.dosh_profile</span></code> is read first, and the
+<em>local</em> file <code class="docutils literal notranslate"><span class="pre">./doshrc</span></code> is read next. The former is hidden to avoid polluting
+the <em>personal</em> directory (like <code class="docutils literal notranslate"><span class="pre">.profile</span></code>, <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>…)
+while the latter is not (like <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>…).</p>
+<p>The shell initialization files (<code class="docutils literal notranslate"><span class="pre">.profile</span></code>, <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>…)
+are read by the host shell. The <em>dosh</em>-specific <a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables">environment-variables</a> are
+string variables, and they have to be exported to be part of the environment of
+the <em>dosh(1)</em> sub-process.</p>
+<p>Both <em>dosh</em> initialization files aim to override the <em>dosh</em>-specific variables.
+The extra options <a class="reference external" href="https://github.com/gportay/dosh/blob/master/dosh.1.adoc#environment-variables">environment-variables</a> are converted to <em>bash(1)</em> arrays
+before the initialization files are read by <em>dosh(1)</em>. They have to remain
+<em>bash(1)</em> arrays.</p>
+</section>
+<section id="shell-profile-examples">
+<h2>Shell profile examples<a class="headerlink" href="#shell-profile-examples" title="Link to this heading"></a></h2>
+<p>Here are some examples of code to copy/paste in the <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.</p>
+<p>They significantly improve the <em>dosh</em> experience.</p>
+<section id="reuse-same-shell-interpreter">
+<h3>Reuse same shell interpreter<a class="headerlink" href="#reuse-same-shell-interpreter" title="Link to this heading"></a></h3>
+<p>This tells <em>dosh</em> to use the same shell interpreter as the one currently in use.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Not sh?</span>
+<span class="k">if</span> <span class="p">[</span> <span class="s2">&quot;$SHELL&quot;</span> <span class="o">!=</span> <span class="s2">&quot;/bin/sh&quot;</span> <span class="p">]</span>
+<span class="n">then</span>
+        <span class="n">export</span> <span class="n">DOSHELL</span><span class="o">=</span><span class="s2">&quot;$SHELL&quot;</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<p><em>Important:</em> Be aware that when the shell interpreter is not installed in the
+container, <em>dosh</em> ends with the following error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="p">:</span> <span class="n">Error</span> <span class="n">response</span> <span class="kn">from</span><span class="w"> </span><span class="nn">daemon</span><span class="p">:</span> <span class="n">oci</span> <span class="n">runtime</span> <span class="n">error</span><span class="p">:</span> <span class="n">container_linux</span><span class="o">.</span><span class="n">go</span><span class="p">:</span><span class="mi">265</span><span class="p">:</span> <span class="n">starting</span> <span class="n">container</span> <span class="n">process</span> <span class="n">caused</span> <span class="s2">&quot;exec: </span><span class="se">\&quot;</span><span class="s2">/bin/zsh</span><span class="se">\&quot;</span><span class="s2">: stat /bin/zsh: no such file or directory&quot;</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="export-environment">
+<h3>Export environment<a class="headerlink" href="#export-environment" title="Link to this heading"></a></h3>
+<p>The following lines export some useful environment variables to the container.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Export some environment variables</span>
+<span class="k">for</span> <span class="n">env</span> <span class="ow">in</span> <span class="n">TERM</span> <span class="n">EDITOR</span>
+<span class="n">do</span>
+        <span class="n">printenv</span> <span class="s2">&quot;$env&quot;</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">||</span> <span class="k">continue</span>
+        <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --env $env&quot;</span>
+<span class="n">done</span>
+</pre></div>
+</div>
+</section>
+<section id="map-dot-files">
+<h3>Map dot-files<a class="headerlink" href="#map-dot-files" title="Link to this heading"></a></h3>
+<p>The following lines map some useful <em>dot-files</em> to the container.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Map some home dot-files
+for vol in $HOME/.config $HOME/.local $HOME/.profile
+do
+        [ -e &quot;$vol&quot; ] || continue
+        DOSH_DOCKER_RUN_EXTRA_OPTS+=&quot; --volume $vol:$vol&quot;
+done
+
+# Map extra home dot-files
+for vol in $HOME/.inputrc $HOME/.gnupg $HOME/.screenrc
+do
+        [ -e &quot;$vol&quot; ] || continue
+        DOSH_DOCKER_RUN_EXTRA_OPTS+=&quot; --volume $vol:$vol&quot;
+done
+</pre></div>
+</div>
+<p><em>bash(1)</em> invocation files are a <em>must-have</em> to feel at home.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Map bash dot-files
+for vol in $HOME/.bash{_profile,rc,login,logout}
+do
+        [ -e &quot;$vol&quot; ] || continue
+        DOSH_DOCKER_RUN_EXTRA_OPTS+=&quot; --volume $vol:$vol&quot;
+done
+</pre></div>
+</div>
+<p><em>zsh(1)</em> too.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Map zsh dot-files
+zdotdir=&quot;${ZDOTDIR:-$HOME}&quot;
+for vol in $zdotdir/.zshenv $zdotdir/.zprofile $zdotdir/.zshrc $HOME/.zlogin $HOME/.zlogout
+do
+        [ -e &quot;$vol&quot; ] || continue
+        DOSH_DOCKER_RUN_EXTRA_OPTS+=&quot; --volume $vol:$vol&quot;
+done
+</pre></div>
+</div>
+</section>
+<section id="ssh-handling">
+<h3>SSH handling<a class="headerlink" href="#ssh-handling" title="Link to this heading"></a></h3>
+<p>For a better experience with <em>SSH</em>, consider the following lines.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Map and export ssh things?</span>
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;$HOME/.ssh&quot;</span> <span class="p">]</span>
+<span class="n">then</span>
+        <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --volume $HOME/.ssh:$HOME/.ssh&quot;</span>
+<span class="n">fi</span>
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">n</span> <span class="s2">&quot;$SSH_AUTH_SOCK&quot;</span> <span class="p">]</span>
+<span class="n">then</span>
+        <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --env SSH_AUTH_SOCK&quot;</span>
+        <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --volume $SSH_AUTH_SOCK:$SSH_AUTH_SOCK&quot;</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="x">
+<h3>X<a class="headerlink" href="#x" title="Link to this heading"></a></h3>
+<p>To enable <em>X</em> in docker, consider the following lines.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Map and export X things?</span>
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">n</span> <span class="s2">&quot;$DISPLAY&quot;</span> <span class="p">]</span>
+<span class="n">then</span>
+        <span class="k">for</span> <span class="n">env</span> <span class="ow">in</span> <span class="n">DISPLAY</span> <span class="n">XAUTHORITY</span> <span class="n">XSOCK</span>
+        <span class="n">do</span>
+                <span class="n">printenv</span> <span class="s2">&quot;$env&quot;</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">||</span> <span class="k">continue</span>
+                <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --env $env&quot;</span>
+        <span class="n">done</span>
+        <span class="n">dotxauthority</span><span class="o">=</span><span class="s2">&quot;${XAUTHORITY:-$HOME/.Xauthority}&quot;</span>
+        <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;$dotxauthority&quot;</span> <span class="p">]</span>
+        <span class="n">then</span>
+                <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --volume $dotxauthority:$HOME/.Xauthority&quot;</span>
+        <span class="n">fi</span>
+        <span class="n">unset</span> <span class="n">dotxauthority</span>
+        <span class="n">xsock</span><span class="o">=</span><span class="s2">&quot;${XSOCK:-/tmp/.X11-unix}&quot;</span>
+        <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;$xsock&quot;</span> <span class="p">]</span>
+        <span class="n">then</span>
+                <span class="n">DOSH_DOCKER_RUN_EXTRA_OPTS</span><span class="o">+=</span><span class="s2">&quot; --volume $xsock:/tmp/.X11-unix:ro&quot;</span>
+        <span class="n">fi</span>
+        <span class="n">unset</span> <span class="n">xsock</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<p><em>Note</em>: To enable <em>X</em> through <em>SSH</em>, have a look at the excellent post by
+Jean-Tiare Le Bigot on his blog <a class="reference external" href="https://blog.yadutaf.fr/2017/09/10/running-a-graphical-app-in-a-docker-container-on-a-remote-server/">yadutaf</a>.</p>
+</section>
+<section id="make-the-prompt-slightly-different">
+<h3>Make the prompt slightly different<a class="headerlink" href="#make-the-prompt-slightly-different" title="Link to this heading"></a></h3>
+<p>Colorize the prompt in the container differently to distinguish <em>dosh</em>
+sessions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># In dosh?</span>
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">z</span> <span class="s2">&quot;$DOSHLVL&quot;</span> <span class="p">]</span>
+<span class="n">then</span>
+        <span class="k">return</span>
+<span class="n">fi</span>
+
+<span class="c1"># Colorize prompt color differently</span>
+<span class="n">PS1</span><span class="o">=</span><span class="s2">&quot;${PS1//32/33}&quot;</span>
+<span class="n">PROMPT</span><span class="o">=</span><span class="s2">&quot;${PROMPT//blue/green}&quot;</span>
+</pre></div>
+</div>
+<p><em>Note</em>: Put these lines at the end of the file.</p>
+<p>Lines after the if statement only apply in the container.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="podman.html" class="btn btn-neutral float-right" title="Use Podman" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2026, Gaël PORTAY.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
