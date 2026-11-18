@@ -387,9 +387,9 @@ Build the documentation using *make(1)*:
 	making output directory... done
 	building [mo]: targets for 0 po files that are out of date
 	writing output... 
-	building [html]: targets for 1 source files that are out of date
-	updating environment: [new config] 1 added, 0 changed, 0 removed
-	reading sources... [100%] index
+	building [html]: targets for 12 source files that are out of date
+	updating environment: [new config] 12 added, 0 changed, 0 removed
+	reading sources... [100%] tuning
 	looking for now-outdated files... none found
 	pickling environment... done
 	checking consistency... done
@@ -397,7 +397,7 @@ Build the documentation using *make(1)*:
 	copying assets... copying static files... done
 	copying extra files... done
 	done
-	writing output... [100%] index
+	writing output... [100%] tuning
 	generating indices... genindex done
 	writing additional pages... search done
 	dumping search index in English (code: en)... done

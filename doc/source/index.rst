@@ -1,20 +1,25 @@
-.. dosh documentation master file, created by
-   sphinx-quickstart on Tue Dec  9 23:40:02 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. SPDX-License-Identifier: LGPL-2.1-or-later
 
-Welcome to dosh's documentation!
-================================
+The docker-shell documentation
+==============================
+
+This is the top level of the docker-shell's documentation tree. docker-shell
+documentation is very much a work in progress; that is especially true as I
+work to integrate many ideas out of my head into a coherent documentation.
+Please note that improvements to the documentation are welcome; submit patches
+to https://github.com/gportay/dosh/pulls if you want to help out.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   overview
+   tuning
+   podman
+   cross-platform
+   interpreter
+   requirements
+   building
+   install
+   links
+   contributing
+   copyright
