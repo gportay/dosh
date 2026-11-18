@@ -443,6 +443,15 @@ else
 	ko
 fi
 
+run "Test DOSH_GROUPS environment variable"
+if          echo 'echo ${GROUPS[@]}' | DOSH_GROUPS=1 dosh --shell /bin/bash -s | tee /dev/stderr | \
+   diff - <(echo 'echo ${GROUPS[@]}' | bash                                 -s | tee /dev/stderr )
+then
+	ok
+else
+	ko
+fi
+
 run "Test option -c"
 if dosh -c "cat /etc/os*release" | tee /dev/stderr | \
    grep -q 'PRETTY_NAME="Ubuntu 20.04[.0-9]* LTS"'

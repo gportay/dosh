@@ -298,6 +298,10 @@ line, through *docker-run(1)*.
 	The target platform to use.
 	Equivalent to --platform <TARGET>.
 
+**DOSH_GROUPS**::
+	Run with host groups if set and not empty.
+	Equivalent to --groups.
+
 **DOSH_MOUNT_OPTIONS**::
 	Set the bind mount volume options.
 	Equivalent to --mount-options <OPTIONS>.

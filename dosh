@@ -155,6 +155,9 @@ Environment variables:
       DOSH_PLATFORM             The target platform to use.
                                 Equivalent to --platform <TARGET>.
 
+      DOSH_GROUPS               Run with host groups if set and not empty.
+                                Equivalent to --groups.
+
       DOSH_MOUNT_OPTIONS        Set the bind mount volume options.
                                 Equivalent to --mount-options <OPTIONS>.
 
@@ -538,20 +541,23 @@ docker_build() {
 	fi
 
 	# Inject host groups to the Dockerfile
-	GROUP_NAMES=("$USER:$UID")
-	mapfile -t groups </etc/group
-	for group in "${groups[@]}"
-	do
-		local gid
-		local name
-
-		IFS=":" read -r name _ gid _ <<<"$group"
-		for i in "${GROUPS[@]}"
+	if [[ "${DOSH_GROUPS:-}" ]]
+	then
+		GROUP_NAMES=("$USER:$UID")
+		mapfile -t groups </etc/group
+		for group in "${groups[@]}"
 		do
-			[[ "$i" == "$gid" ]] || continue
-			GROUP_NAMES+=("$name:$gid")
+			local gid
+			local name
+
+			IFS=":" read -r name _ gid _ <<<"$group"
+			for i in "${GROUPS[@]}"
+			do
+				[[ "$i" == "$gid" ]] || continue
+				GROUP_NAMES+=("$name:$gid")
+			done
 		done
-	done
+	fi
 
 	# Default to cwd if Dockerfile is in current working directory
 	path="${1%/*}"
@@ -892,6 +898,7 @@ is_shopt_argument() {
 shopts=()
 dockerfile="${DOSH_DOCKERFILE:-}"
 platform="${DOSH_PLATFORM:-}"
+groups="${DOSH_GROUPS:-}"
 mount_options="${DOSH_MOUNT_OPTIONS:-}"
 if test -e /sys/fs/selinux/enforce && grep -q 1 /sys/fs/selinux/enforce
 then
@@ -1011,6 +1018,11 @@ fi
 if [[ ${platform:-} ]]
 then
 	DOSH_PLATFORM="$platform"
+fi
+# --groups to DOSH_GROUPS
+if [[ ${groups:-} ]]
+then
+	DOSH_GROUPS="$groups"
 fi
 # --no-extra-options resets DOSH_DOCKER_*_EXTRA_OPTS
 if [[ ${no_extra_options:-} ]]
