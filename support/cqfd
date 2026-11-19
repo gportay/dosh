@@ -159,6 +159,12 @@ cfg_parser ()
 	eval "${ini[*]}"                                     # eval the result
 }
 
+read -r -a dosh <<<"${DOSH[*]:-dosh}"
+if [[ "$-" == *x* ]]
+then
+	dosh=("${BASH:-bash}" -x "${dosh[@]}")
+fi
+
 if [[ "$opt_C" ]] || [ "$opt_directory" ]
 then
 	cd "${opt_C:-$opt_directory}"
@@ -299,12 +305,12 @@ fi
 
 if [[ "$cmd_ls" ]] || [[ "$cmd_images" ]]
 then
-	exec "${DOSH[@]:-dosh}" "${dosh_opts[@]}" --ls </dev/null
+	exec "${dosh[@]}" "${dosh_opts[@]}" --ls </dev/null
 fi
 
 if [[ "$cmd_gc" ]] || [[ "$cmd_prune" ]]
 then
-	exec "${DOSH[@]:-dosh}" "${dosh_opts[@]}" --gc </dev/null
+	exec "${dosh[@]}" "${dosh_opts[@]}" --gc </dev/null
 fi
 
 if [[ "$cmd_init" ]]
@@ -322,7 +328,7 @@ then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" --quiet"
 	fi
 
-	exec "${DOSH[@]:-dosh}" --rebuild "${dosh_opts[@]}" </dev/null
+	exec "${dosh[@]}" --rebuild "${dosh_opts[@]}" </dev/null
 fi
 
 if [[ "$cmd_deinit" ]]
@@ -335,7 +341,7 @@ then
 		DOSH_DOCKER_RMI_EXTRA_OPTS+=" $docker_rmi_args"
 	fi
 
-	exec "${DOSH[@]:-dosh}" --rmi "${dosh_opts[@]}" </dev/null
+	exec "${dosh[@]}" --rmi "${dosh_opts[@]}" </dev/null
 fi
 
 if [[ "$cmd_exec" ]] && [[ "$#" -eq 0 ]]
@@ -423,7 +429,7 @@ then
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e PATH=$path"
 fi
 
-"${DOSH[@]:-dosh}" "${dosh_opts[@]}" -c "$command"
+"${dosh[@]}" "${dosh_opts[@]}" -c "$command"
 
 if [[ "$opt_release" ]] || [[ "$cmd_release" ]]
 then
