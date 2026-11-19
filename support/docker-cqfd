@@ -60,8 +60,8 @@ Options:
 Commands:
   init                   Initialize project build container.
   deinit                 Deinitialize project build container.
-  images                 List all cqfd container images.
-  prune                  Remove all cqfd container images.
+  images, ls             List build images.
+  prune, gc              Clean up unused build images.
   exec string [list]     Run command inside build container.
   flavors                List flavors from config file to stdout.
   run [list]             Run command string inside build container.
