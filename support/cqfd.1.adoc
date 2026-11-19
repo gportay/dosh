@@ -12,7 +12,25 @@ cqfd - a tool to wrap commands in controlled Docker containers using dosh.
 
 == SYNOPSIS
 
-*cqfd* [OPTIONS] [COMMAND] [COMMAND_OPTIONS] [COMMAND_ARGUMENTS]
+*cqfd* [OPTIONS] init|deinit
+
+*cqfd* [OPTIONS] images|purge|ls|gc
+
+*cqfd* [OPTIONS] exec COMMAND [ARGUMENTS]
+
+*cqfd* [OPTIONS] flavors
+
+*cqfd* [OPTIONS] run [COMMAND_STRING]
+
+*cqfd* [OPTIONS] run -c ARGUMENT_STRING
+
+*cqfd* [OPTIONS] release [COMMAND_STRING]
+
+*cqfd* [OPTIONS] shell [SHELL_ARGUMENTS]
+
+*cqfd* [OPTIONS] version
+
+*cqfd* [OPTIONS] help
 
 == DESCRIPTION
 

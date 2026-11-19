@@ -11,7 +11,16 @@ VERSION="9"
 
 usage() {
 	cat <<EOF
-Usage: ${0##*/} [OPTIONS] [COMMAND] [COMMAND_OPTIONS] [COMMAND_ARGUMENTS]
+Usage: ${0##*/} [OPTIONS] init|deinit
+       ${0##*/} [OPTIONS] images|purge|ls|gc
+       ${0##*/} [OPTIONS] exec COMMAND [ARGUMENTS]
+       ${0##*/} [OPTIONS] flavors
+       ${0##*/} [OPTIONS] run [COMMAND_STRING]
+       ${0##*/} [OPTIONS] run -c ARGUMENT_STRING
+       ${0##*/} [OPTIONS] release [COMMAND_STRING]
+       ${0##*/} [OPTIONS] shell [SHELL_ARGUMENTS]
+       ${0##*/} [OPTIONS] version
+       ${0##*/} [OPTIONS] help
 
 A tool to wrap commands in controlled Docker containers using dosh.
 
