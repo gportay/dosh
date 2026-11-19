@@ -258,4 +258,4 @@ Dockerized".
 
 == SEE ALSO
 
-dosh(1), docker-build(1), docker-run(1), Dockerfile(5), cqfdrc(5)
+*dosh(1)*, *docker-build(1)*, *docker-run(1)*, *Dockerfile(5)*, *cqfdrc(5)*
