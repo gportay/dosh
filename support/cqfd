@@ -235,6 +235,31 @@ then
 	echo "Warning: custom_img_name=\"$custom_img_name\": Unsupported option" >&2
 fi
 
+if [[ "$image" ]]
+then
+	echo "Warning: image=\"$image\": Unsupported option" >&2
+fi
+
+if [[ "$tag" ]]
+then
+	echo "Warning: tag=\"$tag\": Unsupported option" >&2
+fi
+
+if [[ "$CQFD_EXTRA_PULL_ARGS" ]]
+then
+	echo "Warning: CQFD_EXTRA_PULL_ARGS=\"$CQFD_EXTRA_PULL_ARGS\": Unsupported option" >&2
+fi
+
+if [[ "$CQFD_PROMPT" ]]
+then
+	echo "Warning: CQFD_PROMPT=\"$CQFD_PROMPT\": Unsupported option" >&2
+fi
+
+if [[ "$CQFD_SUDO_NOPASSWD" ]]
+then
+	echo "Warning: CQFD_SUDO_NOPASSWD=\"$CQFD_SUDO_NOPASSWD\": Unsupported option" >&2
+fi
+
 if [[ "$shell" ]]
 then
 	CQFD_SHELL="$shell"

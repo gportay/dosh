@@ -140,10 +140,21 @@ Command options for run:
 	when building the image. Format is the same as (and passed to)
 	docker-build’s options. See 'docker build --help'.
 
+*CQFD_EXTRA_PULL_ARGS*::
+	A space-separated list of additional docker-pull options to be appended
+	when pulling the image. Format is the same as (and passed to)
+	docker-pull’s options. See 'docker pull --help'.
+	_CQFD_EXTRA_PULL_ARGS_ is *unsupported*.
+
 *CQFD_EXTRA_RMI_ARGS*::
 	A space-separated list of additional docker-rmi options to be appended
 	when removing the image. Format is the same as (and passed to)
 	docker-rmi’s options. See 'docker rmi --help'.
+
+*CQFD_PROMPT*::
+	Set to _yes_ or _no_ to answer prompt messages automatically; the prompt
+	is then disabled.
+	_CQFD_PROMPT_ is *unsupported*.
 
 *CQFD_NO_SSH_CONFIG*::
 	Set to _true_ to disable forwarding the global _/etc/ssh_
@@ -176,6 +187,11 @@ Command options for run:
 
 *CQFD_RUN_WITH_SUDO*::
 	Set to _true_ to run _$CQFD_DOCKER_ with _sudo_.
+
+*CQFD_SUDO_NOPASSWD*::
+	Set to _true_ to run all commands with _sudo_ without password
+	authentication in the build container.
+	_CQFD_SUDO_NOPASSWD_ is *unsupported*.
 
 == FILES
 
