@@ -14,7 +14,9 @@ release = '9'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx_rtd_dark_mode',
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -43,3 +45,11 @@ rst_epilog = '''
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
+html_static_path = ['_static']
+# Loaded before the sphinx_rtd_dark_mode scripts it overrides.
+html_js_files = ['os_theme.js']
+
+# -- Options for sphinx_rtd_dark_mode ----------------------------------------
+# https://github.com/MrDogeBro/sphinx_rtd_dark_mode
+
+default_dark_mode = False
