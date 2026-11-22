@@ -76,11 +76,11 @@ EOF
 tar_transform="no"
 while [[ "$#" -ne 0 ]]
 do
-	if [[ "$1" =~ ^(-h|--help)$ ]]
+	if [[ "$1" =~ ^(-h|--help|help)$ ]]
 	then
 		usage
 		exit
-	elif [[ "$1" =~ ^(-v|--version)$ ]]
+	elif [[ "$1" =~ ^(-v|--version|version)$ ]]
 	then
 		echo "$VERSION"
 		exit
@@ -134,7 +134,7 @@ do
 	then
 		echo "Error: $1: Invalid option" >&2
 		exit 1
-	elif [[ "$1" =~ ^(init|deinit|exec|flavors|images|gc|ls|prune|run|release|shell|version|help)$ ]]
+	elif [[ "$1" =~ ^(init|deinit|exec|flavors|images|gc|ls|prune|run|release|shell)$ ]]
 	then
 		printf -v "cmd_$1" "%s" 1
 		shift
@@ -151,18 +151,6 @@ do
 	fi
 	shift
 done
-
-if [[ "$cmd_help" ]]
-then
-	usage
-	exit
-fi
-
-if [[ "$cmd_version" ]]
-then
-	echo "$VERSION"
-	exit
-fi
 
 #
 # Stolen and hacked from https://ajdiaz.wordpress.com/2008/02/09/bash-ini-parser/
