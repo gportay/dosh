@@ -62,7 +62,7 @@ Commands:
   help                         Show this help text.
 
 Run options:
-  -c list                Append argument string to the default command string.
+  -c list                      Append argument string to the default command string.
 
 Global Options:
       --reinit                 Reinitialize build container.
