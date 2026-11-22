@@ -91,14 +91,34 @@ do
 	then
 		printf -v "opt_${1:1}" "%s" "$2"
 		shift
-	elif [[ "$1" =~ ^--(reinit|release|quiet|verbose)$ ]]
+	elif [[ "$1" = --quiet ]]
+	then
+		opt_q=1
+	elif [[ "$1" = --verbose ]]
+	then
+		opt_D=1
+	elif [[ "$1" =~ ^--(reinit|release)$ ]]
 	then
 		printf -v "opt_${1:2}" "%s" 1
-	elif [[ "$1" =~ ^--(platform|cqfdrc-file|cqfd-directory|directory)$ ]]
+	elif [[ "$1" = --cqfdrc-file ]]
 	then
-		opt="${1//-/_}"
-		printf -v "opt_${opt:2}" "%s" "$2"
-		unset opt
+		opt_f="$2"
+		shift
+	elif [[ "$1" = --cqfd-directory ]]
+	then
+		opt_d="$2"
+		shift
+	elif [[ "$1" = --directory ]]
+	then
+		opt_C="$2"
+		shift
+	elif [[ "$1" = --build ]]
+	then
+		opt_b="$2"
+		shift
+	elif [[ "$1" = --platform ]]
+	then
+		opt_platform="$2"
 		shift
 	elif [[ "$1" =~ ^--(init|deinit|exec|flavors|images|gc|ls|prune|run|shell)$ ]]
 	then
@@ -178,33 +198,34 @@ then
 	dosh=("${BASH:-bash}" -x "${dosh[@]}")
 fi
 
-if [[ "$opt_C" ]] || [ "$opt_directory" ]
+if [[ "$opt_C" ]]
 then
-	cd "${opt_C:-$opt_directory}"
+	cd "$opt_C"
 fi
 
-cfg_parser "${opt_f:-${opt_cqfdrc_file:-${CQFDRC_FILE:-.cqfdrc}}}"
+cfg_parser "${opt_f:-${CQFDRC_FILE:-.cqfdrc}}"
 cfg_section_project
 cfg_section_build
-if [[ "$opt_b" ]] || [[ "$opt_build" ]]
+if [[ "$opt_b" ]]
 then
-	if ! declare -F "cfg_section_${opt_b:-$opt_build}" >/dev/null
+	if [[ "$opt_b" =~ ^(build|project)$ ]] ||
+	   ! declare -F "cfg_section_$opt_b" >/dev/null
 	then
-		echo "Error: ${opt_b:-$opt_build}: Invalid flavor" >&2
+		echo "Error: $opt_b: Invalid flavor" >&2
 		exit 1
 	fi
 
-	"cfg_section_${opt_b:-$opt_build}"
+	"cfg_section_$opt_b"
 fi
 
 dosh_opts+=(--no-doshrc --no-doshprofile)
 
 if ! [[ "$dockerfile" ]]
 then
-	dockerfile="${opt_d:-${opt_cqfd_directory:-${CQFD_DIR:-.cqfd}}}/${distro:-docker}/Dockerfile"
+	dockerfile="${opt_d:-${CQFD_DIR:-.cqfd}}/${distro:-docker}/Dockerfile"
 fi
 dosh_opts+=(--dockerfile "$dockerfile")
-if [[ "$opt_D" ]] || [[ "$opt_verbose" ]]
+if [[ "$opt_D" ]]
 then
 	dosh_opts+=(--verbose)
 fi
@@ -278,38 +299,22 @@ then
 	echo "Warning: CQFD_SUDO_NOPASSWD=\"$CQFD_SUDO_NOPASSWD\": Unsupported option" >&2
 fi
 
-if [[ "$shell" ]]
-then
-	CQFD_SHELL="$shell"
-fi
-
+# Precedence: command line, then environment, then config file.
+CQFD_SHELL="${CQFD_SHELL:-$shell}"
 if [[ "$CQFD_SHELL" ]]
 then
 	DOSHELL="$CQFD_SHELL"
 	export DOSHELL
 fi
 
-if [[ "$docker" ]]
-then
-	CQFD_DOCKER="$docker"
-fi
-
+CQFD_DOCKER="${CQFD_DOCKER:-$docker}"
 if [[ "$CQFD_DOCKER" ]]
 then
 	DOSH_DOCKER="$CQFD_DOCKER"
 	export DOSH_DOCKER
 fi
 
-if [[ "$opt_platform" ]]
-then
-	platform="$opt_platform"
-fi
-
-if [[ "$platform" ]]
-then
-	CQFD_PLATFORM="$platform"
-fi
-
+CQFD_PLATFORM="${opt_platform:-${CQFD_PLATFORM:-$platform}}"
 if [[ "$CQFD_PLATFORM" ]]
 then
 	DOSH_PLATFORM="$CQFD_PLATFORM"
@@ -336,7 +341,7 @@ then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" $docker_build_args"
 	fi
 
-	if [[ "$opt_q" ]] || [ "$opt_quiet" ]
+	if [[ "$opt_q" ]]
 	then
 		DOSH_DOCKER_BUILD_EXTRA_OPTS+=" --quiet"
 	fi
@@ -439,7 +444,7 @@ fi
 
 if [[ "$path" ]]
 then
-	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e PATH=$path"
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=" -e PATH=${path// /\\ }"
 fi
 
 "${dosh[@]}" "${dosh_opts[@]}" -c "$command"
