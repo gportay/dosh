@@ -1221,6 +1221,9 @@ then
 		opts+=("--rm")
 	fi
 
+	# Forward signals to the whole process group, and reap processes
+	opts+=("--init" "--env" "TINI_KILL_PROCESS_GROUP=1")
+
 	# Bind mount the home directory
 	if [[ ${home:-} ]]
 	then
