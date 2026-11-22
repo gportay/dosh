@@ -8,11 +8,10 @@
 set -e
 
 target="${0##*/}"
-target="${target%-cqfd}"
-if [ "$target" != "cqfd" ] && [ ! "${CQFD_PLATFORM:-}" ]
+if [[ "$target" == ?*-cqfd ]] && [[ ! "${CQFD_PLATFORM:-}" ]]
 then
-	target="${target//-/\/}"
-	CQFD_PLATFORM="$target"
+	target="${target%-cqfd}"
+	CQFD_PLATFORM="${target//-/\/}"
 fi
 unset target
 

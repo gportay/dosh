@@ -10,11 +10,10 @@ set -u
 set -o pipefail
 
 target="${0##*/}"
-target="${target%-dosh}"
-if [ "$target" != "dosh" ] && [ ! "${DOSH_PLATFORM:-}" ]
+if [[ "$target" == ?*-dosh ]] && [[ ! "${DOSH_PLATFORM:-}" ]]
 then
-	target="${target//-/\/}"
-	DOSH_PLATFORM="$target"
+	target="${target%-dosh}"
+	DOSH_PLATFORM="${target//-/\/}"
 fi
 
 VERSION="9"
