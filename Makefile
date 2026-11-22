@@ -13,12 +13,12 @@ MAKEFLAGS += --no-print-directory
 all:
 	@eval $$(cat /etc/os*release); echo $$NAME; uname -m
 
-.PHONY: doc
-doc: PATH := $(CURDIR):$(PATH)
-doc: SHELL = dosh
-doc: .SHELLFLAGS = --dockerfile docker/sphinx/Dockerfile -c
-doc:
-	$(MAKE) -C $@ html
+.PHONY: html
+html: PATH := $(CURDIR):$(PATH)
+html: SHELL = dosh
+html: .SHELLFLAGS = --dockerfile docker/sphinx/Dockerfile -c
+html:
+	$(MAKE) -C docs/readthedocs $@
 
 .PHONY: man
 man: PATH := $(CURDIR):$(PATH)
@@ -306,7 +306,7 @@ commit-check:
 
 .PHONY: clean
 clean:
-	$(MAKE) -C doc $@
+	$(MAKE) -C docs/readthedocs $@
 	rm -f cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 	rm -f debian/files debian/debhelper-build-stamp debian/*.substvars \
 	   -R debian/.debhelper/ debian/tmp/ \

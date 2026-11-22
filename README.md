@@ -381,9 +381,9 @@ _Note_: The shell interpreter run in the container does not need to be
 
 Build the documentation using *make(1)*:
 
-	$ make doc
-	make -C doc html
-	make: Entering directory '/home/gportay/src/dosh/doc'
+	$ make html
+	make -C docs/readthedocs html
+	make: Entering directory '/home/gportay/src/dosh/docs/readthedocs'
 	Running Sphinx v8.2.3
 	loading translations [en]... done
 	making output directory... done
@@ -410,10 +410,10 @@ Build the documentation using *make(1)*:
 	preparing documents... done
 	copying assets... 
 	copying static files... 
-	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/language_data.js
-	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/basic.css
-	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/documentation_options.js
-	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/js/versions.js
+	Writing evaluated template result to /home/gportay/src/dosh/docs/readthedocs/build/html/_static/language_data.js
+	Writing evaluated template result to /home/gportay/src/dosh/docs/readthedocs/build/html/_static/basic.css
+	Writing evaluated template result to /home/gportay/src/dosh/docs/readthedocs/build/html/_static/documentation_options.js
+	Writing evaluated template result to /home/gportay/src/dosh/docs/readthedocs/build/html/_static/js/versions.js
 	copying static files: done
 	copying extra files... 
 	copying extra files: done
@@ -438,7 +438,7 @@ Build the documentation using *make(1)*:
 	build succeeded.
 	
 	The HTML pages are in build/html.
-	make: Leaving directory '/home/gportay/src/dosh/doc'
+	make: Leaving directory '/home/gportay/src/dosh/docs/readthedocs'
 
 ## MANUAL PAGES
 
