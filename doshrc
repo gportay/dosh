@@ -33,6 +33,10 @@ docker/rpm/Dockerfile)
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/rpmbuild:$HOME/rpmbuild:${mount_options:-rw}")
 	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--volume "$PWD/dosh.spec:$HOME/rpmbuild/SPECS/dosh.spec:${mount_options:-rw}")
 	;;
+docker/jekyll/Dockerfile)
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--publish 4000:4000)
+	DOSH_DOCKER_RUN_EXTRA_OPTS+=(--publish 35729:35729)
+	;;
 esac
 
 # Uncomment to use the same shell interpreter in container than the one which

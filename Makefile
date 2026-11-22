@@ -26,6 +26,13 @@ man: SHELL = dosh
 man: .SHELLFLAGS = --dockerfile docker/asciidoctor/Dockerfile -c
 man: cqfd.1.gz cqfdrc.5.gz dosh.1.gz
 
+.PHONY: serve
+serve: PATH := $(CURDIR):$(PATH)
+serve: SHELL = dosh
+serve: .SHELLFLAGS = --dockerfile docker/jekyll/Dockerfile -c
+serve:
+	cd docs/gh-pages && bundle exec jekyll serve --host 0.0.0.0 --livereload --destination /tmp/_site
+
 .PHONY: install-world
 install-world: install-all
 install-world: install-linux-amd64-dosh

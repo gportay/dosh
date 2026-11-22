@@ -1,0 +1,13 @@
+main:
+  - title: "News"
+    url: /news/
+  - title: "Getting Started"
+    url: /getting-started/
+  - title: "Download"
+    url: /download/
+  - title: "Documentation"
+    url: https://dosh.readthedocs.io/
+  - title: "FAQ"
+    url: /faq/
+  - title: "Support"
+    url: /support/

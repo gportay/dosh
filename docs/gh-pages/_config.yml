@@ -1,0 +1,50 @@
+remote_theme: mmistakes/minimal-mistakes@4.26.2
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+locale: en
+title: dosh
+logo: "/assets/images/dosh-logo.svg"
+title_separator: "|"
+name: dosh
+description: >-
+  Use Docker containers as naturally as your local shell.
+url: "https://gportay.github.io"
+baseurl: "/dosh"
+repository: "gportay/dosh"
+copyright: "Gaël PORTAY"
+copyright_url: "https://github.com/gportay"
+enable_copy_code_button: true
+
+markdown: kramdown
+search: false
+
+# No feed: the site has no posts, and jekyll-feed is not enabled.
+atom_feed:
+  hide: true
+
+include:
+  - _pages
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - cache
+
+author:
+  name: dosh
+
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/gportay/dosh"
+
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
