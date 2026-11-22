@@ -47,19 +47,19 @@ A tool to wrap commands in controlled Docker containers using docker shell.
 By default, the 'run' command is assumed, with the default command string configured in your .cqfdrc (see build.command).
 
 Management Commands:
-  init                   Initialize project build container.
-  deinit                 Deinitialize project build container.
-  images, ls             List build images.
-  prune, gc              Clean up unused build images.
+  init                         Initialize project build container.
+  deinit                       Deinitialize project build container.
+  images, ls                   List build images.
+  prune, gc                    Clean up unused build images.
 
 Commands:
-  exec string [list]     Run command inside build container.
-  flavors                List flavors from config file to stdout.
-  run [list]             Run command string inside build container.
-  release [list]         Run command string inside build container and release software.
-  shell [list]           Run shell inside build container.
-  version                Show version.
-  help                   Show this help text.
+  exec string [list]           Run command inside build container.
+  flavors                      List flavors from config file to stdout.
+  run [list]                   Run command string inside build container.
+  release [list]               Run command string inside build container and release software.
+  shell [list]                 Run shell inside build container.
+  version                      Show version.
+  help                         Show this help text.
 
 Run options:
   -c list                Append argument string to the default command string.
