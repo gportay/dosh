@@ -1,0 +1,55 @@
+name: Test Homebrew formula
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - Formula/**
+      - .github/workflows/homebrew.yml
+    tags:
+      - "[0-9]*"
+  pull_request:
+    paths:
+      - Formula/**
+      - .github/workflows/homebrew.yml
+
+jobs:
+  test:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Update the formula on top of the default branch on new release
+        ref: ${{ github.ref_type == 'tag' && github.event.repository.default_branch || '' }}
+    - name: Update formula
+      if: github.ref_type == 'tag'
+      run: |
+        url="https://github.com/${{ github.repository }}/archive/refs/tags/${{ github.ref_name }}.tar.gz"
+        sha256="$(curl -fsSL "$url" | shasum -a 256 | cut -d " " -f 1)"
+        perl -pi -e "s|^  url \".*\"\$|  url \"$url\"|; s|^  sha256 \".*\"\$|  sha256 \"$sha256\"|" Formula/${{ github.event.repository.name }}.rb
+        git diff
+    - name: Install formula
+      run: |
+        brew tap-new --no-git local/${{ github.event.repository.name }}
+        cp Formula/${{ github.event.repository.name }}.rb "$(brew --repo local/${{ github.event.repository.name }})/Formula/"
+        brew install --build-from-source local/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+    - name: Test formula
+      run: |
+        brew test local/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+    - name: Lint formula
+      run: |
+        brew audit --strict --formula local/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+        brew style local/${{ github.event.repository.name }}
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v7
+      if: github.ref_type == 'tag'
+      with:
+        branch: homebrew-${{ github.ref_name }}
+        commit-message: "Formula: version ${{ github.ref_name }}"
+        title: "Formula: version ${{ github.ref_name }}"
+        body: Update the Homebrew formula to version ${{ github.ref_name }}.
+        add-paths: Formula/${{ github.event.repository.name }}.rb
