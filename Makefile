@@ -58,6 +58,7 @@ install:
 	install -D -m 644 ssh.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh.rc
 	install -D -m 644 x11.rc $(DESTDIR)$(PREFIX)/share/dosh/rc.d/x11.rc
 	install -D -m 644 docker/buildroot/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/buildroot/Dockerfile
+	install -D -m 644 docker/buildroot/apt-sources.list $(DESTDIR)$(PREFIX)/share/dosh/docker/buildroot/apt-sources.list
 	install -D -m 644 docker/deb/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	install -D -m 644 docker/kas/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/kas/Dockerfile
 	install -D -m 644 docker/pkg/Dockerfile $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
@@ -155,6 +156,7 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/ssh.rc
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/rc.d/x11.rc
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/buildroot/Dockerfile
+	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/buildroot/apt-sources.list
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/deb/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/kas/Dockerfile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/docker/pkg/Dockerfile
