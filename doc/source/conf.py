@@ -53,3 +53,13 @@ html_js_files = ['os_theme.js']
 # https://github.com/MrDogeBro/sphinx_rtd_dark_mode
 
 default_dark_mode = False
+
+# -- dosh palette -------------------------------------------------------------
+
+def setup(app):
+    # Raleway for the text, Chillax for the titles.
+    app.add_css_file('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap')
+    app.add_css_file('https://api.fontshare.com/v2/css?f%5B%5D=chillax@600&display=swap')
+    # Loaded after the sphinx_rtd_dark_mode stylesheets they override.
+    app.add_css_file('github-dark.css', priority=900)
+    app.add_css_file('dosh.css', priority=900)

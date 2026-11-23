@@ -1,0 +1,440 @@
+/*
+ * Copyright (c) 2026 Gaël PORTAY
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ * Colorize the Read the Docs theme with the dosh palette.
+ * Loaded after the sphinx_rtd_dark_mode stylesheets it overrides.
+ */
+
+:root {
+  --dosh-teal-pale: #c9f0f0;
+  --dosh-teal-light: #8ddcdc;
+  --dosh-teal: #53b8b8;
+  --dosh-teal-dark: #286b6b;
+  --dosh-black: #000000;
+  --dosh-text: #1a1a1a;
+  --dosh-muted: #4d4d4d;
+  --dosh-border: #dcdcdc;
+  --dosh-hero: #f3f3f3;
+  --dosh-dark-bg: #0d0d0d;
+  --dosh-dark-surface: #1a1a1a;
+  --dosh-dark-border: #333333;
+  --dosh-dark-text: #e6e6e6;
+  --dosh-dark-muted: #b3b3b3;
+
+  --dosh-palette: linear-gradient(to right,
+    var(--dosh-teal-pale) 0 25%,
+    var(--dosh-teal-light) 25% 50%,
+    var(--dosh-teal) 50% 75%,
+    var(--dosh-teal-dark) 75% 100%);
+}
+
+/* -- Fonts ---------------------------------------------------------------- */
+
+body,
+.btn,
+button,
+input,
+input[type],
+select,
+textarea {
+  font-family: Raleway, "Helvetica Neue", Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, legend,
+.rst-content .toctree-wrapper > p.caption,
+.wy-side-nav-search > a,
+.wy-nav-top a {
+  font-family: Chillax, Raleway, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+/* -- Light mode ----------------------------------------------------------- */
+
+body,
+.wy-body-for-nav,
+.wy-nav-content-wrap,
+.wy-nav-content {
+  background: #ffffff;
+  color: var(--dosh-text);
+}
+
+.rst-content h1, .rst-content h2, .rst-content h3,
+.rst-content h4, .rst-content h5, .rst-content h6 {
+  color: var(--dosh-black);
+}
+
+/* Section titles underlined with a short bar of the theme color. */
+.rst-content h1::after,
+.rst-content h2::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: .25rem;
+  margin-top: .5rem;
+  border-radius: .125rem;
+  background: var(--dosh-teal);
+}
+
+a, a:visited,
+.wy-nav-content a, .wy-nav-content a:visited {
+  color: var(--dosh-teal-dark);
+}
+
+a:hover,
+.wy-nav-content a:hover {
+  color: var(--dosh-black);
+}
+
+mark,
+.rst-content .highlighted,
+span.highlighted {
+  color: var(--dosh-teal-dark);
+  background: var(--dosh-teal-pale);
+  box-shadow: none;
+}
+
+/* White masthead, black title, underlined with the four colors. */
+.wy-side-nav-search,
+.wy-nav-top {
+  position: relative;
+  background: #ffffff;
+}
+
+.wy-side-nav-search::after,
+.wy-nav-top::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: .25rem;
+  background: var(--dosh-palette);
+}
+
+.wy-side-nav-search > a,
+.wy-side-nav-search .wy-dropdown > a,
+.wy-nav-top a {
+  color: var(--dosh-black);
+}
+
+/* Monochrome icons, in the theme color. */
+.wy-side-nav-search > a::before,
+.wy-nav-top i {
+  color: var(--dosh-teal-dark);
+}
+
+.wy-side-nav-search > div.version {
+  color: var(--dosh-muted);
+}
+
+.wy-side-nav-search input[type="text"] {
+  border-color: var(--dosh-teal-light);
+}
+
+.wy-side-nav-search input[type="text"]:focus {
+  border-color: var(--dosh-teal);
+}
+
+/* Navigation */
+.wy-nav-side {
+  background: var(--dosh-hero);
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
+  color: var(--dosh-teal-dark);
+}
+
+.wy-menu-vertical a {
+  color: var(--dosh-text);
+}
+
+.wy-menu-vertical a:hover {
+  color: var(--dosh-black);
+  background: var(--dosh-teal-pale);
+}
+
+.wy-menu-vertical a:active {
+  color: var(--dosh-black);
+  background: var(--dosh-teal-light);
+}
+
+.wy-menu-vertical li.current {
+  background: #ffffff;
+}
+
+.wy-menu-vertical li.current a {
+  color: var(--dosh-text);
+  border-right-color: var(--dosh-border);
+}
+
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.on a {
+  color: var(--dosh-black);
+  background: #ffffff;
+  border-top-color: var(--dosh-border);
+  border-bottom-color: var(--dosh-border);
+  box-shadow: inset .25rem 0 0 var(--dosh-teal);
+}
+
+.wy-menu-vertical li.current a:hover,
+.wy-menu-vertical li.current > a:hover,
+.wy-menu-vertical li.on a:hover {
+  background: var(--dosh-teal-pale);
+}
+
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a,
+.wy-menu-vertical li.toctree-l3.current > a,
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a {
+  background: var(--dosh-teal-pale);
+}
+
+/* Overrides the per-level and hover colors of the theme. */
+.wy-menu-vertical li button.toctree-expand {
+  color: var(--dosh-teal-dark) !important;
+}
+
+/* Code */
+.rst-content code.literal,
+.rst-content tt.literal,
+.rst-content code,
+.rst-content tt,
+code {
+  color: var(--dosh-teal-dark);
+  background: var(--dosh-hero);
+  border-color: var(--dosh-border);
+}
+
+.rst-content div[class^="highlight"],
+.rst-content pre.literal-block {
+  border-color: var(--dosh-border);
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+/* Notes: black text on the theme color and on its light tint. */
+.rst-content .admonition,
+.rst-content .note,
+.wy-alert.wy-alert-info {
+  color: var(--dosh-black);
+  background: var(--dosh-teal-pale);
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.rst-content .admonition .admonition-title,
+.rst-content .note .admonition-title,
+.wy-alert.wy-alert-info .wy-alert-title {
+  color: var(--dosh-black);
+  background: var(--dosh-teal);
+}
+
+/* Rounded buttons */
+.btn {
+  border-radius: 2rem;
+  box-shadow: none;
+}
+
+.btn-neutral {
+  color: var(--dosh-teal-dark) !important;
+  background-color: #ffffff !important;
+  border: 1px solid var(--dosh-teal-light);
+}
+
+.btn-neutral:hover {
+  color: var(--dosh-black) !important;
+  background-color: var(--dosh-teal-pale) !important;
+}
+
+.btn-neutral:visited {
+  color: var(--dosh-teal-dark) !important;
+}
+
+/* White footer with a thin line on top. */
+footer {
+  color: var(--dosh-muted);
+}
+
+footer hr,
+.rst-content hr {
+  border-top-color: var(--dosh-border);
+}
+
+.theme-switcher {
+  color: var(--dosh-teal-dark);
+  background-color: #ffffff;
+}
+
+/* -- Dark mode ------------------------------------------------------------ */
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .wy-body-for-nav,
+html[data-theme="dark"] .wy-nav-content-wrap,
+html[data-theme="dark"] .wy-nav-content {
+  background: var(--dosh-dark-bg);
+  color: var(--dosh-dark-text);
+}
+
+html[data-theme="dark"] .rst-content h1, html[data-theme="dark"] .rst-content h2,
+html[data-theme="dark"] .rst-content h3, html[data-theme="dark"] .rst-content h4,
+html[data-theme="dark"] .rst-content h5, html[data-theme="dark"] .rst-content h6 {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] a,
+html[data-theme="dark"] a:visited,
+html[data-theme="dark"] .wy-nav-content a,
+html[data-theme="dark"] .wy-nav-content a:visited {
+  color: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] a:hover,
+html[data-theme="dark"] .wy-nav-content a:hover {
+  color: var(--dosh-teal-pale);
+}
+
+html[data-theme="dark"] mark,
+html[data-theme="dark"] .rst-content .highlighted,
+html[data-theme="dark"] span.highlighted {
+  color: var(--dosh-black);
+  background: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .wy-side-nav-search,
+html[data-theme="dark"] .wy-nav-top {
+  background: var(--dosh-dark-bg);
+}
+
+html[data-theme="dark"] .wy-side-nav-search > a,
+html[data-theme="dark"] .wy-side-nav-search .wy-dropdown > a,
+html[data-theme="dark"] .wy-nav-top a {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .wy-side-nav-search > a::before,
+html[data-theme="dark"] .wy-nav-top i {
+  color: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .wy-side-nav-search > div.version {
+  color: var(--dosh-dark-muted);
+}
+
+html[data-theme="dark"] .wy-side-nav-search input[type="text"] {
+  color: var(--dosh-dark-text);
+  background: var(--dosh-dark-surface);
+  border-color: var(--dosh-dark-border);
+}
+
+html[data-theme="dark"] .wy-side-nav-search input[type="text"]:focus {
+  border-color: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .wy-nav-side {
+  background: var(--dosh-dark-surface);
+}
+
+html[data-theme="dark"] .wy-menu-vertical header,
+html[data-theme="dark"] .wy-menu-vertical p.caption {
+  color: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .wy-menu-vertical li button.toctree-expand {
+  color: var(--dosh-teal-light) !important;
+}
+
+html[data-theme="dark"] .wy-menu-vertical a,
+html[data-theme="dark"] .wy-menu-vertical li.current a {
+  color: var(--dosh-dark-text);
+  border-color: var(--dosh-dark-border);
+}
+
+html[data-theme="dark"] .wy-menu-vertical a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.current > a:hover,
+html[data-theme="dark"] .wy-menu-vertical li.on a:hover {
+  color: #ffffff;
+  background: var(--dosh-dark-border);
+}
+
+html[data-theme="dark"] .wy-menu-vertical li.current {
+  background: var(--dosh-dark-bg);
+}
+
+html[data-theme="dark"] .wy-menu-vertical li.current > a,
+html[data-theme="dark"] .wy-menu-vertical li.on a {
+  color: #ffffff;
+  background: var(--dosh-dark-bg);
+  border-color: var(--dosh-dark-border);
+  box-shadow: inset .25rem 0 0 var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l2.current > a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l3.current > a,
+html[data-theme="dark"] .wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a {
+  background: var(--dosh-dark-surface);
+}
+
+html[data-theme="dark"] .rst-content code.literal,
+html[data-theme="dark"] .rst-content tt.literal,
+html[data-theme="dark"] .rst-content code,
+html[data-theme="dark"] .rst-content tt,
+html[data-theme="dark"] code {
+  color: var(--dosh-teal-pale);
+  background: var(--dosh-dark-surface);
+  border-color: var(--dosh-dark-border);
+}
+
+html[data-theme="dark"] .highlight,
+html[data-theme="dark"] .rst-content div[class^="highlight"],
+html[data-theme="dark"] .rst-content pre.literal-block {
+  background: var(--dosh-dark-surface);
+  border-color: var(--dosh-dark-border);
+}
+
+html[data-theme="dark"] .rst-content .admonition,
+html[data-theme="dark"] .rst-content .note,
+html[data-theme="dark"] .wy-alert.wy-alert-info {
+  color: var(--dosh-dark-text);
+  background: var(--dosh-dark-surface);
+}
+
+html[data-theme="dark"] .rst-content .admonition .admonition-title,
+html[data-theme="dark"] .rst-content .note .admonition-title,
+html[data-theme="dark"] .wy-alert.wy-alert-info .wy-alert-title {
+  color: var(--dosh-black);
+  background: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .btn-neutral {
+  color: var(--dosh-teal-light) !important;
+  background-color: transparent !important;
+  border-color: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .btn-neutral:hover {
+  color: var(--dosh-black) !important;
+  background-color: var(--dosh-teal-light) !important;
+}
+
+html[data-theme="dark"] .btn-neutral:visited {
+  color: var(--dosh-teal-light) !important;
+}
+
+html[data-theme="dark"] footer {
+  color: var(--dosh-dark-muted);
+}
+
+html[data-theme="dark"] footer hr,
+html[data-theme="dark"] .rst-content hr {
+  border-top-color: var(--dosh-dark-border);
+}
+
+html[data-theme="dark"] .theme-switcher {
+  color: var(--dosh-teal-light);
+  background-color: var(--dosh-dark-surface);
+}

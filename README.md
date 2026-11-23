@@ -383,21 +383,54 @@ Build the documentation using *make(1)*:
 
 	$ make doc
 	make -C doc html
-	Running Sphinx v7.2.6
+	make: Entering directory '/home/gportay/src/dosh/doc'
+	Running Sphinx v8.2.3
+	loading translations [en]... done
 	making output directory... done
 	building [mo]: targets for 0 po files that are out of date
 	writing output... 
 	building [html]: targets for 12 source files that are out of date
 	updating environment: [new config] 12 added, 0 changed, 0 removed
+	reading sources... [  8%] building
+	reading sources... [ 17%] contributing
+	reading sources... [ 25%] copyright
+	reading sources... [ 33%] cross-platform
+	reading sources... [ 42%] index
+	reading sources... [ 50%] install
+	reading sources... [ 58%] interpreter
+	reading sources... [ 67%] links
+	reading sources... [ 75%] overview
+	reading sources... [ 83%] podman
+	reading sources... [ 92%] requirements
 	reading sources... [100%] tuning
+	
 	looking for now-outdated files... none found
 	pickling environment... done
 	checking consistency... done
 	preparing documents... done
-	copying assets... copying static files... done
-	copying extra files... done
-	done
+	copying assets... 
+	copying static files... 
+	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/language_data.js
+	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/basic.css
+	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/documentation_options.js
+	Writing evaluated template result to /home/gportay/src/dosh/doc/build/html/_static/js/versions.js
+	copying static files: done
+	copying extra files... 
+	copying extra files: done
+	copying assets: done
+	writing output... [  8%] building
+	writing output... [ 17%] contributing
+	writing output... [ 25%] copyright
+	writing output... [ 33%] cross-platform
+	writing output... [ 42%] index
+	writing output... [ 50%] install
+	writing output... [ 58%] interpreter
+	writing output... [ 67%] links
+	writing output... [ 75%] overview
+	writing output... [ 83%] podman
+	writing output... [ 92%] requirements
 	writing output... [100%] tuning
+	
 	generating indices... genindex done
 	writing additional pages... search done
 	dumping search index in English (code: en)... done
@@ -405,6 +438,7 @@ Build the documentation using *make(1)*:
 	build succeeded.
 	
 	The HTML pages are in build/html.
+	make: Leaving directory '/home/gportay/src/dosh/doc'
 
 ## MANUAL PAGES
 
