@@ -1,0 +1,53 @@
+name: Deploy macOS package to GitHub Release
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "[0-9]*"
+
+jobs:
+  build:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        brew install asciidoctor bash coreutils gnupg
+    - name: Setup GPG
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY_BLOCK }}
+      run: |
+        echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+    - name: Build package
+      run: |
+        # GNU install supports the option -D used by the Makefile
+        PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+        ver="$(bash ${{ github.event.repository.name }} --version)"
+        make ${{ github.event.repository.name }}.1.gz
+        make DESTDIR="$PWD/root" PREFIX=/usr/local \
+             BASHCOMPLETIONSDIR=/usr/local/share/bash-completion/completions \
+             install-all install-linux-platforms
+        # macOS comes with bash 3.2; use the first bash found in PATH instead
+        sed -i '1s|^#!/bin/bash$|#!/usr/bin/env bash|' "root/usr/local/bin/${{ github.event.repository.name }}"
+        pkgbuild --root root \
+                 --identifier "io.github.${{ github.repository_owner }}.${{ github.event.repository.name }}" \
+                 --version "$ver" \
+                 --install-location / \
+                 "${{ github.event.repository.name }}-$ver.pkg"
+    - name: Sign package
+      env:
+        GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.PGP_PRIVATE_KEY_PASSPHRASE }}
+      run: |
+        for i in ${{ github.event.repository.name }}*.pkg; do echo "$GPG_PRIVATE_KEY_PASSPHRASE" | gpg --batch --pinentry-mode=loopback --passphrase-fd=0 --detach-sign --no-armor "$i"; done
+    - name: Lint package
+      run: |
+        for i in ${{ github.event.repository.name }}*.pkg; do pkgutil --payload-files "$i"; done
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
+        files: |
+          ${{ github.event.repository.name }}*.pkg
+          ${{ github.event.repository.name }}*.sig
