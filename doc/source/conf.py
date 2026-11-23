@@ -46,6 +46,7 @@ rst_epilog = '''
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_logo = '_static/dosh-logo.svg'
 # Loaded before the sphinx_rtd_dark_mode scripts it overrides.
 html_js_files = ['os_theme.js']
 

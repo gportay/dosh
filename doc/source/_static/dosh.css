@@ -129,6 +129,11 @@ span.highlighted {
   color: var(--dosh-muted);
 }
 
+.wy-side-nav-search > a img.logo {
+  width: 5rem;
+  margin: .75rem auto 0;
+}
+
 .wy-side-nav-search input[type="text"] {
   border-color: var(--dosh-teal-light);
 }
@@ -317,6 +322,10 @@ html[data-theme="dark"] .wy-nav-top a {
 html[data-theme="dark"] .wy-side-nav-search > a::before,
 html[data-theme="dark"] .wy-nav-top i {
   color: var(--dosh-teal-light);
+}
+
+html[data-theme="dark"] .wy-side-nav-search > a img.logo {
+  content: url("dosh-logo-dark.svg");
 }
 
 html[data-theme="dark"] .wy-side-nav-search > div.version {

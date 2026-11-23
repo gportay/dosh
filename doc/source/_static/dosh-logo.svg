@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="26 36.5 59 48.5" width="236" height="194" role="img" aria-labelledby="title">
+  <title id="title">dosh</title>
+  <rect x="28" y="44.5" width="55" height="44.588287" fill="#1a1a1a"/>
+  <g fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="40,55 50,63 40,71"/>
+    <line x1="56" y1="71" x2="68" y2="71"/>
+  </g>
+  <rect x="28" y="38.5" width="13.75" height="5" fill="#c9f0f0"/>
+  <rect x="41.75" y="38.5" width="13.75" height="5" fill="#8ddcdc"/>
+  <rect x="55.5" y="38.5" width="13.75" height="5" fill="#53b8b8"/>
+  <rect x="69.25" y="38.5" width="13.75" height="5" fill="#286b6b"/>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:title>dosh</dc:title>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/"/>
+        <dc:creator><cc:Agent><dc:title>GaëlPORTAY</dc:title></cc:Agent></dc:creator>
+        <dc:date>2026-11-23</dc:date>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:requires rdf:resource="http://creativecommons.org/ns#Notice"/>
+        <cc:requires rdf:resource="http://creativecommons.org/ns#Attribution"/>
+        <cc:prohibits rdf:resource="http://creativecommons.org/ns#CommercialUse"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+        <cc:requires rdf:resource="http://creativecommons.org/ns#ShareAlike"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
