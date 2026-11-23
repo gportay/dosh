@@ -66,7 +66,7 @@ License: LGPL-2.1
 
 Files: support/cqfd
 Copyright:
- Copyright 2024-2025 Gaël PORTAY
+ Copyright 2024-2026 Gaël PORTAY
  Copyright 2008,2010-2011 Andrés J. Díaz
 License: LGPL-2.1 and Expat
 
@@ -85,7 +85,7 @@ Copyright: Copyright 2023-2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files: support/doshx
-Copyright: Copyright 2023 Gaël PORTAY
+Copyright: Copyright 2023,2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files: support/posh
@@ -97,7 +97,7 @@ Copyright: Copyright 2026 Gaël PORTAY
 License: LGPL-2.1
 
 Files: support/zdosh
-Copyright: Copyright 2017-2019,2023-2024 Gaël PORTAY
+Copyright: Copyright 2017-2019,2023-2024,2026 Gaël PORTAY
 License: LGPL-2.1
 
 License: LGPL-2.1
