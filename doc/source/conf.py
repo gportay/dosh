@@ -57,7 +57,18 @@ default_dark_mode = False
 
 # -- dosh palette -------------------------------------------------------------
 
+def add_favicons(app, pagename, templatename, context, doctree):
+    # The ICO for the older browsers, and the SVG for the others.
+    ico = context['pathto']('_static/favicon.ico', 1)
+    svg = context['pathto']('_static/favicon.svg', 1)
+    context['metatags'] = context.get('metatags', '') + (
+        f'\n<link rel="icon" href="{ico}" sizes="16x16 32x32 48x48">'
+        f'\n<link rel="icon" href="{svg}" type="image/svg+xml">'
+    )
+
+
 def setup(app):
+    app.connect('html-page-context', add_favicons)
     # Raleway for the text, Chillax for the titles.
     app.add_css_file('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap')
     app.add_css_file('https://api.fontshare.com/v2/css?f%5B%5D=chillax@600&display=swap')
