@@ -4,6 +4,15 @@ permalink: /news/
 excerpt: "dosh releases and announcements."
 ---
 
+### A new <mark>identity</mark> for dosh
+
+23 November 2026
+
+dosh has a new identity! Its logo is a terminal prompt in a container, topped
+with the four shades of teal of its new palette.
+
+<img class="align-center" src="{{ '/assets/images/dosh-social-preview.svg' | relative_url }}" alt="The dosh logo, and A shell for Docker!" width="640" height="320">
+
 ### dosh documentation on <mark>Read the Docs</mark>
 
 18 November 2026
