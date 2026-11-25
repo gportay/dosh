@@ -20,6 +20,13 @@ html: .SHELLFLAGS = --dockerfile docker/sphinx/Dockerfile -c
 html:
 	$(MAKE) -C docs/readthedocs $@
 
+.PHONY: pdf
+pdf: PATH := $(CURDIR):$(PATH)
+pdf: SHELL = dosh
+pdf: .SHELLFLAGS = --dockerfile docker/sphinx-latexpdf/Dockerfile -c
+pdf:
+	$(MAKE) -C docs/readthedocs latexpdf
+
 .PHONY: man
 man: PATH := $(CURDIR):$(PATH)
 man: SHELL = dosh
@@ -81,6 +88,10 @@ install:
 	install -D -m 755 support/zdosh $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	install -D -m 755 support/cqfd $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
+
+.PHONY: install-pdf
+install-pdf:
+	install -D -m 644 docs/readthedocs/build/latex/dosh.pdf $(DESTDIR)$(PREFIX)/share/doc/dosh/dosh.pdf
 
 .PHONY: install-html
 install-html:
@@ -236,6 +247,7 @@ user-install-all: user-install-docker-cli-plugin
 
 user-install:
 user-install-html:
+user-install-pdf:
 user-install-man:
 user-install-bash-completion:
 user-install-docker-cli-plugin:
