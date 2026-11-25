@@ -4,6 +4,14 @@ permalink: /news/
 excerpt: "dosh releases and announcements."
 ---
 
+### <mark>1000 commits</mark> and a new web site
+
+25 November 2026
+
+dosh is 1000 commits old! Nearly ten years after its first commit, dosh marks
+the milestone with a brand new web site, hosted by [GitHub Pages] at
+[www.portay.io/dosh][web site].
+
 ### A new <mark>identity</mark> for dosh
 
 23 November 2026
@@ -44,7 +52,9 @@ collection of unused images. See the [CHANGELOG][changelog-8] for details.
 
 Grab the [dosh 8 release][release-8].
 
+[GitHub Pages]: https://pages.github.com/
 [Read the Docs]: https://dosh.readthedocs.io/
+[web site]: https://www.portay.io/dosh/
 [multi-platform]: https://docs.docker.com/build/building/multi-platform/
 [changelog-9]: https://github.com/gportay/dosh/blob/9/CHANGELOG.md
 [changelog-8]: https://github.com/gportay/dosh/blob/8/CHANGELOG.md
