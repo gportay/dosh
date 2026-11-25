@@ -301,9 +301,15 @@ bump:
 	sed -e "/^Version:/s,$$old,$(BUMP_VERSION)," -i dosh.spec; \
 	sed -e "/%changelog/a* $(shell date "+%a %b %d %Y") $(shell git config user.name) <$(shell git config user.email)> - $(BUMP_VERSION)-1" -i dosh.spec; \
 	sed -e "/^pkgver=/s,$$old,$(BUMP_VERSION)," -e "/^pkgrel=/s,=.*,=1," -i PKGBUILD; \
-	sed -e "/^sha256sums=/s,[[:xdigit:]]\{64\,64\},SKIP," -i PKGBUILD
+	sed -e "/^sha256sums=/s,[[:xdigit:]]\{64\,64\},SKIP," -i PKGBUILD; \
+	sed -e "/^release = /s,'$$old','$(BUMP_VERSION)'," -i docs/readthedocs/source/conf.py; \
+	sed -e "s,/releases/download/$$old/,/releases/download/$(BUMP_VERSION)/,g" \
+	    -e "s,/refs/tags/$$old\.tar\.gz,/refs/tags/$(BUMP_VERSION).tar.gz,g" \
+	    -e "s,dosh-$$old-1,dosh-$(BUMP_VERSION)-1,g" \
+	    -e "s,dosh_$${old}_all,dosh_$(BUMP_VERSION)_all,g" \
+	    -i README.md docs/readthedocs/source/install.rst docs/gh-pages/_pages/download.md
 	"$${EDITOR:-vim}" -p debian/changelog dosh.spec
-	git commit --gpg-sign dosh support/cqfd dosh.1.adoc debian/changelog dosh.spec PKGBUILD README.md CHANGELOG.md --message "dosh: version $(BUMP_VERSION)"
+	git commit --gpg-sign dosh support/cqfd dosh.1.adoc support/cqfd.1.adoc support/cqfdrc.5.adoc debian/changelog dosh.spec PKGBUILD README.md CHANGELOG.md docs/readthedocs/source/conf.py docs/readthedocs/source/install.rst docs/gh-pages/_pages/download.md --message "dosh: version $(BUMP_VERSION)"
 	git tag --sign --annotate --message "dosh-$(BUMP_VERSION)" "$(BUMP_VERSION)"
 else
 .SILENT: bump-major
