@@ -82,6 +82,11 @@ install:
 	install -D -m 644 support/dot-profile $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	install -D -m 755 support/cqfd $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
 
+.PHONY: install-html
+install-html:
+	install -d $(DESTDIR)$(PREFIX)/share/doc/dosh
+	cp -R docs/readthedocs/build/html/. $(DESTDIR)$(PREFIX)/share/doc/dosh/
+
 .PHONY: install-man
 install-man:
 	install -D -m 644 dosh.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
@@ -179,6 +184,7 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/zdosh
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/dot-profile
 	rm -f $(DESTDIR)$(PREFIX)/share/dosh/support/cqfd
+	rm -Rf $(DESTDIR)$(PREFIX)/share/doc/dosh
 	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/dosh.1.gz
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-shell
 	rm -f $(DESTDIR)$(DOCKERLIBDIR)/cli-plugins/docker-sh
@@ -229,6 +235,7 @@ user-install-all: user-install-bash-completion
 user-install-all: user-install-docker-cli-plugin
 
 user-install:
+user-install-html:
 user-install-man:
 user-install-bash-completion:
 user-install-docker-cli-plugin:
