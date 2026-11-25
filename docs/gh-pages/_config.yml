@@ -12,6 +12,7 @@ description: >-
 url: "https://gportay.github.io"
 baseurl: "/dosh"
 repository: "gportay/dosh"
+og_image: "/assets/images/dosh-social-preview.png"
 copyright: "Gaël PORTAY"
 copyright_url: "https://github.com/gportay"
 enable_copy_code_button: true
